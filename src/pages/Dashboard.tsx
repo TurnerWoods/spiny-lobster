@@ -154,14 +154,14 @@ const Dashboard = () => {
           transition={{ delay: 0.1 }}
           className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
         >
-          <Link to="/#treatments">
+          <Link to="/intake">
             <div className="flex items-center gap-4 rounded-xl border bg-card p-4 shadow-sm transition-all hover:shadow-md">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-light">
                 <Plus className="h-6 w-6 text-primary" />
               </div>
               <div>
                 <p className="font-semibold text-foreground">Start Treatment</p>
-                <p className="text-sm text-muted-foreground">Browse options</p>
+                <p className="text-sm text-muted-foreground">Complete intake</p>
               </div>
             </div>
           </Link>

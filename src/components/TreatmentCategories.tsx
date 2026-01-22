@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Scale, Zap, FlaskConical, Heart, Dumbbell, Brain, Scissors, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -165,10 +166,12 @@ const TreatmentCategories = () => {
                 </div>
 
                 {/* CTA */}
-                <Button variant="ghost" size="sm" className="group/btn w-full justify-between text-primary hover:text-primary-dark">
-                  <span>Get Started</span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                </Button>
+                <Link to="/intake">
+                  <Button variant="ghost" size="sm" className="group/btn w-full justify-between text-primary hover:text-primary-dark">
+                    <span>Get Started</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                  </Button>
+                </Link>
               </div>
             </motion.div>
           ))}
