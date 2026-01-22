@@ -19,6 +19,7 @@ import {
   Home
 } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
+import PatientMessaging from "@/components/dashboard/PatientMessaging";
 
 interface Profile {
   first_name: string | null;
@@ -51,6 +52,8 @@ const Dashboard = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMessagingOpen, setIsMessagingOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -84,6 +87,16 @@ const Dashboard = () => {
         .order("created_at", { ascending: false });
 
       if (treatmentsData) setTreatments(treatmentsData as Treatment[]);
+
+      // Fetch unread message count
+      const { count } = await supabase
+        .from("messages")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .eq("is_read", false)
+        .neq("sender_role", "patient");
+
+      setUnreadCount(count || 0);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -165,15 +178,28 @@ const Dashboard = () => {
               </div>
             </div>
           </Link>
-          <div className="flex items-center gap-4 rounded-xl border bg-card p-4 shadow-sm">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+          <button
+            onClick={() => {
+              setIsMessagingOpen(true);
+              setUnreadCount(0);
+            }}
+            className="flex w-full items-center gap-4 rounded-xl border bg-card p-4 shadow-sm transition-all hover:shadow-md text-left"
+          >
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
               <MessageCircle className="h-6 w-6 text-blue-600" />
+              {unreadCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                  {unreadCount}
+                </span>
+              )}
             </div>
             <div>
               <p className="font-semibold text-foreground">Messages</p>
-              <p className="text-sm text-muted-foreground">0 unread</p>
+              <p className="text-sm text-muted-foreground">
+                {unreadCount > 0 ? `${unreadCount} unread` : "Chat with care team"}
+              </p>
             </div>
-          </div>
+          </button>
           <div className="flex items-center gap-4 rounded-xl border bg-card p-4 shadow-sm">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
               <Calendar className="h-6 w-6 text-purple-600" />
@@ -277,6 +303,9 @@ const Dashboard = () => {
           </div>
         </motion.div>
       </main>
+
+      {/* Messaging Modal */}
+      <PatientMessaging isOpen={isMessagingOpen} onClose={() => setIsMessagingOpen(false)} />
     </div>
   );
 };
