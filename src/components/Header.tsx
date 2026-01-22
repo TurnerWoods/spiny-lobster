@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, User } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import logoIcon from "@/assets/logo-icon.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, isLoading } = useAuth();
 
   const navLinks = [
     { name: "Treatments", href: "#treatments" },
@@ -48,12 +50,32 @@ const Header = () => {
             <Phone className="h-4 w-4" />
             <span className="hidden lg:inline">(800) 123-4567</span>
           </a>
-          <Button variant="outline" size="sm" asChild>
-            <a href="#pricing">View Pricing</a>
-          </Button>
-          <Button size="sm" className="bg-primary hover:bg-primary-dark">
-            Start Free Consultation
-          </Button>
+          
+          {!isLoading && (
+            <>
+              {user ? (
+                <Link to="/dashboard">
+                  <Button size="sm" className="bg-primary hover:bg-primary-dark">
+                    <User className="mr-2 h-4 w-4" />
+                    My Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="outline" size="sm">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button size="sm" className="bg-primary hover:bg-primary-dark">
+                      Get Started
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -88,9 +110,31 @@ const Header = () => {
               <Phone className="h-4 w-4" />
               (800) 123-4567
             </a>
-            <Button className="w-full bg-primary hover:bg-primary-dark">
-              Start Free Consultation
-            </Button>
+            {!isLoading && (
+              <>
+                {user ? (
+                  <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full bg-primary hover:bg-primary-dark">
+                      <User className="mr-2 h-4 w-4" />
+                      My Dashboard
+                    </Button>
+                  </Link>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="outline" className="w-full">
+                        Sign In
+                      </Button>
+                    </Link>
+                    <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
+                      <Button className="w-full bg-primary hover:bg-primary-dark">
+                        Get Started
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+              </>
+            )}
           </nav>
         </div>
       )}
