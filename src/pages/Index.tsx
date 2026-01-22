@@ -8,6 +8,7 @@ import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
+import AIChatWidget from "@/components/AIChatWidget";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
         <FinalCTA />
       </main>
       <Footer />
+      <AIChatWidget />
     </div>
   );
 };
