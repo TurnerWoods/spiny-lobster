@@ -1,26 +1,57 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Clock, Truck } from "lucide-react";
+import { ArrowRight, Shield, Clock, Truck, Play, Volume2, VolumeX } from "lucide-react";
+import { useState, useRef } from "react";
 import AnimatedHeroText from "./AnimatedHeroText";
 import StatsCounter from "./StatsCounter";
+import heroVideo from "@/assets/hero-video.mp4";
 
 const Hero = () => {
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   return (
-    <section className="relative overflow-hidden gradient-hero-bg">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -right-40 -top-40 h-80 w-80 rounded-full bg-primary/5" />
-        <div className="absolute -left-20 top-1/2 h-60 w-60 rounded-full bg-primary/5" />
+    <section className="relative min-h-[90vh] overflow-hidden">
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
       </div>
 
-      <div className="container relative px-4 py-16 md:px-6 md:py-24 lg:py-32">
+      {/* Mute/Unmute Button */}
+      <button
+        onClick={toggleMute}
+        className="absolute bottom-6 right-6 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-all hover:bg-white/30"
+        aria-label={isMuted ? "Unmute video" : "Mute video"}
+      >
+        {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+      </button>
+
+      <div className="container relative z-10 px-4 py-20 md:px-6 md:py-28 lg:py-36">
         <div className="mx-auto max-w-4xl text-center">
           {/* Trust Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary-light px-4 py-2 text-sm font-medium text-primary"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm"
           >
             <Shield className="h-4 w-4" />
             <span>HIPAA Compliant • Licensed US Providers</span>
@@ -31,7 +62,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-6 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl"
+            className="mb-6 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
           >
             Stop treating{" "}
             <AnimatedHeroText />
@@ -44,7 +75,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground md:text-xl"
+            className="mx-auto mb-8 max-w-2xl text-lg text-white/80 md:text-xl"
           >
             Clinically proven GLP-1, peptides, and hormone therapy prescribed by licensed providers. 
             No waiting rooms, no hidden fees—just results.
@@ -61,7 +92,12 @@ const Hero = () => {
               Start Free Consultation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button size="lg" variant="outline" className="text-lg" asChild>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white/30 bg-white/10 text-lg text-white backdrop-blur-sm hover:bg-white/20" 
+              asChild
+            >
               <a href="#treatments">View Treatments</a>
             </Button>
           </motion.div>
@@ -71,7 +107,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
+            className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/70"
           >
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-primary" />

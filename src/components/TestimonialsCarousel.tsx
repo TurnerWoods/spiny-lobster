@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Import testimonial images
+import testimonial1 from "@/assets/patient-testimonial-1.jpg";
+import testimonial2 from "@/assets/patient-testimonial-2.jpg";
+
 const reviews = [
   {
     id: "1",
@@ -11,6 +15,7 @@ const reviews = [
     name: "Lisa M.",
     city: "Austin, TX",
     treatment: "Weight Loss",
+    image: testimonial2,
   },
   {
     id: "2",
@@ -19,6 +24,7 @@ const reviews = [
     name: "Mark T.",
     city: "Dallas, TX",
     treatment: "GLP-1",
+    image: testimonial1,
   },
   {
     id: "3",
@@ -27,6 +33,7 @@ const reviews = [
     name: "James R.",
     city: "Houston, TX",
     treatment: "TRT",
+    image: testimonial1,
   },
   {
     id: "4",
@@ -35,6 +42,7 @@ const reviews = [
     name: "Amanda S.",
     city: "San Antonio, TX",
     treatment: "Hormone Therapy",
+    image: testimonial2,
   },
   {
     id: "5",
@@ -43,6 +51,7 @@ const reviews = [
     name: "Robert K.",
     city: "Fort Worth, TX",
     treatment: "Peptides",
+    image: testimonial1,
   },
   {
     id: "6",
@@ -51,6 +60,7 @@ const reviews = [
     name: "Michelle P.",
     city: "Plano, TX",
     treatment: "Weight Loss",
+    image: testimonial2,
   },
 ];
 
@@ -71,9 +81,11 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
     
     {/* Author */}
     <div className="mt-auto flex items-center gap-3 border-t pt-4">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-light font-semibold text-primary">
-        {review.name.charAt(0)}
-      </div>
+      <img 
+        src={review.image} 
+        alt={review.name}
+        className="h-12 w-12 rounded-full object-cover ring-2 ring-primary/20"
+      />
       <div>
         <p className="font-semibold text-foreground">{review.name}</p>
         <p className="text-sm text-muted-foreground">
