@@ -2,6 +2,11 @@ import { motion } from "framer-motion";
 import { Scale, Zap, FlaskConical, Heart, Dumbbell, Brain, Scissors, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Import treatment images
+import treatmentWeightLoss from "@/assets/treatment-weight-loss.jpg";
+import treatmentPeptides from "@/assets/treatment-peptides.jpg";
+import treatmentHormone from "@/assets/treatment-hormone.jpg";
+
 const treatments = [
   {
     icon: Scale,
@@ -9,7 +14,8 @@ const treatments = [
     subtitle: "GLP-1 Therapy",
     description: "Clinically proven semaglutide and tirzepatide for sustainable weight management.",
     medications: ["Semaglutide", "Tirzepatide"],
-    color: "bg-emerald-500",
+    image: treatmentWeightLoss,
+    price: "From $199/mo",
   },
   {
     icon: FlaskConical,
@@ -17,7 +23,8 @@ const treatments = [
     subtitle: "Cellular Health",
     description: "Support longevity and optimize your cellular function with advanced peptides.",
     medications: ["BPC-157", "NAD+", "Sermorelin"],
-    color: "bg-teal-500",
+    image: treatmentPeptides,
+    price: "From $149/mo",
   },
   {
     icon: Zap,
@@ -25,7 +32,8 @@ const treatments = [
     subtitle: "TRT & HRT",
     description: "Restore balance and optimize performance with bioidentical hormones.",
     medications: ["Testosterone", "HRT", "Thyroid"],
-    color: "bg-cyan-500",
+    image: treatmentHormone,
+    price: "From $99/mo",
   },
   {
     icon: Dumbbell,
@@ -33,7 +41,8 @@ const treatments = [
     subtitle: "Performance",
     description: "Enhance muscle tone and recovery naturally with proven therapies.",
     medications: ["IGF-LR3", "CJC-1295"],
-    color: "bg-blue-500",
+    image: treatmentPeptides,
+    price: "From $149/mo",
   },
   {
     icon: Brain,
@@ -41,7 +50,8 @@ const treatments = [
     subtitle: "Cognitive Health",
     description: "Improve focus, clarity, and emotional well-being.",
     medications: ["Semax", "Selank"],
-    color: "bg-indigo-500",
+    image: treatmentPeptides,
+    price: "From $129/mo",
   },
   {
     icon: Scissors,
@@ -49,7 +59,8 @@ const treatments = [
     subtitle: "Restoration",
     description: "Stimulate growth and prevent thinning with targeted treatments.",
     medications: ["Finasteride", "Minoxidil"],
-    color: "bg-violet-500",
+    image: treatmentHormone,
+    price: "From $79/mo",
   },
 ];
 
@@ -111,37 +122,54 @@ const TreatmentCategories = () => {
             <motion.div
               key={treatment.title}
               variants={item}
-              className="group relative overflow-hidden rounded-2xl border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-2xl border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
-              {/* Icon */}
-              <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl ${treatment.color} text-white`}>
-                <treatment.icon className="h-6 w-6" />
+              {/* Image */}
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={treatment.image} 
+                  alt={treatment.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                
+                {/* Price Badge */}
+                <div className="absolute bottom-3 left-3 rounded-full bg-primary px-3 py-1 text-sm font-semibold text-white">
+                  {treatment.price}
+                </div>
+                
+                {/* Icon */}
+                <div className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-primary shadow-md">
+                  <treatment.icon className="h-5 w-5" />
+                </div>
               </div>
 
               {/* Content */}
-              <h3 className="mb-1 font-display text-xl font-bold text-foreground">
-                {treatment.title}
-              </h3>
-              <p className="mb-3 text-sm font-medium text-primary">{treatment.subtitle}</p>
-              <p className="mb-4 text-sm text-muted-foreground">{treatment.description}</p>
+              <div className="p-5">
+                <h3 className="mb-1 font-display text-xl font-bold text-foreground">
+                  {treatment.title}
+                </h3>
+                <p className="mb-3 text-sm font-medium text-primary">{treatment.subtitle}</p>
+                <p className="mb-4 text-sm text-muted-foreground">{treatment.description}</p>
 
-              {/* Medications */}
-              <div className="mb-4 flex flex-wrap gap-2">
-                {treatment.medications.map((med) => (
-                  <span
-                    key={med}
-                    className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground"
-                  >
-                    {med}
-                  </span>
-                ))}
+                {/* Medications */}
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {treatment.medications.map((med) => (
+                    <span
+                      key={med}
+                      className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground"
+                    >
+                      {med}
+                    </span>
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <Button variant="ghost" size="sm" className="group/btn w-full justify-between text-primary hover:text-primary-dark">
+                  <span>Get Started</span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                </Button>
               </div>
-
-              {/* CTA */}
-              <Button variant="ghost" size="sm" className="group/btn text-primary hover:text-primary-dark">
-                Learn More
-                <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-              </Button>
             </motion.div>
           ))}
         </motion.div>

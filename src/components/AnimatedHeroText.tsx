@@ -29,7 +29,7 @@ const AnimatedHeroText = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="absolute left-0 text-primary"
+          className="absolute left-0 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
         >
           {symptoms[currentIndex]}
         </motion.span>

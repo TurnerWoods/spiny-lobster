@@ -47,7 +47,7 @@ const AnimatedNumber = ({ value, suffix, inView }: { value: number; suffix: stri
   };
 
   return (
-    <span className="font-display text-4xl font-bold text-primary md:text-5xl">
+    <span className="font-display text-3xl font-bold text-white md:text-4xl lg:text-5xl">
       {formatNumber(displayValue)}{suffix}
     </span>
   );
@@ -63,12 +63,12 @@ const StatsCounter = () => {
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: 0.5 }}
-      className="mt-16 grid grid-cols-2 gap-8 rounded-2xl border bg-card p-8 shadow-lg md:grid-cols-4"
+      className="mt-16 grid grid-cols-2 gap-6 rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-md md:grid-cols-4 md:gap-8 md:p-8"
     >
       {stats.map((stat, index) => (
         <div key={index} className="text-center">
           <AnimatedNumber value={stat.numericValue} suffix={stat.suffix} inView={isInView} />
-          <p className="mt-2 text-sm font-medium text-muted-foreground">{stat.label}</p>
+          <p className="mt-2 text-sm font-medium text-white/70">{stat.label}</p>
         </div>
       ))}
     </motion.div>
