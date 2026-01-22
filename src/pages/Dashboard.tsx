@@ -258,8 +258,9 @@ const Dashboard = () => {
                 const StatusIcon = status.icon;
 
                 return (
-                  <div
+                  <Link
                     key={treatment.id}
+                    to={`/treatment/${treatment.id}`}
                     className="flex items-center justify-between rounded-xl border bg-card p-4 shadow-sm transition-all hover:shadow-md"
                   >
                     <div className="flex items-center gap-4">
@@ -280,7 +281,7 @@ const Dashboard = () => {
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
