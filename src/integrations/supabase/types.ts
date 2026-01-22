@@ -14,6 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      intake_forms: {
+        Row: {
+          allergies: string | null
+          created_at: string
+          current_medications: string | null
+          current_weight: number | null
+          diet_description: string | null
+          exercise_frequency: string | null
+          height_inches: number | null
+          id: string
+          medical_conditions: string[] | null
+          preferred_treatment: string | null
+          previous_treatments: string | null
+          primary_goal: string
+          secondary_goals: string[] | null
+          sleep_hours: number | null
+          status: string
+          stress_level: string | null
+          submitted_at: string
+          target_timeline: string | null
+          target_weight: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          allergies?: string | null
+          created_at?: string
+          current_medications?: string | null
+          current_weight?: number | null
+          diet_description?: string | null
+          exercise_frequency?: string | null
+          height_inches?: number | null
+          id?: string
+          medical_conditions?: string[] | null
+          preferred_treatment?: string | null
+          previous_treatments?: string | null
+          primary_goal: string
+          secondary_goals?: string[] | null
+          sleep_hours?: number | null
+          status?: string
+          stress_level?: string | null
+          submitted_at?: string
+          target_timeline?: string | null
+          target_weight?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          allergies?: string | null
+          created_at?: string
+          current_medications?: string | null
+          current_weight?: number | null
+          diet_description?: string | null
+          exercise_frequency?: string | null
+          height_inches?: number | null
+          id?: string
+          medical_conditions?: string[] | null
+          preferred_treatment?: string | null
+          previous_treatments?: string | null
+          primary_goal?: string
+          secondary_goals?: string[] | null
+          sleep_hours?: number | null
+          status?: string
+          stress_level?: string | null
+          submitted_at?: string
+          target_timeline?: string | null
+          target_weight?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
