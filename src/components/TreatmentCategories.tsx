@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Zap, FlaskConical, Battery, Sparkles, ArrowRight } from "lucide-react";
+import { Zap, FlaskConical, Battery, Sparkles, Dumbbell, Heart, Smile, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import treatment images
@@ -12,7 +12,7 @@ const treatments = [
   {
     icon: Zap,
     title: "Testosterone Cypionate",
-    subtitle: "The Gold Standard",
+    subtitle: "Hormone Optimization",
     description: "Weekly injection providing steady hormone levels for consistent energy, improved body composition, and enhanced mood.",
     benefits: ["Increased energy", "Improved mood", "Better composition"],
     image: treatmentHormone,
@@ -48,6 +48,36 @@ const treatments = [
     image: treatmentPeptides,
     price: "From $199/mo",
     slug: "nad",
+  },
+  {
+    icon: Dumbbell,
+    title: "Strength & Recovery",
+    subtitle: "Performance Peptides",
+    description: "BPC-157, CJC-1295/Ipamorelin, and other peptides to support muscle growth, recovery, and athletic performance.",
+    benefits: ["Faster recovery", "Muscle growth", "Joint support"],
+    image: treatmentPeptides,
+    price: "From $199/mo",
+    slug: "strength",
+  },
+  {
+    icon: Heart,
+    title: "Skin & Anti-Aging",
+    subtitle: "Regenerative Therapy",
+    description: "GHK-Cu, Glutathione, and collagen-boosting peptides for healthier, more youthful skin from within.",
+    benefits: ["Skin firmness", "Reduced wrinkles", "Brighter tone"],
+    image: treatmentPeptides,
+    price: "From $149/mo",
+    slug: "skin",
+  },
+  {
+    icon: Smile,
+    title: "Mood & Focus",
+    subtitle: "Cognitive Enhancement",
+    description: "Semax, Selank, and B12 therapies to support mental clarity, reduce stress, and improve focus.",
+    benefits: ["Mental clarity", "Stress reduction", "Better focus"],
+    image: treatmentPeptides,
+    price: "From $149/mo",
+    slug: "mood",
   },
 ];
 
@@ -103,7 +133,7 @@ const TreatmentCategories = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
+          className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4"
         >
           {treatments.map((treatment) => (
             <motion.div
