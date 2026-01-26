@@ -5,8 +5,12 @@ import { Button } from "@/components/ui/button";
 
 // Import treatment images
 import treatmentWeightLoss from "@/assets/treatment-weight-loss.jpg";
-import treatmentPeptides from "@/assets/treatment-peptides.jpg";
 import treatmentHormone from "@/assets/treatment-hormone.jpg";
+import treatmentStrength from "@/assets/treatment-strength.jpg";
+import treatmentAntiAging from "@/assets/treatment-anti-aging.jpg";
+import treatmentHair from "@/assets/treatment-hair.jpg";
+import treatmentSkin from "@/assets/treatment-skin.jpg";
+import treatmentMood from "@/assets/treatment-mood.jpg";
 
 const treatments = [
   {
@@ -35,7 +39,7 @@ const treatments = [
     subtitle: "Performance Peptides",
     description: "Sermorelin, BPC-157, and recovery peptides to build muscle, heal faster, and maximize performance.",
     benefits: ["Faster recovery", "Muscle growth", "Joint support"],
-    image: treatmentPeptides,
+    image: treatmentStrength,
     price: "From $199/mo",
     slug: "strength",
   },
@@ -45,7 +49,7 @@ const treatments = [
     subtitle: "Cellular Optimization",
     description: "NAD+, Glutathione, and longevity peptides for cellular energy, mental clarity, and healthy aging.",
     benefits: ["Cellular energy", "Mental clarity", "Longevity"],
-    image: treatmentPeptides,
+    image: treatmentAntiAging,
     price: "From $199/mo",
     slug: "anti-aging",
   },
@@ -55,7 +59,7 @@ const treatments = [
     subtitle: "Hair Restoration",
     description: "Finasteride, Minoxidil, and peptide therapies to stop hair loss and promote regrowth.",
     benefits: ["Stop hair loss", "Promote growth", "Thicker hair"],
-    image: treatmentPeptides,
+    image: treatmentHair,
     price: "From $29/mo",
     slug: "hair",
   },
@@ -65,7 +69,7 @@ const treatments = [
     subtitle: "Medical Skincare",
     description: "Tretinoin, GHK-Cu, and regenerative treatments for healthier, more youthful skin.",
     benefits: ["Reduce wrinkles", "Brighter tone", "Skin firmness"],
-    image: treatmentPeptides,
+    image: treatmentSkin,
     price: "From $49/mo",
     slug: "skin",
   },
@@ -75,7 +79,7 @@ const treatments = [
     subtitle: "Cognitive Enhancement",
     description: "Semax, Selank, and nootropic peptides to sharpen focus, reduce stress, and boost mental clarity.",
     benefits: ["Mental clarity", "Stress reduction", "Better focus"],
-    image: treatmentPeptides,
+    image: treatmentMood,
     price: "From $99/mo",
     slug: "mood",
   },
