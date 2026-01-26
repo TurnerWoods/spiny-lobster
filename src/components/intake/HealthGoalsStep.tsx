@@ -41,7 +41,7 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="font-display text-xl font-bold text-foreground">What's your primary health goal?</h2>
+        <h2 className="font-display text-xl font-bold text-rich-black">What's your primary health goal?</h2>
         <p className="mt-1 text-muted-foreground">Select the main reason you're seeking treatment</p>
       </div>
 
@@ -59,9 +59,9 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
             />
             <Label
               htmlFor={goal.value}
-              className="flex cursor-pointer flex-col rounded-xl border-2 border-muted bg-card p-4 transition-all hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5"
+              className="flex cursor-pointer flex-col rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-4 backdrop-blur-sm transition-all hover:border-warm-stone/40 hover:bg-pure-white/80 peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10"
             >
-              <span className="font-semibold text-foreground">{goal.label}</span>
+              <span className="font-semibold text-rich-black">{goal.label}</span>
               <span className="text-sm text-muted-foreground">{goal.description}</span>
             </Label>
           </div>
@@ -69,7 +69,7 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
       </RadioGroup>
 
       <div>
-        <Label className="text-base font-semibold">Additional goals (select all that apply)</Label>
+        <Label className="text-base font-semibold text-rich-black">Additional goals (select all that apply)</Label>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {secondaryGoalOptions.map((goal) => (
             <div key={goal} className="flex items-center space-x-2">
@@ -78,7 +78,7 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
                 checked={data.secondaryGoals.includes(goal)}
                 onCheckedChange={(checked) => handleSecondaryGoalChange(goal, checked as boolean)}
               />
-              <Label htmlFor={goal} className="text-sm font-normal cursor-pointer">
+              <Label htmlFor={goal} className="text-sm font-normal cursor-pointer text-rich-black">
                 {goal}
               </Label>
             </div>
@@ -87,7 +87,7 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
       </div>
 
       <div>
-        <Label htmlFor="timeline" className="text-base font-semibold">
+        <Label htmlFor="timeline" className="text-base font-semibold text-rich-black">
           What's your target timeline?
         </Label>
         <Select value={data.targetTimeline} onValueChange={(value) => onChange({ targetTimeline: value })}>

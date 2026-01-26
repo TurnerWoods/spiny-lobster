@@ -31,14 +31,14 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="font-display text-xl font-bold text-foreground">Lifestyle Assessment</h2>
+        <h2 className="font-display text-xl font-bold text-rich-black">Lifestyle Assessment</h2>
         <p className="mt-1 text-muted-foreground">
           Help us understand your daily habits to optimize your treatment plan
         </p>
       </div>
 
       <div>
-        <Label className="text-base font-semibold">How often do you exercise?</Label>
+        <Label className="text-base font-semibold text-rich-black">How often do you exercise?</Label>
         <RadioGroup
           value={data.exerciseFrequency}
           onValueChange={(value) => onChange({ exerciseFrequency: value })}
@@ -49,9 +49,9 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
               <RadioGroupItem value={option.value} id={`exercise-${option.value}`} className="peer sr-only" />
               <Label
                 htmlFor={`exercise-${option.value}`}
-                className="flex cursor-pointer flex-col rounded-lg border-2 border-muted bg-card p-3 transition-all hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5"
+                className="flex cursor-pointer flex-col rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-3 backdrop-blur-sm transition-all hover:border-warm-stone/40 hover:bg-pure-white/80 peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10"
               >
-                <span className="font-medium text-foreground">{option.label}</span>
+                <span className="font-medium text-rich-black">{option.label}</span>
                 <span className="text-sm text-muted-foreground">{option.description}</span>
               </Label>
             </div>
@@ -60,7 +60,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
       </div>
 
       <div>
-        <Label className="text-base font-semibold">What's your typical stress level?</Label>
+        <Label className="text-base font-semibold text-rich-black">What's your typical stress level?</Label>
         <RadioGroup
           value={data.stressLevel}
           onValueChange={(value) => onChange({ stressLevel: value })}
@@ -71,9 +71,9 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
               <RadioGroupItem value={option.value} id={`stress-${option.value}`} className="peer sr-only" />
               <Label
                 htmlFor={`stress-${option.value}`}
-                className="flex cursor-pointer flex-col rounded-lg border-2 border-muted bg-card p-3 transition-all hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5"
+                className="flex cursor-pointer flex-col rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-3 backdrop-blur-sm transition-all hover:border-warm-stone/40 hover:bg-pure-white/80 peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10"
               >
-                <span className="font-medium text-foreground">{option.label}</span>
+                <span className="font-medium text-rich-black">{option.label}</span>
                 <span className="text-sm text-muted-foreground">{option.description}</span>
               </Label>
             </div>
@@ -82,7 +82,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
       </div>
 
       <div>
-        <Label htmlFor="sleepHours" className="text-base font-semibold">
+        <Label htmlFor="sleepHours" className="text-base font-semibold text-rich-black">
           Average hours of sleep per night
         </Label>
         <Select value={data.sleepHours} onValueChange={(value) => onChange({ sleepHours: value })}>
@@ -100,7 +100,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="dietDescription" className="text-base font-semibold">
+        <Label htmlFor="dietDescription" className="text-base font-semibold text-rich-black">
           Describe your typical diet
         </Label>
         <Textarea

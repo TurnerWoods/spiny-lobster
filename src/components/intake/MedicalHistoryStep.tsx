@@ -46,7 +46,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="font-display text-xl font-bold text-foreground">Medical History</h2>
+        <h2 className="font-display text-xl font-bold text-rich-black">Medical History</h2>
         <p className="mt-1 text-muted-foreground">
           This information helps our providers create a safe, personalized treatment plan
         </p>
@@ -54,7 +54,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="currentWeight">Current Weight (lbs)</Label>
+          <Label htmlFor="currentWeight" className="text-rich-black">Current Weight (lbs)</Label>
           <Input
             id="currentWeight"
             type="number"
@@ -64,7 +64,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="targetWeight">Target Weight (lbs)</Label>
+          <Label htmlFor="targetWeight" className="text-rich-black">Target Weight (lbs)</Label>
           <Input
             id="targetWeight"
             type="number"
@@ -76,7 +76,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       </div>
 
       <div>
-        <Label className="text-base">Height</Label>
+        <Label className="text-base text-rich-black">Height</Label>
         <div className="mt-2 flex gap-4">
           <div className="w-24">
             <Select value={data.heightFeet} onValueChange={(value) => onChange({ heightFeet: value })}>
@@ -110,7 +110,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       </div>
 
       <div>
-        <Label className="text-base font-semibold">Do you have any of the following conditions?</Label>
+        <Label className="text-base font-semibold text-rich-black">Do you have any of the following conditions?</Label>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {medicalConditionOptions.map((condition) => (
             <div key={condition} className="flex items-center space-x-2">
@@ -119,7 +119,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
                 checked={data.medicalConditions.includes(condition)}
                 onCheckedChange={(checked) => handleConditionChange(condition, checked as boolean)}
               />
-              <Label htmlFor={condition} className="text-sm font-normal cursor-pointer">
+              <Label htmlFor={condition} className="text-sm font-normal cursor-pointer text-rich-black">
                 {condition}
               </Label>
             </div>
@@ -128,7 +128,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="currentMedications">Current Medications</Label>
+        <Label htmlFor="currentMedications" className="text-rich-black">Current Medications</Label>
         <Textarea
           id="currentMedications"
           placeholder="List any medications you're currently taking, including dosages..."
@@ -139,7 +139,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="allergies">Allergies</Label>
+        <Label htmlFor="allergies" className="text-rich-black">Allergies</Label>
         <Textarea
           id="allergies"
           placeholder="List any known allergies to medications or substances..."
@@ -150,7 +150,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="previousTreatments">Previous Weight Loss or Hormone Treatments</Label>
+        <Label htmlFor="previousTreatments" className="text-rich-black">Previous Weight Loss or Hormone Treatments</Label>
         <Textarea
           id="previousTreatments"
           placeholder="Describe any previous treatments you've tried and their outcomes..."
