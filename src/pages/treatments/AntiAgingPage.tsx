@@ -61,6 +61,14 @@ const treatment: TreatmentData = {
     { period: "Month 2-3", description: "Sustained energy improvements, better recovery, and enhanced physical performance." },
     { period: "Month 3-6", description: "Long-term cellular benefits. Optimal results with consistent treatment." }
   ],
+  results: [
+    { id: "aa-1", metric: "Energy Level", before: "3/10", after: "8/10", timeframe: "2 weeks", improvement: "+167%" },
+    { id: "aa-2", metric: "Mental Clarity", before: "4/10", after: "9/10", timeframe: "3 weeks", improvement: "+125%" },
+    { id: "aa-3", metric: "Sleep Score", before: "52", after: "89", timeframe: "4 weeks", improvement: "+71% (Oura Ring)" },
+    { id: "aa-4", metric: "NAD+ Levels", before: "Low", after: "Optimal", timeframe: "6 weeks", improvement: "Restored" },
+    { id: "aa-5", metric: "Recovery Time", before: "5 days", after: "2 days", timeframe: "6 weeks", improvement: "60% faster" },
+    { id: "aa-6", metric: "Biological Age", before: "54 yrs", after: "46 yrs", timeframe: "6 months", improvement: "-8 years" }
+  ],
   safetyNote: "NAD+ injections may cause flushing, nausea, or discomfort at injection site initially. These effects typically diminish with continued use. See full safety information."
 };
 

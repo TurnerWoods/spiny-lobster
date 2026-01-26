@@ -61,6 +61,14 @@ const treatment: TreatmentData = {
     { period: "Month 2-3", description: "Improvements in body composition, strength, and physical performance." },
     { period: "Month 3-6", description: "Optimal results as hormone levels fully stabilize. Maximum benefits achieved." }
   ],
+  results: [
+    { id: "trt-1", metric: "Total Testosterone", before: "285 ng/dL", after: "850 ng/dL", timeframe: "8 weeks", improvement: "+198%" },
+    { id: "trt-2", metric: "Free Testosterone", before: "5.2 pg/mL", after: "18.5 pg/mL", timeframe: "8 weeks", improvement: "+256%" },
+    { id: "trt-3", metric: "Energy Level", before: "3/10", after: "9/10", timeframe: "4 weeks", improvement: "+200%" },
+    { id: "trt-4", metric: "Body Fat %", before: "28%", after: "19%", timeframe: "6 months", improvement: "-9% body fat" },
+    { id: "trt-5", metric: "Lean Muscle", before: "145 lbs", after: "162 lbs", timeframe: "6 months", improvement: "+17 lbs muscle" },
+    { id: "trt-6", metric: "Libido Score", before: "2/10", after: "8/10", timeframe: "6 weeks", improvement: "+300%" }
+  ],
   safetyNote: "TRT requires regular blood work to monitor hormone levels, hematocrit, and PSA. May affect fertility—discuss with your physician if planning to have children. See full safety information."
 };
 
