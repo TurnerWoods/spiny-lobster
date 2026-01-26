@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const FinalCTA = () => {
   return (
@@ -32,25 +33,27 @@ const FinalCTA = () => {
 
           {/* Subtitle */}
           <p className="mx-auto mb-8 max-w-xl text-lg text-white/80">
-            Start your free consultation today. No appointment needed, no commitment required.
+            Start your free assessment today. Takes 5 minutes. No commitment. Completely confidential.
             Your card is only charged if you're approved.
           </p>
 
           {/* CTAs */}
           <div className="mb-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button
-              size="lg"
-              className="bg-white text-primary hover:bg-white/90"
-            >
-              Start Free Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link to="/intake">
+              <Button
+                size="lg"
+                className="bg-white text-primary hover:bg-white/90"
+              >
+                Start Your Free Assessment
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
             <Button
               size="lg"
               variant="outline"
               className="border-white/30 text-white hover:bg-white/10"
             >
-              Book Telehealth Visit - $99
+              Book Video Consultation - $99
             </Button>
           </div>
 
@@ -61,7 +64,7 @@ const FinalCTA = () => {
                 <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
               ))}
             </div>
-            <span className="text-sm text-white/80">4.9/5 from 2,847 patients</span>
+            <span className="text-sm text-white/80">4.9/5 from verified patient reviews</span>
           </div>
         </motion.div>
       </div>

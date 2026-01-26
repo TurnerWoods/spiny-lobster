@@ -6,27 +6,25 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const treatments = [
-    { name: "Weight Loss", href: "#" },
-    { name: "Peptide Therapy", href: "#" },
-    { name: "Hormone Therapy", href: "#" },
-    { name: "Muscle & Recovery", href: "#" },
-    { name: "Mental Wellness", href: "#" },
-    { name: "Hair Growth", href: "#" },
+    { name: "Testosterone Therapy", href: "/treatments/testosterone" },
+    { name: "Sermorelin", href: "/treatments/sermorelin" },
+    { name: "Tesamorelin", href: "/treatments/tesamorelin" },
+    { name: "NAD+", href: "/treatments/nad" },
   ];
 
   const company = [
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Reviews", href: "#reviews" },
-    { name: "FAQ", href: "#faq" },
-    { name: "Contact", href: "#" },
+    { name: "How It Works", href: "/how-it-works" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "About Us", href: "/about" },
+    { name: "FAQ", href: "/#faq" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const legal = [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Use", href: "#" },
-    { name: "HIPAA Notice", href: "#" },
-    { name: "Consent Forms", href: "#" },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Terms of Use", href: "/terms" },
+    { name: "HIPAA Notice", href: "/hipaa" },
+    { name: "Safety Information", href: "/safety" },
   ];
 
   return (
@@ -36,27 +34,22 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="mb-4 flex items-center gap-2">
-              <img src={logoIcon} alt="Pure Nova Health" className="h-10 w-auto" />
+              <img src={logoIcon} alt="Elevare Health" className="h-10 w-auto" />
               <span className="font-display text-xl font-bold text-foreground">
-                Pure<span className="text-primary">Nova</span>Health
+                Elevare<span className="text-primary">Health</span>
               </span>
             </Link>
             <p className="mb-6 max-w-sm text-muted-foreground">
-              Modern telehealth care delivering clinically proven treatments directly to your door. 
-              Licensed providers, transparent pricing, real results.
+              Premium testosterone therapy and men's health optimization, delivered discreetly to successful Texas professionals.
             </p>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <a href="tel:+18001234567" className="flex items-center gap-2 transition-colors hover:text-primary">
-                <Phone className="h-4 w-4" />
-                (800) 123-4567
-              </a>
-              <a href="mailto:support@purenovahealth.com" className="flex items-center gap-2 transition-colors hover:text-primary">
+              <a href="mailto:info@elevarehealth.com" className="flex items-center gap-2 transition-colors hover:text-primary">
                 <Mail className="h-4 w-4" />
-                support@purenovahealth.com
+                info@elevarehealth.com
               </a>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 flex-shrink-0" />
-                Serving patients in all 50 states
+                Serving Austin • Houston • Dallas
               </div>
             </div>
           </div>
@@ -67,9 +60,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {treatments.map((item) => (
                 <li key={item.name}>
-                  <a href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                  <Link to={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -81,9 +74,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {company.map((item) => (
                 <li key={item.name}>
-                  <a href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                  <Link to={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -95,9 +88,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {legal.map((item) => (
                 <li key={item.name}>
-                  <a href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                  <Link to={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -107,7 +100,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
           <p className="text-center text-sm text-muted-foreground">
-            © {currentYear} PureNovaHealth. All rights reserved.
+            © {currentYear} Elevare Health. All rights reserved.
           </p>
           
           {/* Social Links */}
@@ -129,9 +122,13 @@ const Footer = () => {
 
         {/* Disclaimer */}
         <div className="mt-8 rounded-lg bg-muted/50 p-4 text-center text-xs text-muted-foreground">
+          <p className="mb-2">
+            Elevare Health MSO LLC is a technology and administrative services company. It does not practice medicine or dispense medications.
+            All medical decisions, diagnoses, and prescriptions are made exclusively by licensed physicians through Elevare Health Medical PLLC.
+          </p>
           <p>
-            Compounded medications are prepared for specific patient needs and are not reviewed or approved by the FDA. 
-            Prescription required. Results may vary. You must be at least 18 years old to use our services.
+            Compounded medications are prepared by licensed U.S. pharmacies but are not FDA-approved.
+            Services are currently available only to Texas residents. This is not medical advice.
           </p>
         </div>
       </div>

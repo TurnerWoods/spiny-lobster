@@ -1,28 +1,43 @@
 import { motion } from "framer-motion";
-import { ClipboardList, UserCheck, Truck, ArrowRight } from "lucide-react";
+import { ClipboardList, UserCheck, Video, Truck, MessageSquare, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const steps = [
   {
     icon: ClipboardList,
     number: "01",
-    title: "Complete Online Intake",
-    description: "Answer a few questions about your health goals and medical history. Takes just 5 minutes, all online—no waiting rooms.",
+    title: "Start Your Assessment",
+    description: "Click \"Get Started\" and complete our secure health assessment. You'll answer questions about your symptoms, health history, and goals. The entire process takes about 5 minutes and can be done from your phone, tablet, or computer.",
     highlight: "5-minute form",
   },
   {
     icon: UserCheck,
     number: "02",
-    title: "Provider Review",
-    description: "A board-certified clinician reviews your intake and creates a personalized treatment plan within 24-48 hours.",
-    highlight: "24-48hr response",
+    title: "Physician Review",
+    description: "A Texas-licensed, board-certified physician reviews your complete health profile. If you're a good candidate for treatment, they'll create a personalized protocol based on your specific needs. Most patients receive their treatment plan within 24 hours.",
+    highlight: "24hr response",
+  },
+  {
+    icon: Video,
+    number: "03",
+    title: "Optional Consultation ($99)",
+    description: "Prefer to speak directly with your physician? Book a 30-minute video consultation. This option is ideal for patients with complex health histories or those who simply prefer face-to-face discussion.",
+    highlight: "Optional",
   },
   {
     icon: Truck,
-    number: "03",
-    title: "Medication Delivered",
-    description: "Your prescription is filled by a licensed US pharmacy and shipped free to your door in discreet packaging.",
-    highlight: "Free shipping",
+    number: "04",
+    title: "Treatment Delivered",
+    description: "Once approved, your prescription is filled by our FDA-regulated pharmacy partner and shipped directly to your home or office in discreet, unmarked packaging. Most shipments arrive within 3-5 business days.",
+    highlight: "3-5 day shipping",
+  },
+  {
+    icon: MessageSquare,
+    number: "05",
+    title: "Ongoing Support",
+    description: "Your care doesn't end when your medication arrives. You have unlimited secure messaging access to your care team for questions, adjustments, or concerns. We monitor your progress and adjust your protocol as needed.",
+    highlight: "Unlimited messaging",
   },
 ];
 
@@ -38,7 +53,7 @@ const HowItWorks = () => {
             viewport={{ once: true }}
             className="mb-4 inline-block rounded-full bg-primary-light px-4 py-1 text-sm font-medium text-primary"
           >
-            Simple Process
+            Premium Care. Zero Friction.
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -55,7 +70,7 @@ const HowItWorks = () => {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            Get started in minutes. Your card is only charged if you're approved.
+            Three steps to feeling like yourself again. No waiting rooms. No awkward conversations. Just results.
           </motion.p>
         </div>
 
@@ -71,7 +86,7 @@ const HowItWorks = () => {
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
+                transition={{ delay: index * 0.15 }}
                 className={`flex flex-col items-center gap-8 lg:flex-row ${
                   index % 2 === 1 ? "lg:flex-row-reverse" : ""
                 }`}
@@ -114,15 +129,17 @@ const HowItWorks = () => {
           className="mt-16 text-center"
         >
           <p className="mb-4 text-muted-foreground">
-            Prefer a live visit? Book a $99 telehealth consult anytime.
+            Your card is only charged if you're approved for treatment.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button size="lg" className="bg-primary hover:bg-primary-dark">
-              Start Free Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link to="/intake">
+              <Button size="lg" className="bg-primary hover:bg-primary-dark">
+                Start Your Free Assessment
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
             <Button size="lg" variant="outline">
-              Book Telehealth Visit - $99
+              Book Video Consultation - $99
             </Button>
           </div>
         </motion.div>

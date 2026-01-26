@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -11,56 +11,56 @@ const reviews = [
   {
     id: "1",
     rating: 5,
-    quote: "The whole process was so easy. From intake to receiving my medication, everything was seamless. The provider actually took time to understand my concerns.",
-    name: "Lisa M.",
+    quote: "I was skeptical about telehealth, but Elevare changed my mind. The process was seamless, the physician actually took time to understand my situation, and I felt the difference within two weeks. This is how healthcare should work.",
+    name: "James R.",
     city: "Austin, TX",
-    treatment: "Weight Loss",
-    image: testimonial2,
+    treatment: "Tech Executive",
+    image: testimonial1,
   },
   {
     id: "2",
     rating: 5,
-    quote: "Lost 32 lbs in 4 months. Life-changing results. I've tried everything before and nothing worked like this program.",
-    name: "Mark T.",
-    city: "Dallas, TX",
-    treatment: "GLP-1",
+    quote: "Between court appearances and client meetings, I don't have time to sit in waiting rooms. Elevare gave me back my energy without disrupting my schedule. The monthly delivery is like clockwork.",
+    name: "Michael T.",
+    city: "Houston, TX",
+    treatment: "Attorney",
     image: testimonial1,
   },
   {
     id: "3",
     rating: 5,
-    quote: "My energy is back to what it was 10 years ago. I feel like myself again. The testosterone therapy has been a game changer.",
-    name: "James R.",
-    city: "Houston, TX",
-    treatment: "TRT",
+    quote: "I tried the big national telehealth companies but felt like a number. With Elevare, I actually talk to Texas doctors who get it. The white-glove approach is worth every penny.",
+    name: "David K.",
+    city: "Dallas, TX",
+    treatment: "Business Owner",
     image: testimonial1,
   },
   {
     id: "4",
     rating: 5,
-    quote: "Finally a clinic that doesn't nickel and dime you. Transparent pricing and amazing support. Highly recommend.",
-    name: "Amanda S.",
-    city: "San Antonio, TX",
-    treatment: "Hormone Therapy",
-    image: testimonial2,
+    quote: "The convenience of doing everything online while still getting quality care is incredible. No more driving to appointments or sitting in waiting rooms. This is the future of healthcare.",
+    name: "Robert K.",
+    city: "Fort Worth, TX",
+    treatment: "Finance Executive",
+    image: testimonial1,
   },
   {
     id: "5",
     rating: 5,
-    quote: "The convenience of doing everything online while still getting quality care is incredible. No more driving to appointments.",
-    name: "Robert K.",
-    city: "Fort Worth, TX",
-    treatment: "Peptides",
+    quote: "Finally a clinic that doesn't nickel and dime you. Transparent pricing and amazing support. The physician took his time to explain everything thoroughly.",
+    name: "Chris M.",
+    city: "San Antonio, TX",
+    treatment: "Entrepreneur",
     image: testimonial1,
   },
   {
     id: "6",
     rating: 5,
-    quote: "I was skeptical at first but the results speak for themselves. Down 28 lbs and feeling better than ever.",
-    name: "Michelle P.",
+    quote: "My energy is back to what it was 10 years ago. I feel like myself again. The testosterone therapy has been a game changer for my performance at work and at home.",
+    name: "Steven P.",
     city: "Plano, TX",
-    treatment: "Weight Loss",
-    image: testimonial2,
+    treatment: "Sales Director",
+    image: testimonial1,
   },
 ];
 
@@ -143,7 +143,7 @@ const TestimonialsCarousel = () => {
             viewport={{ once: true }}
             className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl"
           >
-            What Our Patients Say
+            Why Texas Leaders Choose Elevare
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -152,7 +152,7 @@ const TestimonialsCarousel = () => {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            Trusted by 10,000+ patients across Texas
+            Trusted by professionals across Austin, Houston, and Dallas
           </motion.p>
         </div>
 
@@ -227,7 +227,7 @@ const TestimonialsCarousel = () => {
             ))}
           </div>
           <p className="font-semibold text-foreground">4.9/5.0</p>
-          <p className="text-sm text-muted-foreground">Based on 2,847 reviews</p>
+          <p className="text-sm text-muted-foreground">Based on verified patient reviews</p>
         </motion.div>
       </div>
     </section>

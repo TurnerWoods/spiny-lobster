@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Clock, Truck, Play, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, Shield, Clock, Truck, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef } from "react";
-import AnimatedHeroText from "./AnimatedHeroText";
+import { Link } from "react-router-dom";
 import StatsCounter from "./StatsCounter";
 import heroVideo from "@/assets/hero-video.mp4";
 
@@ -54,7 +54,7 @@ const Hero = () => {
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm"
           >
             <Shield className="h-4 w-4" />
-            <span>HIPAA Compliant • Licensed US Providers</span>
+            <span>HIPAA Compliant • Texas-Licensed Physicians</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -64,10 +64,9 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mb-6 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            Stop treating{" "}
-            <AnimatedHeroText />
+            Reclaim Your Edge.
             <br className="hidden sm:block" />
-            <span className="mt-2 block sm:inline"> Start living again.</span>
+            <span className="mt-2 block text-primary sm:inline"> Elevate Your Life.</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -77,8 +76,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mx-auto mb-8 max-w-2xl text-lg text-white/80 md:text-xl"
           >
-            Clinically proven GLP-1, peptides, and hormone therapy prescribed by licensed providers. 
-            No waiting rooms, no hidden fees—just results.
+            Premium testosterone therapy and men's health optimization, delivered discreetly to successful Texas professionals. Licensed physicians. Transparent pricing. Results you can feel.
           </motion.p>
 
           {/* CTAs */}
@@ -88,10 +86,12 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
-            <Button size="lg" className="bg-primary px-8 text-lg hover:bg-primary-dark">
-              Start Free Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link to="/intake">
+              <Button size="lg" className="bg-primary px-8 text-lg hover:bg-primary-dark">
+                Start Your Free Assessment
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
             <Button 
               size="lg" 
               variant="outline" 
@@ -115,11 +115,11 @@ const Hero = () => {
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-primary" />
-              <span>Same-Day Consults</span>
+              <span>24hr Physician Review</span>
             </div>
             <div className="flex items-center gap-2">
               <Truck className="h-5 w-5 text-primary" />
-              <span>Free Shipping</span>
+              <span>Discreet Delivery</span>
             </div>
           </motion.div>
         </div>
