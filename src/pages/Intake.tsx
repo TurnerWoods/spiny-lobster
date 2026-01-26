@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, Sparkles } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
 import IntakeFormProgress from "@/components/intake/IntakeFormProgress";
 import HealthGoalsStep from "@/components/intake/HealthGoalsStep";
@@ -23,10 +23,12 @@ const steps = [
 const Intake = () => {
   const { user, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [hasPrefilledData, setHasPrefilledData] = useState(false);
 
   // Form data
   const [healthGoals, setHealthGoals] = useState({
@@ -52,6 +54,78 @@ const Intake = () => {
     sleepHours: "",
     stressLevel: "",
   });
+
+  // Pre-fill from symptom checker data
+  useEffect(() => {
+    const symptomData = localStorage.getItem("symptom_checker_data");
+    if (symptomData && !hasPrefilledData) {
+      try {
+        const parsed = JSON.parse(symptomData);
+        const { answers, resultLevel } = parsed;
+        
+        // Map symptom checker answers to intake form
+        const secondaryGoals: string[] = [];
+        
+        // Energy -> "Increase energy levels"
+        if (answers.energy >= 2) secondaryGoals.push("Increase energy levels");
+        
+        // Sleep -> "Improve sleep quality"  
+        if (answers.sleep >= 2) secondaryGoals.push("Improve sleep quality");
+        
+        // Muscle -> "Build muscle mass"
+        if (answers.muscle >= 2) secondaryGoals.push("Build muscle mass");
+        
+        // Mood -> "Improve mood"
+        if (answers.mood >= 2) secondaryGoals.push("Improve mood");
+        
+        // Focus -> "Enhance mental clarity"
+        if (answers.focus >= 2) secondaryGoals.push("Enhance mental clarity");
+        
+        // Libido -> "Boost libido"
+        if (answers.libido >= 2) secondaryGoals.push("Boost libido");
+        
+        // Set primary goal based on result level
+        const primaryGoal = resultLevel === "high" || resultLevel === "moderate" 
+          ? "hormone-therapy" 
+          : "";
+
+        // Map sleep hours from symptom checker
+        let sleepHours = "";
+        if (answers.sleep === 0) sleepHours = "7-8";
+        else if (answers.sleep === 1) sleepHours = "6-7";
+        else if (answers.sleep === 2) sleepHours = "5-6";
+        else if (answers.sleep === 3) sleepHours = "less-than-5";
+
+        // Map exercise frequency from recovery question
+        let exerciseFrequency = "";
+        if (answers.recovery !== undefined) {
+          if (answers.recovery === 0) exerciseFrequency = "5-plus";
+          else if (answers.recovery === 1) exerciseFrequency = "3-4";
+          else if (answers.recovery === 2) exerciseFrequency = "1-2";
+          else exerciseFrequency = "rarely";
+        }
+
+        setHealthGoals(prev => ({
+          ...prev,
+          primaryGoal: primaryGoal || prev.primaryGoal,
+          secondaryGoals: secondaryGoals.length > 0 ? secondaryGoals : prev.secondaryGoals,
+        }));
+
+        setLifestyle(prev => ({
+          ...prev,
+          sleepHours: sleepHours || prev.sleepHours,
+          exerciseFrequency: exerciseFrequency || prev.exerciseFrequency,
+        }));
+
+        setHasPrefilledData(true);
+        toast.success("We've pre-filled some answers from your symptom quiz!", {
+          icon: <Sparkles className="h-4 w-4" />,
+        });
+      } catch (e) {
+        console.error("Error parsing symptom checker data:", e);
+      }
+    }
+  }, [hasPrefilledData]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -137,6 +211,20 @@ const Intake = () => {
         status: "pending",
       });
 
+      // Link symptom checker result to user if available
+      const symptomResultId = localStorage.getItem("symptom_checker_result_id");
+      if (symptomResultId) {
+        await supabase
+          .from("symptom_checker_results")
+          .update({ user_id: user.id })
+          .eq("id", symptomResultId);
+        
+        // Clean up localStorage
+        localStorage.removeItem("symptom_checker_result_id");
+        localStorage.removeItem("symptom_checker_data");
+        localStorage.removeItem("symptom_checker_session");
+      }
+
       setIsComplete(true);
       toast.success("Your intake form has been submitted!");
     } catch (error) {
@@ -217,6 +305,18 @@ const Intake = () => {
       </header>
 
       <div className="container max-w-3xl px-4 py-8">
+        {/* Pre-filled indicator */}
+        {hasPrefilledData && currentStep === 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-3 text-sm text-primary"
+          >
+            <Sparkles className="h-4 w-4" />
+            <span>Some fields have been pre-filled based on your symptom quiz results</span>
+          </motion.div>
+        )}
+
         {/* Progress */}
         <IntakeFormProgress steps={steps} currentStep={currentStep} />
 
