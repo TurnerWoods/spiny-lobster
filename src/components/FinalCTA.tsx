@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 
 const FinalCTA = () => {
   return (
-    <section className="relative overflow-hidden py-20">
+    <section className="relative overflow-hidden py-12 sm:py-16 md:py-20">
       {/* Background */}
       <div className="absolute inset-0 gradient-bg opacity-95" />
       <div className="absolute inset-0">
-        <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-white/10" />
-        <div className="absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-white/5" />
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 sm:-right-20 sm:-top-20 sm:h-60 sm:w-60" />
+        <div className="absolute -bottom-10 -left-10 h-60 w-60 rounded-full bg-white/5 sm:-bottom-20 sm:-left-20 sm:h-80 sm:w-80" />
       </div>
 
       <div className="container relative z-10 px-4 md:px-6">
@@ -21,50 +21,49 @@ const FinalCTA = () => {
           className="mx-auto max-w-3xl text-center"
         >
           {/* Trust Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white/90">
-            <Shield className="h-4 w-4" />
-            <span>HIPAA Compliant • No Commitment Required</span>
+          <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90 sm:mb-6 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
+            <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span>HIPAA Compliant • No Commitment</span>
           </div>
 
           {/* Headline */}
-          <h2 className="mb-6 font-display text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+          <h2 className="mb-4 font-display text-2xl font-bold text-white sm:mb-6 sm:text-3xl md:text-4xl lg:text-5xl">
             Ready to Feel Like Yourself Again?
           </h2>
 
           {/* Subtitle */}
-          <p className="mx-auto mb-8 max-w-xl text-lg text-white/80">
-            Start your free assessment today. Takes 5 minutes. No commitment. Completely confidential.
-            Your card is only charged if you're approved.
+          <p className="mx-auto mb-6 max-w-xl px-2 text-base text-white/80 sm:mb-8 sm:px-0 sm:text-lg">
+            Start your free assessment today. Takes 5 minutes. Completely confidential.
           </p>
 
           {/* CTAs */}
-          <div className="mb-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link to="/intake">
+          <div className="mb-6 flex flex-col items-center justify-center gap-3 sm:mb-8 sm:flex-row sm:gap-4">
+            <Link to="/intake" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="bg-white text-primary hover:bg-white/90"
+                className="w-full bg-white text-primary hover:bg-white/90 sm:w-auto"
               >
-                Start Your Free Assessment
-                <ArrowRight className="ml-2 h-5 w-5" />
+                Start Free Assessment
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </Link>
             <Button
               size="lg"
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10"
+              className="w-full border-white/30 text-white hover:bg-white/10 sm:w-auto"
             >
-              Book Video Consultation - $99
+              Video Consultation - $99
             </Button>
           </div>
 
           {/* Rating */}
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400 sm:h-5 sm:w-5" />
               ))}
             </div>
-            <span className="text-sm text-white/80">4.9/5 from verified patient reviews</span>
+            <span className="text-xs text-white/80 sm:text-sm">4.9/5 from verified patients</span>
           </div>
         </motion.div>
       </div>
