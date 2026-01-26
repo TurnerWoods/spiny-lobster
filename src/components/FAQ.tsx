@@ -4,47 +4,78 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    question: "How does the consultation process work?",
-    answer: "Complete our quick online intake form (5 minutes). A licensed provider reviews your information within 24-48 hours. If approved, your medication is shipped directly to your door. No in-person visits required."
+    category: "Getting Started",
+    items: [
+      {
+        question: "How does the intake process work?",
+        answer: "After clicking \"Get Started,\" you'll create a secure account and complete a brief health assessment. The entire process takes about 5 minutes and can be done from any device."
+      },
+      {
+        question: "Do I have to talk to a doctor?",
+        answer: "Not necessarily. Most patients complete care through our secure online pathway. A licensed physician reviews every case, but a live consultation is optional ($99) for those who prefer face-to-face discussion."
+      },
+      {
+        question: "How long until I know if I'm approved?",
+        answer: "Most patients receive a decision within 24 hours. If approved, your prescription is sent to the pharmacy immediately."
+      },
+    ]
   },
   {
-    question: "Is my information kept private?",
-    answer: "Absolutely. We're fully HIPAA compliant. Your medical information is encrypted and only accessible to your healthcare providers. We never share or sell your data."
+    category: "Pricing & Payment",
+    items: [
+      {
+        question: "Will I be charged if I'm not approved?",
+        answer: "No. Your payment method is stored securely but only charged if your physician approves treatment. If you're not a candidate, you pay nothing."
+      },
+      {
+        question: "Do I need insurance?",
+        answer: "No. Elevare operates on a direct-pay model with transparent pricing. This keeps your health information private and off insurance records."
+      },
+      {
+        question: "Can I cancel anytime?",
+        answer: "Yes. There are no contracts or commitments. You can pause or stop services at any time without penalty."
+      },
+    ]
   },
   {
-    question: "What if I'm not approved?",
-    answer: "Your card is only charged if you're approved for treatment. If our providers determine treatment isn't right for you, you pay nothing."
+    category: "Treatment & Safety",
+    items: [
+      {
+        question: "Are compounded medications safe?",
+        answer: "When prescribed by a licensed physician and prepared by an FDA-regulated compounding pharmacy, these medications are held to strict safety standards. Our pharmacy partners are fully licensed and regularly inspected."
+      },
+      {
+        question: "Do I need lab work before starting?",
+        answer: "It depends on the treatment. Some protocols require baseline labs, which your physician will request during the review process. We can provide requisitions for local labs."
+      },
+      {
+        question: "How long until I feel results?",
+        answer: "Most patients notice improvements in energy and mood within 2-4 weeks. Optimal results typically develop over 3-6 months."
+      },
+    ]
   },
   {
-    question: "How quickly will I see results?",
-    answer: "Results vary by treatment. GLP-1 patients typically see 5-10% body weight reduction in the first 3 months. TRT patients often notice improved energy within 2-4 weeks."
-  },
-  {
-    question: "Can I cancel anytime?",
-    answer: "Yes, there are no long-term contracts. You can pause or cancel your subscription at any time through your patient portal."
-  },
-  {
-    question: "Do you accept insurance?",
-    answer: "We're a direct-pay practice with transparent pricing. While we don't bill insurance directly, we can provide documentation for HSA/FSA reimbursement."
-  },
-  {
-    question: "What states do you serve?",
-    answer: "We serve patients in all 50 states for most treatments. Some GLP-1 medications have restrictions in AR, LA, MS, and NM."
-  },
-  {
-    question: "How do I get my medication?",
-    answer: "After approval, your prescription is sent to our licensed US pharmacy and shipped directly to your home in discreet packaging. Free shipping on all orders."
+    category: "Privacy & Delivery",
+    items: [
+      {
+        question: "Is my information secure?",
+        answer: "Yes. We use enterprise-grade encryption and HIPAA-compliant systems. Your health information is never shared without your explicit consent."
+      },
+      {
+        question: "How is medication shipped?",
+        answer: "All shipments arrive in discreet, unmarked packaging with no indication of contents. Temperature-sensitive medications are shipped with appropriate cold packs."
+      },
+      {
+        question: "How long does shipping take?",
+        answer: "Most medications arrive within 3-5 business days after your prescription is processed."
+      },
+    ]
   },
 ];
 
-const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolean; onClick: () => void }) => {
+const FAQItem = ({ faq, isOpen, onClick }: { faq: { question: string; answer: string }; isOpen: boolean; onClick: () => void }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="border-b border-border last:border-0"
-    >
+    <div className="border-b border-border last:border-0">
       <button
         onClick={onClick}
         className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-primary"
@@ -69,12 +100,12 @@ const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolea
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 };
 
 const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<string | null>("0-0");
 
   return (
     <section id="faq" className="bg-muted/30 py-20">
@@ -105,19 +136,37 @@ const FAQ = () => {
               transition={{ delay: 0.1 }}
               className="text-lg text-muted-foreground"
             >
-              Everything you need to know about our treatments
+              Everything you need to know about getting started
             </motion.p>
           </div>
 
-          {/* FAQ List */}
-          <div className="rounded-2xl border bg-card p-2 shadow-sm md:p-6">
-            {faqs.map((faq, index) => (
-              <FAQItem
-                key={index}
-                faq={faq}
-                isOpen={openIndex === index}
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              />
+          {/* FAQ Categories */}
+          <div className="space-y-8">
+            {faqs.map((category, categoryIndex) => (
+              <motion.div
+                key={category.category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: categoryIndex * 0.1 }}
+              >
+                <h3 className="mb-4 font-display text-xl font-bold text-primary">
+                  {category.category}
+                </h3>
+                <div className="rounded-2xl border bg-card p-2 shadow-sm md:p-6">
+                  {category.items.map((faq, itemIndex) => {
+                    const key = `${categoryIndex}-${itemIndex}`;
+                    return (
+                      <FAQItem
+                        key={key}
+                        faq={faq}
+                        isOpen={openIndex === key}
+                        onClick={() => setOpenIndex(openIndex === key ? null : key)}
+                      />
+                    );
+                  })}
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>

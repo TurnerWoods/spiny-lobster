@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, User } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import logoIcon from "@/assets/logo-icon.png";
 
@@ -10,11 +10,11 @@ const Header = () => {
   const { user, isLoading } = useAuth();
 
   const navLinks = [
-    { name: "Treatments", href: "#treatments" },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Reviews", href: "#reviews" },
-    { name: "FAQ", href: "#faq" },
+    { name: "Treatments", href: "/#treatments" },
+    { name: "How It Works", href: "/how-it-works" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "About", href: "/about" },
+    { name: "FAQ", href: "/#faq" },
   ];
 
   return (
@@ -22,35 +22,27 @@ const Header = () => {
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <img src={logoIcon} alt="Pure Nova Health" className="h-10 w-auto" />
+          <img src={logoIcon} alt="Elevare Health" className="h-10 w-auto" />
           <span className="hidden font-display text-xl font-bold text-foreground sm:inline-block">
-            Pure<span className="text-primary">Nova</span>Health
+            Elevare<span className="text-primary">Health</span>
           </span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
+              to={link.href}
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               {link.name}
-            </a>
+            </Link>
           ))}
         </nav>
 
         {/* CTA Buttons */}
         <div className="hidden items-center gap-3 md:flex">
-          <a 
-            href="tel:+18001234567" 
-            className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            <Phone className="h-4 w-4" />
-            <span className="hidden lg:inline">(800) 123-4567</span>
-          </a>
-          
           {!isLoading && (
             <>
               {user ? (
@@ -67,7 +59,7 @@ const Header = () => {
                       Sign In
                     </Button>
                   </Link>
-                  <Link to="/signup">
+                  <Link to="/intake">
                     <Button size="sm" className="bg-primary hover:bg-primary-dark">
                       Get Started
                     </Button>
@@ -93,23 +85,16 @@ const Header = () => {
         <div className="border-t bg-background md:hidden">
           <nav className="container flex flex-col gap-4 px-4 py-4">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
             <hr className="my-2" />
-            <a 
-              href="tel:+18001234567" 
-              className="flex items-center gap-2 text-base font-medium text-muted-foreground"
-            >
-              <Phone className="h-4 w-4" />
-              (800) 123-4567
-            </a>
             {!isLoading && (
               <>
                 {user ? (
@@ -126,7 +111,7 @@ const Header = () => {
                         Sign In
                       </Button>
                     </Link>
-                    <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
+                    <Link to="/intake" onClick={() => setIsMenuOpen(false)}>
                       <Button className="w-full bg-primary hover:bg-primary-dark">
                         Get Started
                       </Button>
