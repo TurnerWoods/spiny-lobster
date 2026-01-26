@@ -39,6 +39,9 @@ const AIChatWidget = () => {
     scrollToBottom();
   }, [messages]);
 
+  // Track if we should save lead (after enough conversation)
+  const shouldSaveLead = messages.length >= 6;
+
   const handleSend = async (messageText?: string) => {
     const textToSend = messageText || input.trim();
     if (!textToSend || isLoading) return;
@@ -70,7 +73,10 @@ const AIChatWidget = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-        body: JSON.stringify({ messages: [...messages, userMessage] }),
+        body: JSON.stringify({ 
+          messages: [...messages, userMessage],
+          saveLead: shouldSaveLead // Trigger lead extraction after 6+ messages
+        }),
       });
 
       if (!resp.ok) {

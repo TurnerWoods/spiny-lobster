@@ -1,9 +1,91 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// Extract lead data from conversation using tool calling
+async function extractLeadData(messages: any[], apiKey: string): Promise<any | null> {
+  try {
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash-lite",
+        messages: [
+          {
+            role: "system",
+            content: "Extract structured lead data from this conversation. Only extract if a treatment recommendation was made."
+          },
+          ...messages.slice(-10) // Last 10 messages for context
+        ],
+        tools: [
+          {
+            type: "function",
+            function: {
+              name: "save_lead",
+              description: "Save lead data when a treatment recommendation has been made",
+              parameters: {
+                type: "object",
+                properties: {
+                  primary_concern: {
+                    type: "string",
+                    description: "User's main health concern (e.g., fatigue, weight loss, hair loss)"
+                  },
+                  symptoms: {
+                    type: "array",
+                    items: { type: "string" },
+                    description: "List of symptoms mentioned"
+                  },
+                  age_range: {
+                    type: "string",
+                    description: "User's age range if mentioned (30s, 40s, 50s, 60+)"
+                  },
+                  duration: {
+                    type: "string",
+                    description: "How long they've had symptoms"
+                  },
+                  recommended_treatment: {
+                    type: "string",
+                    enum: ["Hormones/TRT", "Weight Loss", "Strength & Peptides", "Anti-Aging", "Hair", "Skin", "Mood & Cognition"]
+                  },
+                  recommended_price: {
+                    type: "string",
+                    description: "Price mentioned (e.g., $149/mo)"
+                  },
+                  conversation_summary: {
+                    type: "string",
+                    description: "Brief 1-2 sentence summary of the conversation"
+                  }
+                },
+                required: ["primary_concern", "recommended_treatment"]
+              }
+            }
+          }
+        ],
+        tool_choice: "auto"
+      }),
+    });
+
+    if (!response.ok) return null;
+    
+    const data = await response.json();
+    const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+    
+    if (toolCall?.function?.name === "save_lead") {
+      return JSON.parse(toolCall.function.arguments);
+    }
+    return null;
+  } catch (e) {
+    console.error("Lead extraction error:", e);
+    return null;
+  }
+}
 
 serve(async (req) => {
   // Handle CORS preflight
@@ -12,11 +94,33 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, saveLead } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
+    }
+
+    // If saveLead flag is true, extract and save lead data
+    if (saveLead && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+      const leadData = await extractLeadData(messages, LOVABLE_API_KEY);
+      
+      if (leadData) {
+        const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+        
+        await supabase.from("chat_leads").insert({
+          primary_concern: leadData.primary_concern,
+          symptoms: leadData.symptoms || [],
+          age_range: leadData.age_range,
+          duration: leadData.duration,
+          recommended_treatment: leadData.recommended_treatment,
+          recommended_price: leadData.recommended_price,
+          conversation_summary: leadData.conversation_summary,
+          source: "chat_widget"
+        });
+      }
     }
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
