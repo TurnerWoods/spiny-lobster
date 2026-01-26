@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BeforeAfterGallery, { BeforeAfterResult } from "@/components/BeforeAfterGallery";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Clock, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ export interface TreatmentData {
   timeline: { period: string; description: string }[];
   safetyNote?: string;
   icon?: LucideIcon;
+  results?: BeforeAfterResult[];
 }
 
 interface TreatmentPageTemplateProps {
@@ -193,6 +195,11 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
             </div>
           </div>
         </section>
+
+        {/* Before/After Results Gallery */}
+        {treatment.results && treatment.results.length > 0 && (
+          <BeforeAfterGallery results={treatment.results} />
+        )}
 
         {/* Timeline Section */}
         <section className="bg-muted/30 py-12 sm:py-20">

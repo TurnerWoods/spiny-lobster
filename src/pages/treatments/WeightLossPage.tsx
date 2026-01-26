@@ -61,6 +61,14 @@ const treatment: TreatmentData = {
     { period: "Month 2-3", description: "Significant weight loss progress. Improved body composition and metabolic markers." },
     { period: "Month 3-6", description: "Optimal results with 10-20% body weight reduction common. Lifestyle changes become sustainable habits." }
   ],
+  results: [
+    { id: "wl-1", metric: "Body Weight", before: "245 lbs", after: "198 lbs", timeframe: "6 months", improvement: "-47 lbs (19%)" },
+    { id: "wl-2", metric: "Waist Size", before: '42"', after: '34"', timeframe: "5 months", improvement: '-8 inches' },
+    { id: "wl-3", metric: "A1C Level", before: "6.8%", after: "5.4%", timeframe: "4 months", improvement: "Now normal range" },
+    { id: "wl-4", metric: "Body Fat %", before: "32%", after: "22%", timeframe: "6 months", improvement: "-10% body fat" },
+    { id: "wl-5", metric: "Appetite Score", before: "9/10", after: "3/10", timeframe: "2 weeks", improvement: "67% reduction" },
+    { id: "wl-6", metric: "Energy Level", before: "3/10", after: "8/10", timeframe: "1 month", improvement: "+167% energy" }
+  ],
   safetyNote: "GLP-1 medications may cause nausea, especially initially. We start with low doses and titrate slowly. Not recommended for those with personal or family history of medullary thyroid cancer or MEN2 syndrome. See full safety information."
 };
 

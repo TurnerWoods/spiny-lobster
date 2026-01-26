@@ -66,6 +66,14 @@ const treatment: TreatmentData = {
     { period: "Month 3-6", description: "Significant improvements in fine lines, tone, and overall skin quality." },
     { period: "Month 6+", description: "Optimal anti-aging results. Continued use maintains and enhances benefits." }
   ],
+  results: [
+    { id: "skin-1", metric: "Fine Lines", before: "Deep", after: "Minimal", timeframe: "6 months", improvement: "-70% visible" },
+    { id: "skin-2", metric: "Skin Texture", before: "3/10", after: "8/10", timeframe: "4 months", improvement: "+167%" },
+    { id: "skin-3", metric: "Dark Spots", before: "Multiple", after: "Faded", timeframe: "5 months", improvement: "-80% visible" },
+    { id: "skin-4", metric: "Collagen Density", before: "Low", after: "Normal", timeframe: "6 months", improvement: "+45%" },
+    { id: "skin-5", metric: "Acne Breakouts", before: "8/month", after: "1/month", timeframe: "3 months", improvement: "-87%" },
+    { id: "skin-6", metric: "Skin Radiance", before: "Dull", after: "Glowing", timeframe: "8 weeks", improvement: "Visible glow" }
+  ],
   safetyNote: "Tretinoin increases sun sensitivity. Daily sunscreen (SPF 30+) is essential. Start with lower concentrations and increase gradually. Avoid during pregnancy."
 };
 

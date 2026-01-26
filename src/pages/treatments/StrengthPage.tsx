@@ -61,6 +61,14 @@ const treatment: TreatmentData = {
     { period: "Month 2-3", description: "Significant improvements in strength, endurance, and body composition." },
     { period: "Month 3-6", description: "Optimal performance benefits. Sustained improvements in muscle mass and recovery." }
   ],
+  results: [
+    { id: "str-1", metric: "Bench Press", before: "185 lbs", after: "245 lbs", timeframe: "6 months", improvement: "+60 lbs (32%)" },
+    { id: "str-2", metric: "Recovery Time", before: "72 hrs", after: "24 hrs", timeframe: "4 weeks", improvement: "3x faster" },
+    { id: "str-3", metric: "Lean Mass", before: "158 lbs", after: "175 lbs", timeframe: "6 months", improvement: "+17 lbs muscle" },
+    { id: "str-4", metric: "Sleep Quality", before: "4/10", after: "9/10", timeframe: "3 weeks", improvement: "+125%" },
+    { id: "str-5", metric: "Joint Pain", before: "7/10", after: "2/10", timeframe: "8 weeks", improvement: "-71% pain" },
+    { id: "str-6", metric: "IGF-1 Levels", before: "145 ng/mL", after: "285 ng/mL", timeframe: "3 months", improvement: "+97%" }
+  ],
   safetyNote: "Peptide therapies are compounded medications and are not FDA-approved. Results vary based on individual factors, training, and nutrition. Discuss your fitness goals with your physician."
 };
 

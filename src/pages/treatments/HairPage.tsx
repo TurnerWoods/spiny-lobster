@@ -66,6 +66,14 @@ const treatment: TreatmentData = {
     { period: "Month 6-9", description: "Noticeable improvements in hair density and thickness. Visible regrowth in many patients." },
     { period: "Month 12+", description: "Maximum results achieved. Continued treatment maintains and improves results over time." }
   ],
+  results: [
+    { id: "hair-1", metric: "Hair Count", before: "85/cm²", after: "142/cm²", timeframe: "12 months", improvement: "+67% density" },
+    { id: "hair-2", metric: "Hair Thickness", before: "45 μm", after: "72 μm", timeframe: "9 months", improvement: "+60% thicker" },
+    { id: "hair-3", metric: "Shedding", before: "150+/day", after: "40/day", timeframe: "3 months", improvement: "-73% loss" },
+    { id: "hair-4", metric: "Crown Coverage", before: "40%", after: "85%", timeframe: "12 months", improvement: "+45% coverage" },
+    { id: "hair-5", metric: "Hairline", before: "NW3", after: "NW2", timeframe: "18 months", improvement: "1 grade improved" },
+    { id: "hair-6", metric: "Confidence", before: "4/10", after: "9/10", timeframe: "9 months", improvement: "+125%" }
+  ],
   safetyNote: "Finasteride may cause sexual side effects in a small percentage of men (2-4%). Most side effects resolve with continued use or discontinuation. Discuss concerns with your physician."
 };
 

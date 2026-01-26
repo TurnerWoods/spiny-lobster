@@ -66,6 +66,14 @@ const treatment: TreatmentData = {
     { period: "Month 2-3", description: "Enhanced cognitive performance, better memory, and sustained mental energy." },
     { period: "Month 3+", description: "Optimal cognitive benefits. Long-term brain health support with continued use." }
   ],
+  results: [
+    { id: "mood-1", metric: "Focus Score", before: "3/10", after: "9/10", timeframe: "3 weeks", improvement: "+200%" },
+    { id: "mood-2", metric: "Anxiety Level", before: "8/10", after: "3/10", timeframe: "4 weeks", improvement: "-63% anxiety" },
+    { id: "mood-3", metric: "Brain Fog", before: "Daily", after: "Rare", timeframe: "2 weeks", improvement: "Cleared" },
+    { id: "mood-4", metric: "Memory Recall", before: "Poor", after: "Sharp", timeframe: "6 weeks", improvement: "+85%" },
+    { id: "mood-5", metric: "Work Output", before: "4 hrs/day", after: "7 hrs/day", timeframe: "1 month", improvement: "+75% productive" },
+    { id: "mood-6", metric: "Libido (PT-141)", before: "2/10", after: "8/10", timeframe: "Same day", improvement: "+300%" }
+  ],
   safetyNote: "Cognitive peptides are not FDA-approved and are compounded medications. They are not intended to treat clinical depression or anxiety disorders. Consult your physician if you have diagnosed mental health conditions."
 };
 
