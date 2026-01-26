@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, Shield } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
 
 const Login = () => {
@@ -38,17 +38,17 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
       {/* Header */}
-      <header className="border-b bg-background">
+      <header className="border-b border-warm-stone/10 bg-pure-white/70 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between px-4">
           <Link to="/" className="flex items-center gap-2">
             <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
-            <span className="font-display text-lg font-bold">
-              Elevare<span className="text-primary">Health</span>
+            <span className="font-display text-lg font-bold text-rich-black">
+              Elevare<span className="text-warm-stone">Health</span>
             </span>
           </Link>
-          <Link to="/" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary">
+          <Link to="/" className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-warm-stone">
             <ArrowLeft className="h-4 w-4" />
             Back to Home
           </Link>
@@ -61,63 +61,77 @@ const Login = () => {
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          <div className="rounded-2xl border bg-card p-8 shadow-lg">
+          {/* Glassmorphic Card */}
+          <div className="rounded-2xl border border-pure-white/40 bg-pure-white/80 p-8 shadow-xl backdrop-blur-xl">
             <div className="mb-6 text-center">
-              <h1 className="font-display text-2xl font-bold text-foreground">Welcome Back</h1>
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-warm-stone/10">
+                <Shield className="h-7 w-7 text-warm-stone" />
+              </div>
+              <h1 className="font-display text-2xl font-bold text-rich-black">Welcome Back</h1>
               <p className="mt-2 text-muted-foreground">Sign in to your patient portal</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-rich-black">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10"
+                    className="border-warm-stone/20 bg-pure-white/60 pl-10 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
                     disabled={isLoading}
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-rich-black">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10"
+                    className="border-warm-stone/20 bg-pure-white/60 pl-10 pr-10 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
                     disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-stone/60 transition-colors hover:text-warm-stone"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
               </div>
 
-              <Button type="submit" className="w-full bg-primary hover:bg-primary-dark" disabled={isLoading}>
+              <Button 
+                type="submit" 
+                className="w-full bg-warm-stone text-pure-white shadow-lg transition-all hover:bg-warm-stone/90 hover:shadow-xl" 
+                disabled={isLoading}
+              >
                 {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
 
             <div className="mt-6 text-center text-sm">
               <span className="text-muted-foreground">Don't have an account? </span>
-              <Link to="/signup" className="font-medium text-primary hover:underline">
+              <Link to="/signup" className="font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">
                 Sign up
               </Link>
             </div>
+          </div>
+
+          {/* Trust Badge */}
+          <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <Shield className="h-4 w-4 text-warm-stone" />
+            <span>HIPAA Compliant • 256-bit Encryption</span>
           </div>
         </motion.div>
       </div>
