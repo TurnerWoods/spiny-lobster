@@ -84,11 +84,11 @@ const Header = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] p-0">
-            <SheetHeader className="border-b p-4">
+            <SheetHeader className="border-b border-warm-stone/20 bg-soft-linen/50 p-4">
               <SheetTitle className="flex items-center gap-2">
                 <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
-                <span className="font-display text-lg font-bold">
-                  Elevare<span className="text-primary">Health</span>
+                <span className="font-display text-lg font-bold text-rich-black">
+                  Elevare<span className="text-warm-stone">Health</span>
                 </span>
               </SheetTitle>
             </SheetHeader>
@@ -100,16 +100,16 @@ const Header = () => {
                     <Link
                       key={link.name}
                       to={link.href}
-                      className="flex items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
+                      className="flex items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-rich-black transition-colors hover:bg-warm-stone/10 hover:text-warm-stone"
                     >
                       {link.name}
-                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                      <ChevronRight className="h-4 w-4 text-warm-stone/60" />
                     </Link>
                   ))}
                 </nav>
 
                 {/* Divider */}
-                <div className="my-4 h-px bg-border" />
+                <div className="my-4 h-px bg-warm-stone/20" />
 
                 {/* Auth Buttons */}
                 {!isLoading && (
@@ -139,13 +139,13 @@ const Header = () => {
                 )}
 
                 {/* Additional Info */}
-                <div className="mt-6 rounded-lg bg-muted/50 p-4">
-                  <p className="text-sm font-medium text-foreground">Need help?</p>
+                <div className="mt-6 rounded-xl border border-warm-stone/20 bg-soft-linen/60 backdrop-blur-sm p-4">
+                  <p className="text-sm font-medium text-rich-black">Need help?</p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     Our team is available 24/7 to answer your questions.
                   </p>
                   <Link to="/contact" className="mt-3 block">
-                    <Button variant="outline" size="sm" className="w-full">
+                    <Button variant="outline" size="sm" className="w-full border-warm-stone/30 hover:bg-warm-stone/10">
                       Contact Support
                     </Button>
                   </Link>
