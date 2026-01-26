@@ -22,9 +22,9 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
                 className={cn(
                   "relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors",
                   currentStep > step.id
-                    ? "border-primary bg-primary text-primary-foreground"
+                    ? "border-warm-stone bg-warm-stone text-pure-white"
                     : currentStep === step.id
-                    ? "border-primary bg-background text-primary"
+                    ? "border-warm-stone bg-background text-warm-stone"
                     : "border-muted-foreground/30 bg-background text-muted-foreground"
                 )}
               >
@@ -38,7 +38,7 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
                 <div
                   className={cn(
                     "h-0.5 flex-1 transition-colors",
-                    currentStep > step.id ? "bg-primary" : "bg-muted-foreground/30"
+                    currentStep > step.id ? "bg-warm-stone" : "bg-muted-foreground/30"
                   )}
                 />
               )}

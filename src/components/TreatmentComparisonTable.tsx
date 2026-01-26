@@ -139,13 +139,13 @@ const popularSearches = [
 ];
 
 const categoryColors: Record<string, string> = {
-  "Weight Loss": "bg-orange-500/10 text-orange-600 border-orange-500/20",
-  "Hormones": "bg-blue-500/10 text-blue-600 border-blue-500/20",
-  "Anti-Aging": "bg-purple-500/10 text-purple-600 border-purple-500/20",
-  "Strength": "bg-green-500/10 text-green-600 border-green-500/20",
-  "Hair": "bg-amber-500/10 text-amber-600 border-amber-500/20",
-  "Skin": "bg-pink-500/10 text-pink-600 border-pink-500/20",
-  "Mood": "bg-teal-500/10 text-teal-600 border-teal-500/20",
+  "Weight Loss": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
+  "Hormones": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
+  "Anti-Aging": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
+  "Strength": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
+  "Hair": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
+  "Skin": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
+  "Mood": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
 };
 
 const TreatmentComparisonTable = () => {
