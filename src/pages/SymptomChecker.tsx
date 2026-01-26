@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, CheckCircle, AlertTriangle, Activity, Zap, Download, FileText } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle, AlertTriangle, Activity, Zap, Download, FileText, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -150,12 +153,57 @@ const RESULTS: Record<ResultLevel, { title: string; description: string; icon: t
 };
 
 const SymptomChecker = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showResults, setShowResults] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [resultId, setResultId] = useState<string | null>(null);
 
   const progress = ((currentStep + 1) / QUESTIONS.length) * 100;
   const currentQuestion = QUESTIONS[currentStep];
+
+  // Save results to database when quiz is completed
+  const saveResults = async (finalAnswers: Record<string, number>, score: number, level: ResultLevel) => {
+    setIsSaving(true);
+    try {
+      const sessionId = localStorage.getItem("symptom_checker_session") || crypto.randomUUID();
+      localStorage.setItem("symptom_checker_session", sessionId);
+
+      const { data, error } = await supabase
+        .from("symptom_checker_results")
+        .insert({
+          user_id: user?.id || null,
+          session_id: user ? null : sessionId,
+          total_score: score,
+          max_score: QUESTIONS.length * 3,
+          result_level: level,
+          answers: finalAnswers,
+        })
+        .select("id")
+        .single();
+
+      if (error) throw error;
+      
+      setResultId(data.id);
+      
+      // Store result ID for intake pre-fill
+      localStorage.setItem("symptom_checker_result_id", data.id);
+      localStorage.setItem("symptom_checker_data", JSON.stringify({
+        totalScore: score,
+        resultLevel: level,
+        answers: finalAnswers,
+      }));
+      
+      toast.success("Results saved successfully");
+    } catch (error) {
+      console.error("Error saving results:", error);
+      // Still allow user to see results even if save fails
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const handleAnswer = (value: number) => {
     const newAnswers = { ...answers, [currentQuestion.id]: value };
@@ -164,6 +212,10 @@ const SymptomChecker = () => {
     if (currentStep < QUESTIONS.length - 1) {
       setTimeout(() => setCurrentStep(currentStep + 1), 300);
     } else {
+      // Calculate score and save results
+      const score = Object.values(newAnswers).reduce((sum, val) => sum + val, 0);
+      const level = getResultLevel(score, QUESTIONS.length * 3);
+      saveResults(newAnswers, score, level);
       setTimeout(() => setShowResults(true), 300);
     }
   };
@@ -184,6 +236,14 @@ const SymptomChecker = () => {
     setCurrentStep(0);
     setAnswers({});
     setShowResults(false);
+    setResultId(null);
+    localStorage.removeItem("symptom_checker_result_id");
+    localStorage.removeItem("symptom_checker_data");
+  };
+
+  const handleStartIntake = () => {
+    // Navigate to intake with pre-fill flag
+    navigate("/intake", { state: { fromSymptomChecker: true } });
   };
 
   const generatePDF = () => {
@@ -428,12 +488,24 @@ const SymptomChecker = () => {
 
               {/* CTA Buttons */}
               <div className="space-y-3">
-                <Link to="/intake" className="block">
-                  <Button size="lg" className="w-full bg-primary hover:bg-primary-dark">
-                    Start Free Medical Evaluation
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
+                <Button 
+                  size="lg" 
+                  className="w-full bg-primary hover:bg-primary-dark"
+                  onClick={handleStartIntake}
+                  disabled={isSaving}
+                >
+                  {isSaving ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      Start Free Medical Evaluation
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </>
+                  )}
+                </Button>
 
                 <Button
                   variant="outline"

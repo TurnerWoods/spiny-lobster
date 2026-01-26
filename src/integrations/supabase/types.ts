@@ -206,6 +206,39 @@ export type Database = {
         }
         Relationships: []
       }
+      symptom_checker_results: {
+        Row: {
+          answers: Json
+          created_at: string
+          id: string
+          max_score: number
+          result_level: string
+          session_id: string | null
+          total_score: number
+          user_id: string | null
+        }
+        Insert: {
+          answers: Json
+          created_at?: string
+          id?: string
+          max_score?: number
+          result_level: string
+          session_id?: string | null
+          total_score: number
+          user_id?: string | null
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          id?: string
+          max_score?: number
+          result_level?: string
+          session_id?: string | null
+          total_score?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       treatments: {
         Row: {
           created_at: string
