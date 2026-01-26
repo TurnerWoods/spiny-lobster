@@ -2,8 +2,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Plus, Minus, HelpCircle, CreditCard, Pill, Shield, Truck, Users, Clock, FileText } from "lucide-react";
+import { Plus, Minus, HelpCircle, CreditCard, Pill, Shield, Truck, Users, Clock, FileText, Sparkles, ArrowRight } from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface FAQItem {
   question: string;
@@ -225,14 +228,14 @@ const faqCategories: FAQCategory[] = [
 
 const FAQItemComponent = ({ faq, isOpen, onClick }: { faq: FAQItem; isOpen: boolean; onClick: () => void }) => {
   return (
-    <div className="border-b border-border last:border-0">
+    <div className="border-b border-warm-stone/10 last:border-0">
       <button
         onClick={onClick}
-        className="flex w-full items-center justify-between gap-3 py-4 text-left transition-colors hover:text-primary"
+        className="flex w-full items-center justify-between gap-3 py-4 text-left transition-colors hover:text-warm-stone"
       >
-        <span className="font-medium text-foreground">{faq.question}</span>
+        <span className="font-medium text-rich-black">{faq.question}</span>
         <span className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border transition-all ${
-          isOpen ? "rotate-180 border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground"
+          isOpen ? "rotate-180 border-warm-stone bg-warm-stone text-pure-white" : "border-warm-stone/30 text-warm-gray"
         }`}>
           {isOpen ? <Minus className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
         </span>
@@ -241,7 +244,7 @@ const FAQItemComponent = ({ faq, isOpen, onClick }: { faq: FAQItem; isOpen: bool
         <motion.p
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="pb-4 text-sm text-muted-foreground"
+          className="pb-4 text-sm text-warm-gray"
         >
           {faq.answer}
         </motion.p>
@@ -261,25 +264,27 @@ const FAQ = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-primary/10 to-background py-16 sm:py-20">
-          <div className="container px-4 md:px-6">
+        <section className="relative overflow-hidden py-16 sm:py-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-warm-stone/5 to-transparent" />
+          <div className="container relative px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mb-4 inline-block rounded-full bg-primary-light px-4 py-1 text-sm font-medium text-primary"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mb-6 inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white/80 px-4 py-2 backdrop-blur-sm"
               >
-                FAQ
-              </motion.span>
+                <Sparkles className="h-4 w-4 text-warm-stone" />
+                <span className="text-sm font-medium text-warm-stone">FAQ</span>
+              </motion.div>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="mb-6 font-display text-3xl font-bold text-foreground sm:text-4xl md:text-5xl"
+                className="mb-6 font-display text-3xl font-bold text-rich-black sm:text-4xl md:text-5xl"
               >
                 Frequently Asked Questions
               </motion.h1>
@@ -287,7 +292,7 @@ const FAQ = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-base text-muted-foreground sm:text-lg"
+                className="text-base text-warm-gray sm:text-lg"
               >
                 Everything you need to know about getting started with Elevare Health
               </motion.p>
@@ -296,14 +301,14 @@ const FAQ = () => {
         </section>
 
         {/* Quick Links */}
-        <section className="border-b py-6">
+        <section className="border-b border-warm-stone/10 py-6">
           <div className="container px-4 md:px-6">
             <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
               {faqCategories.map((category, index) => (
                 <a
                   key={index}
                   href={`#category-${index}`}
-                  className="flex items-center gap-1.5 rounded-full border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary hover:text-primary sm:px-4 sm:py-2 sm:text-sm"
+                  className="flex items-center gap-1.5 rounded-full border border-warm-stone/20 bg-pure-white/80 px-3 py-1.5 text-xs font-medium text-warm-gray backdrop-blur-sm transition-colors hover:border-warm-stone hover:text-warm-stone sm:px-4 sm:py-2 sm:text-sm"
                 >
                   <category.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   {category.title}
@@ -327,14 +332,14 @@ const FAQ = () => {
                   className="scroll-mt-24"
                 >
                   <div className="mb-4 flex items-center gap-3 sm:mb-6">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary sm:h-12 sm:w-12">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10 text-warm-stone sm:h-12 sm:w-12">
                       <category.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
-                    <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl">
+                    <h2 className="font-display text-xl font-bold text-rich-black sm:text-2xl">
                       {category.title}
                     </h2>
                   </div>
-                  <div className="rounded-xl border bg-card p-4 shadow-sm sm:p-6">
+                  <Card variant="glass" className="p-4 sm:p-6">
                     {category.faqs.map((faq, faqIndex) => (
                       <FAQItemComponent
                         key={faqIndex}
@@ -343,7 +348,7 @@ const FAQ = () => {
                         onClick={() => toggleItem(categoryIndex, faqIndex)}
                       />
                     ))}
-                  </div>
+                  </Card>
                 </motion.div>
               ))}
             </div>
@@ -351,34 +356,35 @@ const FAQ = () => {
         </section>
 
         {/* Still Have Questions */}
-        <section className="border-t bg-muted/30 py-12 sm:py-20">
-          <div className="container px-4 md:px-6">
+        <section className="relative py-12 sm:py-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-warm-stone/5" />
+          <div className="container relative px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto max-w-2xl text-center"
             >
-              <h2 className="mb-4 font-display text-2xl font-bold text-foreground sm:text-3xl">
-                Still Have Questions?
-              </h2>
-              <p className="mb-6 text-muted-foreground">
-                Our team is here to help. Reach out and we'll get back to you within 24 hours.
-              </p>
-              <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <a
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 font-medium text-primary-foreground transition-colors hover:bg-primary-dark"
-                >
-                  Contact Us
-                </a>
-                <a
-                  href="mailto:support@elevarehealth.com"
-                  className="inline-flex items-center justify-center rounded-lg border bg-card px-6 py-3 font-medium text-foreground transition-colors hover:bg-muted"
-                >
-                  Email Support
-                </a>
-              </div>
+              <Card variant="glassDark" className="mx-auto max-w-2xl p-8 text-center md:p-12">
+                <h2 className="mb-4 font-display text-2xl font-bold text-pure-white sm:text-3xl">
+                  Still Have Questions?
+                </h2>
+                <p className="mb-6 text-warm-gray">
+                  Our team is here to help. Reach out and we'll get back to you within 24 hours.
+                </p>
+                <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                  <Link to="/contact">
+                    <Button size="lg" className="w-full bg-warm-stone text-pure-white hover:bg-warm-stone/90 sm:w-auto">
+                      Contact Us
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                  <a href="mailto:support@elevarehealth.com">
+                    <Button size="lg" variant="outline" className="w-full border-pure-white/30 text-pure-white hover:bg-pure-white/10 sm:w-auto">
+                      Email Support
+                    </Button>
+                  </a>
+                </div>
+              </Card>
             </motion.div>
           </div>
         </section>
