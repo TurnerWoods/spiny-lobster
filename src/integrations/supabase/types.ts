@@ -28,6 +28,7 @@ export type Database = {
           primary_concern: string | null
           recommended_price: string | null
           recommended_treatment: string | null
+          session_id: string | null
           source: string | null
           symptoms: string[] | null
           user_id: string | null
@@ -45,6 +46,7 @@ export type Database = {
           primary_concern?: string | null
           recommended_price?: string | null
           recommended_treatment?: string | null
+          session_id?: string | null
           source?: string | null
           symptoms?: string[] | null
           user_id?: string | null
@@ -62,6 +64,7 @@ export type Database = {
           primary_concern?: string | null
           recommended_price?: string | null
           recommended_treatment?: string | null
+          session_id?: string | null
           source?: string | null
           symptoms?: string[] | null
           user_id?: string | null

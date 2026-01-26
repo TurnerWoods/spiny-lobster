@@ -94,7 +94,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, saveLead } = await req.json();
+    const { messages, saveLead, sessionId, getVisitorContext } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -103,13 +103,30 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
+    const supabase = SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY 
+      ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+      : null;
+
+    // If requesting visitor context, look up previous leads
+    if (getVisitorContext && sessionId && supabase) {
+      const { data: previousLeads } = await supabase
+        .from("chat_leads")
+        .select("primary_concern, recommended_treatment, created_at, conversation_summary")
+        .eq("session_id", sessionId)
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      return new Response(
+        JSON.stringify({ visitorContext: previousLeads?.[0] || null }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     // If saveLead flag is true, extract and save lead data
-    if (saveLead && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+    if (saveLead && supabase) {
       const leadData = await extractLeadData(messages, LOVABLE_API_KEY);
       
       if (leadData) {
-        const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-        
         await supabase.from("chat_leads").insert({
           primary_concern: leadData.primary_concern,
           symptoms: leadData.symptoms || [],
@@ -118,6 +135,7 @@ serve(async (req) => {
           recommended_treatment: leadData.recommended_treatment,
           recommended_price: leadData.recommended_price,
           conversation_summary: leadData.conversation_summary,
+          session_id: sessionId,
           source: "chat_widget"
         });
       }
