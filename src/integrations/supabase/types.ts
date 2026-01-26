@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      chat_leads: {
+        Row: {
+          age_range: string | null
+          conversation_summary: string | null
+          converted: boolean | null
+          converted_at: string | null
+          created_at: string
+          duration: string | null
+          email: string | null
+          id: string
+          phone: string | null
+          primary_concern: string | null
+          recommended_price: string | null
+          recommended_treatment: string | null
+          source: string | null
+          symptoms: string[] | null
+          user_id: string | null
+        }
+        Insert: {
+          age_range?: string | null
+          conversation_summary?: string | null
+          converted?: boolean | null
+          converted_at?: string | null
+          created_at?: string
+          duration?: string | null
+          email?: string | null
+          id?: string
+          phone?: string | null
+          primary_concern?: string | null
+          recommended_price?: string | null
+          recommended_treatment?: string | null
+          source?: string | null
+          symptoms?: string[] | null
+          user_id?: string | null
+        }
+        Update: {
+          age_range?: string | null
+          conversation_summary?: string | null
+          converted?: boolean | null
+          converted_at?: string | null
+          created_at?: string
+          duration?: string | null
+          email?: string | null
+          id?: string
+          phone?: string | null
+          primary_concern?: string | null
+          recommended_price?: string | null
+          recommended_treatment?: string | null
+          source?: string | null
+          symptoms?: string[] | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       intake_forms: {
         Row: {
           allergies: string | null
