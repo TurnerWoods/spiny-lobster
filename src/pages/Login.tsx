@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Eye, EyeOff, Mail, Lock, ArrowLeft, Shield } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
@@ -62,71 +63,73 @@ const Login = () => {
           className="w-full max-w-md"
         >
           {/* Glassmorphic Card */}
-          <div className="rounded-2xl border border-pure-white/40 bg-pure-white/80 p-8 shadow-xl backdrop-blur-xl">
-            <div className="mb-6 text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-warm-stone/10">
-                <Shield className="h-7 w-7 text-warm-stone" />
-              </div>
-              <h1 className="font-display text-2xl font-bold text-rich-black">Welcome Back</h1>
-              <p className="mt-2 text-muted-foreground">Sign in to your patient portal</p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-rich-black">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="border-warm-stone/20 bg-pure-white/60 pl-10 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
-                    disabled={isLoading}
-                  />
+          <Card variant="glass" className="p-8">
+            <CardContent className="p-0">
+              <div className="mb-6 text-center">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-warm-stone/10">
+                  <Shield className="h-7 w-7 text-warm-stone" />
                 </div>
+                <h1 className="font-display text-2xl font-bold text-rich-black">Welcome Back</h1>
+                <p className="mt-2 text-warm-gray">Sign in to your patient portal</p>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-rich-black">Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="border-warm-stone/20 bg-pure-white/60 pl-10 pr-10 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-stone/60 transition-colors hover:text-warm-stone"
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-rich-black">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10"
+                      disabled={isLoading}
+                    />
+                  </div>
                 </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-rich-black">Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-10 pr-10"
+                      disabled={isLoading}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-stone/60 transition-colors hover:text-warm-stone"
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full bg-warm-stone text-pure-white shadow-lg transition-all hover:bg-warm-stone/90 hover:shadow-xl" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Signing in..." : "Sign In"}
+                </Button>
+              </form>
+
+              <div className="mt-6 text-center text-sm">
+                <span className="text-warm-gray">Don't have an account? </span>
+                <Link to="/signup" className="font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">
+                  Sign up
+                </Link>
               </div>
-
-              <Button 
-                type="submit" 
-                className="w-full bg-warm-stone text-pure-white shadow-lg transition-all hover:bg-warm-stone/90 hover:shadow-xl" 
-                disabled={isLoading}
-              >
-                {isLoading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
-
-            <div className="mt-6 text-center text-sm">
-              <span className="text-muted-foreground">Don't have an account? </span>
-              <Link to="/signup" className="font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">
-                Sign up
-              </Link>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Trust Badge */}
           <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
