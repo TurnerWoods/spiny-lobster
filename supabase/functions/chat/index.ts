@@ -94,7 +94,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, saveLead, sessionId, getVisitorContext } = await req.json();
+    const { messages, saveLead, sessionId, getVisitorContext, saveContact } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -111,13 +111,68 @@ serve(async (req) => {
     if (getVisitorContext && sessionId && supabase) {
       const { data: previousLeads } = await supabase
         .from("chat_leads")
-        .select("primary_concern, recommended_treatment, created_at, conversation_summary")
+        .select("primary_concern, recommended_treatment, created_at, conversation_summary, email")
         .eq("session_id", sessionId)
         .order("created_at", { ascending: false })
         .limit(1);
 
       return new Response(
         JSON.stringify({ visitorContext: previousLeads?.[0] || null }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // If saving contact info, update the most recent lead for this session
+    if (saveContact && sessionId && supabase) {
+      const { email, phone } = saveContact;
+      
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email && !emailRegex.test(email)) {
+        return new Response(
+          JSON.stringify({ error: "Invalid email format" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      
+      // Validate phone format (basic - digits, spaces, dashes, parens)
+      const phoneRegex = /^[\d\s\-\(\)\+]{10,20}$/;
+      if (phone && !phoneRegex.test(phone.replace(/\s/g, ''))) {
+        return new Response(
+          JSON.stringify({ error: "Invalid phone format" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      // Update the most recent lead with contact info
+      const { data: existingLead } = await supabase
+        .from("chat_leads")
+        .select("id")
+        .eq("session_id", sessionId)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (existingLead) {
+        await supabase
+          .from("chat_leads")
+          .update({ 
+            email: email?.toLowerCase().trim(), 
+            phone: phone?.trim() 
+          })
+          .eq("id", existingLead.id);
+      } else {
+        // Create a new lead with just contact info if none exists
+        await supabase.from("chat_leads").insert({
+          email: email?.toLowerCase().trim(),
+          phone: phone?.trim(),
+          session_id: sessionId,
+          source: "chat_widget"
+        });
+      }
+
+      return new Response(
+        JSON.stringify({ success: true }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }

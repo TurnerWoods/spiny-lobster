@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Loader2, Mail, Phone, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -15,6 +15,7 @@ type VisitorContext = {
   recommended_treatment: string;
   created_at: string;
   conversation_summary: string;
+  email?: string;
 } | null;
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
@@ -50,6 +51,25 @@ const getReturningVisitorGreeting = (context: VisitorContext): string => {
   return `Welcome back! 👋 I remember we talked about ${concern} and I recommended our ${treatmentName} program. Have you had a chance to start your free assessment, or would you like to explore other options today?`;
 };
 
+// Detect if a recommendation was made in the conversation
+const hasRecommendation = (messages: Message[]): boolean => {
+  const lastAssistantMessages = messages
+    .filter(m => m.role === "assistant")
+    .slice(-3);
+  
+  const recommendationKeywords = [
+    "recommend", "perfect for", "ideal for", "suggest", 
+    "$149/mo", "$199/mo", "$99/mo", "start your free assessment",
+    "based on what you've shared"
+  ];
+  
+  return lastAssistantMessages.some(m => 
+    recommendationKeywords.some(keyword => 
+      m.content.toLowerCase().includes(keyword.toLowerCase())
+    )
+  );
+};
+
 const AIChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -62,6 +82,11 @@ const AIChatWidget = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [visitorContext, setVisitorContext] = useState<VisitorContext>(null);
   const [hasCheckedVisitor, setHasCheckedVisitor] = useState(false);
+  const [showLeadCapture, setShowLeadCapture] = useState(false);
+  const [leadCaptured, setLeadCaptured] = useState(false);
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(getSessionId());
 
@@ -94,6 +119,10 @@ const AIChatWidget = () => {
         const data = await resp.json();
         if (data.visitorContext) {
           setVisitorContext(data.visitorContext);
+          // If they already provided email, mark as captured
+          if (data.visitorContext.email) {
+            setLeadCaptured(true);
+          }
           setMessages([{
             role: "assistant",
             content: getReturningVisitorGreeting(data.visitorContext),
@@ -112,6 +141,70 @@ const AIChatWidget = () => {
       checkReturningVisitor();
     }
   }, [isOpen, hasCheckedVisitor, checkReturningVisitor]);
+
+  // Show lead capture after recommendation is made
+  useEffect(() => {
+    if (!leadCaptured && messages.length >= 4 && hasRecommendation(messages)) {
+      // Delay showing the form slightly after recommendation
+      const timer = setTimeout(() => setShowLeadCapture(true), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [messages, leadCaptured]);
+
+  // Handle contact form submission
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!contactEmail.trim() && !contactPhone.trim()) {
+      toast.error("Please provide an email or phone number");
+      return;
+    }
+
+    // Basic email validation
+    if (contactEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsSubmittingContact(true);
+
+    try {
+      const resp = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
+          saveContact: {
+            email: contactEmail.trim() || null,
+            phone: contactPhone.trim() || null,
+          },
+          sessionId: sessionId.current,
+        }),
+      });
+
+      if (resp.ok) {
+        setLeadCaptured(true);
+        setShowLeadCapture(false);
+        toast.success("Thanks! We'll be in touch soon.");
+        
+        // Add a follow-up message from Nova
+        setMessages(prev => [...prev, {
+          role: "assistant",
+          content: "Great! Our team will reach out to help you get started. In the meantime, you can begin your free assessment anytime. Is there anything else I can help you with?",
+        }]);
+      } else {
+        const data = await resp.json();
+        toast.error(data.error || "Failed to save contact info");
+      }
+    } catch (e) {
+      console.error("Contact save error:", e);
+      toast.error("Failed to save contact info");
+    } finally {
+      setIsSubmittingContact(false);
+    }
+  };
 
   // Track if we should save lead (after enough conversation)
   const shouldSaveLead = messages.length >= 6;
@@ -328,6 +421,79 @@ const AIChatWidget = () => {
                       ))}
                     </div>
                   </div>
+                )}
+
+                {/* Lead Capture Form */}
+                {showLeadCapture && !leadCaptured && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-3 rounded-xl border border-primary/20 bg-primary/5 p-4"
+                  >
+                    <div className="mb-3 flex items-center gap-2">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+                        <Mail className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">Get personalized follow-up</p>
+                        <p className="text-xs text-muted-foreground">We'll send your treatment details</p>
+                      </div>
+                    </div>
+                    <form onSubmit={handleContactSubmit} className="space-y-2">
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                          type="email"
+                          placeholder="Your email"
+                          value={contactEmail}
+                          onChange={(e) => setContactEmail(e.target.value)}
+                          className="pl-9"
+                          disabled={isSubmittingContact}
+                        />
+                      </div>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                          type="tel"
+                          placeholder="Phone (optional)"
+                          value={contactPhone}
+                          onChange={(e) => setContactPhone(e.target.value)}
+                          className="pl-9"
+                          disabled={isSubmittingContact}
+                        />
+                      </div>
+                      <Button 
+                        type="submit" 
+                        className="w-full bg-primary hover:bg-primary-dark"
+                        disabled={isSubmittingContact}
+                      >
+                        {isSubmittingContact ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          "Get My Treatment Plan"
+                        )}
+                      </Button>
+                      <button
+                        type="button"
+                        onClick={() => setShowLeadCapture(false)}
+                        className="w-full text-xs text-muted-foreground hover:text-foreground"
+                      >
+                        Maybe later
+                      </button>
+                    </form>
+                  </motion.div>
+                )}
+
+                {/* Lead Captured Confirmation */}
+                {leadCaptured && messages.length > 1 && messages[messages.length - 1]?.content.includes("Our team will reach out") && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mt-3 flex items-center gap-2 rounded-lg bg-green-500/10 p-3 text-green-700"
+                  >
+                    <CheckCircle className="h-5 w-5" />
+                    <span className="text-sm font-medium">Contact info saved!</span>
+                  </motion.div>
                 )}
 
                 {isLoading && messages[messages.length - 1]?.role === "user" && (
