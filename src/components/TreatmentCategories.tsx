@@ -144,7 +144,7 @@ const TreatmentCategories = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="group relative overflow-hidden rounded-xl border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:rounded-2xl"
+              className="group relative overflow-hidden rounded-xl border border-neutral-gray/50 bg-pure-white/80 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-warm-stone/30 sm:rounded-2xl"
             >
               {/* Image */}
               <div className="relative h-40 overflow-hidden sm:h-48">
@@ -153,25 +153,25 @@ const TreatmentCategories = () => {
                   alt={treatment.title}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/60 to-transparent" />
                 
                 {/* Price Badge */}
-                <div className="absolute bottom-2 left-2 rounded-full bg-primary px-2.5 py-0.5 text-xs font-semibold text-white sm:bottom-3 sm:left-3 sm:px-3 sm:py-1 sm:text-sm">
+                <div className="absolute bottom-2 left-2 rounded-full bg-warm-stone px-2.5 py-0.5 text-xs font-semibold text-pure-white shadow-md sm:bottom-3 sm:left-3 sm:px-3 sm:py-1 sm:text-sm">
                   {treatment.price}
                 </div>
                 
                 {/* Icon */}
-                <div className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-primary shadow-md sm:right-3 sm:top-3 sm:h-10 sm:w-10">
+                <div className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full border border-pure-white/30 bg-pure-white/90 text-warm-stone shadow-md backdrop-blur-sm sm:right-3 sm:top-3 sm:h-10 sm:w-10">
                   <treatment.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-4 sm:p-5">
-                <h3 className="mb-0.5 font-display text-lg font-bold text-foreground sm:mb-1 sm:text-xl">
+                <h3 className="mb-0.5 font-display text-lg font-bold text-rich-black sm:mb-1 sm:text-xl">
                   {treatment.title}
                 </h3>
-                <p className="mb-2 text-xs font-medium text-primary sm:mb-3 sm:text-sm">{treatment.subtitle}</p>
+                <p className="mb-2 text-xs font-medium text-warm-stone sm:mb-3 sm:text-sm">{treatment.subtitle}</p>
                 <p className="mb-3 line-clamp-2 text-xs text-muted-foreground sm:mb-4 sm:line-clamp-3 sm:text-sm">{treatment.description}</p>
 
                 {/* Benefits */}
@@ -179,7 +179,7 @@ const TreatmentCategories = () => {
                   {treatment.benefits.map((benefit) => (
                     <span
                       key={benefit}
-                      className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium text-secondary-foreground sm:px-3 sm:py-1 sm:text-xs"
+                      className="rounded-full border border-light-cloud bg-light-cloud/50 px-2 py-0.5 text-[10px] font-medium text-deep-charcoal sm:px-3 sm:py-1 sm:text-xs"
                     >
                       {benefit}
                     </span>
@@ -188,7 +188,7 @@ const TreatmentCategories = () => {
 
                 {/* CTA */}
                 <Link to={`/treatments/${treatment.slug}`}>
-                  <Button variant="ghost" size="sm" className="group/btn w-full justify-between text-xs text-primary hover:text-primary-dark sm:text-sm">
+                  <Button variant="ghost" size="sm" className="group/btn w-full justify-between text-xs text-warm-stone hover:text-warm-stone/80 hover:bg-light-cloud/50 sm:text-sm">
                     <span>Learn More</span>
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-1 sm:h-4 sm:w-4" />
                   </Button>

@@ -64,7 +64,7 @@ const reviews = [
 ];
 
 const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
-  <div className="flex h-full flex-col rounded-xl border bg-card p-4 shadow-sm sm:rounded-2xl sm:p-6">
+  <div className="flex h-full flex-col rounded-xl border border-neutral-gray/50 bg-pure-white/80 p-4 shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 sm:rounded-2xl sm:p-6">
     {/* Stars */}
     <div className="mb-3 flex gap-0.5 sm:mb-4 sm:gap-1">
       {[...Array(review.rating)].map((_, i) => (
@@ -74,19 +74,19 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
     
     {/* Quote */}
     <div className="relative mb-3 flex-1 sm:mb-4">
-      <Quote className="absolute -left-1 -top-1 h-6 w-6 text-primary/10 sm:h-8 sm:w-8" />
+      <Quote className="absolute -left-1 -top-1 h-6 w-6 text-warm-stone/15 sm:h-8 sm:w-8" />
       <p className="relative z-10 text-sm text-muted-foreground sm:text-base">"{review.quote}"</p>
     </div>
     
     {/* Author */}
-    <div className="mt-auto flex items-center gap-2.5 border-t pt-3 sm:gap-3 sm:pt-4">
+    <div className="mt-auto flex items-center gap-2.5 border-t border-warm-gray/30 pt-3 sm:gap-3 sm:pt-4">
       <img 
         src={review.image} 
         alt={review.name}
-        className="h-10 w-10 rounded-full object-cover ring-2 ring-primary/20 sm:h-12 sm:w-12"
+        className="h-10 w-10 rounded-full object-cover ring-2 ring-warm-stone/20 sm:h-12 sm:w-12"
       />
       <div>
-        <p className="text-sm font-semibold text-foreground sm:text-base">{review.name}</p>
+        <p className="text-sm font-semibold text-rich-black sm:text-base">{review.name}</p>
         <p className="text-xs text-muted-foreground sm:text-sm">
           {review.city} • {review.role}
         </p>

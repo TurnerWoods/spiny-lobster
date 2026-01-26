@@ -75,21 +75,21 @@ const HowItWorks = () => {
                 transition={{ delay: index * 0.15 }}
                 className="flex flex-col items-center text-center"
               >
-                {/* Icon Circle */}
-                <div className="relative z-10 mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-background bg-primary shadow-lg sm:mb-6 sm:h-20 sm:w-20">
-                  <step.icon className="h-6 w-6 text-primary-foreground sm:h-8 sm:w-8" />
+              {/* Icon Circle */}
+                <div className="relative z-10 mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-soft-linen bg-warm-stone shadow-lg sm:mb-6 sm:h-20 sm:w-20">
+                  <step.icon className="h-6 w-6 text-pure-white sm:h-8 sm:w-8" />
                 </div>
 
-                {/* Content Card */}
-                <div className="rounded-xl border bg-card p-4 shadow-sm sm:rounded-2xl sm:p-6">
-                  <span className="mb-1 block text-xs font-bold text-primary sm:mb-2 sm:text-sm">
+                {/* Content Card - Glassmorphic */}
+                <div className="rounded-xl border border-neutral-gray/50 bg-pure-white/80 p-4 shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 sm:rounded-2xl sm:p-6">
+                  <span className="mb-1 block text-xs font-bold text-warm-stone sm:mb-2 sm:text-sm">
                     Step {step.number}
                   </span>
-                  <h3 className="mb-2 font-display text-lg font-bold text-foreground sm:mb-3 sm:text-xl">
+                  <h3 className="mb-2 font-display text-lg font-bold text-rich-black sm:mb-3 sm:text-xl">
                     {step.title}
                   </h3>
                   <p className="mb-3 text-sm text-muted-foreground sm:mb-4">{step.description}</p>
-                  <span className="inline-flex items-center rounded-full bg-primary-light px-2.5 py-0.5 text-xs font-medium text-primary sm:px-3 sm:py-1">
+                  <span className="inline-flex items-center rounded-full border border-light-cloud bg-light-cloud/50 px-2.5 py-0.5 text-xs font-medium text-deep-charcoal sm:px-3 sm:py-1">
                     {step.highlight}
                   </span>
                 </div>
