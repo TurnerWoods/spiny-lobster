@@ -13,10 +13,10 @@ type Message = {
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 const SUGGESTED_PROMPTS = [
-  "What treatments do you offer?",
-  "How does the intake process work?",
+  "Find my ideal treatment",
+  "I've been feeling fatigued lately",
   "What are your prices?",
-  "Is TRT right for me?",
+  "How does TRT work?",
 ];
 
 const AIChatWidget = () => {
@@ -24,7 +24,7 @@ const AIChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm Nova, your Elevare Health assistant. How can I help you today? I can answer questions about our treatments, pricing, or help you get started.",
+      content: "Hi! I'm Nova, your Elevare Health assistant. I can help you find the right treatment based on your symptoms and goals. Want to take a quick quiz to discover your ideal treatment plan?",
     },
   ]);
   const [input, setInput] = useState("");
