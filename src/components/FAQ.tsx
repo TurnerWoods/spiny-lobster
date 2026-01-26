@@ -109,8 +109,8 @@ const FAQ = () => {
             </motion.p>
           </div>
 
-          {/* FAQ List */}
-          <div className="rounded-xl border bg-card p-3 shadow-sm sm:rounded-2xl sm:p-6 md:p-6">
+          {/* FAQ List - Glassmorphic */}
+          <div className="rounded-xl border border-neutral-gray/50 bg-pure-white/80 p-3 shadow-md backdrop-blur-sm sm:rounded-2xl sm:p-6 md:p-6">
             {faqs.map((faq, index) => (
               <FAQItem
                 key={index}
