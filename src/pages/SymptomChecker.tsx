@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, CheckCircle, AlertTriangle, Activity, Zap } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle, AlertTriangle, Activity, Zap, Download, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
+import { jsPDF } from "jspdf";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -185,6 +186,127 @@ const SymptomChecker = () => {
     setShowResults(false);
   };
 
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    let yPos = 20;
+
+    // Header
+    doc.setFillColor(42, 105, 89); // Primary color
+    doc.rect(0, 0, pageWidth, 40, "F");
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont("helvetica", "bold");
+    doc.text("Elevare Health", margin, 25);
+    
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text("Low Testosterone Symptom Assessment", margin, 35);
+
+    yPos = 55;
+
+    // Date
+    doc.setTextColor(100, 100, 100);
+    doc.setFontSize(10);
+    doc.text(`Report Generated: ${new Date().toLocaleDateString("en-US", { 
+      year: "numeric", 
+      month: "long", 
+      day: "numeric" 
+    })}`, margin, yPos);
+    yPos += 15;
+
+    // Result Summary Box
+    doc.setFillColor(245, 245, 245);
+    doc.roundedRect(margin, yPos, pageWidth - margin * 2, 45, 3, 3, "F");
+    
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("Assessment Result", margin + 10, yPos + 15);
+    
+    doc.setFontSize(24);
+    const scoreColor = resultLevel === "low" ? [34, 197, 94] : 
+                       resultLevel === "moderate" ? [234, 179, 8] : [42, 105, 89];
+    doc.setTextColor(scoreColor[0], scoreColor[1], scoreColor[2]);
+    doc.text(`${totalScore}/${maxScore}`, margin + 10, yPos + 32);
+    
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.text(`${result.title}`, margin + 60, yPos + 32);
+    
+    yPos += 60;
+
+    // Description
+    doc.setFontSize(11);
+    doc.setTextColor(60, 60, 60);
+    const descLines = doc.splitTextToSize(result.description, pageWidth - margin * 2);
+    doc.text(descLines, margin, yPos);
+    yPos += descLines.length * 6 + 15;
+
+    // Recommendation Box
+    doc.setFillColor(42, 105, 89);
+    doc.roundedRect(margin, yPos, pageWidth - margin * 2, 35, 3, 3, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Our Recommendation", margin + 10, yPos + 12);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    const recLines = doc.splitTextToSize(result.recommendation, pageWidth - margin * 2 - 20);
+    doc.text(recLines, margin + 10, yPos + 22);
+    yPos += 50;
+
+    // Your Answers Section
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Your Responses", margin, yPos);
+    yPos += 10;
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+
+    QUESTIONS.forEach((q, index) => {
+      if (yPos > 260) {
+        doc.addPage();
+        yPos = 20;
+      }
+
+      const answerValue = answers[q.id];
+      const selectedOption = q.options.find(opt => opt.value === answerValue);
+      
+      doc.setTextColor(80, 80, 80);
+      doc.setFont("helvetica", "bold");
+      doc.text(`${index + 1}. ${q.question}`, margin, yPos);
+      yPos += 6;
+      
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(42, 105, 89);
+      doc.text(`→ ${selectedOption?.label || "Not answered"}`, margin + 5, yPos);
+      yPos += 10;
+    });
+
+    // Footer
+    yPos = 275;
+    doc.setDrawColor(200, 200, 200);
+    doc.line(margin, yPos, pageWidth - margin, yPos);
+    yPos += 8;
+    
+    doc.setTextColor(100, 100, 100);
+    doc.setFontSize(8);
+    doc.text("This assessment is for informational purposes only and is not a medical diagnosis.", margin, yPos);
+    yPos += 5;
+    doc.text("Please consult with a licensed healthcare provider for proper evaluation and treatment.", margin, yPos);
+    yPos += 8;
+    doc.setFont("helvetica", "bold");
+    doc.text("Elevare Health | www.elevarehealth.com | HIPAA Compliant", margin, yPos);
+
+    // Save the PDF
+    doc.save("Elevare-LowT-Assessment.pdf");
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -312,6 +434,16 @@ const SymptomChecker = () => {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
+
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={generatePDF}
+                  className="w-full"
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download PDF Report
+                </Button>
                 
                 <div className="flex gap-3">
                   <Button
@@ -328,6 +460,12 @@ const SymptomChecker = () => {
                     </Button>
                   </Link>
                 </div>
+              </div>
+
+              {/* Share with doctor note */}
+              <div className="mt-6 flex items-center justify-center gap-2 rounded-lg bg-muted/50 p-3 text-sm text-muted-foreground">
+                <FileText className="h-4 w-4" />
+                <span>Download and share this report with your doctor</span>
               </div>
 
               {/* Trust indicators */}
