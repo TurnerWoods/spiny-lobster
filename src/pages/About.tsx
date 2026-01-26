@@ -5,6 +5,7 @@ import { Users, Target, Shield, HeartHandshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const stats = [
   { label: "Physician Response Time", value: "< 24 hours" },
@@ -38,17 +39,17 @@ const values = [
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-primary/10 to-background py-20">
+        <section className="py-20">
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="mb-4 inline-block rounded-full bg-primary-light px-4 py-1 text-sm font-medium text-primary"
+                className="mb-4 inline-block rounded-full border border-warm-stone/20 bg-warm-stone/10 px-4 py-1 text-sm font-medium text-warm-stone backdrop-blur-sm"
               >
                 About Us
               </motion.span>
@@ -56,7 +57,7 @@ const About = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="mb-6 font-display text-4xl font-bold text-foreground md:text-5xl"
+                className="mb-6 font-display text-4xl font-bold text-rich-black md:text-5xl"
               >
                 Healthcare Built for How You Live
               </motion.h1>
@@ -82,7 +83,7 @@ const About = () => {
                 viewport={{ once: true }}
                 className="mb-16"
               >
-                <h2 className="mb-6 font-display text-3xl font-bold text-foreground">Our Mission</h2>
+                <h2 className="mb-6 font-display text-3xl font-bold text-rich-black">Our Mission</h2>
                 <p className="mb-4 text-muted-foreground">
                   We created Elevare to bridge that gap. Our platform combines the expertise of board-certified physicians with the convenience of modern technology. No waiting rooms. No insurance paperwork. No judgment. Just personalized care delivered on your terms.
                 </p>
@@ -95,24 +96,32 @@ const About = () => {
                 viewport={{ once: true }}
                 className="mb-16"
               >
-                <h2 className="mb-6 font-display text-3xl font-bold text-foreground">Our Approach</h2>
+                <h2 className="mb-6 font-display text-3xl font-bold text-rich-black">Our Approach</h2>
                 <div className="grid gap-4 md:grid-cols-2">
-                  <div className="rounded-xl border bg-card p-6">
-                    <h3 className="mb-2 font-display text-lg font-bold text-primary">Physician-First</h3>
-                    <p className="text-sm text-muted-foreground">Every treatment decision is made by a licensed physician, not an algorithm. Our medical team personally reviews each case.</p>
-                  </div>
-                  <div className="rounded-xl border bg-card p-6">
-                    <h3 className="mb-2 font-display text-lg font-bold text-primary">Texas-Focused</h3>
-                    <p className="text-sm text-muted-foreground">We serve Texas exclusively. Our physicians understand the unique needs and lifestyles of Texas professionals.</p>
-                  </div>
-                  <div className="rounded-xl border bg-card p-6">
-                    <h3 className="mb-2 font-display text-lg font-bold text-primary">Radically Transparent</h3>
-                    <p className="text-sm text-muted-foreground">Clear pricing. Honest communication. No upsells. We tell you exactly what to expect.</p>
-                  </div>
-                  <div className="rounded-xl border bg-card p-6">
-                    <h3 className="mb-2 font-display text-lg font-bold text-primary">Concierge-Level Service</h3>
-                    <p className="text-sm text-muted-foreground">Direct access to your care team. Fast response times. The healthcare experience you deserve.</p>
-                  </div>
+                  <Card variant="glass">
+                    <CardContent className="p-6">
+                      <h3 className="mb-2 font-display text-lg font-bold text-warm-stone">Physician-First</h3>
+                      <p className="text-sm text-muted-foreground">Every treatment decision is made by a licensed physician, not an algorithm. Our medical team personally reviews each case.</p>
+                    </CardContent>
+                  </Card>
+                  <Card variant="glass">
+                    <CardContent className="p-6">
+                      <h3 className="mb-2 font-display text-lg font-bold text-warm-stone">Texas-Focused</h3>
+                      <p className="text-sm text-muted-foreground">We serve Texas exclusively. Our physicians understand the unique needs and lifestyles of Texas professionals.</p>
+                    </CardContent>
+                  </Card>
+                  <Card variant="glass">
+                    <CardContent className="p-6">
+                      <h3 className="mb-2 font-display text-lg font-bold text-warm-stone">Radically Transparent</h3>
+                      <p className="text-sm text-muted-foreground">Clear pricing. Honest communication. No upsells. We tell you exactly what to expect.</p>
+                    </CardContent>
+                  </Card>
+                  <Card variant="glass">
+                    <CardContent className="p-6">
+                      <h3 className="mb-2 font-display text-lg font-bold text-warm-stone">Concierge-Level Service</h3>
+                      <p className="text-sm text-muted-foreground">Direct access to your care team. Fast response times. The healthcare experience you deserve.</p>
+                    </CardContent>
+                  </Card>
                 </div>
               </motion.div>
             </div>
@@ -120,7 +129,7 @@ const About = () => {
         </section>
 
         {/* Leadership Section */}
-        <section className="bg-muted/30 py-20">
+        <section className="py-20">
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-3xl">
               <motion.div
@@ -128,28 +137,32 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="mb-8 text-center font-display text-3xl font-bold text-foreground">Leadership Team</h2>
+                <h2 className="mb-8 text-center font-display text-3xl font-bold text-rich-black">Leadership Team</h2>
                 <div className="grid gap-6 md:grid-cols-2">
-                  <div className="rounded-xl border bg-card p-6 text-center">
-                    <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <span className="font-display text-2xl font-bold">PM</span>
-                    </div>
-                    <h3 className="mb-1 font-display text-xl font-bold text-foreground">Dr. Paul Myers, DO</h3>
-                    <p className="mb-3 text-sm font-medium text-primary">Co-Founder & Medical Director</p>
-                    <p className="text-sm text-muted-foreground">
-                      Graduated from Lake Erie College of Osteopathic Medicine (2010). Board-certified emergency medicine physician with 15+ years clinical experience. Oversees all clinical care and personally treats patients.
-                    </p>
-                  </div>
-                  <div className="rounded-xl border bg-card p-6 text-center">
-                    <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <span className="font-display text-2xl font-bold">PE</span>
-                    </div>
-                    <h3 className="mb-1 font-display text-xl font-bold text-foreground">Paul Eckdale</h3>
-                    <p className="mb-3 text-sm font-medium text-primary">Co-Founder</p>
-                    <p className="text-sm text-muted-foreground">
-                      16+ years medical field experience. Focus on pharmacy operations and provider-pharmacy coordination. Oversees pharmacy relationships.
-                    </p>
-                  </div>
+                  <Card variant="glass">
+                    <CardContent className="p-6 text-center">
+                      <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-warm-stone/10 text-warm-stone">
+                        <span className="font-display text-2xl font-bold">PM</span>
+                      </div>
+                      <h3 className="mb-1 font-display text-xl font-bold text-rich-black">Dr. Paul Myers, DO</h3>
+                      <p className="mb-3 text-sm font-medium text-warm-stone">Co-Founder & Medical Director</p>
+                      <p className="text-sm text-muted-foreground">
+                        Graduated from Lake Erie College of Osteopathic Medicine (2010). Board-certified emergency medicine physician with 15+ years clinical experience. Oversees all clinical care and personally treats patients.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card variant="glass">
+                    <CardContent className="p-6 text-center">
+                      <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-warm-stone/10 text-warm-stone">
+                        <span className="font-display text-2xl font-bold">PE</span>
+                      </div>
+                      <h3 className="mb-1 font-display text-xl font-bold text-rich-black">Paul Eckdale</h3>
+                      <p className="mb-3 text-sm font-medium text-warm-stone">Co-Founder</p>
+                      <p className="text-sm text-muted-foreground">
+                        16+ years medical field experience. Focus on pharmacy operations and provider-pharmacy coordination. Oversees pharmacy relationships.
+                      </p>
+                    </CardContent>
+                  </Card>
                 </div>
               </motion.div>
             </div>
@@ -165,13 +178,15 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="mb-8 text-center font-display text-3xl font-bold text-foreground">Key Stats</h2>
+                <h2 className="mb-8 text-center font-display text-3xl font-bold text-rich-black">Key Stats</h2>
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                   {stats.map((stat, index) => (
-                    <div key={index} className="rounded-xl border bg-card p-4 text-center">
-                      <p className="mb-1 font-display text-lg font-bold text-primary">{stat.value}</p>
-                      <p className="text-xs text-muted-foreground">{stat.label}</p>
-                    </div>
+                    <Card key={index} variant="glass">
+                      <CardContent className="p-4 text-center">
+                        <p className="mb-1 font-display text-lg font-bold text-warm-stone">{stat.value}</p>
+                        <p className="text-xs text-muted-foreground">{stat.label}</p>
+                      </CardContent>
+                    </Card>
                   ))}
                 </div>
               </motion.div>
@@ -180,7 +195,7 @@ const About = () => {
         </section>
 
         {/* Values Section */}
-        <section className="bg-muted/30 py-20">
+        <section className="py-20">
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-4xl">
               <motion.div
@@ -188,18 +203,20 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="mb-8 text-center font-display text-3xl font-bold text-foreground">Core Values</h2>
+                <h2 className="mb-8 text-center font-display text-3xl font-bold text-rich-black">Core Values</h2>
                 <div className="grid gap-6 md:grid-cols-2">
                   {values.map((value, index) => (
-                    <div key={index} className="flex gap-4 rounded-xl border bg-card p-6">
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                        <value.icon className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <h3 className="mb-2 font-display text-lg font-bold text-foreground">{value.title}</h3>
-                        <p className="text-sm text-muted-foreground">{value.description}</p>
-                      </div>
-                    </div>
+                    <Card key={index} variant="glass">
+                      <CardContent className="flex gap-4 p-6">
+                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 text-warm-stone">
+                          <value.icon className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <h3 className="mb-2 font-display text-lg font-bold text-rich-black">{value.title}</h3>
+                          <p className="text-sm text-muted-foreground">{value.description}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
                   ))}
                 </div>
               </motion.div>
@@ -214,18 +231,22 @@ const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto max-w-2xl text-center"
+              className="mx-auto max-w-2xl"
             >
-              <h2 className="mb-4 font-display text-3xl font-bold text-foreground">Ready to Get Started?</h2>
-              <p className="mb-8 text-muted-foreground">
-                Take the first step toward feeling like yourself again. Our free assessment takes just 5 minutes.
-              </p>
-              <Link to="/intake">
-                <Button size="lg" className="bg-primary hover:bg-primary-dark">
-                  Start Your Free Assessment
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+              <Card variant="glassDark" className="overflow-hidden">
+                <CardContent className="p-8 text-center md:p-12">
+                  <h2 className="mb-4 font-display text-3xl font-bold text-pure-white">Ready to Get Started?</h2>
+                  <p className="mb-8 text-pure-white/70">
+                    Take the first step toward feeling like yourself again. Our free assessment takes just 5 minutes.
+                  </p>
+                  <Link to="/intake">
+                    <Button size="lg" className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90">
+                      Start Your Free Assessment
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             </motion.div>
           </div>
         </section>
