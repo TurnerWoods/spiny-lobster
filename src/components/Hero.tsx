@@ -1,28 +1,16 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Clock, Truck, Volume2, VolumeX } from "lucide-react";
-import { useState, useRef } from "react";
+import { ArrowRight, Shield, Clock, Truck } from "lucide-react";
 import { Link } from "react-router-dom";
 import StatsCounter from "./StatsCounter";
 import heroVideo from "@/assets/hero-video.mp4";
 
 const Hero = () => {
-  const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
-    }
-  };
-
   return (
     <section className="relative min-h-[85vh] overflow-hidden sm:min-h-[90vh]">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <video
-          ref={videoRef}
           autoPlay
           loop
           muted
@@ -34,15 +22,6 @@ const Hero = () => {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
       </div>
-
-      {/* Mute/Unmute Button - styled with primary color */}
-      <button
-        onClick={toggleMute}
-        className="absolute bottom-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-primary/80 text-white backdrop-blur-sm transition-all hover:bg-primary sm:bottom-6 sm:right-6 sm:h-12 sm:w-12"
-        aria-label={isMuted ? "Unmute video" : "Mute video"}
-      >
-        {isMuted ? <VolumeX className="h-4 w-4 sm:h-5 sm:w-5" /> : <Volume2 className="h-4 w-4 sm:h-5 sm:w-5" />}
-      </button>
 
       <div className="container relative z-10 px-4 py-16 sm:py-20 md:px-6 md:py-28 lg:py-36">
         <div className="mx-auto max-w-4xl text-center">
