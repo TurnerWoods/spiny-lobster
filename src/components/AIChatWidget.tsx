@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,13 @@ type Message = {
   content: string;
 };
 
+type VisitorContext = {
+  primary_concern: string;
+  recommended_treatment: string;
+  created_at: string;
+  conversation_summary: string;
+} | null;
+
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 const SUGGESTED_PROMPTS = [
@@ -19,17 +26,44 @@ const SUGGESTED_PROMPTS = [
   "How does TRT work?",
 ];
 
+// Get or create a persistent session ID
+const getSessionId = (): string => {
+  const key = "elevare_chat_session";
+  let sessionId = localStorage.getItem(key);
+  if (!sessionId) {
+    sessionId = `session_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+    localStorage.setItem(key, sessionId);
+  }
+  return sessionId;
+};
+
+const getDefaultGreeting = (): string => {
+  return "Hi! I'm Nova, your Elevare Health assistant. I can help you find the right treatment based on your symptoms and goals. Want to take a quick quiz to discover your ideal treatment plan?";
+};
+
+const getReturningVisitorGreeting = (context: VisitorContext): string => {
+  if (!context) return getDefaultGreeting();
+  
+  const treatmentName = context.recommended_treatment || "treatment";
+  const concern = context.primary_concern || "your health goals";
+  
+  return `Welcome back! 👋 I remember we talked about ${concern} and I recommended our ${treatmentName} program. Have you had a chance to start your free assessment, or would you like to explore other options today?`;
+};
+
 const AIChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm Nova, your Elevare Health assistant. I can help you find the right treatment based on your symptoms and goals. Want to take a quick quiz to discover your ideal treatment plan?",
+      content: getDefaultGreeting(),
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [visitorContext, setVisitorContext] = useState<VisitorContext>(null);
+  const [hasCheckedVisitor, setHasCheckedVisitor] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const sessionId = useRef(getSessionId());
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,6 +72,46 @@ const AIChatWidget = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Check for returning visitor when chat opens
+  const checkReturningVisitor = useCallback(async () => {
+    if (hasCheckedVisitor) return;
+    
+    try {
+      const resp = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ 
+          getVisitorContext: true,
+          sessionId: sessionId.current 
+        }),
+      });
+
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.visitorContext) {
+          setVisitorContext(data.visitorContext);
+          setMessages([{
+            role: "assistant",
+            content: getReturningVisitorGreeting(data.visitorContext),
+          }]);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to check visitor context:", e);
+    } finally {
+      setHasCheckedVisitor(true);
+    }
+  }, [hasCheckedVisitor]);
+
+  useEffect(() => {
+    if (isOpen && !hasCheckedVisitor) {
+      checkReturningVisitor();
+    }
+  }, [isOpen, hasCheckedVisitor, checkReturningVisitor]);
 
   // Track if we should save lead (after enough conversation)
   const shouldSaveLead = messages.length >= 6;
@@ -75,7 +149,8 @@ const AIChatWidget = () => {
         },
         body: JSON.stringify({ 
           messages: [...messages, userMessage],
-          saveLead: shouldSaveLead // Trigger lead extraction after 6+ messages
+          saveLead: shouldSaveLead,
+          sessionId: sessionId.current
         }),
       });
 
