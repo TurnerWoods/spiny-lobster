@@ -1,10 +1,10 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TreatmentComparisonTable from "@/components/TreatmentComparisonTable";
 import { motion } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
 const consultationOptions = [
   {
     name: "Online Assessment",
@@ -172,6 +172,9 @@ const PricingPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Treatment Comparison Table */}
+        <TreatmentComparisonTable />
 
         {/* What's Included */}
         <section className="py-20">
