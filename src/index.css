@@ -8,45 +8,45 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&display=swap");
 
-/* Elevare Health Design System - Navy & Warm Stone */
+/* Elevare Health Design System - Light & Glassmorphic */
 
 @layer base {
   :root {
-    /* Light Mode - Soft Linen with Warm Stone accents */
-    --background: 40 18% 96%;
-    --foreground: 217 60% 10%;
+    /* Light Theme - Soft Linen & Warm Stone */
+    --background: 40 15% 96%; /* soft-linen #F6F5F3 */
+    --foreground: 240 11% 4%; /* rich-black #08080A */
 
-    --card: 0 0% 100%;
-    --card-foreground: 217 60% 10%;
+    --card: 0 0% 99%; /* pure-white #FDFDFD */
+    --card-foreground: 240 11% 4%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 217 60% 10%;
+    --popover: 0 0% 99%;
+    --popover-foreground: 240 11% 4%;
 
     /* Primary - Warm Stone */
-    --primary: 26 13% 40%;
+    --primary: 30 12% 40%; /* warm-stone #726658 */
     --primary-foreground: 0 0% 99%;
-    --primary-light: 26 13% 48%;
-    --primary-dark: 27 13% 32%;
+    --primary-light: 30 12% 50%;
+    --primary-dark: 30 12% 32%;
 
     /* Secondary - Light Cloud */
-    --secondary: 226 33% 95%;
-    --secondary-foreground: 217 60% 10%;
+    --secondary: 226 33% 95%; /* light-cloud #EEF0F7 */
+    --secondary-foreground: 240 11% 4%;
 
-    --muted: 45 10% 83%;
-    --muted-foreground: 0 0% 63%;
+    --muted: 45 10% 83%; /* warm-gray #D7D5CF */
+    --muted-foreground: 270 5% 40%;
 
-    /* Accent - Warm Stone Light */
-    --accent: 26 13% 48%;
+    /* Accent - Deep Charcoal */
+    --accent: 270 5% 18%; /* deep-charcoal #2F2B31 */
     --accent-foreground: 0 0% 99%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 99%;
 
-    --border: 0 0% 88%;
+    --border: 0 0% 88%; /* neutral-gray #E0E0E0 */
     --input: 0 0% 88%;
-    --ring: 26 13% 40%;
+    --ring: 30 12% 40%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     /* Extended Palette */
     --success: 160 84% 39%;
@@ -54,122 +54,55 @@
     --warning: 38 92% 50%;
     --info: 217 91% 60%;
 
-    /* Bronze for muted elements */
-    --bronze: 17 4% 34%;
+    /* Custom Brand Colors */
+    --deep-charcoal: 270 5% 18%;
+    --pure-white: 0 0% 99%;
+    --warm-stone: 30 12% 40%;
+    --soft-linen: 40 15% 96%;
+    --rich-black: 240 11% 4%;
+    --warm-gray: 45 10% 83%;
+    --light-cloud: 226 33% 95%;
+    --neutral-gray: 0 0% 88%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(26, 13%, 40%) 0%, hsl(26, 13%, 48%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(40, 18%, 96%) 0%, hsl(0, 0%, 100%) 100%);
-    --gradient-dark: linear-gradient(135deg, hsl(217, 60%, 10%) 0%, hsl(218, 55%, 13%) 100%);
+    /* Glassmorphism */
+    --glass-bg: 0 0% 100% / 0.7;
+    --glass-border: 0 0% 100% / 0.3;
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 
     /* Shadows */
-    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.08), 0 1px 2px -1px hsl(0 0% 0% / 0.08);
-    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.08), 0 2px 4px -1px hsl(0 0% 0% / 0.05);
+    --shadow-2xs: 0 1px 2px 0 hsl(0 0% 0% / 0.03);
+    --shadow-xs: 0 1px 3px 0 hsl(0 0% 0% / 0.04);
+    --shadow-sm: 0 2px 4px -1px hsl(0 0% 0% / 0.06);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.07), 0 2px 4px -1px hsl(0 0% 0% / 0.04);
     --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.08), 0 4px 6px -2px hsl(0 0% 0% / 0.04);
     --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.08), 0 10px 10px -5px hsl(0 0% 0% / 0.03);
-    --shadow-card: 0 4px 20px rgb(0 0 0 / 0.06);
-    --shadow-glow: 0 0 40px hsl(26 13% 40% / 0.15);
+    --shadow-2xl: 0 25px 50px -12px hsl(0 0% 0% / 0.15);
+    --shadow-card: 0 4px 20px rgb(0 0 0 / 0.04);
+    --shadow-glow: 0 0 40px hsl(30 12% 40% / 0.1);
 
-    --sidebar-background: 40 18% 96%;
-    --sidebar-foreground: 217 60% 10%;
-    --sidebar-primary: 26 13% 40%;
+    /* Sidebar */
+    --sidebar-background: 40 15% 96%;
+    --sidebar-foreground: 240 11% 4%;
+    --sidebar-primary: 30 12% 40%;
     --sidebar-primary-foreground: 0 0% 99%;
-    --sidebar-accent: 26 13% 48%;
+    --sidebar-accent: 270 5% 18%;
     --sidebar-accent-foreground: 0 0% 99%;
     --sidebar-border: 0 0% 88%;
-    --sidebar-ring: 26 13% 40%;
-    --chart-1: 26 13% 40%;
-    --chart-2: 17 4% 34%;
-    --chart-3: 26 15% 49%;
-    --chart-4: 45 10% 83%;
-    --chart-5: 27 13% 53%;
-    --sidebar: 0 0% 100%;
-    --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-    --font-serif: 'Crimson Pro', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
-    --font-mono: 'SF Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.04);
-    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.08), 0 1px 2px -1px hsl(0 0% 0% / 0.08);
-    --shadow-2xl: 0 25px 50px -12px hsl(0 0% 0% / 0.2);
+    --sidebar-ring: 30 12% 40%;
+
+    /* Charts */
+    --chart-1: 30 12% 40%;
+    --chart-2: 270 5% 18%;
+    --chart-3: 30 15% 50%;
+    --chart-4: 45 10% 70%;
+    --chart-5: 226 33% 85%;
+
+    --sidebar: 0 0% 99%;
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Crimson Pro', ui-serif, Georgia, serif;
+    --font-mono: 'SF Mono', ui-monospace, monospace;
     --tracking-normal: 0em;
     --spacing: 0.25rem;
-  }
-
-  .dark {
-    /* Dark Mode - Rich Navy with Warm Stone accents */
-    --background: 217 60% 10%;
-    --foreground: 0 0% 99%;
-
-    --card: 218 55% 13%;
-    --card-foreground: 0 0% 99%;
-
-    --popover: 218 55% 13%;
-    --popover-foreground: 0 0% 99%;
-
-    /* Primary - Warm Stone (elegant on dark) */
-    --primary: 26 13% 40%;
-    --primary-foreground: 0 0% 99%;
-    --primary-light: 26 13% 48%;
-    --primary-dark: 27 13% 32%;
-
-    /* Secondary - Navy Mid */
-    --secondary: 216 48% 16%;
-    --secondary-foreground: 0 0% 99%;
-
-    --muted: 216 48% 16%;
-    --muted-foreground: 0 0% 63%;
-
-    /* Accent - Navy Light */
-    --accent: 215 45% 19%;
-    --accent-foreground: 0 0% 99%;
-
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 99%;
-
-    --border: 213 45% 22%;
-    --input: 216 48% 16%;
-    --ring: 26 13% 40%;
-
-    /* Extended Palette - Dark Mode */
-    --success: 160 84% 39%;
-    --success-light: 160 40% 20%;
-    --warning: 38 92% 50%;
-    --info: 217 91% 60%;
-
-    /* Bronze for muted elements */
-    --bronze: 17 4% 34%;
-
-    /* Gradients - Dark Mode */
-    --gradient-primary: linear-gradient(135deg, hsl(26, 13%, 40%) 0%, hsl(26, 13%, 48%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(217, 60%, 10%) 0%, hsl(218, 55%, 13%) 100%);
-    --gradient-dark: linear-gradient(135deg, hsl(217, 60%, 8%) 0%, hsl(218, 55%, 13%) 100%);
-
-    /* Shadows - Dark Mode */
-    --shadow-card: 0 4px 20px rgb(0 0 0 / 0.4);
-    --shadow-glow: 0 0 40px hsl(26 13% 40% / 0.25);
-
-    --sidebar-background: 217 60% 8%;
-    --sidebar-foreground: 0 0% 99%;
-    --sidebar-primary: 26 13% 40%;
-    --sidebar-primary-foreground: 0 0% 99%;
-    --sidebar-accent: 26 13% 48%;
-    --sidebar-accent-foreground: 0 0% 99%;
-    --sidebar-border: 213 45% 22%;
-    --sidebar-ring: 26 13% 40%;
-    --chart-1: 26 13% 40%;
-    --chart-2: 17 4% 34%;
-    --chart-3: 26 15% 49%;
-    --chart-4: 45 10% 83%;
-    --chart-5: 27 13% 53%;
-    --sidebar: 218 55% 13%;
-    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.2);
-    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.2);
-    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.3), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
-    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.35), 0 1px 2px -1px hsl(0 0% 0% / 0.25);
-    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.35), 0 2px 4px -1px hsl(0 0% 0% / 0.25);
-    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.35), 0 4px 6px -2px hsl(0 0% 0% / 0.2);
-    --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.35), 0 10px 10px -5px hsl(0 0% 0% / 0.2);
-    --shadow-2xl: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
   }
 }
 
@@ -196,15 +129,15 @@
 @layer utilities {
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-primary);
+    background-image: linear-gradient(135deg, hsl(var(--warm-stone)) 0%, hsl(var(--deep-charcoal)) 100%);
   }
 
   .gradient-bg {
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg, hsl(var(--warm-stone)) 0%, hsl(var(--primary-light)) 100%);
   }
 
   .gradient-hero-bg {
-    background: var(--gradient-hero);
+    background: linear-gradient(180deg, hsl(var(--soft-linen)) 0%, hsl(var(--pure-white)) 100%);
   }
 
   .shadow-glow {
@@ -213,5 +146,28 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Glassmorphism utilities */
+  .glass {
+    background: hsl(var(--pure-white) / 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--pure-white) / 0.3);
+  }
+
+  .glass-card {
+    background: hsl(var(--pure-white) / 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--neutral-gray) / 0.5);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+  }
+
+  .glass-dark {
+    background: hsl(var(--deep-charcoal) / 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--warm-gray) / 0.2);
   }
 }
