@@ -38,12 +38,12 @@ interface Treatment {
 }
 
 const statusConfig: Record<string, { label: string; color: string; icon: any }> = {
-  pending: { label: "Pending Review", color: "bg-amber-100 text-amber-700", icon: Clock },
-  under_review: { label: "Under Review", color: "bg-blue-100 text-blue-700", icon: AlertCircle },
-  approved: { label: "Approved", color: "bg-green-100 text-green-700", icon: CheckCircle2 },
-  active: { label: "Active", color: "bg-primary-light text-primary", icon: CheckCircle2 },
-  completed: { label: "Completed", color: "bg-gray-100 text-gray-600", icon: CheckCircle2 },
-  cancelled: { label: "Cancelled", color: "bg-red-100 text-red-700", icon: AlertCircle },
+  pending: { label: "Pending Review", color: "bg-warm-stone/20 text-warm-stone", icon: Clock },
+  under_review: { label: "Under Review", color: "bg-warm-stone/30 text-warm-stone", icon: AlertCircle },
+  approved: { label: "Approved", color: "bg-success/10 text-success", icon: CheckCircle2 },
+  active: { label: "Active", color: "bg-warm-stone/10 text-warm-stone", icon: CheckCircle2 },
+  completed: { label: "Completed", color: "bg-muted text-muted-foreground", icon: CheckCircle2 },
+  cancelled: { label: "Cancelled", color: "bg-destructive/10 text-destructive", icon: AlertCircle },
 };
 
 const Dashboard = () => {

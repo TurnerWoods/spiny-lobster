@@ -144,7 +144,7 @@ const TestimonialsCarousel = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mb-3 inline-block rounded-full bg-primary-light px-3 py-1 text-xs font-medium text-primary sm:mb-4 sm:px-4 sm:text-sm"
+            className="mb-3 inline-block rounded-full border border-warm-stone/20 bg-warm-stone/10 px-3 py-1 text-xs font-medium text-warm-stone sm:mb-4 sm:px-4 sm:text-sm"
           >
             Testimonials
           </motion.span>

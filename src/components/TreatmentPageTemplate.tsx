@@ -54,7 +54,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="mb-4 inline-block rounded-full bg-primary-light px-4 py-1 text-sm font-medium text-primary"
+                className="mb-4 inline-block rounded-full border border-warm-stone/20 bg-warm-stone/10 px-4 py-1 text-sm font-medium text-warm-stone"
               >
                 {treatment.category}
               </motion.span>
