@@ -10,6 +10,7 @@ import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import AIChatWidget from "@/components/AIChatWidget";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
   return (
@@ -28,6 +29,7 @@ const Index = () => {
       <Footer />
       <AIChatWidget />
       <MobileBottomCTA />
+      <ScrollToTop />
     </div>
   );
 };
