@@ -125,9 +125,9 @@ const Dashboard = () => {
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between px-4">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logoIcon} alt="Pure Nova Health" className="h-8 w-auto" />
+            <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
             <span className="font-display text-lg font-bold">
-              Pure<span className="text-primary">Nova</span>Health
+              Elevare<span className="text-primary">Health</span>
             </span>
           </Link>
           <div className="flex items-center gap-3">

@@ -17,7 +17,7 @@ const AIChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm Nova, your PureNovaHealth assistant. How can I help you today? I can answer questions about our treatments, pricing, or help you get started.",
+      content: "Hi! I'm Nova, your Elevare Health assistant. How can I help you today? I can answer questions about our treatments, pricing, or help you get started.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -175,7 +175,7 @@ const AIChatWidget = () => {
                 </div>
                 <div>
                   <p className="font-semibold">Nova</p>
-                  <p className="text-xs text-white/70">PureNovaHealth Assistant</p>
+                  <p className="text-xs text-white/70">Elevare Health Assistant</p>
                 </div>
               </div>
               <button
