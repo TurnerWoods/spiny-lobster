@@ -1,8 +1,9 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Clock, Phone, MessageSquare, Users, Plus, Minus, Shield } from "lucide-react";
+import { Mail, MapPin, Clock, Phone, MessageSquare, Users, Plus, Minus, Shield, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -45,13 +46,19 @@ const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolea
       >
         <span className="font-medium text-rich-black">{faq.question}</span>
         <span className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border transition-all ${
-          isOpen ? "rotate-180 border-warm-stone bg-warm-stone text-pure-white" : "border-warm-stone/30 text-warm-stone/60"
+          isOpen ? "rotate-180 border-warm-stone bg-warm-stone text-pure-white" : "border-warm-stone/30 text-warm-gray"
         }`}>
           {isOpen ? <Minus className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
         </span>
       </button>
       {isOpen && (
-        <p className="pb-4 text-sm text-muted-foreground">{faq.answer}</p>
+        <motion.p
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          className="pb-4 text-sm text-warm-gray"
+        >
+          {faq.answer}
+        </motion.p>
       )}
     </div>
   );
@@ -90,16 +97,18 @@ const Contact = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-warm-stone/5 to-transparent py-16 sm:py-20">
-          <div className="container px-4 md:px-6">
+        <section className="relative overflow-hidden py-16 sm:py-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-warm-stone/5 to-transparent" />
+          <div className="container relative px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mb-4 inline-block rounded-full border border-warm-stone/20 bg-warm-stone/10 px-4 py-1 text-sm font-medium text-warm-stone"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mb-6 inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white/80 px-4 py-2 backdrop-blur-sm"
               >
-                Contact Us
-              </motion.span>
+                <Sparkles className="h-4 w-4 text-warm-stone" />
+                <span className="text-sm font-medium text-warm-stone">Contact Us</span>
+              </motion.div>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -112,7 +121,7 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-base text-muted-foreground sm:text-lg"
+                className="text-base text-warm-gray sm:text-lg"
               >
                 Questions about getting started? Our team is ready to help. No sales pressure. Just honest answers.
               </motion.p>
@@ -133,83 +142,82 @@ const Contact = () => {
                 <h2 className="mb-6 font-display text-2xl font-bold text-rich-black">Contact Information</h2>
                 
                 <div className="mb-8 space-y-4">
-                  <a 
-                    href="tel:512-270-8701"
-                    className="flex items-start gap-4 rounded-xl border border-pure-white/40 bg-pure-white/60 p-4 backdrop-blur-sm transition-all hover:bg-pure-white/80 hover:shadow-md"
-                  >
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 text-warm-stone">
-                      <Phone className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-rich-black">Phone</h3>
-                      <p className="text-muted-foreground">(512) 270-8701</p>
-                    </div>
+                  <a href="tel:512-270-8701">
+                    <Card variant="glass" className="flex items-start gap-4 p-4 transition-all hover:shadow-lg">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                        <Phone className="h-5 w-5 text-warm-stone" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-rich-black">Phone</h3>
+                        <p className="text-warm-gray">(512) 270-8701</p>
+                      </div>
+                    </Card>
                   </a>
                   
-                  <a 
-                    href="mailto:info@elevarehealth.com"
-                    className="flex items-start gap-4 rounded-xl border border-pure-white/40 bg-pure-white/60 p-4 backdrop-blur-sm transition-all hover:bg-pure-white/80 hover:shadow-md"
-                  >
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 text-warm-stone">
-                      <Mail className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-rich-black">Email</h3>
-                      <p className="text-muted-foreground">info@elevarehealth.com</p>
-                    </div>
+                  <a href="mailto:info@elevarehealth.com">
+                    <Card variant="glass" className="flex items-start gap-4 p-4 transition-all hover:shadow-lg">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                        <Mail className="h-5 w-5 text-warm-stone" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-rich-black">Email</h3>
+                        <p className="text-warm-gray">info@elevarehealth.com</p>
+                      </div>
+                    </Card>
                   </a>
                   
                   <a 
                     href="https://maps.google.com/?q=1401+Lavaca+St,+Austin,+TX+78701"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-start gap-4 rounded-xl border border-pure-white/40 bg-pure-white/60 p-4 backdrop-blur-sm transition-all hover:bg-pure-white/80 hover:shadow-md"
                   >
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 text-warm-stone">
-                      <MapPin className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-rich-black">Address</h3>
-                      <p className="text-muted-foreground">1401 Lavaca St, Suite 388</p>
-                      <p className="text-muted-foreground">Austin, TX 78701</p>
-                    </div>
+                    <Card variant="glass" className="flex items-start gap-4 p-4 transition-all hover:shadow-lg">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                        <MapPin className="h-5 w-5 text-warm-stone" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-rich-black">Address</h3>
+                        <p className="text-warm-gray">1401 Lavaca St, Suite 388</p>
+                        <p className="text-warm-gray">Austin, TX 78701</p>
+                      </div>
+                    </Card>
                   </a>
                   
-                  <div className="flex items-start gap-4 rounded-xl border border-pure-white/40 bg-pure-white/60 p-4 backdrop-blur-sm">
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 text-warm-stone">
-                      <Clock className="h-5 w-5" />
+                  <Card variant="glass" className="flex items-start gap-4 p-4">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                      <Clock className="h-5 w-5 text-warm-stone" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-rich-black">Hours</h3>
-                      <p className="text-muted-foreground">Monday - Friday, 8am - 6pm CT</p>
+                      <p className="text-warm-gray">Monday - Friday, 8am - 6pm CT</p>
                     </div>
-                  </div>
+                  </Card>
                 </div>
 
                 {/* Existing Patients */}
-                <div className="mb-6 rounded-xl border border-pure-white/40 bg-pure-white/70 p-5 shadow-sm backdrop-blur-sm">
+                <Card variant="glass" className="mb-6 p-5">
                   <div className="mb-3 flex items-center gap-3">
                     <MessageSquare className="h-5 w-5 text-warm-stone" />
                     <h3 className="font-display text-lg font-bold text-rich-black">Existing Patients</h3>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-warm-gray">
                     Current patients can reach their care team directly through secure messaging in the patient portal. This ensures HIPAA compliance and faster response times for health-related questions.
                   </p>
-                </div>
+                </Card>
 
                 {/* Provider Partnerships */}
-                <div className="rounded-xl border border-pure-white/40 bg-pure-white/70 p-5 shadow-sm backdrop-blur-sm">
+                <Card variant="glass" className="p-5">
                   <div className="mb-3 flex items-center gap-3">
                     <Users className="h-5 w-5 text-warm-stone" />
                     <h3 className="font-display text-lg font-bold text-rich-black">Provider Partnerships</h3>
                   </div>
-                  <p className="mb-3 text-sm text-muted-foreground">
+                  <p className="mb-3 text-sm text-warm-gray">
                     Are you a licensed physician interested in partnering with Elevare? We're building a network of Texas-licensed providers who share our commitment to accessible, high-quality men's health care.
                   </p>
                   <a href="mailto:providers@elevarehealth.com" className="text-sm font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">
                     Contact us at providers@elevarehealth.com
                   </a>
-                </div>
+                </Card>
               </motion.div>
 
               {/* Contact Form */}
@@ -218,7 +226,7 @@ const Contact = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="rounded-2xl border border-pure-white/40 bg-pure-white/80 p-6 shadow-xl backdrop-blur-xl sm:p-8">
+                <Card variant="glass" className="p-6 shadow-xl sm:p-8">
                   <h2 className="mb-6 font-display text-2xl font-bold text-rich-black">Send Us a Message</h2>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid gap-4 sm:grid-cols-2">
@@ -230,6 +238,7 @@ const Contact = () => {
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           placeholder="John Smith"
                           required
+                          className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
                         />
                       </div>
                       <div className="space-y-2">
@@ -241,6 +250,7 @@ const Contact = () => {
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           placeholder="john@example.com"
                           required
+                          className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
                         />
                       </div>
                     </div>
@@ -254,6 +264,7 @@ const Contact = () => {
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           placeholder="(512) 555-0123"
+                          className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
                         />
                       </div>
                       <div className="space-y-2">
@@ -264,6 +275,7 @@ const Contact = () => {
                           onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                           placeholder="How can we help?"
                           required
+                          className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
                         />
                       </div>
                     </div>
@@ -277,10 +289,11 @@ const Contact = () => {
                         placeholder="Tell us more about your inquiry..."
                         rows={5}
                         required
+                        className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
                       />
                     </div>
                     
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-warm-gray">
                       Note: Please do not include personal health information in this form.
                     </p>
                     
@@ -294,19 +307,20 @@ const Contact = () => {
                   </form>
 
                   {/* Trust Badge */}
-                  <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                  <div className="mt-6 flex items-center justify-center gap-2 text-xs text-warm-gray">
                     <Shield className="h-4 w-4 text-warm-stone" />
                     <span>HIPAA Compliant • Secure Form</span>
                   </div>
-                </div>
+                </Card>
               </motion.div>
             </div>
           </div>
         </section>
 
         {/* Embedded FAQs */}
-        <section className="border-t border-warm-stone/10 bg-soft-linen/50 py-12 sm:py-20">
-          <div className="container px-4 md:px-6">
+        <section className="relative py-12 sm:py-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-warm-stone/5 via-transparent to-warm-stone/5" />
+          <div className="container relative px-4 md:px-6">
             <div className="mx-auto max-w-3xl">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -317,7 +331,7 @@ const Contact = () => {
                 <h2 className="mb-3 font-display text-2xl font-bold text-rich-black sm:text-3xl">
                   Frequently Asked Questions
                 </h2>
-                <p className="text-muted-foreground">
+                <p className="text-warm-gray">
                   Quick answers to common questions
                 </p>
               </motion.div>
@@ -326,16 +340,17 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-lg backdrop-blur-xl sm:p-6"
               >
-                {faqs.map((faq, index) => (
-                  <FAQItem
-                    key={index}
-                    faq={faq}
-                    isOpen={openFaqIndex === index}
-                    onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                  />
-                ))}
+                <Card variant="glass" className="p-4 sm:p-6">
+                  {faqs.map((faq, index) => (
+                    <FAQItem
+                      key={index}
+                      faq={faq}
+                      isOpen={openFaqIndex === index}
+                      onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                    />
+                  ))}
+                </Card>
               </motion.div>
             </div>
           </div>
