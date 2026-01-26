@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Shield, Sparkles } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
@@ -82,131 +83,131 @@ const Signup = () => {
           className="w-full max-w-md"
         >
           {/* Glassmorphic Card */}
-          <div className="rounded-2xl border border-pure-white/40 bg-pure-white/80 p-8 shadow-xl backdrop-blur-xl">
-            <div className="mb-6 text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-warm-stone/10">
-                <Sparkles className="h-7 w-7 text-warm-stone" />
+          <Card variant="glass" className="p-8">
+            <CardContent className="p-0">
+              <div className="mb-6 text-center">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-warm-stone/10">
+                  <Sparkles className="h-7 w-7 text-warm-stone" />
+                </div>
+                <h1 className="font-display text-2xl font-bold text-rich-black">Create Account</h1>
+                <p className="mt-2 text-warm-gray">Start your health journey today</p>
               </div>
-              <h1 className="font-display text-2xl font-bold text-rich-black">Create Account</h1>
-              <p className="mt-2 text-muted-foreground">Start your health journey today</p>
-            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName" className="text-rich-black">First Name</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="text-rich-black">First Name</Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
+                      <Input
+                        id="firstName"
+                        placeholder="John"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        className="pl-10"
+                        disabled={isLoading}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="text-rich-black">Last Name</Label>
                     <Input
-                      id="firstName"
-                      placeholder="John"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      className="border-warm-stone/20 bg-pure-white/60 pl-10 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
+                      id="lastName"
+                      placeholder="Doe"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       disabled={isLoading}
                     />
                   </div>
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="lastName" className="text-rich-black">Last Name</Label>
-                  <Input
-                    id="lastName"
-                    placeholder="Doe"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
+                  <Label htmlFor="email" className="text-rich-black">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10"
+                      disabled={isLoading}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-rich-black">Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-10 pr-10"
+                      disabled={isLoading}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-stone/60 transition-colors hover:text-warm-stone"
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword" className="text-rich-black">Confirm Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
+                    <Input
+                      id="confirmPassword"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="pl-10"
+                      disabled={isLoading}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 rounded-lg border border-warm-stone/10 bg-soft-linen/50 p-3">
+                  <Checkbox
+                    id="terms"
+                    checked={agreeTerms}
+                    onCheckedChange={(checked) => setAgreeTerms(checked as boolean)}
                     disabled={isLoading}
                   />
+                  <label htmlFor="terms" className="text-sm text-warm-gray">
+                    I agree to the{" "}
+                    <Link to="/terms-of-use" className="text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">Terms of Service</Link>
+                    {" "}and{" "}
+                    <Link to="/privacy-policy" className="text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">Privacy Policy</Link>
+                  </label>
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-rich-black">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="border-warm-stone/20 bg-pure-white/60 pl-10 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-rich-black">Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="border-warm-stone/20 bg-pure-white/60 pl-10 pr-10 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-stone/60 transition-colors hover:text-warm-stone"
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-rich-black">Confirm Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-warm-stone/60" />
-                  <Input
-                    id="confirmPassword"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="border-warm-stone/20 bg-pure-white/60 pl-10 backdrop-blur-sm focus:border-warm-stone focus:ring-warm-stone/20"
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 rounded-lg border border-warm-stone/10 bg-soft-linen/50 p-3">
-                <Checkbox
-                  id="terms"
-                  checked={agreeTerms}
-                  onCheckedChange={(checked) => setAgreeTerms(checked as boolean)}
+                <Button 
+                  type="submit" 
+                  className="w-full bg-warm-stone text-pure-white shadow-lg transition-all hover:bg-warm-stone/90 hover:shadow-xl" 
                   disabled={isLoading}
-                  className="mt-0.5 border-warm-stone/30 data-[state=checked]:bg-warm-stone data-[state=checked]:border-warm-stone"
-                />
-                <label htmlFor="terms" className="text-sm text-muted-foreground">
-                  I agree to the{" "}
-                  <Link to="/terms-of-use" className="text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">Terms of Service</Link>
-                  {" "}and{" "}
-                  <Link to="/privacy-policy" className="text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">Privacy Policy</Link>
-                </label>
+                >
+                  {isLoading ? "Creating Account..." : "Create Account"}
+                </Button>
+              </form>
+
+              <div className="mt-6 text-center text-sm">
+                <span className="text-warm-gray">Already have an account? </span>
+                <Link to="/login" className="font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">
+                  Sign in
+                </Link>
               </div>
-
-              <Button 
-                type="submit" 
-                className="w-full bg-warm-stone text-pure-white shadow-lg transition-all hover:bg-warm-stone/90 hover:shadow-xl" 
-                disabled={isLoading}
-              >
-                {isLoading ? "Creating Account..." : "Create Account"}
-              </Button>
-            </form>
-
-            <div className="mt-6 text-center text-sm">
-              <span className="text-muted-foreground">Already have an account? </span>
-              <Link to="/login" className="font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">
-                Sign in
-              </Link>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Trust Badge */}
           <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
