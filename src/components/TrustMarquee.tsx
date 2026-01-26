@@ -2,40 +2,40 @@ import { Shield, Clock, Truck, UserCheck, Building2, CreditCard, Headphones, Pac
 
 const badges = [
   { icon: Shield, text: "HIPAA Compliant" },
-  { icon: Clock, text: "Same-Day Consults" },
-  { icon: Truck, text: "Free Shipping" },
-  { icon: UserCheck, text: "Licensed Providers" },
-  { icon: Building2, text: "US-Based Pharmacy" },
+  { icon: Clock, text: "24hr Response" },
+  { icon: Truck, text: "Discreet Shipping" },
+  { icon: UserCheck, text: "Texas Physicians" },
+  { icon: Building2, text: "US Pharmacy" },
   { icon: CreditCard, text: "No Hidden Fees" },
-  { icon: Headphones, text: "24/7 Support" },
-  { icon: Package, text: "Discreet Delivery" },
+  { icon: Headphones, text: "Direct Support" },
+  { icon: Package, text: "Cancel Anytime" },
 ];
 
 const TrustMarquee = () => {
   return (
-    <section className="overflow-hidden bg-primary-light py-4">
+    <section className="overflow-hidden bg-primary-light py-3 sm:py-4">
       <div className="relative">
         <div className="flex animate-marquee hover:[animation-play-state:paused]">
           {/* First set */}
           {badges.map((badge, index) => (
             <div
               key={`first-${index}`}
-              className="flex items-center gap-2 whitespace-nowrap px-6 text-sm font-medium text-primary"
+              className="flex items-center gap-1.5 whitespace-nowrap px-3 text-xs font-medium text-primary sm:gap-2 sm:px-6 sm:text-sm"
             >
-              <badge.icon className="h-4 w-4 flex-shrink-0" />
+              <badge.icon className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" />
               <span>{badge.text}</span>
-              <span className="ml-6 text-primary/40">•</span>
+              <span className="ml-3 text-primary/40 sm:ml-6">•</span>
             </div>
           ))}
           {/* Duplicate set for seamless loop */}
           {badges.map((badge, index) => (
             <div
               key={`second-${index}`}
-              className="flex items-center gap-2 whitespace-nowrap px-6 text-sm font-medium text-primary"
+              className="flex items-center gap-1.5 whitespace-nowrap px-3 text-xs font-medium text-primary sm:gap-2 sm:px-6 sm:text-sm"
             >
-              <badge.icon className="h-4 w-4 flex-shrink-0" />
+              <badge.icon className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" />
               <span>{badge.text}</span>
-              <span className="ml-6 text-primary/40">•</span>
+              <span className="ml-3 text-primary/40 sm:ml-6">•</span>
             </div>
           ))}
         </div>

@@ -11,7 +11,7 @@ const consultationOptions = [
     description: "Secure online health assessment reviewed by licensed clinician",
   },
   {
-    name: "Live Video Consultation",
+    name: "Video Consultation",
     recommended: false,
     price: "$99",
     description: "30-minute 1-on-1 video visit with licensed physician",
@@ -19,32 +19,32 @@ const consultationOptions = [
 ];
 
 const treatments = [
-  { name: "Testosterone Cypionate", price: "$149/month" },
-  { name: "Sermorelin", price: "$199/month" },
-  { name: "Tesamorelin", price: "$199/month" },
-  { name: "NAD+", price: "$199/month" },
+  { name: "Testosterone Cypionate", price: "$149/mo" },
+  { name: "Sermorelin", price: "$199/mo" },
+  { name: "Tesamorelin", price: "$199/mo" },
+  { name: "NAD+", price: "$199/mo" },
 ];
 
 const included = [
-  "Prescribed medication fulfilled by licensed U.S. pharmacies",
-  "Personalized treatment plan from a Texas-licensed physician",
-  "Unlimited secure messaging with your care team",
-  "Ongoing protocol monitoring and adjustments",
-  "Discreet shipping to your home or office",
-  "No contracts. Cancel anytime.",
+  "Medication from licensed U.S. pharmacies",
+  "Personalized treatment plan",
+  "Unlimited secure messaging",
+  "Ongoing monitoring",
+  "Discreet shipping",
+  "No contracts",
 ];
 
 const PricingComparison = () => {
   return (
-    <section id="pricing" className="bg-muted/30 py-20">
+    <section id="pricing" className="bg-muted/30 py-12 sm:py-16 md:py-20">
       <div className="container px-4 md:px-6">
         {/* Section Header */}
-        <div className="mx-auto mb-12 max-w-2xl text-center">
+        <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-12">
           <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mb-4 inline-block rounded-full bg-primary-light px-4 py-1 text-sm font-medium text-primary"
+            className="mb-3 inline-block rounded-full bg-primary-light px-3 py-1 text-xs font-medium text-primary sm:mb-4 sm:px-4 sm:text-sm"
           >
             Transparent Pricing
           </motion.span>
@@ -52,7 +52,7 @@ const PricingComparison = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl"
+            className="mb-3 font-display text-2xl font-bold text-foreground sm:mb-4 sm:text-3xl md:text-4xl"
           >
             Clear Pricing. No Surprises.
           </motion.h2>
@@ -61,9 +61,9 @@ const PricingComparison = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-muted-foreground"
+            className="px-2 text-base text-muted-foreground sm:px-0 sm:text-lg"
           >
-            We believe you shouldn't need a decoder ring to understand healthcare costs. One monthly price covers your medication, pharmacy fulfillment, and unlimited access to your care team.
+            One monthly price covers medication, pharmacy, and unlimited care team access.
           </motion.p>
         </div>
 
@@ -72,25 +72,25 @@ const PricingComparison = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-12 grid max-w-3xl gap-6 md:grid-cols-2"
+          className="mx-auto mb-8 grid max-w-3xl gap-4 sm:mb-12 sm:grid-cols-2 sm:gap-6"
         >
           {consultationOptions.map((option) => (
             <div
               key={option.name}
-              className={`relative rounded-2xl border p-6 ${
+              className={`relative rounded-xl border p-4 sm:rounded-2xl sm:p-6 ${
                 option.recommended ? "border-primary bg-primary/5" : "bg-card"
               }`}
             >
               {option.recommended && (
-                <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
+                <span className="absolute -top-2.5 left-4 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-medium text-primary-foreground sm:-top-3 sm:left-6 sm:px-3 sm:py-1 sm:text-xs">
                   Recommended
                 </span>
               )}
-              <h3 className="mb-2 font-display text-xl font-bold text-foreground">
+              <h3 className="mb-1 font-display text-lg font-bold text-foreground sm:mb-2 sm:text-xl">
                 {option.name}
               </h3>
-              <p className="mb-4 text-3xl font-bold text-primary">{option.price}</p>
-              <p className="text-sm text-muted-foreground">{option.description}</p>
+              <p className="mb-2 text-2xl font-bold text-primary sm:mb-4 sm:text-3xl">{option.price}</p>
+              <p className="text-xs text-muted-foreground sm:text-sm">{option.description}</p>
             </div>
           ))}
         </motion.div>
@@ -100,13 +100,13 @@ const PricingComparison = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-12 max-w-3xl"
+          className="mx-auto mb-8 max-w-3xl sm:mb-12"
         >
-          <h3 className="mb-6 text-center font-display text-2xl font-bold text-foreground">
+          <h3 className="mb-4 text-center font-display text-xl font-bold text-foreground sm:mb-6 sm:text-2xl">
             Treatment Pricing
           </h3>
-          <div className="overflow-hidden rounded-2xl border bg-card shadow-sm">
-            <div className="grid grid-cols-2 gap-4 border-b bg-muted/50 p-4 text-sm font-semibold">
+          <div className="overflow-hidden rounded-xl border bg-card shadow-sm sm:rounded-2xl">
+            <div className="grid grid-cols-2 gap-2 border-b bg-muted/50 p-3 text-xs font-semibold sm:gap-4 sm:p-4 sm:text-sm">
               <div className="text-foreground">Treatment</div>
               <div className="text-right text-primary">Starting Price</div>
             </div>
@@ -118,7 +118,7 @@ const PricingComparison = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
-                  className="grid grid-cols-2 gap-4 p-4 transition-colors hover:bg-muted/30"
+                  className="grid grid-cols-2 gap-2 p-3 text-sm transition-colors hover:bg-muted/30 sm:gap-4 sm:p-4"
                 >
                   <div className="font-medium text-foreground">{treatment.name}</div>
                   <div className="text-right font-semibold text-primary">{treatment.price}</div>
@@ -126,9 +126,6 @@ const PricingComparison = () => {
               ))}
             </div>
           </div>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            Note: Final pricing varies based on medication, dosage, and clinical appropriateness.
-          </p>
         </motion.div>
 
         {/* What's Included */}
@@ -136,17 +133,17 @@ const PricingComparison = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-12 max-w-3xl"
+          className="mx-auto mb-8 max-w-3xl sm:mb-12"
         >
-          <h3 className="mb-6 text-center font-display text-2xl font-bold text-foreground">
+          <h3 className="mb-4 text-center font-display text-xl font-bold text-foreground sm:mb-6 sm:text-2xl">
             What's Included
           </h3>
-          <div className="rounded-2xl border bg-card p-6 shadow-sm">
-            <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border bg-card p-4 shadow-sm sm:rounded-2xl sm:p-6">
+            <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
               {included.map((item, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                  <span className="text-muted-foreground">{item}</span>
+                <div key={index} className="flex items-center gap-2 sm:gap-3">
+                  <Check className="h-4 w-4 flex-shrink-0 text-primary sm:h-5 sm:w-5" />
+                  <span className="text-sm text-muted-foreground">{item}</span>
                 </div>
               ))}
             </div>
@@ -160,10 +157,10 @@ const PricingComparison = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <Link to="/intake">
-            <Button size="lg" className="bg-primary hover:bg-primary-dark">
+          <Link to="/intake" className="inline-block w-full sm:w-auto">
+            <Button size="lg" className="w-full bg-primary hover:bg-primary-dark sm:w-auto">
               Start Your Free Assessment
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
           </Link>
         </motion.div>
