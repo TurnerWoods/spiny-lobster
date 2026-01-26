@@ -21,8 +21,8 @@ type VisitorContext = {
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 const SUGGESTED_PROMPTS = [
+  "Do I have low T?",
   "Find my ideal treatment",
-  "I've been feeling fatigued lately",
   "What are your prices?",
   "How does TRT work?",
 ];

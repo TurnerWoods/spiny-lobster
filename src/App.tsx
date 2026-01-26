@@ -19,6 +19,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import HIPAANotice from "./pages/HIPAANotice";
 import SafetyInformation from "./pages/SafetyInformation";
 import FAQPage from "./pages/FAQ";
+import SymptomChecker from "./pages/SymptomChecker";
 import NotFound from "./pages/NotFound";
 
 // Treatment Pages
@@ -54,6 +55,7 @@ const App = () => (
             <Route path="/hipaa" element={<HIPAANotice />} />
             <Route path="/safety" element={<SafetyInformation />} />
             <Route path="/faq" element={<FAQPage />} />
+            <Route path="/symptom-checker" element={<SymptomChecker />} />
             
             {/* Treatment Category Pages */}
             <Route path="/treatments/weight-loss" element={<WeightLossPage />} />
