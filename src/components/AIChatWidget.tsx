@@ -12,6 +12,13 @@ type Message = {
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
+const SUGGESTED_PROMPTS = [
+  "What treatments do you offer?",
+  "How does the intake process work?",
+  "What are your prices?",
+  "Is TRT right for me?",
+];
+
 const AIChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -32,10 +39,11 @@ const AIChatWidget = () => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+  const handleSend = async (messageText?: string) => {
+    const textToSend = messageText || input.trim();
+    if (!textToSend || isLoading) return;
 
-    const userMessage: Message = { role: "user", content: input.trim() };
+    const userMessage: Message = { role: "user", content: textToSend };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
@@ -141,9 +149,11 @@ const AIChatWidget = () => {
     }
   };
 
+  const showSuggestedPrompts = messages.length === 1 && !isLoading;
+
   return (
     <>
-      {/* Chat Button */}
+      {/* Chat Button - positioned higher to avoid scrollbar */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -151,7 +161,7 @@ const AIChatWidget = () => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 left-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform hover:scale-105"
+            className="fixed bottom-20 left-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform hover:scale-105"
           >
             <MessageCircle className="h-6 w-6" />
           </motion.button>
@@ -165,7 +175,7 @@ const AIChatWidget = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 left-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border bg-card shadow-2xl"
+            className="fixed bottom-20 left-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border bg-card shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b bg-primary px-4 py-3 text-white">
@@ -220,6 +230,25 @@ const AIChatWidget = () => {
                     </div>
                   </div>
                 ))}
+
+                {/* Suggested Prompts */}
+                {showSuggestedPrompts && (
+                  <div className="mt-2 flex flex-col gap-2">
+                    <p className="text-xs font-medium text-muted-foreground">Quick questions:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {SUGGESTED_PROMPTS.map((prompt, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleSend(prompt)}
+                          className="rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/10 hover:border-primary/50"
+                        >
+                          {prompt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {isLoading && messages[messages.length - 1]?.role === "user" && (
                   <div className="flex gap-2">
                     <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-light text-primary">
