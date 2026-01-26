@@ -74,24 +74,24 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="font-display text-xl font-bold text-foreground">Review Your Information</h2>
+        <h2 className="font-display text-xl font-bold text-rich-black">Review Your Information</h2>
         <p className="mt-1 text-muted-foreground">
           Please review your information before submitting. Our providers will review your intake within 24-48 hours.
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
+        <Card variant="glass">
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Target className="h-4 w-4 text-primary" />
+            <CardTitle className="flex items-center gap-2 text-base text-rich-black">
+              <Target className="h-4 w-4 text-warm-stone" />
               Health Goals
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm">
             <div>
               <span className="text-muted-foreground">Primary Goal: </span>
-              <Badge variant="secondary">{goalLabels[healthGoals.primaryGoal] || healthGoals.primaryGoal}</Badge>
+              <Badge variant="default">{goalLabels[healthGoals.primaryGoal] || healthGoals.primaryGoal}</Badge>
             </div>
             {healthGoals.secondaryGoals.length > 0 && (
               <div>
@@ -108,31 +108,31 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
             {healthGoals.targetTimeline && (
               <div>
                 <span className="text-muted-foreground">Timeline: </span>
-                <span>{timelineLabels[healthGoals.targetTimeline]}</span>
+                <span className="text-rich-black">{timelineLabels[healthGoals.targetTimeline]}</span>
               </div>
             )}
           </CardContent>
         </Card>
 
-        <Card>
+        <Card variant="glass">
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Heart className="h-4 w-4 text-primary" />
+            <CardTitle className="flex items-center gap-2 text-base text-rich-black">
+              <Heart className="h-4 w-4 text-warm-stone" />
               Medical Info
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Current Weight:</span>
-              <span>{medicalHistory.currentWeight || "—"} lbs</span>
+              <span className="text-rich-black">{medicalHistory.currentWeight || "—"} lbs</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Target Weight:</span>
-              <span>{medicalHistory.targetWeight || "—"} lbs</span>
+              <span className="text-rich-black">{medicalHistory.targetWeight || "—"} lbs</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Height:</span>
-              <span>
+              <span className="text-rich-black">
                 {medicalHistory.heightFeet && medicalHistory.heightInches
                   ? `${medicalHistory.heightFeet}'${medicalHistory.heightInches}"`
                   : "—"}
@@ -141,53 +141,53 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
             {medicalHistory.medicalConditions.length > 0 && (
               <div className="pt-2">
                 <span className="text-muted-foreground">Conditions: </span>
-                <span>{medicalHistory.medicalConditions.join(", ")}</span>
+                <span className="text-rich-black">{medicalHistory.medicalConditions.join(", ")}</span>
               </div>
             )}
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2">
+        <Card variant="glass" className="md:col-span-2">
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Activity className="h-4 w-4 text-primary" />
+            <CardTitle className="flex items-center gap-2 text-base text-rich-black">
+              <Activity className="h-4 w-4 text-warm-stone" />
               Lifestyle
             </CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 text-sm sm:grid-cols-3">
             <div>
               <span className="text-muted-foreground">Exercise: </span>
-              <span>{exerciseLabels[lifestyle.exerciseFrequency] || "—"}</span>
+              <span className="text-rich-black">{exerciseLabels[lifestyle.exerciseFrequency] || "—"}</span>
             </div>
             <div>
               <span className="text-muted-foreground">Stress Level: </span>
-              <span>{stressLabels[lifestyle.stressLevel] || "—"}</span>
+              <span className="text-rich-black">{stressLabels[lifestyle.stressLevel] || "—"}</span>
             </div>
             <div>
               <span className="text-muted-foreground">Sleep: </span>
-              <span>{sleepLabels[lifestyle.sleepHours] || "—"}</span>
+              <span className="text-rich-black">{sleepLabels[lifestyle.sleepHours] || "—"}</span>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="border-primary/20 bg-primary/5">
+      <Card className="border-warm-stone/20 bg-warm-stone/5">
         <CardContent className="flex items-start gap-3 pt-6">
-          <Shield className="mt-0.5 h-5 w-5 text-primary" />
+          <Shield className="mt-0.5 h-5 w-5 text-warm-stone" />
           <div className="space-y-4">
             <div>
-              <h3 className="font-semibold text-foreground">Your information is secure</h3>
+              <h3 className="font-semibold text-rich-black">Your information is secure</h3>
               <p className="text-sm text-muted-foreground">
                 All data is encrypted and HIPAA-compliant. Only your assigned provider will review your information.
               </p>
             </div>
-            <div className="flex items-start gap-2">
+            <div className="flex items-start gap-3 rounded-lg border border-warm-stone/10 bg-soft-linen/50 p-3">
               <Checkbox
                 id="terms"
                 checked={agreedToTerms}
                 onCheckedChange={(checked) => onAgreeChange(checked as boolean)}
               />
-              <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer">
+              <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer text-rich-black">
                 I confirm that the information provided is accurate to the best of my knowledge. I understand that a
                 licensed provider will review my intake and may request additional information before prescribing
                 treatment.
