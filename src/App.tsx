@@ -18,8 +18,16 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import HIPAANotice from "./pages/HIPAANotice";
 import SafetyInformation from "./pages/SafetyInformation";
-import TRTPage from "./pages/treatments/TRTPage";
 import NotFound from "./pages/NotFound";
+
+// Treatment Pages
+import WeightLossPage from "./pages/treatments/WeightLossPage";
+import HormonesPage from "./pages/treatments/HormonesPage";
+import StrengthPage from "./pages/treatments/StrengthPage";
+import AntiAgingPage from "./pages/treatments/AntiAgingPage";
+import HairPage from "./pages/treatments/HairPage";
+import SkinPage from "./pages/treatments/SkinPage";
+import MoodPage from "./pages/treatments/MoodPage";
 
 const queryClient = new QueryClient();
 
@@ -44,10 +52,16 @@ const App = () => (
             <Route path="/terms" element={<TermsOfUse />} />
             <Route path="/hipaa" element={<HIPAANotice />} />
             <Route path="/safety" element={<SafetyInformation />} />
-            <Route path="/treatments/testosterone" element={<TRTPage />} />
-            <Route path="/treatments/sermorelin" element={<TRTPage />} />
-            <Route path="/treatments/tesamorelin" element={<TRTPage />} />
-            <Route path="/treatments/nad" element={<TRTPage />} />
+            
+            {/* Treatment Category Pages */}
+            <Route path="/treatments/weight-loss" element={<WeightLossPage />} />
+            <Route path="/treatments/hormones" element={<HormonesPage />} />
+            <Route path="/treatments/strength" element={<StrengthPage />} />
+            <Route path="/treatments/anti-aging" element={<AntiAgingPage />} />
+            <Route path="/treatments/hair" element={<HairPage />} />
+            <Route path="/treatments/skin" element={<SkinPage />} />
+            <Route path="/treatments/mood" element={<MoodPage />} />
+            
             <Route path="/treatment/:id" element={<TreatmentDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
