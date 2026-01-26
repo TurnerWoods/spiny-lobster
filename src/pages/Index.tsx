@@ -11,10 +11,12 @@ import Footer from "@/components/Footer";
 import AIChatWidget from "@/components/AIChatWidget";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
 import ScrollToTop from "@/components/ScrollToTop";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />
