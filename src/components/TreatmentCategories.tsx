@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { Zap, FlaskConical, Battery, Sparkles, Dumbbell, Heart, Smile, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Import treatment images
-import treatmentWeightLoss from "@/assets/treatment-weight-loss.jpg";
-import treatmentHormone from "@/assets/treatment-hormone.jpg";
-import treatmentStrength from "@/assets/treatment-strength.jpg";
-import treatmentAntiAging from "@/assets/treatment-anti-aging.jpg";
-import treatmentHair from "@/assets/treatment-hair.jpg";
-import treatmentSkin from "@/assets/treatment-skin.jpg";
-import treatmentMood from "@/assets/treatment-mood.jpg";
+// Import new lifestyle treatment card images
+import cardWeightLoss from "@/assets/card-weight-loss.jpg";
+import cardHormones from "@/assets/card-hormones.jpg";
+import cardStrength from "@/assets/card-strength.jpg";
+import cardAntiAging from "@/assets/card-anti-aging.jpg";
+import cardHair from "@/assets/card-hair.jpg";
+import cardSkin from "@/assets/card-skin.jpg";
+import cardMood from "@/assets/card-mood.jpg";
 
 const treatments = [
   {
@@ -19,7 +19,7 @@ const treatments = [
     subtitle: "GLP-1 & Peptide Therapies",
     description: "Semaglutide, Tirzepatide, and metabolic peptides for clinically proven, sustainable weight loss results.",
     benefits: ["Reduce appetite", "Boost metabolism", "Lose stubborn fat"],
-    image: treatmentWeightLoss,
+    image: cardWeightLoss,
     price: "From $149/mo",
     slug: "weight-loss",
   },
@@ -29,7 +29,7 @@ const treatments = [
     subtitle: "Testosterone Therapy",
     description: "Testosterone Cypionate with ongoing physician support for energy, mood, and performance optimization.",
     benefits: ["Increased energy", "Improved mood", "Better composition"],
-    image: treatmentHormone,
+    image: cardHormones,
     price: "From $149/mo",
     slug: "hormones",
   },
@@ -39,7 +39,7 @@ const treatments = [
     subtitle: "Performance Peptides",
     description: "Sermorelin, BPC-157, and recovery peptides to build muscle, heal faster, and maximize performance.",
     benefits: ["Faster recovery", "Muscle growth", "Joint support"],
-    image: treatmentStrength,
+    image: cardStrength,
     price: "From $199/mo",
     slug: "strength",
   },
@@ -49,7 +49,7 @@ const treatments = [
     subtitle: "Cellular Optimization",
     description: "NAD+, Glutathione, and longevity peptides for cellular energy, mental clarity, and healthy aging.",
     benefits: ["Cellular energy", "Mental clarity", "Longevity"],
-    image: treatmentAntiAging,
+    image: cardAntiAging,
     price: "From $199/mo",
     slug: "anti-aging",
   },
@@ -59,7 +59,7 @@ const treatments = [
     subtitle: "Hair Restoration",
     description: "Finasteride, Minoxidil, and peptide therapies to stop hair loss and promote regrowth.",
     benefits: ["Stop hair loss", "Promote growth", "Thicker hair"],
-    image: treatmentHair,
+    image: cardHair,
     price: "From $29/mo",
     slug: "hair",
   },
@@ -69,7 +69,7 @@ const treatments = [
     subtitle: "Medical Skincare",
     description: "Tretinoin, GHK-Cu, and regenerative treatments for healthier, more youthful skin.",
     benefits: ["Reduce wrinkles", "Brighter tone", "Skin firmness"],
-    image: treatmentSkin,
+    image: cardSkin,
     price: "From $49/mo",
     slug: "skin",
   },
@@ -79,7 +79,7 @@ const treatments = [
     subtitle: "Cognitive Enhancement",
     description: "Semax, Selank, and nootropic peptides to sharpen focus, reduce stress, and boost mental clarity.",
     benefits: ["Mental clarity", "Stress reduction", "Better focus"],
-    image: treatmentMood,
+    image: cardMood,
     price: "From $99/mo",
     slug: "mood",
   },
