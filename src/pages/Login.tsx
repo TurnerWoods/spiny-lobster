@@ -43,9 +43,9 @@ const Login = () => {
       <header className="border-b bg-background">
         <div className="container flex h-16 items-center justify-between px-4">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logoIcon} alt="Pure Nova Health" className="h-8 w-auto" />
+            <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
             <span className="font-display text-lg font-bold">
-              Pure<span className="text-primary">Nova</span>Health
+              Elevare<span className="text-primary">Health</span>
             </span>
           </Link>
           <Link to="/" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary">
