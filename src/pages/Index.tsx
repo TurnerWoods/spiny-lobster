@@ -9,6 +9,7 @@ import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import AIChatWidget from "@/components/AIChatWidget";
+import MobileBottomCTA from "@/components/MobileBottomCTA";
 
 const Index = () => {
   return (
@@ -26,6 +27,7 @@ const Index = () => {
       </main>
       <Footer />
       <AIChatWidget />
+      <MobileBottomCTA />
     </div>
   );
 };
