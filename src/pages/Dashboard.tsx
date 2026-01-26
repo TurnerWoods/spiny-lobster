@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { 
   User, 
   Pill, 
@@ -16,7 +17,8 @@ import {
   AlertCircle,
   Package,
   ChevronRight,
-  Home
+  Home,
+  Sparkles
 } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
 import PatientMessaging from "@/components/dashboard/PatientMessaging";
@@ -132,12 +134,12 @@ const Dashboard = () => {
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-warm-stone">
+              <Button variant="ghost" size="sm" className="text-warm-gray hover:text-warm-stone hover:bg-warm-stone/10">
                 <Home className="mr-2 h-4 w-4" />
                 Home
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" onClick={handleSignOut} className="text-muted-foreground hover:text-warm-stone">
+            <Button variant="ghost" size="sm" onClick={handleSignOut} className="text-warm-gray hover:text-warm-stone hover:bg-warm-stone/10">
               <LogOut className="mr-2 h-4 w-4" />
               Sign Out
             </Button>
@@ -152,10 +154,14 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white/80 px-4 py-2 backdrop-blur-sm">
+            <Sparkles className="h-4 w-4 text-warm-stone" />
+            <span className="text-sm font-medium text-warm-stone">Patient Dashboard</span>
+          </div>
           <h1 className="font-display text-3xl font-bold text-rich-black">
             Welcome back, {firstName}!
           </h1>
-          <p className="mt-1 text-muted-foreground">
+          <p className="mt-1 text-warm-gray">
             Track your treatments and manage your health journey
           </p>
         </motion.div>
@@ -168,56 +174,58 @@ const Dashboard = () => {
           className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
         >
           <Link to="/intake">
-            <div className="flex items-center gap-4 rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl transition-all hover:shadow-lg hover:bg-pure-white">
+            <Card variant="glass" className="flex items-center gap-4 p-4 transition-all hover:shadow-lg">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
                 <Plus className="h-6 w-6 text-warm-stone" />
               </div>
               <div>
                 <p className="font-semibold text-rich-black">Start Treatment</p>
-                <p className="text-sm text-muted-foreground">Complete intake</p>
+                <p className="text-sm text-warm-gray">Complete intake</p>
               </div>
-            </div>
+            </Card>
           </Link>
           <button
             onClick={() => {
               setIsMessagingOpen(true);
               setUnreadCount(0);
             }}
-            className="flex w-full items-center gap-4 rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl transition-all hover:shadow-lg hover:bg-pure-white text-left"
+            className="text-left"
           >
-            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
-              <MessageCircle className="h-6 w-6 text-warm-stone" />
-              {unreadCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-bold text-pure-white">
-                  {unreadCount}
-                </span>
-              )}
-            </div>
-            <div>
-              <p className="font-semibold text-rich-black">Messages</p>
-              <p className="text-sm text-muted-foreground">
-                {unreadCount > 0 ? `${unreadCount} unread` : "Chat with care team"}
-              </p>
-            </div>
+            <Card variant="glass" className="flex h-full items-center gap-4 p-4 transition-all hover:shadow-lg">
+              <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+                <MessageCircle className="h-6 w-6 text-warm-stone" />
+                {unreadCount > 0 && (
+                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-bold text-pure-white">
+                    {unreadCount}
+                  </span>
+                )}
+              </div>
+              <div>
+                <p className="font-semibold text-rich-black">Messages</p>
+                <p className="text-sm text-warm-gray">
+                  {unreadCount > 0 ? `${unreadCount} unread` : "Chat with care team"}
+                </p>
+              </div>
+            </Card>
           </button>
-          <div className="flex items-center gap-4 rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl">
+          <Card variant="glass" className="flex items-center gap-4 p-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
               <Calendar className="h-6 w-6 text-warm-stone" />
             </div>
             <div>
               <p className="font-semibold text-rich-black">Appointments</p>
-              <p className="text-sm text-muted-foreground">None scheduled</p>
+              <p className="text-sm text-warm-gray">None scheduled</p>
             </div>
-          </div>
-          <div className="flex items-center gap-4 rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl">
+          </Card>
+          <Card variant="glass" className="flex items-center gap-4 p-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
               <User className="h-6 w-6 text-warm-stone" />
             </div>
             <div>
               <p className="font-semibold text-rich-black">Profile</p>
-              <p className="text-sm text-muted-foreground">Edit details</p>
+              <p className="text-sm text-warm-gray">Edit details</p>
             </div>
-          </div>
+          </Card>
         </motion.div>
 
         {/* Treatments Section */}
@@ -229,7 +237,7 @@ const Dashboard = () => {
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-display text-xl font-bold text-rich-black">My Treatments</h2>
             <Link to="/#treatments">
-              <Button variant="outline" size="sm" className="border-warm-stone/30 hover:bg-warm-stone/10">
+              <Button variant="outline" size="sm" className="border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10">
                 <Plus className="mr-2 h-4 w-4" />
                 New Treatment
               </Button>
@@ -237,12 +245,12 @@ const Dashboard = () => {
           </div>
 
           {treatments.length === 0 ? (
-            <div className="rounded-2xl border border-pure-white/40 bg-pure-white/80 p-8 text-center shadow-lg backdrop-blur-xl">
+            <Card variant="glass" className="p-8 text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-warm-stone/10">
                 <Pill className="h-8 w-8 text-warm-stone" />
               </div>
               <h3 className="mb-2 font-display text-lg font-semibold text-rich-black">No treatments yet</h3>
-              <p className="mb-4 text-muted-foreground">
+              <p className="mb-4 text-warm-gray">
                 Start your health journey by completing a free consultation
               </p>
               <Link to="/#treatments">
@@ -250,7 +258,7 @@ const Dashboard = () => {
                   Browse Treatments
                 </Button>
               </Link>
-            </div>
+            </Card>
           ) : (
             <div className="space-y-4">
               {treatments.map((treatment) => {
@@ -258,29 +266,27 @@ const Dashboard = () => {
                 const StatusIcon = status.icon;
 
                 return (
-                  <Link
-                    key={treatment.id}
-                    to={`/treatment/${treatment.id}`}
-                    className="flex items-center justify-between rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl transition-all hover:shadow-lg hover:bg-pure-white"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
-                        <Pill className="h-6 w-6 text-warm-stone" />
+                  <Link key={treatment.id} to={`/treatment/${treatment.id}`}>
+                    <Card variant="glass" className="flex items-center justify-between p-4 transition-all hover:shadow-lg">
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+                          <Pill className="h-6 w-6 text-warm-stone" />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-rich-black">{treatment.treatment_type}</p>
+                          <p className="text-sm text-warm-gray">
+                            {treatment.medication || "Medication pending"}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-rich-black">{treatment.treatment_type}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {treatment.medication || "Medication pending"}
-                        </p>
+                      <div className="flex items-center gap-4">
+                        <div className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${status.color}`}>
+                          <StatusIcon className="h-4 w-4" />
+                          {status.label}
+                        </div>
+                        <ChevronRight className="h-5 w-5 text-warm-stone/60" />
                       </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${status.color}`}>
-                        <StatusIcon className="h-4 w-4" />
-                        {status.label}
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-warm-stone/60" />
-                    </div>
+                    </Card>
                   </Link>
                 );
               })}
@@ -296,12 +302,12 @@ const Dashboard = () => {
           className="mt-8"
         >
           <h2 className="mb-4 font-display text-xl font-bold text-rich-black">Recent Activity</h2>
-          <div className="rounded-2xl border border-pure-white/40 bg-pure-white/80 p-6 shadow-sm backdrop-blur-xl">
-            <div className="flex items-center gap-4 text-muted-foreground">
+          <Card variant="glass" className="p-6">
+            <div className="flex items-center gap-4 text-warm-gray">
               <Package className="h-5 w-5 text-warm-stone/60" />
               <p>No recent activity. Start a treatment to see updates here.</p>
             </div>
-          </div>
+          </Card>
         </motion.div>
       </main>
 
