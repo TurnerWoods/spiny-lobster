@@ -1,4 +1,5 @@
 import TreatmentPageTemplate, { TreatmentData } from "@/components/TreatmentPageTemplate";
+import heroImage from "@/assets/hero-hair.jpg";
 
 const treatment: TreatmentData = {
   category: "Hair Restoration",
@@ -6,6 +7,7 @@ const treatment: TreatmentData = {
   subtitle: "Clinically Proven Solutions for Male Pattern Baldness",
   description: "Hair loss affects 85% of men by age 50, but it doesn't have to be permanent. Our comprehensive hair restoration protocols combine proven medications with advanced peptide therapies to stop loss and promote regrowth.",
   price: "$79/mo",
+  heroImage,
   medications: [
     {
       name: "Finasteride",

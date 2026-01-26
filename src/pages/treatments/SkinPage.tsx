@@ -1,4 +1,5 @@
 import TreatmentPageTemplate, { TreatmentData } from "@/components/TreatmentPageTemplate";
+import heroImage from "@/assets/hero-skin.jpg";
 
 const treatment: TreatmentData = {
   category: "Skin & Aesthetics",
@@ -6,6 +7,7 @@ const treatment: TreatmentData = {
   subtitle: "Prescription-Strength Solutions for Healthier Skin",
   description: "Look as good as you feel with medical-grade skincare treatments that go beyond what's available over the counter. Our protocols target aging, acne, sun damage, and skin health at the cellular level.",
   price: "$99/mo",
+  heroImage,
   medications: [
     {
       name: "Tretinoin (Retin-A)",

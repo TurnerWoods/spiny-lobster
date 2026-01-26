@@ -12,6 +12,7 @@ export interface TreatmentData {
   subtitle: string;
   description: string;
   price: string;
+  heroImage?: string;
   medications: {
     name: string;
     description: string;
@@ -34,8 +35,19 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-primary/10 to-background py-16 sm:py-20">
-          <div className="container px-4 md:px-6">
+        <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 to-background py-16 sm:py-20">
+          {/* Hero Background Image */}
+          {treatment.heroImage && (
+            <div className="absolute inset-0 z-0">
+              <img
+                src={treatment.heroImage}
+                alt={treatment.title}
+                className="h-full w-full object-cover opacity-15"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+            </div>
+          )}
+          <div className="container relative z-10 px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <motion.span
                 initial={{ opacity: 0 }}
