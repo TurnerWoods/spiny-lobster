@@ -1,4 +1,5 @@
 import TreatmentPageTemplate, { TreatmentData } from "@/components/TreatmentPageTemplate";
+import heroImage from "@/assets/hero-weight-loss.jpg";
 
 const treatment: TreatmentData = {
   category: "Weight Loss",
@@ -6,6 +7,7 @@ const treatment: TreatmentData = {
   subtitle: "Clinically Proven GLP-1 & Peptide Therapies",
   description: "Break through weight loss plateaus with physician-supervised therapies that work with your body's natural systems. Our medical weight loss protocols help reduce appetite, boost metabolism, and support lasting results.",
   price: "$149/mo",
+  heroImage,
   medications: [
     {
       name: "Semaglutide",

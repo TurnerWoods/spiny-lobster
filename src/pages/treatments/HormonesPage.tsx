@@ -1,4 +1,5 @@
 import TreatmentPageTemplate, { TreatmentData } from "@/components/TreatmentPageTemplate";
+import heroImage from "@/assets/hero-hormones.jpg";
 
 const treatment: TreatmentData = {
   category: "Hormone Optimization",
@@ -6,6 +7,7 @@ const treatment: TreatmentData = {
   subtitle: "Restore Your Vitality & Performance",
   description: "Low testosterone affects millions of men, often without them realizing it. Fatigue, decreased motivation, weight gain, and declining performance aren't inevitable parts of aging. TRT can help you feel like yourself again.",
   price: "$149/mo",
+  heroImage,
   medications: [
     {
       name: "Testosterone Cypionate",

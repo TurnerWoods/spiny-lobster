@@ -1,4 +1,5 @@
 import TreatmentPageTemplate, { TreatmentData } from "@/components/TreatmentPageTemplate";
+import heroImage from "@/assets/hero-mood.jpg";
 
 const treatment: TreatmentData = {
   category: "Mood & Cognitive",
@@ -6,6 +7,7 @@ const treatment: TreatmentData = {
   subtitle: "Optimize Your Mind for Peak Performance",
   description: "Your mental performance matters as much as your physical health. Our cognitive and mood support protocols help sharpen focus, stabilize mood, and enhance mental clarity without the side effects of traditional medications.",
   price: "$99/mo",
+  heroImage,
   medications: [
     {
       name: "PT-141 (Bremelanotide)",

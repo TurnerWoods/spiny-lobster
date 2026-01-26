@@ -1,4 +1,5 @@
 import TreatmentPageTemplate, { TreatmentData } from "@/components/TreatmentPageTemplate";
+import heroImage from "@/assets/hero-anti-aging.jpg";
 
 const treatment: TreatmentData = {
   category: "Anti-Aging & Longevity",
@@ -6,6 +7,7 @@ const treatment: TreatmentData = {
   subtitle: "Turn Back the Clock at the Cellular Level",
   description: "Age is more than a number—it's how your cells function. Our anti-aging protocols target the root causes of aging, supporting cellular energy, DNA repair, and metabolic health for a longer, more vibrant healthspan.",
   price: "$199/mo",
+  heroImage,
   medications: [
     {
       name: "NAD+ Injections",

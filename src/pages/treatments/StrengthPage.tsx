@@ -1,4 +1,5 @@
 import TreatmentPageTemplate, { TreatmentData } from "@/components/TreatmentPageTemplate";
+import heroImage from "@/assets/hero-strength.jpg";
 
 const treatment: TreatmentData = {
   category: "Strength & Recovery",
@@ -6,6 +7,7 @@ const treatment: TreatmentData = {
   subtitle: "Accelerate Recovery & Build Lean Muscle",
   description: "Optimize your body's natural recovery systems with peptide therapies that support muscle growth, tissue repair, and athletic performance. Perfect for active men looking to maximize their training results.",
   price: "$199/mo",
+  heroImage,
   medications: [
     {
       name: "Sermorelin",
