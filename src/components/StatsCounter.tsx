@@ -49,14 +49,14 @@ const AnimatedNumber = ({ value, suffix, inView, isRange }: { value: number; suf
   // Special handling for range values like "3-5"
   if (isRange) {
     return (
-      <span className="font-display text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+      <span className="font-display text-2xl font-bold text-pure-white sm:text-3xl md:text-4xl">
         3-5{suffix}
       </span>
     );
   }
 
   return (
-    <span className="font-display text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+    <span className="font-display text-2xl font-bold text-pure-white sm:text-3xl md:text-4xl">
       {formatNumber(displayValue)}{suffix}
     </span>
   );
@@ -72,7 +72,7 @@ const StatsCounter = () => {
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: 0.5 }}
-      className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-md sm:mt-16 sm:gap-6 sm:p-6 md:grid-cols-4 md:gap-8 md:p-8"
+      className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-pure-white/20 bg-pure-white/10 p-4 shadow-xl backdrop-blur-lg sm:mt-16 sm:gap-6 sm:p-6 md:grid-cols-4 md:gap-8 md:p-8"
     >
       {stats.map((stat, index) => (
         <div key={index} className="text-center">
@@ -82,7 +82,7 @@ const StatsCounter = () => {
             inView={isInView} 
             isRange={stat.value.includes("-")}
           />
-          <p className="mt-1 text-xs font-medium text-white/70 sm:mt-2 sm:text-sm">{stat.label}</p>
+          <p className="mt-1 text-xs font-medium text-pure-white/75 sm:mt-2 sm:text-sm">{stat.label}</p>
         </div>
       ))}
     </motion.div>
