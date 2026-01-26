@@ -111,8 +111,8 @@ const Dashboard = () => {
 
   if (authLoading || isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-warm-stone border-t-transparent" />
       </div>
     );
   }
@@ -120,24 +120,24 @@ const Dashboard = () => {
   const firstName = profile?.first_name || user?.email?.split("@")[0] || "Patient";
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/70 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between px-4">
           <Link to="/" className="flex items-center gap-2">
             <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
-            <span className="font-display text-lg font-bold">
-              Elevare<span className="text-primary">Health</span>
+            <span className="font-display text-lg font-bold text-rich-black">
+              Elevare<span className="text-warm-stone">Health</span>
             </span>
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-warm-stone">
                 <Home className="mr-2 h-4 w-4" />
                 Home
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" onClick={handleSignOut}>
+            <Button variant="ghost" size="sm" onClick={handleSignOut} className="text-muted-foreground hover:text-warm-stone">
               <LogOut className="mr-2 h-4 w-4" />
               Sign Out
             </Button>
@@ -152,7 +152,7 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="font-display text-3xl font-bold text-foreground">
+          <h1 className="font-display text-3xl font-bold text-rich-black">
             Welcome back, {firstName}!
           </h1>
           <p className="mt-1 text-muted-foreground">
@@ -168,12 +168,12 @@ const Dashboard = () => {
           className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
         >
           <Link to="/intake">
-            <div className="flex items-center gap-4 rounded-xl border bg-card p-4 shadow-sm transition-all hover:shadow-md">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-light">
-                <Plus className="h-6 w-6 text-primary" />
+            <div className="flex items-center gap-4 rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl transition-all hover:shadow-lg hover:bg-pure-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+                <Plus className="h-6 w-6 text-warm-stone" />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Start Treatment</p>
+                <p className="font-semibold text-rich-black">Start Treatment</p>
                 <p className="text-sm text-muted-foreground">Complete intake</p>
               </div>
             </div>
@@ -183,38 +183,38 @@ const Dashboard = () => {
               setIsMessagingOpen(true);
               setUnreadCount(0);
             }}
-            className="flex w-full items-center gap-4 rounded-xl border bg-card p-4 shadow-sm transition-all hover:shadow-md text-left"
+            className="flex w-full items-center gap-4 rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl transition-all hover:shadow-lg hover:bg-pure-white text-left"
           >
-            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-              <MessageCircle className="h-6 w-6 text-blue-600" />
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+              <MessageCircle className="h-6 w-6 text-warm-stone" />
               {unreadCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-bold text-pure-white">
                   {unreadCount}
                 </span>
               )}
             </div>
             <div>
-              <p className="font-semibold text-foreground">Messages</p>
+              <p className="font-semibold text-rich-black">Messages</p>
               <p className="text-sm text-muted-foreground">
                 {unreadCount > 0 ? `${unreadCount} unread` : "Chat with care team"}
               </p>
             </div>
           </button>
-          <div className="flex items-center gap-4 rounded-xl border bg-card p-4 shadow-sm">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-              <Calendar className="h-6 w-6 text-purple-600" />
+          <div className="flex items-center gap-4 rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+              <Calendar className="h-6 w-6 text-warm-stone" />
             </div>
             <div>
-              <p className="font-semibold text-foreground">Appointments</p>
+              <p className="font-semibold text-rich-black">Appointments</p>
               <p className="text-sm text-muted-foreground">None scheduled</p>
             </div>
           </div>
-          <div className="flex items-center gap-4 rounded-xl border bg-card p-4 shadow-sm">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
-              <User className="h-6 w-6 text-amber-600" />
+          <div className="flex items-center gap-4 rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+              <User className="h-6 w-6 text-warm-stone" />
             </div>
             <div>
-              <p className="font-semibold text-foreground">Profile</p>
+              <p className="font-semibold text-rich-black">Profile</p>
               <p className="text-sm text-muted-foreground">Edit details</p>
             </div>
           </div>
@@ -227,9 +227,9 @@ const Dashboard = () => {
           transition={{ delay: 0.2 }}
         >
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display text-xl font-bold text-foreground">My Treatments</h2>
+            <h2 className="font-display text-xl font-bold text-rich-black">My Treatments</h2>
             <Link to="/#treatments">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="border-warm-stone/30 hover:bg-warm-stone/10">
                 <Plus className="mr-2 h-4 w-4" />
                 New Treatment
               </Button>
@@ -237,16 +237,16 @@ const Dashboard = () => {
           </div>
 
           {treatments.length === 0 ? (
-            <div className="rounded-2xl border bg-card p-8 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-                <Pill className="h-8 w-8 text-muted-foreground" />
+            <div className="rounded-2xl border border-pure-white/40 bg-pure-white/80 p-8 text-center shadow-lg backdrop-blur-xl">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-warm-stone/10">
+                <Pill className="h-8 w-8 text-warm-stone" />
               </div>
-              <h3 className="mb-2 font-display text-lg font-semibold">No treatments yet</h3>
+              <h3 className="mb-2 font-display text-lg font-semibold text-rich-black">No treatments yet</h3>
               <p className="mb-4 text-muted-foreground">
                 Start your health journey by completing a free consultation
               </p>
               <Link to="/#treatments">
-                <Button className="bg-primary hover:bg-primary-dark">
+                <Button className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90">
                   Browse Treatments
                 </Button>
               </Link>
@@ -261,14 +261,14 @@ const Dashboard = () => {
                   <Link
                     key={treatment.id}
                     to={`/treatment/${treatment.id}`}
-                    className="flex items-center justify-between rounded-xl border bg-card p-4 shadow-sm transition-all hover:shadow-md"
+                    className="flex items-center justify-between rounded-xl border border-pure-white/40 bg-pure-white/80 p-4 shadow-sm backdrop-blur-xl transition-all hover:shadow-lg hover:bg-pure-white"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-light">
-                        <Pill className="h-6 w-6 text-primary" />
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+                        <Pill className="h-6 w-6 text-warm-stone" />
                       </div>
                       <div>
-                        <p className="font-semibold text-foreground">{treatment.treatment_type}</p>
+                        <p className="font-semibold text-rich-black">{treatment.treatment_type}</p>
                         <p className="text-sm text-muted-foreground">
                           {treatment.medication || "Medication pending"}
                         </p>
@@ -279,7 +279,7 @@ const Dashboard = () => {
                         <StatusIcon className="h-4 w-4" />
                         {status.label}
                       </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                      <ChevronRight className="h-5 w-5 text-warm-stone/60" />
                     </div>
                   </Link>
                 );
@@ -295,10 +295,10 @@ const Dashboard = () => {
           transition={{ delay: 0.3 }}
           className="mt-8"
         >
-          <h2 className="mb-4 font-display text-xl font-bold text-foreground">Recent Activity</h2>
-          <div className="rounded-2xl border bg-card p-6">
+          <h2 className="mb-4 font-display text-xl font-bold text-rich-black">Recent Activity</h2>
+          <div className="rounded-2xl border border-pure-white/40 bg-pure-white/80 p-6 shadow-sm backdrop-blur-xl">
             <div className="flex items-center gap-4 text-muted-foreground">
-              <Package className="h-5 w-5" />
+              <Package className="h-5 w-5 text-warm-stone/60" />
               <p>No recent activity. Start a treatment to see updates here.</p>
             </div>
           </div>
