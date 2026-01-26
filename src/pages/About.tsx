@@ -128,26 +128,26 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="mb-8 text-center font-display text-3xl font-bold text-foreground">Leadership</h2>
+                <h2 className="mb-8 text-center font-display text-3xl font-bold text-foreground">Leadership Team</h2>
                 <div className="grid gap-6 md:grid-cols-2">
                   <div className="rounded-xl border bg-card p-6 text-center">
                     <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary">
                       <span className="font-display text-2xl font-bold">PM</span>
                     </div>
-                    <h3 className="mb-1 font-display text-xl font-bold text-foreground">Dr. Paul Myers, MD</h3>
-                    <p className="mb-3 text-sm font-medium text-primary">Medical Director</p>
+                    <h3 className="mb-1 font-display text-xl font-bold text-foreground">Dr. Paul Myers, DO</h3>
+                    <p className="mb-3 text-sm font-medium text-primary">Co-Founder & Medical Director</p>
                     <p className="text-sm text-muted-foreground">
-                      Board-certified physician with 15+ years of clinical experience. Dr. Myers oversees all clinical operations and personally reviews complex cases. He ensures every treatment plan meets the highest standards of medical care.
+                      Graduated from Lake Erie College of Osteopathic Medicine (2010). Board-certified emergency medicine physician with 15+ years clinical experience. Oversees all clinical care and personally treats patients.
                     </p>
                   </div>
                   <div className="rounded-xl border bg-card p-6 text-center">
                     <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <span className="font-display text-2xl font-bold">W&M</span>
+                      <span className="font-display text-2xl font-bold">PE</span>
                     </div>
-                    <h3 className="mb-1 font-display text-xl font-bold text-foreground">Woods & Matt Woods</h3>
-                    <p className="mb-3 text-sm font-medium text-primary">Co-Founders</p>
+                    <h3 className="mb-1 font-display text-xl font-bold text-foreground">Paul Eckdale</h3>
+                    <p className="mb-3 text-sm font-medium text-primary">Co-Founder</p>
                     <p className="text-sm text-muted-foreground">
-                      The Woods brothers bring decades of combined experience in healthcare operations, technology, and patient experience. Their mission: make premium men's health accessible to every Texas professional who needs it.
+                      16+ years medical field experience. Focus on pharmacy operations and provider-pharmacy coordination. Oversees pharmacy relationships.
                     </p>
                   </div>
                 </div>
