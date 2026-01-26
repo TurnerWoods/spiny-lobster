@@ -1,12 +1,18 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User } from "lucide-react";
+import { Menu, User, ChevronRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import logoIcon from "@/assets/logo-icon.png";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, isLoading } = useAuth();
 
   const navLinks = [
@@ -70,59 +76,85 @@ const Header = () => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="flex items-center justify-center md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-      </div>
+        {/* Mobile Menu */}
+        <Sheet>
+          <SheetTrigger asChild className="md:hidden">
+            <Button variant="ghost" size="icon" aria-label="Open menu">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[300px] p-0">
+            <SheetHeader className="border-b p-4">
+              <SheetTitle className="flex items-center gap-2">
+                <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
+                <span className="font-display text-lg font-bold">
+                  Elevare<span className="text-primary">Health</span>
+                </span>
+              </SheetTitle>
+            </SheetHeader>
+            <ScrollArea className="h-[calc(100vh-80px)]">
+              <div className="flex flex-col p-4">
+                {/* Navigation Links */}
+                <nav className="flex flex-col gap-1">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      to={link.href}
+                      className="flex items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
+                    >
+                      {link.name}
+                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    </Link>
+                  ))}
+                </nav>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="border-t bg-background md:hidden">
-          <nav className="container flex flex-col gap-4 px-4 py-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <hr className="my-2" />
-            {!isLoading && (
-              <>
-                {user ? (
-                  <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                    <Button className="w-full bg-primary hover:bg-primary-dark">
-                      <User className="mr-2 h-4 w-4" />
-                      My Dashboard
-                    </Button>
-                  </Link>
-                ) : (
-                  <div className="flex flex-col gap-2">
-                    <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                      <Button variant="outline" className="w-full">
-                        Sign In
-                      </Button>
-                    </Link>
-                    <Link to="/intake" onClick={() => setIsMenuOpen(false)}>
-                      <Button className="w-full bg-primary hover:bg-primary-dark">
-                        Get Started
-                      </Button>
-                    </Link>
+                {/* Divider */}
+                <div className="my-4 h-px bg-border" />
+
+                {/* Auth Buttons */}
+                {!isLoading && (
+                  <div className="flex flex-col gap-3">
+                    {user ? (
+                      <Link to="/dashboard">
+                        <Button className="w-full bg-primary hover:bg-primary-dark">
+                          <User className="mr-2 h-4 w-4" />
+                          My Dashboard
+                        </Button>
+                      </Link>
+                    ) : (
+                      <>
+                        <Link to="/intake">
+                          <Button className="w-full bg-primary hover:bg-primary-dark">
+                            Get Started
+                          </Button>
+                        </Link>
+                        <Link to="/login">
+                          <Button variant="outline" className="w-full">
+                            Sign In
+                          </Button>
+                        </Link>
+                      </>
+                    )}
                   </div>
                 )}
-              </>
-            )}
-          </nav>
-        </div>
-      )}
+
+                {/* Additional Info */}
+                <div className="mt-6 rounded-lg bg-muted/50 p-4">
+                  <p className="text-sm font-medium text-foreground">Need help?</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Our team is available 24/7 to answer your questions.
+                  </p>
+                  <Link to="/contact" className="mt-3 block">
+                    <Button variant="outline" size="sm" className="w-full">
+                      Contact Support
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </ScrollArea>
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 };
