@@ -77,6 +77,12 @@ const MediaManager = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   
+  // Pagination states
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const PAGE_SIZE = 50;
+  
   // Dialog states
   const [newFolderDialogOpen, setNewFolderDialogOpen] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
@@ -96,13 +102,23 @@ const MediaManager = () => {
     navigate("/login");
   };
 
-  const fetchFiles = useCallback(async () => {
-    setIsLoading(true);
+  const fetchFiles = useCallback(async (reset = true) => {
+    if (reset) {
+      setIsLoading(true);
+      setFiles([]);
+      setHasMore(true);
+    } else {
+      setIsLoadingMore(true);
+    }
+    
     try {
+      const offset = reset ? 0 : files.filter(f => !("isFolder" in f)).length;
+      
       const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
         .list(currentPath, {
-          limit: 1000,
+          limit: PAGE_SIZE,
+          offset: offset,
           sortBy: { column: "name", order: "asc" },
         });
 
@@ -121,7 +137,19 @@ const MediaManager = () => {
         }
       });
 
-      setFiles([...folders, ...fileItems]);
+      // Check if there are more files to load
+      setHasMore(data?.length === PAGE_SIZE);
+
+      if (reset) {
+        setFiles([...folders, ...fileItems]);
+      } else {
+        // Append only new files (folders are always fetched on reset)
+        setFiles(prev => {
+          const existingNames = new Set(prev.map(f => f.name));
+          const newItems = fileItems.filter(f => !existingNames.has(f.name));
+          return [...prev, ...newItems];
+        });
+      }
     } catch (error) {
       console.error("Error fetching files:", error);
       toast({
@@ -131,14 +159,35 @@ const MediaManager = () => {
       });
     } finally {
       setIsLoading(false);
+      setIsLoadingMore(false);
     }
-  }, [currentPath, toast]);
+  }, [currentPath, files, toast]);
 
+  // Initial fetch when path changes
   useEffect(() => {
     if (user && !authLoading) {
-      fetchFiles();
+      fetchFiles(true);
     }
-  }, [user, authLoading, fetchFiles]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, authLoading, currentPath]);
+
+  // Intersection observer for infinite scroll
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoadingMore && !isLoading && !searchQuery) {
+          fetchFiles(false);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(loadMoreRef.current);
+    return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasMore, isLoadingMore, isLoading, searchQuery]);
 
   const uploadFiles = useCallback(async (filesToUpload: FileList | File[]) => {
     const filesArray = Array.from(filesToUpload);
@@ -844,6 +893,27 @@ const MediaManager = () => {
               </Card>
             ))}
           </motion.div>
+        )}
+
+        {/* Infinite scroll trigger */}
+        {!searchQuery && filteredFiles.length > 0 && (
+          <div
+            ref={loadMoreRef}
+            className="flex items-center justify-center py-8"
+          >
+            {isLoadingMore ? (
+              <div className="flex items-center gap-2 text-warm-gray">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span className="text-sm">Loading more files...</span>
+              </div>
+            ) : hasMore ? (
+              <span className="text-sm text-warm-gray">Scroll for more</span>
+            ) : (
+              <span className="text-sm text-warm-gray">
+                All {files.length} items loaded
+              </span>
+            )}
+          </div>
         )}
       </main>
 
