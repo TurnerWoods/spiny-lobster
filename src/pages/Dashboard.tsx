@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { 
   User, 
   Pill, 
@@ -18,7 +18,8 @@ import {
   Package,
   ChevronRight,
   Home,
-  Sparkles
+  Sparkles,
+  Activity
 } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
 import PatientMessaging from "@/components/dashboard/PatientMessaging";
@@ -40,12 +41,12 @@ interface Treatment {
 }
 
 const statusConfig: Record<string, { label: string; color: string; icon: any }> = {
-  pending: { label: "Pending Review", color: "bg-warm-stone/20 text-warm-stone", icon: Clock },
-  under_review: { label: "Under Review", color: "bg-warm-stone/30 text-warm-stone", icon: AlertCircle },
-  approved: { label: "Approved", color: "bg-success/10 text-success", icon: CheckCircle2 },
-  active: { label: "Active", color: "bg-warm-stone/10 text-warm-stone", icon: CheckCircle2 },
-  completed: { label: "Completed", color: "bg-muted text-muted-foreground", icon: CheckCircle2 },
-  cancelled: { label: "Cancelled", color: "bg-destructive/10 text-destructive", icon: AlertCircle },
+  pending: { label: "Pending Review", color: "bg-warm-stone/20 text-warm-stone border border-warm-stone/30", icon: Clock },
+  under_review: { label: "Under Review", color: "bg-warm-stone/30 text-warm-stone border border-warm-stone/40", icon: AlertCircle },
+  approved: { label: "Approved", color: "bg-success/10 text-success border border-success/30", icon: CheckCircle2 },
+  active: { label: "Active", color: "bg-warm-stone/10 text-warm-stone border border-warm-stone/20", icon: CheckCircle2 },
+  completed: { label: "Completed", color: "bg-muted text-muted-foreground border border-border", icon: CheckCircle2 },
+  cancelled: { label: "Cancelled", color: "bg-destructive/10 text-destructive border border-destructive/30", icon: AlertCircle },
 };
 
 const Dashboard = () => {
@@ -113,8 +114,15 @@ const Dashboard = () => {
 
   if (authLoading || isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-warm-stone border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center gap-4"
+        >
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-warm-stone border-t-transparent" />
+          <p className="text-sm text-warm-gray">Loading your dashboard...</p>
+        </motion.div>
       </div>
     );
   }
@@ -122,46 +130,46 @@ const Dashboard = () => {
   const firstName = profile?.first_name || user?.email?.split("@")[0] || "Patient";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
+    <div className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/70 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
             <span className="font-display text-lg font-bold text-rich-black">
               Elevare<span className="text-warm-stone">Health</span>
             </span>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Link to="/">
               <Button variant="ghost" size="sm" className="text-warm-gray hover:text-warm-stone hover:bg-warm-stone/10">
                 <Home className="mr-2 h-4 w-4" />
-                Home
+                <span className="hidden sm:inline">Home</span>
               </Button>
             </Link>
             <Button variant="ghost" size="sm" onClick={handleSignOut} className="text-warm-gray hover:text-warm-stone hover:bg-warm-stone/10">
               <LogOut className="mr-2 h-4 w-4" />
-              Sign Out
+              <span className="hidden sm:inline">Sign Out</span>
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="container px-4 py-8">
+      <main className="container px-4 py-8 md:py-12">
         {/* Welcome Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white/80 px-4 py-2 backdrop-blur-sm">
-            <Sparkles className="h-4 w-4 text-warm-stone" />
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white/80 px-4 py-2 shadow-sm backdrop-blur-sm">
+            <Activity className="h-4 w-4 text-warm-stone" />
             <span className="text-sm font-medium text-warm-stone">Patient Dashboard</span>
           </div>
-          <h1 className="font-display text-3xl font-bold text-rich-black">
+          <h1 className="font-display text-3xl font-bold text-rich-black md:text-4xl">
             Welcome back, {firstName}!
           </h1>
-          <p className="mt-1 text-warm-gray">
+          <p className="mt-2 text-warm-gray">
             Track your treatments and manage your health journey
           </p>
         </motion.div>
@@ -171,11 +179,11 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
         >
-          <Link to="/intake">
-            <Card variant="glass" className="flex items-center gap-4 p-4 transition-all hover:shadow-lg">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+          <Link to="/intake" className="group">
+            <Card variant="glass" className="flex h-full items-center gap-4 p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
                 <Plus className="h-6 w-6 text-warm-stone" />
               </div>
               <div>
@@ -189,13 +197,13 @@ const Dashboard = () => {
               setIsMessagingOpen(true);
               setUnreadCount(0);
             }}
-            className="text-left"
+            className="text-left group"
           >
-            <Card variant="glass" className="flex h-full items-center gap-4 p-4 transition-all hover:shadow-lg">
-              <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+            <Card variant="glass" className="flex h-full items-center gap-4 p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
+              <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
                 <MessageCircle className="h-6 w-6 text-warm-stone" />
                 {unreadCount > 0 && (
-                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-bold text-pure-white">
+                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-bold text-pure-white animate-pulse">
                     {unreadCount}
                   </span>
                 )}
@@ -208,22 +216,22 @@ const Dashboard = () => {
               </div>
             </Card>
           </button>
-          <Card variant="glass" className="flex items-center gap-4 p-4">
+          <Card variant="glass" className="flex items-center gap-4 p-5 opacity-75">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
-              <Calendar className="h-6 w-6 text-warm-stone" />
+              <Calendar className="h-6 w-6 text-warm-stone/60" />
             </div>
             <div>
-              <p className="font-semibold text-rich-black">Appointments</p>
+              <p className="font-semibold text-rich-black/80">Appointments</p>
               <p className="text-sm text-warm-gray">None scheduled</p>
             </div>
           </Card>
-          <Card variant="glass" className="flex items-center gap-4 p-4">
+          <Card variant="glass" className="flex items-center gap-4 p-5 opacity-75">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
-              <User className="h-6 w-6 text-warm-stone" />
+              <User className="h-6 w-6 text-warm-stone/60" />
             </div>
             <div>
-              <p className="font-semibold text-rich-black">Profile</p>
-              <p className="text-sm text-warm-gray">Edit details</p>
+              <p className="font-semibold text-rich-black/80">Profile</p>
+              <p className="text-sm text-warm-gray">Coming soon</p>
             </div>
           </Card>
         </motion.div>
@@ -234,10 +242,13 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display text-xl font-bold text-rich-black">My Treatments</h2>
+          <div className="mb-5 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Sparkles className="h-5 w-5 text-warm-stone" />
+              <h2 className="font-display text-xl font-bold text-rich-black md:text-2xl">My Treatments</h2>
+            </div>
             <Link to="/#treatments">
-              <Button variant="outline" size="sm" className="border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10">
+              <Button variant="outline" size="sm" className="border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10 hover:border-warm-stone/50">
                 <Plus className="mr-2 h-4 w-4" />
                 New Treatment
               </Button>
@@ -245,49 +256,56 @@ const Dashboard = () => {
           </div>
 
           {treatments.length === 0 ? (
-            <Card variant="glass" className="p-8 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-warm-stone/10">
-                <Pill className="h-8 w-8 text-warm-stone" />
+            <Card variant="glass" className="p-10 text-center">
+              <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-warm-stone/10 to-warm-stone/20">
+                <Pill className="h-10 w-10 text-warm-stone" />
               </div>
-              <h3 className="mb-2 font-display text-lg font-semibold text-rich-black">No treatments yet</h3>
-              <p className="mb-4 text-warm-gray">
-                Start your health journey by completing a free consultation
+              <h3 className="mb-3 font-display text-xl font-semibold text-rich-black">No treatments yet</h3>
+              <p className="mb-6 max-w-sm mx-auto text-warm-gray">
+                Start your personalized health journey by completing a free consultation with our providers
               </p>
               <Link to="/#treatments">
-                <Button className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90">
+                <Button className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90 transition-all duration-300 hover:shadow-xl">
                   Browse Treatments
                 </Button>
               </Link>
             </Card>
           ) : (
             <div className="space-y-4">
-              {treatments.map((treatment) => {
+              {treatments.map((treatment, index) => {
                 const status = statusConfig[treatment.status] || statusConfig.pending;
                 const StatusIcon = status.icon;
 
                 return (
-                  <Link key={treatment.id} to={`/treatment/${treatment.id}`}>
-                    <Card variant="glass" className="flex items-center justify-between p-4 transition-all hover:shadow-lg">
-                      <div className="flex items-center gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
-                          <Pill className="h-6 w-6 text-warm-stone" />
+                  <motion.div
+                    key={treatment.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                  >
+                    <Link to={`/treatment/${treatment.id}`} className="group block">
+                      <Card variant="glass" className="flex items-center justify-between p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
+                        <div className="flex items-center gap-4">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
+                            <Pill className="h-6 w-6 text-warm-stone" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-rich-black">{treatment.treatment_type}</p>
+                            <p className="text-sm text-warm-gray">
+                              {treatment.medication || "Medication pending"}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-semibold text-rich-black">{treatment.treatment_type}</p>
-                          <p className="text-sm text-warm-gray">
-                            {treatment.medication || "Medication pending"}
-                          </p>
+                        <div className="flex items-center gap-3">
+                          <div className={`hidden sm:flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium ${status.color}`}>
+                            <StatusIcon className="h-4 w-4" />
+                            {status.label}
+                          </div>
+                          <ChevronRight className="h-5 w-5 text-warm-stone/60 transition-transform group-hover:translate-x-1" />
                         </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <div className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${status.color}`}>
-                          <StatusIcon className="h-4 w-4" />
-                          {status.label}
-                        </div>
-                        <ChevronRight className="h-5 w-5 text-warm-stone/60" />
-                      </div>
-                    </Card>
-                  </Link>
+                      </Card>
+                    </Link>
+                  </motion.div>
                 );
               })}
             </div>
@@ -299,13 +317,20 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-8"
+          className="mt-10"
         >
-          <h2 className="mb-4 font-display text-xl font-bold text-rich-black">Recent Activity</h2>
-          <Card variant="glass" className="p-6">
-            <div className="flex items-center gap-4 text-warm-gray">
-              <Package className="h-5 w-5 text-warm-stone/60" />
-              <p>No recent activity. Start a treatment to see updates here.</p>
+          <div className="flex items-center gap-3 mb-5">
+            <Package className="h-5 w-5 text-warm-stone" />
+            <h2 className="font-display text-xl font-bold text-rich-black md:text-2xl">Recent Activity</h2>
+          </div>
+          <Card variant="glass" className="p-8">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-warm-stone/10">
+                <Clock className="h-7 w-7 text-warm-stone/60" />
+              </div>
+              <p className="text-warm-gray max-w-sm">
+                No recent activity. Start a treatment to see updates and track your progress here.
+              </p>
             </div>
           </Card>
         </motion.div>
