@@ -255,13 +255,23 @@ const MediaManager = () => {
 
     try {
       const folderPath = currentPath 
-        ? `${currentPath}/${newFolderName.trim()}/.gitkeep`
-        : `${newFolderName.trim()}/.gitkeep`;
+        ? `${currentPath}/${newFolderName.trim()}/.folder`
+        : `${newFolderName.trim()}/.folder`;
+
+      // Create a tiny 1x1 transparent PNG as placeholder (bucket only accepts images/videos)
+      const base64Png = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+      const binaryString = atob(base64Png);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const pngBlob = new Blob([bytes], { type: "image/png" });
 
       const { error } = await supabase.storage
         .from(BUCKET_NAME)
-        .upload(folderPath, new Blob([""]), {
+        .upload(folderPath, pngBlob, {
           cacheControl: "3600",
+          contentType: "image/png",
         });
 
       if (error) throw error;
