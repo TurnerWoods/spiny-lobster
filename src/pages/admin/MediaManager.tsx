@@ -93,6 +93,7 @@ const MediaManager = () => {
       const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
         .list(currentPath, {
+          limit: 1000,
           sortBy: { column: "name", order: "asc" },
         });
 
