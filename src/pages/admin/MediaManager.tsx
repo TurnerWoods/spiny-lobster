@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef, DragEvent } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { 
   Upload, 
@@ -17,7 +17,11 @@ import {
   ChevronRight,
   Loader2,
   Copy,
-  Check
+  Check,
+  ZoomIn,
+  ZoomOut,
+  RotateCw,
+  Download
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -81,6 +85,11 @@ const MediaManager = () => {
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragCounter = useRef(0);
+  
+  // Image preview states
+  const [previewImage, setPreviewImage] = useState<{ url: string; name: string } | null>(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [rotation, setRotation] = useState(0);
 
   const handleSignOut = async () => {
     await signOut();
@@ -394,6 +403,54 @@ const MediaManager = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
+  // Image preview functions
+  const openImagePreview = (fileName: string) => {
+    const url = getFileUrl(fileName);
+    setPreviewImage({ url, name: fileName });
+    setZoomLevel(1);
+    setRotation(0);
+  };
+
+  const closeImagePreview = () => {
+    setPreviewImage(null);
+    setZoomLevel(1);
+    setRotation(0);
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel((prev) => Math.min(prev + 0.25, 3));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel((prev) => Math.max(prev - 0.25, 0.5));
+  };
+
+  const handleRotate = () => {
+    setRotation((prev) => (prev + 90) % 360);
+  };
+
+  const handleDownload = async () => {
+    if (!previewImage) return;
+    try {
+      const response = await fetch(previewImage.url);
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = previewImage.name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      toast({
+        title: "Download failed",
+        description: "Unable to download the image.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const filteredFiles = files.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -638,8 +695,9 @@ const MediaManager = () => {
                       <img
                         src={getFileUrl(item.name)}
                         alt={item.name}
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover cursor-pointer"
                         loading="lazy"
+                        onClick={() => openImagePreview(item.name)}
                       />
                     ) : item.metadata?.mimetype?.startsWith("video/") ? (
                       <video
@@ -656,6 +714,16 @@ const MediaManager = () => {
                         {item.name}
                       </span>
                       <div className="flex gap-1">
+                        {item.metadata?.mimetype?.startsWith("image/") && (
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            className="h-8 px-2"
+                            onClick={() => openImagePreview(item.name)}
+                          >
+                            <ZoomIn className="h-3 w-3" />
+                          </Button>
+                        )}
                         <Button
                           size="sm"
                           variant="secondary"
@@ -711,11 +779,19 @@ const MediaManager = () => {
               >
                 <div
                   className={`flex items-center gap-4 flex-1 min-w-0 ${
-                    "isFolder" in item ? "cursor-pointer" : ""
+                    "isFolder" in item 
+                      ? "cursor-pointer" 
+                      : item.metadata?.mimetype?.startsWith("image/") 
+                        ? "cursor-pointer" 
+                        : ""
                   }`}
-                  onClick={() =>
-                    "isFolder" in item && navigateToFolder(item.name)
-                  }
+                  onClick={() => {
+                    if ("isFolder" in item) {
+                      navigateToFolder(item.name);
+                    } else if (item.metadata?.mimetype?.startsWith("image/")) {
+                      openImagePreview(item.name);
+                    }
+                  }}
                 >
                   {getFileIcon(item)}
                   <div className="min-w-0 flex-1">
@@ -732,6 +808,15 @@ const MediaManager = () => {
                 </div>
                 {!("isFolder" in item) && (
                   <div className="flex items-center gap-2">
+                    {item.metadata?.mimetype?.startsWith("image/") && (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => openImagePreview(item.name)}
+                      >
+                        <ZoomIn className="h-4 w-4" />
+                      </Button>
+                    )}
                     <Button
                       size="sm"
                       variant="ghost"
@@ -806,6 +891,107 @@ const MediaManager = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Image Preview Modal */}
+      <AnimatePresence>
+        {previewImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-rich-black/90 backdrop-blur-sm"
+            onClick={closeImagePreview}
+          >
+            {/* Controls Bar */}
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-pure-white/10 backdrop-blur-md px-4 py-2 border border-pure-white/20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-pure-white hover:bg-pure-white/20"
+                onClick={handleZoomOut}
+                disabled={zoomLevel <= 0.5}
+              >
+                <ZoomOut className="h-5 w-5" />
+              </Button>
+              <span className="text-pure-white text-sm min-w-[60px] text-center">
+                {Math.round(zoomLevel * 100)}%
+              </span>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-pure-white hover:bg-pure-white/20"
+                onClick={handleZoomIn}
+                disabled={zoomLevel >= 3}
+              >
+                <ZoomIn className="h-5 w-5" />
+              </Button>
+              <div className="w-px h-6 bg-pure-white/30 mx-2" />
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-pure-white hover:bg-pure-white/20"
+                onClick={handleRotate}
+              >
+                <RotateCw className="h-5 w-5" />
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-pure-white hover:bg-pure-white/20"
+                onClick={handleDownload}
+              >
+                <Download className="h-5 w-5" />
+              </Button>
+              <div className="w-px h-6 bg-pure-white/30 mx-2" />
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-pure-white hover:bg-pure-white/20"
+                onClick={closeImagePreview}
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </motion.div>
+
+            {/* Image */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="max-w-[90vw] max-h-[85vh] overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={previewImage.url}
+                alt={previewImage.name}
+                className="max-w-full max-h-[85vh] object-contain transition-transform duration-200"
+                style={{
+                  transform: `scale(${zoomLevel}) rotate(${rotation}deg)`,
+                }}
+                draggable={false}
+              />
+            </motion.div>
+
+            {/* File Name */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-pure-white/10 backdrop-blur-md px-4 py-2 border border-pure-white/20"
+            >
+              <span className="text-pure-white text-sm truncate max-w-[300px] block">
+                {previewImage.name}
+              </span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
