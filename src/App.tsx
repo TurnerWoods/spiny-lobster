@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import BrandKit from "./pages/BrandKit";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -75,6 +76,7 @@ const App = () => (
             
             {/* Admin Pages */}
             <Route path="/admin/media" element={<MediaManager />} />
+            <Route path="/brand-kit" element={<BrandKit />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
