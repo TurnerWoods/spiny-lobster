@@ -33,6 +33,13 @@ import HairPage from "./pages/treatments/HairPage";
 import SkinPage from "./pages/treatments/SkinPage";
 import MoodPage from "./pages/treatments/MoodPage";
 
+// Tools Pages
+import TreatmentMatch from "./pages/tools/TreatmentMatch";
+import TDEECalculator from "./pages/tools/TDEECalculator";
+import BMICalculator from "./pages/tools/BMICalculator";
+import ProteinCalculator from "./pages/tools/ProteinCalculator";
+import CalorieCalculator from "./pages/tools/CalorieCalculator";
+
 // Admin Pages
 import MediaManager from "./pages/admin/MediaManager";
 
@@ -74,6 +81,13 @@ const App = () => (
             
             <Route path="/treatment/:id" element={<TreatmentDetail />} />
             
+            {/* Tools Pages */}
+            <Route path="/tools/treatment-match" element={<TreatmentMatch />} />
+            <Route path="/tools/tdee" element={<TDEECalculator />} />
+            <Route path="/tools/bmi" element={<BMICalculator />} />
+            <Route path="/tools/protein" element={<ProteinCalculator />} />
+            <Route path="/tools/calories" element={<CalorieCalculator />} />
+
             {/* Admin Pages */}
             <Route path="/admin/media" element={<MediaManager />} />
             <Route path="/brand-kit" element={<BrandKit />} />

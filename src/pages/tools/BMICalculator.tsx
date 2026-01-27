@@ -1,0 +1,240 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
+import { ArrowLeft, Scale } from "lucide-react";
+
+interface BMIResult {
+  bmi: number;
+  category: string;
+  color: string;
+  context: string;
+}
+
+function getBMIResult(bmi: number): BMIResult {
+  if (bmi < 18.5) {
+    return {
+      bmi,
+      category: "Underweight",
+      color: "text-blue-600",
+      context: "A BMI below 18.5 may indicate insufficient body weight. Consider consulting a healthcare provider about nutrition and hormone levels that could affect weight.",
+    };
+  } else if (bmi < 25) {
+    return {
+      bmi,
+      category: "Normal",
+      color: "text-green-600",
+      context: "A BMI between 18.5 and 24.9 is considered a healthy weight range. Maintaining balanced hormones can help sustain this healthy range.",
+    };
+  } else if (bmi < 30) {
+    return {
+      bmi,
+      category: "Overweight",
+      color: "text-yellow-600",
+      context: "A BMI between 25 and 29.9 may indicate above-normal body weight. Hormonal imbalances, especially low testosterone, can contribute to weight gain.",
+    };
+  } else {
+    return {
+      bmi,
+      category: "Obese",
+      color: "text-red-600",
+      context: "A BMI of 30 or above may indicate obesity. Hormonal optimization combined with medical weight management can help. Speaking with our physicians is recommended.",
+    };
+  }
+}
+
+export default function BMICalculator() {
+  const [weight, setWeight] = useState("");
+  const [weightUnit, setWeightUnit] = useState("lbs");
+  const [heightFt, setHeightFt] = useState("");
+  const [heightIn, setHeightIn] = useState("");
+  const [heightCm, setHeightCm] = useState("");
+  const [heightUnit, setHeightUnit] = useState("imperial");
+  const [result, setResult] = useState<BMIResult | null>(null);
+
+  const calculate = () => {
+    const weightNum = parseFloat(weight);
+    if (isNaN(weightNum)) return;
+
+    const weightKg = weightUnit === "lbs" ? weightNum * 0.453592 : weightNum;
+
+    let heightM: number;
+    if (heightUnit === "imperial") {
+      const ft = parseFloat(heightFt) || 0;
+      const inches = parseFloat(heightIn) || 0;
+      const totalInches = ft * 12 + inches;
+      if (totalInches === 0) return;
+      heightM = totalInches * 0.0254;
+    } else {
+      const cm = parseFloat(heightCm);
+      if (isNaN(cm) || cm === 0) return;
+      heightM = cm / 100;
+    }
+
+    const bmi = weightKg / (heightM * heightM);
+    setResult(getBMIResult(parseFloat(bmi.toFixed(1))));
+  };
+
+  const bmiProgressValue = result ? Math.min((result.bmi / 40) * 100, 100) : 0;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-soft-linen to-light-cloud">
+      <Header />
+
+      <main className="container mx-auto px-4 py-12 md:py-20">
+        <div className="mx-auto max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
+          >
+            <Link
+              to="/tools"
+              className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1" /> Back to Tools
+            </Link>
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-warm-stone/10 border border-warm-stone/20 mb-6 block w-fit">
+              <Scale className="h-4 w-4 text-warm-stone" />
+              <span className="text-sm font-medium text-warm-stone">Calculator</span>
+            </div>
+
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-rich-black mb-2">
+              BMI Calculator
+            </h1>
+            <p className="text-muted-foreground">
+              Calculate your Body Mass Index to get a general assessment of your weight relative to your height.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="rounded-2xl border bg-card p-6 shadow-sm md:p-8"
+          >
+            <h2 className="text-xl font-display font-semibold text-foreground mb-6">Your Details</h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="weight">Weight</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="weight"
+                    type="number"
+                    placeholder={weightUnit === "lbs" ? "150" : "68"}
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="shrink-0"
+                    onClick={() => setWeightUnit(weightUnit === "lbs" ? "kg" : "lbs")}
+                  >
+                    {weightUnit}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label>Height</Label>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setHeightUnit(heightUnit === "imperial" ? "metric" : "imperial")}
+                    className="text-warm-stone hover:text-warm-stone/80"
+                  >
+                    Switch to {heightUnit === "imperial" ? "cm" : "ft/in"}
+                  </Button>
+                </div>
+                {heightUnit === "imperial" ? (
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <Input
+                        type="number"
+                        placeholder="5"
+                        value={heightFt}
+                        onChange={(e) => setHeightFt(e.target.value)}
+                      />
+                      <span className="text-xs text-muted-foreground mt-1 block">feet</span>
+                    </div>
+                    <div className="flex-1">
+                      <Input
+                        type="number"
+                        placeholder="8"
+                        value={heightIn}
+                        onChange={(e) => setHeightIn(e.target.value)}
+                      />
+                      <span className="text-xs text-muted-foreground mt-1 block">inches</span>
+                    </div>
+                  </div>
+                ) : (
+                  <Input
+                    type="number"
+                    placeholder="173"
+                    value={heightCm}
+                    onChange={(e) => setHeightCm(e.target.value)}
+                  />
+                )}
+              </div>
+
+              <Button
+                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white"
+                onClick={calculate}
+              >
+                Calculate BMI
+              </Button>
+            </div>
+          </motion.div>
+
+          {result && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="rounded-2xl border bg-card p-6 shadow-sm md:p-8 mt-6"
+            >
+              <h2 className="text-xl font-display font-semibold text-foreground mb-6">Your Results</h2>
+              <div className="space-y-6">
+                <div className="text-center">
+                  <p className="text-4xl font-display font-bold text-rich-black">{result.bmi}</p>
+                  <p className={`text-lg font-semibold mt-1 ${result.color}`}>
+                    {result.category}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Underweight</span>
+                    <span>Normal</span>
+                    <span>Overweight</span>
+                    <span>Obese</span>
+                  </div>
+                  <Progress value={bmiProgressValue} className="h-3" />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>{"<18.5"}</span>
+                    <span>18.5–24.9</span>
+                    <span>25–29.9</span>
+                    <span>30+</span>
+                  </div>
+                </div>
+
+                <div className="rounded-xl bg-warm-stone/5 border border-warm-stone/10 p-4">
+                  <p className="text-sm text-muted-foreground">{result.context}</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
