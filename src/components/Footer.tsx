@@ -19,6 +19,7 @@ const Footer = () => {
     { name: "Pricing", href: "/pricing" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
+    { name: "Brand Kit", href: "/brand-kit" },
   ];
 
   const legal = [
