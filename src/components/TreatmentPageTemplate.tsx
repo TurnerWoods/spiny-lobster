@@ -14,10 +14,12 @@ export interface TreatmentData {
   description: string;
   price: string;
   heroImage?: string;
+  productImage?: string;
   medications: {
     name: string;
     description: string;
     price: string;
+    image?: string;
   }[];
   symptoms: string[];
   benefits: string[];
@@ -112,6 +114,23 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
               >
                 Available Medications
               </motion.h2>
+              
+              {/* Product Showcase Image */}
+              {treatment.productImage && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="mb-10 overflow-hidden rounded-2xl"
+                >
+                  <img 
+                    src={treatment.productImage} 
+                    alt={`${treatment.title} products`}
+                    className="w-full h-64 sm:h-80 object-cover"
+                  />
+                </motion.div>
+              )}
+              
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {treatment.medications.map((med, index) => (
                   <motion.div
@@ -120,11 +139,22 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
-                    className="flex flex-col rounded-xl border bg-card p-6"
+                    className="group flex flex-col rounded-xl border bg-card overflow-hidden hover:shadow-lg hover:border-warm-stone/30 transition-all duration-300"
                   >
-                    <h3 className="mb-2 font-display text-lg font-bold text-foreground">{med.name}</h3>
-                    <p className="mb-4 flex-1 text-sm text-muted-foreground">{med.description}</p>
-                    <p className="font-bold text-primary">{med.price}</p>
+                    {med.image && (
+                      <div className="h-40 overflow-hidden">
+                        <img 
+                          src={med.image} 
+                          alt={med.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6 flex flex-col flex-1">
+                      <h3 className="mb-2 font-display text-lg font-bold text-foreground">{med.name}</h3>
+                      <p className="mb-4 flex-1 text-sm text-muted-foreground">{med.description}</p>
+                      <p className="font-bold text-primary">{med.price}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>

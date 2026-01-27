@@ -8,16 +8,19 @@ const treatment: TreatmentData = {
   description: "Low testosterone affects millions of men, often without them realizing it. Fatigue, decreased motivation, weight gain, and declining performance aren't inevitable parts of aging. TRT can help you feel like yourself again.",
   price: "$149/mo",
   heroImage,
+  productImage: "/images/products/testosterone-vial.png",
   medications: [
     {
       name: "Testosterone Cypionate",
       description: "The gold standard for TRT. Long-acting injectable testosterone that provides stable hormone levels with weekly or bi-weekly dosing.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/testosterone-vial.png"
     },
     {
       name: "Testosterone Enanthate",
       description: "Similar to cypionate with slightly different ester. Preferred by some patients for its absorption profile.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/testosterone-vial.png"
     },
     {
       name: "hCG (Human Chorionic Gonadotropin)",
@@ -32,7 +35,8 @@ const treatment: TreatmentData = {
     {
       name: "Gonadorelin",
       description: "Alternative to hCG for maintaining natural testosterone production and testicular size.",
-      price: "$79/mo add-on"
+      price: "$79/mo add-on",
+      image: "/images/products/injection-supplies.png"
     }
   ],
   symptoms: [

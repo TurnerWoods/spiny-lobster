@@ -8,11 +8,13 @@ const treatment: TreatmentData = {
   description: "Age is more than a number—it's how your cells function. Our anti-aging protocols target the root causes of aging, supporting cellular energy, DNA repair, and metabolic health for a longer, more vibrant healthspan.",
   price: "$199/mo",
   heroImage,
+  productImage: "/images/products/nad-supplements.png",
   medications: [
     {
       name: "NAD+ Injections",
       description: "Essential coenzyme for cellular energy production and DNA repair. Declines with age. Supports mental clarity, energy, and longevity.",
-      price: "$199/mo"
+      price: "$199/mo",
+      image: "/images/products/nad-supplements.png"
     },
     {
       name: "NAD+ Nasal Spray",

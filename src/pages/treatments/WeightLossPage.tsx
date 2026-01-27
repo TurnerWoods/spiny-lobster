@@ -8,16 +8,19 @@ const treatment: TreatmentData = {
   description: "Break through weight loss plateaus with physician-supervised therapies that work with your body's natural systems. Our medical weight loss protocols help reduce appetite, boost metabolism, and support lasting results.",
   price: "$149/mo",
   heroImage,
+  productImage: "/images/products/tirzepatide-prep.png",
   medications: [
     {
       name: "Semaglutide",
       description: "GLP-1 receptor agonist that reduces appetite, slows gastric emptying, and improves blood sugar control. The same active ingredient in Ozempic® and Wegovy®.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/semaglutide-vial.png"
     },
     {
       name: "Tirzepatide",
       description: "Dual GIP/GLP-1 receptor agonist for enhanced weight loss. The same active ingredient in Mounjaro® and Zepbound®. Our most effective option.",
-      price: "$199/mo"
+      price: "$199/mo",
+      image: "/images/products/tirzepatide-prep.png"
     },
     {
       name: "Tesamorelin",
@@ -32,7 +35,8 @@ const treatment: TreatmentData = {
     {
       name: "Lipotropic Injections",
       description: "B12 + MIC (Methionine, Inositol, Choline) injections that support fat metabolism, energy, and liver function.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/injection-supplies.png"
     }
   ],
   symptoms: [

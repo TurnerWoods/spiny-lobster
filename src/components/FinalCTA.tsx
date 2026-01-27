@@ -6,10 +6,17 @@ import { Link } from "react-router-dom";
 const FinalCTA = () => {
   return (
     <section className="relative overflow-hidden py-12 sm:py-16 md:py-20">
-      {/* Background - Warm Stone gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-warm-stone via-warm-stone/95 to-deep-charcoal" />
+      {/* Background Image */}
       <div className="absolute inset-0">
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-pure-white/10 sm:-right-20 sm:-top-20 sm:h-60 sm:w-60" />
+        <img 
+          src="/images/heroes/man-terrace.png" 
+          alt="Premium lifestyle"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-deep-charcoal/90 via-warm-stone/80 to-deep-charcoal/90" />
+      </div>
+      <div className="absolute inset-0">
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-pure-white/5 sm:-right-20 sm:-top-20 sm:h-60 sm:w-60" />
         <div className="absolute -bottom-10 -left-10 h-60 w-60 rounded-full bg-pure-white/5 sm:-bottom-20 sm:-left-20 sm:h-80 sm:w-80" />
       </div>
 

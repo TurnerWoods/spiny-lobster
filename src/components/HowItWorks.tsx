@@ -3,6 +3,13 @@ import { ClipboardList, UserCheck, Video, Truck, MessageSquare, ArrowRight } fro
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
+// Process step images
+const stepImages = {
+  assessment: "/images/process/video-consultation.png",
+  physician: "/images/process/physician-consultation.png",
+  delivery: "/images/process/discreet-delivery.png",
+};
+
 const steps = [
   {
     icon: ClipboardList,
@@ -10,6 +17,7 @@ const steps = [
     title: "Complete Assessment",
     description: "Answer questions about your symptoms, health history, and goals. Takes about 5 minutes from any device.",
     highlight: "5-minute form",
+    image: stepImages.assessment,
   },
   {
     icon: UserCheck,
@@ -17,6 +25,7 @@ const steps = [
     title: "Physician Review",
     description: "A Texas-licensed physician reviews your profile and creates a personalized treatment plan within 24 hours.",
     highlight: "24hr response",
+    image: stepImages.physician,
   },
   {
     icon: Truck,
@@ -24,6 +33,7 @@ const steps = [
     title: "Discreet Delivery",
     description: "Your prescription ships in unmarked packaging directly to your home or office within 3-5 business days.",
     highlight: "3-5 day shipping",
+    image: stepImages.delivery,
   },
 ];
 
@@ -61,11 +71,8 @@ const HowItWorks = () => {
         </div>
 
         {/* Steps - Mobile Vertical / Desktop Horizontal */}
-        <div className="relative mx-auto max-w-4xl">
-          {/* Connection Line - Desktop Only */}
-          <div className="absolute left-0 right-0 top-10 hidden h-0.5 bg-gradient-to-r from-primary/30 via-primary to-primary/30 lg:block" />
-
-          <div className="grid gap-6 sm:gap-8 lg:grid-cols-3 lg:gap-8">
+        <div className="relative mx-auto max-w-5xl">
+          <div className="grid gap-6 sm:gap-8 lg:grid-cols-3 lg:gap-6">
             {steps.map((step, index) => (
               <motion.div
                 key={step.number}
@@ -73,25 +80,40 @@ const HowItWorks = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
-                className="flex flex-col items-center text-center"
+                className="group"
               >
-              {/* Icon Circle */}
-                <div className="relative z-10 mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-soft-linen bg-warm-stone shadow-lg sm:mb-6 sm:h-20 sm:w-20">
-                  <step.icon className="h-6 w-6 text-pure-white sm:h-8 sm:w-8" />
-                </div>
+                {/* Card with Image */}
+                <div className="h-full overflow-hidden rounded-xl border border-neutral-gray/50 bg-pure-white/80 shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:border-warm-stone/30 sm:rounded-2xl">
+                  {/* Image Section */}
+                  <div className="relative h-48 overflow-hidden sm:h-56">
+                    <img 
+                      src={step.image} 
+                      alt={step.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/70 via-deep-charcoal/20 to-transparent" />
+                    
+                    {/* Step Number Badge */}
+                    <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone text-pure-white font-display font-bold shadow-lg sm:h-12 sm:w-12">
+                      {step.number}
+                    </div>
+                    
+                    {/* Icon */}
+                    <div className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full border border-pure-white/30 bg-pure-white/90 text-warm-stone shadow-lg backdrop-blur-sm sm:h-14 sm:w-14">
+                      <step.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                    </div>
+                  </div>
 
-                {/* Content Card - Glassmorphic */}
-                <div className="rounded-xl border border-neutral-gray/50 bg-pure-white/80 p-4 shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 sm:rounded-2xl sm:p-6">
-                  <span className="mb-1 block text-xs font-bold text-warm-stone sm:mb-2 sm:text-sm">
-                    Step {step.number}
-                  </span>
-                  <h3 className="mb-2 font-display text-lg font-bold text-rich-black sm:mb-3 sm:text-xl">
-                    {step.title}
-                  </h3>
-                  <p className="mb-3 text-sm text-muted-foreground sm:mb-4">{step.description}</p>
-                  <span className="inline-flex items-center rounded-full border border-light-cloud bg-light-cloud/50 px-2.5 py-0.5 text-xs font-medium text-deep-charcoal sm:px-3 sm:py-1">
-                    {step.highlight}
-                  </span>
+                  {/* Content Section */}
+                  <div className="p-4 sm:p-6">
+                    <h3 className="mb-2 font-display text-lg font-bold text-rich-black sm:mb-3 sm:text-xl">
+                      {step.title}
+                    </h3>
+                    <p className="mb-3 text-sm text-muted-foreground sm:mb-4">{step.description}</p>
+                    <span className="inline-flex items-center rounded-full border border-warm-stone/20 bg-warm-stone/10 px-3 py-1 text-xs font-semibold text-warm-stone sm:px-4 sm:py-1.5 sm:text-sm">
+                      {step.highlight}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             ))}

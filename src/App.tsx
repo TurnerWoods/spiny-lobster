@@ -40,6 +40,10 @@ import BMICalculator from "./pages/tools/BMICalculator";
 import ProteinCalculator from "./pages/tools/ProteinCalculator";
 import CalorieCalculator from "./pages/tools/CalorieCalculator";
 
+// New AI-Powered Tools
+import { HormoneAssessment, TreatmentMatchQuiz } from "./components/tools";
+import { BMRCalculator, CarbCalculator } from "./components/tools/Calculators";
+
 // Admin Pages
 import MediaManager from "./pages/admin/MediaManager";
 
@@ -87,6 +91,18 @@ const App = () => (
             <Route path="/tools/bmi" element={<BMICalculator />} />
             <Route path="/tools/protein" element={<ProteinCalculator />} />
             <Route path="/tools/calories" element={<CalorieCalculator />} />
+            
+            {/* New AI-Powered Tools */}
+            <Route path="/tools/hormone-assessment" element={<HormoneAssessment />} />
+            <Route path="/tools/treatment-match-quiz" element={<TreatmentMatchQuiz />} />
+            <Route path="/tools/calculators/bmr" element={<BMRCalculator />} />
+            <Route path="/tools/calculators/carb" element={<CarbCalculator />} />
+            
+            {/* Calculator Routes with /calculators/ prefix */}
+            <Route path="/tools/calculators/tdee" element={<TDEECalculator />} />
+            <Route path="/tools/calculators/bmi" element={<BMICalculator />} />
+            <Route path="/tools/calculators/protein" element={<ProteinCalculator />} />
+            <Route path="/tools/calculators/calorie" element={<CalorieCalculator />} />
 
             {/* Admin Pages */}
             <Route path="/admin/media" element={<MediaManager />} />

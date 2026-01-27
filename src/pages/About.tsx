@@ -42,9 +42,19 @@ const About = () => {
     <div className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
       <Header />
       <main>
-        {/* Hero Section */}
-        <section className="py-16 md:py-24">
-          <div className="container px-4 md:px-6">
+        {/* Hero Section with Image */}
+        <section className="relative py-16 md:py-24 overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="/images/heroes/houston-skyline.png" 
+              alt="Texas Executive"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-soft-linen via-soft-linen/95 to-soft-linen/80" />
+          </div>
+          
+          <div className="container relative z-10 px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <motion.div
                 initial={{ opacity: 0, y: -10 }}

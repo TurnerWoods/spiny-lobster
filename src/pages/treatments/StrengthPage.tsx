@@ -8,6 +8,7 @@ const treatment: TreatmentData = {
   description: "Optimize your body's natural recovery systems with peptide therapies that support muscle growth, tissue repair, and athletic performance. Perfect for active men looking to maximize their training results.",
   price: "$199/mo",
   heroImage,
+  productImage: "/images/lifestyle/strength-workout.png",
   medications: [
     {
       name: "Sermorelin",

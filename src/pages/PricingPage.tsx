@@ -57,8 +57,16 @@ const PricingPage = () => {
       <main>
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-warm-stone/5 to-transparent" />
-          <div className="container relative px-4 md:px-6">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="/images/lifestyle/executive-contemplating.png" 
+              alt="Executive lifestyle"
+              className="h-full w-full object-cover object-top"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-soft-linen via-soft-linen/95 to-soft-linen/80" />
+          </div>
+          <div className="container relative z-10 px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}

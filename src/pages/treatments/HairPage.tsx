@@ -8,11 +8,13 @@ const treatment: TreatmentData = {
   description: "Hair loss affects 85% of men by age 50, but it doesn't have to be permanent. Our comprehensive hair restoration protocols combine proven medications with advanced peptide therapies to stop loss and promote regrowth.",
   price: "$79/mo",
   heroImage,
+  productImage: "/images/products/hair-restoration-kit.png",
   medications: [
     {
       name: "Finasteride",
       description: "FDA-approved DHT blocker that stops hair loss at the source. The most effective oral treatment for male pattern baldness.",
-      price: "$29/mo"
+      price: "$29/mo",
+      image: "/images/products/hair-restoration-kit.png"
     },
     {
       name: "Minoxidil (Oral)",
@@ -22,12 +24,14 @@ const treatment: TreatmentData = {
     {
       name: "Finasteride + Minoxidil Combo",
       description: "Our most popular protocol. Combination therapy for maximum results—blocks DHT while stimulating growth.",
-      price: "$49/mo"
+      price: "$49/mo",
+      image: "/images/products/hair-growth-dropper.png"
     },
     {
       name: "Topical Finasteride + Minoxidil",
       description: "Compounded topical solution that delivers both medications directly to the scalp with reduced systemic absorption.",
-      price: "$79/mo"
+      price: "$79/mo",
+      image: "/images/products/hair-growth-dropper.png"
     },
     {
       name: "GHK-Cu Peptide",

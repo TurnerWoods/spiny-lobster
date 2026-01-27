@@ -3,8 +3,15 @@ import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Import testimonial images
-import testimonial1 from "@/assets/patient-testimonial-1.jpg";
+// Testimonial images from public folder
+const testimonialImages = {
+  executive: "/images/testimonials/man-executive-1.png",
+  athletic: "/images/testimonials/man-athletic-1.png",
+  confident: "/images/testimonials/man-confident-1.png",
+  golf: "/images/testimonials/man-golf-1.png",
+  successful: "/images/testimonials/man-successful-1.png",
+  fitExecutive: "/images/testimonials/man-fit-executive-1.png",
+};
 
 const reviews = [
   {
@@ -14,7 +21,7 @@ const reviews = [
     name: "James R.",
     city: "Austin, TX",
     role: "Tech Executive",
-    image: testimonial1,
+    image: testimonialImages.executive,
   },
   {
     id: "2",
@@ -23,7 +30,7 @@ const reviews = [
     name: "Michael T.",
     city: "Houston, TX",
     role: "Attorney",
-    image: testimonial1,
+    image: testimonialImages.fitExecutive,
   },
   {
     id: "3",
@@ -32,7 +39,7 @@ const reviews = [
     name: "David K.",
     city: "Dallas, TX",
     role: "Business Owner",
-    image: testimonial1,
+    image: testimonialImages.confident,
   },
   {
     id: "4",
@@ -41,7 +48,7 @@ const reviews = [
     name: "Robert K.",
     city: "Fort Worth, TX",
     role: "Finance Executive",
-    image: testimonial1,
+    image: testimonialImages.golf,
   },
   {
     id: "5",
@@ -50,7 +57,7 @@ const reviews = [
     name: "Chris M.",
     city: "San Antonio, TX",
     role: "Entrepreneur",
-    image: testimonial1,
+    image: testimonialImages.athletic,
   },
   {
     id: "6",
@@ -59,7 +66,7 @@ const reviews = [
     name: "Steven P.",
     city: "Plano, TX",
     role: "Sales Director",
-    image: testimonial1,
+    image: testimonialImages.successful,
   },
 ];
 

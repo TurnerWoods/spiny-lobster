@@ -22,7 +22,7 @@ const tools = [
     description: "AI-powered comprehensive evaluation of your hormonal health and symptoms.",
     icon: Brain,
     aiPowered: true,
-    route: "/symptom-checker",
+    route: "/tools/hormone-assessment",
     color: "from-warm-stone to-deep-charcoal",
   },
   {
@@ -31,7 +31,7 @@ const tools = [
     description: "Find your personalized treatment recommendation based on your health goals.",
     icon: Sparkles,
     aiPowered: true,
-    route: "/tools/treatment-match",
+    route: "/tools/treatment-match-quiz",
     color: "from-warm-stone to-deep-charcoal",
   },
   {
@@ -40,7 +40,7 @@ const tools = [
     description: "Calculate your Total Daily Energy Expenditure for optimal nutrition planning.",
     icon: Flame,
     aiPowered: false,
-    route: "/tools/tdee",
+    route: "/tools/calculators/tdee",
     color: "from-warm-stone/80 to-warm-stone",
   },
   {
@@ -49,7 +49,16 @@ const tools = [
     description: "Calculate your Body Mass Index with personalized health insights.",
     icon: Scale,
     aiPowered: false,
-    route: "/tools/bmi",
+    route: "/tools/calculators/bmi",
+    color: "from-warm-stone/80 to-warm-stone",
+  },
+  {
+    id: "bmr",
+    title: "BMR Calculator",
+    description: "Find your Basal Metabolic Rate - the calories you burn at rest.",
+    icon: Activity,
+    aiPowered: false,
+    route: "/tools/calculators/bmr",
     color: "from-warm-stone/80 to-warm-stone",
   },
   {
@@ -58,7 +67,7 @@ const tools = [
     description: "Determine your optimal daily protein intake based on your goals.",
     icon: Dumbbell,
     aiPowered: false,
-    route: "/tools/protein",
+    route: "/tools/calculators/protein",
     color: "from-warm-stone/80 to-warm-stone",
   },
   {
@@ -67,7 +76,16 @@ const tools = [
     description: "Get personalized calorie recommendations for your fitness journey.",
     icon: Calculator,
     aiPowered: false,
-    route: "/tools/calories",
+    route: "/tools/calculators/calorie",
+    color: "from-warm-stone/80 to-warm-stone",
+  },
+  {
+    id: "carb",
+    title: "Carb Calculator",
+    description: "Calculate optimal carbohydrate intake for your diet type.",
+    icon: Calculator,
+    aiPowered: false,
+    route: "/tools/calculators/carb",
     color: "from-warm-stone/80 to-warm-stone",
   },
 ];
@@ -99,26 +117,47 @@ const Tools = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-16 md:py-24">
-        {/* Hero Section */}
+        {/* Hero Section with Image */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-warm-stone/10 border border-warm-stone/20 mb-6">
-            <Activity className="h-4 w-4 text-warm-stone" />
-            <span className="text-sm font-medium text-warm-stone">AI-Powered Health Intelligence</span>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="text-center md:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-warm-stone/10 border border-warm-stone/20 mb-6">
+                <Activity className="h-4 w-4 text-warm-stone" />
+                <span className="text-sm font-medium text-warm-stone">AI-Powered Health Intelligence</span>
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-rich-black mb-6">
+                Health Tools & <span className="text-warm-stone">Calculators</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
+                Discover personalized insights with our suite of AI-enhanced health tools. 
+                Get actionable recommendations tailored to your unique health profile.
+              </p>
+            </div>
+            
+            {/* Hero Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="hidden md:block"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                <img 
+                  src="/images/lifestyle/mental-clarity.png" 
+                  alt="Focus and mental clarity"
+                  className="w-full h-80 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/40 to-transparent" />
+              </div>
+            </motion.div>
           </div>
-          
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-rich-black mb-6">
-            Health Tools & <span className="text-warm-stone">Calculators</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover personalized insights with our suite of AI-enhanced health tools. 
-            Get actionable recommendations tailored to your unique health profile.
-          </p>
         </motion.div>
 
         {/* Tools Grid */}
