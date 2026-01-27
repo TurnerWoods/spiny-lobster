@@ -31,6 +31,9 @@ import HairPage from "./pages/treatments/HairPage";
 import SkinPage from "./pages/treatments/SkinPage";
 import MoodPage from "./pages/treatments/MoodPage";
 
+// Admin Pages
+import MediaManager from "./pages/admin/MediaManager";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -67,6 +70,10 @@ const App = () => (
             <Route path="/treatments/mood" element={<MoodPage />} />
             
             <Route path="/treatment/:id" element={<TreatmentDetail />} />
+            
+            {/* Admin Pages */}
+            <Route path="/admin/media" element={<MediaManager />} />
+            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
