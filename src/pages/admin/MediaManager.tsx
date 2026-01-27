@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef, DragEvent } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { 
@@ -79,6 +79,8 @@ const MediaManager = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<ListItem | null>(null);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragCounter = useRef(0);
 
   const handleSignOut = async () => {
     await signOut();
@@ -128,18 +130,39 @@ const MediaManager = () => {
     }
   }, [user, authLoading, fetchFiles]);
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = e.target.files;
-    if (!selectedFiles || selectedFiles.length === 0) return;
+  const uploadFiles = useCallback(async (filesToUpload: FileList | File[]) => {
+    const filesArray = Array.from(filesToUpload);
+    if (filesArray.length === 0) return;
+
+    // Filter for valid file types
+    const validFiles = filesArray.filter(file => 
+      file.type.startsWith("image/") || file.type.startsWith("video/")
+    );
+
+    if (validFiles.length === 0) {
+      toast({
+        title: "Invalid files",
+        description: "Please upload only images or videos.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (validFiles.length !== filesArray.length) {
+      toast({
+        title: "Some files skipped",
+        description: "Only images and videos are allowed.",
+      });
+    }
 
     setIsUploading(true);
     setUploadProgress(0);
 
-    const totalFiles = selectedFiles.length;
+    const totalFiles = validFiles.length;
     let uploadedCount = 0;
 
     try {
-      for (const file of Array.from(selectedFiles)) {
+      for (const file of validFiles) {
         const filePath = currentPath ? `${currentPath}/${file.name}` : file.name;
 
         const { error } = await supabase.storage
@@ -181,10 +204,51 @@ const MediaManager = () => {
     } finally {
       setIsUploading(false);
       setUploadProgress(0);
-      // Reset input
-      e.target.value = "";
     }
+  }, [currentPath, fetchFiles, toast]);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+    if (!selectedFiles || selectedFiles.length === 0) return;
+    await uploadFiles(selectedFiles);
+    e.target.value = "";
   };
+
+  // Drag and drop handlers
+  const handleDragEnter = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current++;
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setIsDragging(true);
+    }
+  }, []);
+
+  const handleDragLeave = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current--;
+    if (dragCounter.current === 0) {
+      setIsDragging(false);
+    }
+  }, []);
+
+  const handleDragOver = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDrop = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    dragCounter.current = 0;
+
+    const droppedFiles = e.dataTransfer.files;
+    if (droppedFiles && droppedFiles.length > 0) {
+      uploadFiles(droppedFiles);
+    }
+  }, [uploadFiles]);
 
   const handleCreateFolder = async () => {
     if (!newFolderName.trim()) return;
@@ -339,7 +403,13 @@ const MediaManager = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
+    <div 
+      className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud"
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between px-4">
@@ -454,6 +524,7 @@ const MediaManager = () => {
                 </span>
               </Button>
               <input
+                id="file-upload-input"
                 type="file"
                 multiple
                 accept="image/*,video/*"
@@ -493,19 +564,38 @@ const MediaManager = () => {
           ))}
         </motion.div>
 
+        {/* Drag Overlay */}
+        {isDragging && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-rich-black/50 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="rounded-2xl border-4 border-dashed border-warm-stone bg-pure-white/95 p-12 text-center shadow-2xl"
+            >
+              <Upload className="mx-auto h-16 w-16 text-warm-stone mb-4" />
+              <p className="text-xl font-semibold text-rich-black">Drop files here</p>
+              <p className="text-warm-gray mt-2">Images and videos only</p>
+            </motion.div>
+          </div>
+        )}
+
         {/* Files Grid/List */}
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="h-8 w-8 animate-spin text-warm-stone" />
           </div>
         ) : filteredFiles.length === 0 ? (
-          <Card variant="glass" className="flex flex-col items-center justify-center py-20">
-            <Image className="h-16 w-16 text-warm-gray/50 mb-4" />
-            <p className="text-warm-gray text-center">
-              {searchQuery ? "No files match your search" : "This folder is empty"}
+          <Card 
+            variant="glass" 
+            className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-warm-stone/30 hover:border-warm-stone/50 transition-colors cursor-pointer"
+            onClick={() => document.getElementById('file-upload-input')?.click()}
+          >
+            <Upload className="h-16 w-16 text-warm-gray/50 mb-4" />
+            <p className="text-warm-gray text-center font-medium">
+              {searchQuery ? "No files match your search" : "Drop files here or click to upload"}
             </p>
             <p className="text-sm text-warm-gray/70 mt-1">
-              Upload files or create a folder to get started
+              Supports images and videos up to 50MB
             </p>
           </Card>
         ) : viewMode === "grid" ? (
