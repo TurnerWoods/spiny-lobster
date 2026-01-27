@@ -44,9 +44,9 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
               <img
                 src={treatment.heroImage}
                 alt={treatment.title}
-                className="h-full w-full object-cover opacity-15"
+                className="h-full w-full object-cover opacity-60"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background/80" />
             </div>
           )}
           <div className="container relative z-10 px-4 md:px-6">
