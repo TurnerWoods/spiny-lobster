@@ -61,7 +61,7 @@ type ListItem = FileObject | FolderItem;
 const BUCKET_NAME = "media-library";
 
 const MediaManager = () => {
-  const { user, signOut } = useAuth();
+  const { user, isLoading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -123,10 +123,10 @@ const MediaManager = () => {
   }, [currentPath, toast]);
 
   useEffect(() => {
-    if (user) {
+    if (user && !authLoading) {
       fetchFiles();
     }
-  }, [user, fetchFiles]);
+  }, [user, authLoading, fetchFiles]);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -325,12 +325,17 @@ const MediaManager = () => {
 
   const breadcrumbs = currentPath ? currentPath.split("/") : [];
 
-  if (!user) {
+  if (authLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
         <Loader2 className="h-8 w-8 animate-spin text-warm-stone" />
       </div>
     );
+  }
+
+  if (!user) {
+    navigate("/login");
+    return null;
   }
 
   return (
