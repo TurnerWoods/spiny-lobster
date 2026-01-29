@@ -52,7 +52,7 @@ const BeforeAfterGallery = ({
               >
                 {/* Metric Label */}
                 <div className="mb-4 flex items-center justify-between">
-                  <span className="rounded-full bg-primary-light px-3 py-1 text-xs font-medium text-primary">
+                  <span className="rounded-full bg-warm-stone/15 px-3 py-1 text-xs font-medium text-foreground">
                     {result.metric}
                   </span>
                   <span className="text-xs text-muted-foreground">{result.timeframe}</span>

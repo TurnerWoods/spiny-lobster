@@ -384,7 +384,7 @@ const AIChatWidget = () => {
                       className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ${
                         message.role === "user"
                           ? "bg-primary text-white"
-                          : "bg-primary-light text-primary"
+                          : "bg-warm-stone/15 text-foreground"
                       }`}
                     >
                       {message.role === "user" ? (
@@ -498,7 +498,7 @@ const AIChatWidget = () => {
 
                 {isLoading && messages[messages.length - 1]?.role === "user" && (
                   <div className="flex gap-2">
-                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-light text-primary">
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/15 text-foreground">
                       <Bot className="h-4 w-4" />
                     </div>
                     <div className="flex items-center gap-1 rounded-2xl bg-muted px-4 py-2">

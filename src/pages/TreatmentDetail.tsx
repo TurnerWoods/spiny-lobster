@@ -63,7 +63,7 @@ const statusConfig: Record<string, { label: string; color: string; icon: any; de
   },
   active: { 
     label: "Active", 
-    color: "bg-primary-light text-primary border-primary/20", 
+    color: "bg-warm-stone/15 text-foreground border-warm-stone/30",
     icon: CheckCircle2,
     description: "Your treatment is active. Follow dosage instructions carefully."
   },
@@ -371,8 +371,8 @@ const TreatmentDetail = () => {
               className="rounded-2xl border bg-card p-6 shadow-sm"
             >
               <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-light">
-                  <Pill className="h-5 w-5 text-primary" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/15">
+                  <Pill className="h-5 w-5 text-foreground" />
                 </div>
                 <h3 className="font-display text-lg font-semibold text-foreground">
                   Medication & Dosage
@@ -407,15 +407,15 @@ const TreatmentDetail = () => {
               </div>
 
               {/* Dosage Instructions */}
-              <div className="rounded-xl border border-primary/20 bg-primary-light/50 p-4">
+              <div className="rounded-xl border border-warm-stone/30 bg-warm-stone/10 p-4">
                 <div className="mb-3 flex items-center gap-2">
-                  <Info className="h-5 w-5 text-primary" />
-                  <span className="font-semibold text-primary">Important Instructions</span>
+                  <Info className="h-5 w-5 text-foreground" />
+                  <span className="font-semibold text-foreground">Important Instructions</span>
                 </div>
                 <ul className="space-y-2">
                   {dosageInfo.notes.map((note, index) => (
                     <li key={index} className="flex items-start gap-2 text-sm text-foreground">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-warm-stone" />
                       {note}
                     </li>
                   ))}

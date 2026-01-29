@@ -86,7 +86,7 @@ const FAQ = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="mb-3 inline-block rounded-full bg-primary-light px-3 py-1 text-xs font-medium text-primary sm:mb-4 sm:px-4 sm:text-sm"
+              className="mb-3 inline-block rounded-full bg-warm-stone/15 px-3 py-1 text-xs font-medium text-foreground sm:mb-4 sm:px-4 sm:text-sm"
             >
               FAQ
             </motion.span>
