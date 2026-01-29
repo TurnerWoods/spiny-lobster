@@ -168,8 +168,8 @@ const PatientMessaging = ({ isOpen, onClose }: PatientMessagingProps) => {
           {/* Header */}
           <div className="flex items-center justify-between border-b bg-muted/50 px-4 py-3">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-light">
-                <Stethoscope className="h-5 w-5 text-primary" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/15">
+                <Stethoscope className="h-5 w-5 text-foreground" />
               </div>
               <div>
                 <h2 className="font-semibold text-foreground">Care Team</h2>
@@ -216,8 +216,8 @@ const PatientMessaging = ({ isOpen, onClose }: PatientMessagingProps) => {
                           )}
                         >
                           {message.sender_role !== "patient" && (
-                            <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-light">
-                              <Stethoscope className="h-4 w-4 text-primary" />
+                            <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/15">
+                              <Stethoscope className="h-4 w-4 text-foreground" />
                             </div>
                           )}
                           <div
