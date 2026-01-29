@@ -3,37 +3,77 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Activity, 
-  Brain, 
-  Calculator, 
-  Flame, 
-  Scale, 
+import {
+  Activity,
+  Brain,
+  Calculator,
+  Flame,
+  Scale,
   Dumbbell,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  FlaskConical,
+  Utensils,
+  Dumbbell as WorkoutIcon
 } from "lucide-react";
 import { motion } from "framer-motion";
 
-const tools = [
+// AI-Powered Tools (Featured)
+const aiTools = [
+  {
+    id: "lab-interpreter",
+    title: "Lab Results Interpreter",
+    description: "AI explains your lab values in plain language, identifies patterns, and generates questions for your physician.",
+    icon: FlaskConical,
+    aiPowered: true,
+    route: "/tools/lab-interpreter",
+    color: "from-warm-stone to-deep-charcoal",
+    featured: true,
+  },
   {
     id: "hormone-assessment",
     title: "Hormone Health Assessment",
-    description: "AI-powered comprehensive evaluation of your hormonal health and symptoms.",
+    description: "AI-powered comprehensive evaluation of your hormonal health symptoms and risk factors.",
     icon: Brain,
     aiPowered: true,
     route: "/tools/hormone-assessment",
     color: "from-warm-stone to-deep-charcoal",
+    featured: true,
   },
   {
     id: "treatment-match",
     title: "Treatment Match Quiz",
-    description: "Find your personalized treatment recommendation based on your health goals.",
+    description: "Find your personalized treatment recommendation based on your health goals and lifestyle.",
     icon: Sparkles,
     aiPowered: true,
     route: "/tools/treatment-match-quiz",
     color: "from-warm-stone to-deep-charcoal",
+    featured: true,
   },
+  {
+    id: "meal-planner",
+    title: "AI Meal Planner",
+    description: "Get treatment-specific nutrition plans with Texas restaurant recommendations and H-E-B shopping lists.",
+    icon: Utensils,
+    aiPowered: true,
+    route: "/tools/meal-planner",
+    color: "from-warm-stone to-deep-charcoal",
+    featured: true,
+  },
+  {
+    id: "workout-generator",
+    title: "AI Workout Generator",
+    description: "Treatment-optimized exercise programs for muscle building, fat loss, and recovery.",
+    icon: WorkoutIcon,
+    aiPowered: true,
+    route: "/tools/workout-generator",
+    color: "from-warm-stone to-deep-charcoal",
+    featured: true,
+  },
+];
+
+// Health Calculators
+const calculatorTools = [
   {
     id: "tdee",
     title: "TDEE Calculator",
@@ -89,6 +129,9 @@ const tools = [
     color: "from-warm-stone/80 to-warm-stone",
   },
 ];
+
+// Combined for backward compatibility
+const tools = [...aiTools, ...calculatorTools];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -160,50 +203,140 @@ const Tools = () => {
           </div>
         </motion.div>
 
-        {/* Tools Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {tools.map((tool) => (
-            <motion.div key={tool.id} variants={itemVariants}>
-              <Link to={tool.route}>
-                <Card 
-                  variant="glass" 
-                  className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer border-warm-stone/10"
-                >
-                  <CardHeader className="pb-4">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} shadow-md`}>
-                        <tool.icon className="h-6 w-6 text-pure-white" />
-                      </div>
-                      {tool.aiPowered && (
-                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-warm-stone/10 border border-warm-stone/20">
-                          <Sparkles className="h-3 w-3 text-warm-stone" />
-                          <span className="text-xs font-medium text-warm-stone">AI-Powered</span>
+        {/* AI-Powered Tools Section */}
+        <div className="mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <div className="p-2 rounded-lg bg-gradient-to-br from-warm-stone to-deep-charcoal">
+              <Sparkles className="h-5 w-5 text-pure-white" />
+            </div>
+            <h2 className="text-2xl font-display font-bold text-rich-black">AI-Powered Tools</h2>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {aiTools.map((tool) => (
+              <motion.div key={tool.id} variants={itemVariants}>
+                {tool.comingSoon ? (
+                  <Card
+                    variant="glass"
+                    className="h-full border-warm-stone/10 opacity-70 cursor-not-allowed"
+                  >
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} shadow-md opacity-60`}>
+                          <tool.icon className="h-6 w-6 text-pure-white" />
+                        </div>
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-100 border border-amber-200">
+                          <span className="text-xs font-medium text-amber-700">Coming Soon</span>
                         </span>
-                      )}
-                    </div>
-                    <CardTitle className="text-xl font-display text-rich-black group-hover:text-warm-stone transition-colors">
-                      {tool.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-muted-foreground mb-4">
-                      {tool.description}
-                    </CardDescription>
-                    <div className="flex items-center text-warm-stone font-medium text-sm group-hover:gap-2 transition-all">
-                      <span>Get Started</span>
-                      <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
+                      </div>
+                      <CardTitle className="text-xl font-display text-rich-black/70">
+                        {tool.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-muted-foreground/70 mb-4">
+                        {tool.description}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <Link to={tool.route}>
+                    <Card
+                      variant="glass"
+                      className={`group h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-warm-stone/20 ${tool.featured ? 'ring-1 ring-warm-stone/20' : ''}`}
+                    >
+                      <CardHeader className="pb-4">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} shadow-md group-hover:scale-110 transition-transform`}>
+                            <tool.icon className="h-6 w-6 text-pure-white" />
+                          </div>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warm-stone/10 border border-warm-stone/20">
+                            <Sparkles className="h-3 w-3 text-warm-stone" />
+                            <span className="text-xs font-semibold text-warm-stone">AI-Powered</span>
+                          </span>
+                        </div>
+                        <CardTitle className="text-xl font-display text-rich-black group-hover:text-warm-stone transition-colors">
+                          {tool.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription className="text-muted-foreground mb-4">
+                          {tool.description}
+                        </CardDescription>
+                        <div className="flex items-center text-warm-stone font-semibold text-sm group-hover:gap-2 transition-all">
+                          <span>Get Started</span>
+                          <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Health Calculators Section */}
+        <div className="mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <div className="p-2 rounded-lg bg-warm-stone/20">
+              <Calculator className="h-5 w-5 text-warm-stone" />
+            </div>
+            <h2 className="text-2xl font-display font-bold text-rich-black">Health Calculators</h2>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
+            {calculatorTools.map((tool) => (
+              <motion.div key={tool.id} variants={itemVariants}>
+                <Link to={tool.route}>
+                  <Card
+                    variant="glass"
+                    className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer border-warm-stone/10"
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start gap-3 mb-2">
+                        <div className={`p-2.5 rounded-lg bg-gradient-to-br ${tool.color} shadow-sm group-hover:scale-105 transition-transform`}>
+                          <tool.icon className="h-5 w-5 text-pure-white" />
+                        </div>
+                        <CardTitle className="text-lg font-display text-rich-black group-hover:text-warm-stone transition-colors pt-0.5">
+                          {tool.title}
+                        </CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <CardDescription className="text-muted-foreground text-sm mb-3">
+                        {tool.description}
+                      </CardDescription>
+                      <div className="flex items-center text-warm-stone font-medium text-sm group-hover:gap-2 transition-all">
+                        <span>Calculate</span>
+                        <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
 
         {/* CTA Section */}
         <motion.div

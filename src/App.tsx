@@ -43,7 +43,7 @@ import ProteinCalculator from "./pages/tools/ProteinCalculator";
 import CalorieCalculator from "./pages/tools/CalorieCalculator";
 
 // New AI-Powered Tools
-import { HormoneAssessment, TreatmentMatchQuiz } from "./components/tools";
+import { HormoneAssessment, TreatmentMatchQuiz, LabInterpreter, MealPlanner, WorkoutGenerator } from "./components/tools";
 import { BMRCalculator, CarbCalculator } from "./components/tools/Calculators";
 
 // Admin Pages
@@ -99,6 +99,9 @@ const App = () => (
               {/* New AI-Powered Tools */}
               <Route path="/tools/hormone-assessment" element={<HormoneAssessment />} />
               <Route path="/tools/treatment-match-quiz" element={<TreatmentMatchQuiz />} />
+              <Route path="/tools/lab-interpreter" element={<LabInterpreter />} />
+              <Route path="/tools/meal-planner" element={<MealPlanner />} />
+              <Route path="/tools/workout-generator" element={<WorkoutGenerator />} />
               <Route path="/tools/calculators/bmr" element={<BMRCalculator />} />
               <Route path="/tools/calculators/carb" element={<CarbCalculator />} />
 
