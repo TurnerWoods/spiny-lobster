@@ -3,11 +3,14 @@
 
 export { default as HormoneAssessment } from './HormoneAssessment';
 export { default as TreatmentMatchQuiz } from './TreatmentMatchQuiz';
-export { 
-  TDEECalculator, 
-  BMICalculator, 
-  BMRCalculator, 
-  ProteinCalculator, 
-  CalorieCalculator, 
-  CarbCalculator 
+export { default as LabInterpreter } from './LabInterpreter';
+export { default as MealPlanner } from './MealPlanner';
+export { default as WorkoutGenerator } from './WorkoutGenerator';
+export {
+  TDEECalculator,
+  BMICalculator,
+  BMRCalculator,
+  ProteinCalculator,
+  CalorieCalculator,
+  CarbCalculator
 } from './Calculators';
