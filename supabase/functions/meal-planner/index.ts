@@ -260,8 +260,9 @@ Respond with ONLY a valid JSON object in the specified format, no other text.`
 
   } catch (error) {
     console.error('Error in meal-planner:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: errorMessage }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500

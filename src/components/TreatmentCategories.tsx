@@ -3,15 +3,7 @@ import { Link } from "react-router-dom";
 import { Zap, FlaskConical, Battery, Sparkles, Dumbbell, Heart, Smile, ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Import treatment card images - product-focused medical imagery
-import cardWeightLoss from "@/assets/card-weight-loss.jpg";
-import cardHormones from "@/assets/card-hormones.jpg";
-import cardStrength from "@/assets/card-strength.jpg";
-import cardAntiAging from "@/assets/card-anti-aging.jpg";
-import cardHair from "@/assets/card-hair.jpg";
-import cardSkin from "@/assets/card-skin.jpg";
-import cardMood from "@/assets/card-mood.jpg";
-
+// Use product images from public/images/products for treatment cards
 const treatments = [
   {
     icon: FlaskConical,
@@ -19,8 +11,8 @@ const treatments = [
     subtitle: "GLP-1 & Peptide Therapies",
     description: "Semaglutide, Tirzepatide, and metabolic peptides for clinically proven, sustainable weight loss results.",
     benefits: ["Reduce appetite", "Boost metabolism", "Lose stubborn fat"],
-    image: cardWeightLoss,
-    imageAlt: "Semaglutide and Tirzepatide injection vials for weight loss treatment",
+    image: "/images/products/semaglutide-vial.png",
+    imageAlt: "Semaglutide injection vial for weight loss treatment",
     price: "From $149/mo",
     slug: "weight-loss",
     featured: true,
@@ -31,8 +23,8 @@ const treatments = [
     subtitle: "Testosterone Therapy",
     description: "Testosterone Cypionate with ongoing physician support for energy, mood, and performance optimization.",
     benefits: ["Increased energy", "Improved mood", "Better composition"],
-    image: cardHormones,
-    imageAlt: "Testosterone Cypionate vial and injection supplies for TRT",
+    image: "/images/products/testosterone-vial.png",
+    imageAlt: "Testosterone Cypionate vial for TRT treatment",
     price: "From $149/mo",
     slug: "hormones",
     featured: true,
@@ -43,8 +35,8 @@ const treatments = [
     subtitle: "Performance Peptides",
     description: "Sermorelin, BPC-157, and recovery peptides to build muscle, heal faster, and maximize performance.",
     benefits: ["Faster recovery", "Muscle growth", "Joint support"],
-    image: cardStrength,
-    imageAlt: "BPC-157 and Sermorelin peptide vials for muscle building",
+    image: "/images/products/injection-supplies.png",
+    imageAlt: "Peptide injection supplies for performance enhancement",
     price: "From $199/mo",
     slug: "strength",
   },
@@ -54,8 +46,8 @@ const treatments = [
     subtitle: "Cellular Optimization",
     description: "NAD+, Glutathione, and longevity peptides for cellular energy, mental clarity, and healthy aging.",
     benefits: ["Cellular energy", "Mental clarity", "Longevity"],
-    image: cardAntiAging,
-    imageAlt: "NAD+ and Glutathione IV therapy products for anti-aging",
+    image: "/images/products/nad-supplements.png",
+    imageAlt: "NAD+ supplements for anti-aging and cellular optimization",
     price: "From $199/mo",
     slug: "anti-aging",
   },
@@ -65,8 +57,8 @@ const treatments = [
     subtitle: "Hair Restoration",
     description: "Finasteride, Minoxidil, and peptide therapies to stop hair loss and promote regrowth.",
     benefits: ["Stop hair loss", "Promote growth", "Thicker hair"],
-    image: cardHair,
-    imageAlt: "Finasteride tablets and Minoxidil solution for hair restoration",
+    image: "/images/products/hair-growth-dropper.png",
+    imageAlt: "Hair growth serum dropper for hair restoration",
     price: "From $29/mo",
     slug: "hair",
   },
@@ -76,8 +68,8 @@ const treatments = [
     subtitle: "Medical Skincare",
     description: "Tretinoin, GHK-Cu, and regenerative treatments for healthier, more youthful skin.",
     benefits: ["Reduce wrinkles", "Brighter tone", "Skin firmness"],
-    image: cardSkin,
-    imageAlt: "Tretinoin cream and GHK-Cu peptide serum for skin rejuvenation",
+    image: "/images/products/medication-package.png",
+    imageAlt: "Medical skincare package with prescription treatments",
     price: "From $49/mo",
     slug: "skin",
   },
@@ -87,8 +79,8 @@ const treatments = [
     subtitle: "Cognitive Enhancement",
     description: "Semax, Selank, and nootropic peptides to sharpen focus, reduce stress, and boost mental clarity.",
     benefits: ["Mental clarity", "Stress reduction", "Better focus"],
-    image: cardMood,
-    imageAlt: "Semax and Selank nasal spray peptides for cognitive enhancement",
+    image: "/images/products/tirzepatide-prep.png",
+    imageAlt: "Peptide preparation for cognitive enhancement",
     price: "From $99/mo",
     slug: "mood",
   },

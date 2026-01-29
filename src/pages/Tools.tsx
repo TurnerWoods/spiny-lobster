@@ -224,62 +224,36 @@ const Tools = () => {
           >
             {aiTools.map((tool) => (
               <motion.div key={tool.id} variants={itemVariants}>
-                {tool.comingSoon ? (
+                <Link to={tool.route}>
                   <Card
                     variant="glass"
-                    className="h-full border-warm-stone/10 opacity-70 cursor-not-allowed"
+                    className={`group h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-warm-stone/20 ${tool.featured ? 'ring-1 ring-warm-stone/20' : ''}`}
                   >
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-4">
-                        <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} shadow-md opacity-60`}>
+                        <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} shadow-md group-hover:scale-110 transition-transform`}>
                           <tool.icon className="h-6 w-6 text-pure-white" />
                         </div>
-                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-100 border border-amber-200">
-                          <span className="text-xs font-medium text-amber-700">Coming Soon</span>
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warm-stone/10 border border-warm-stone/20">
+                          <Sparkles className="h-3 w-3 text-warm-stone" />
+                          <span className="text-xs font-semibold text-warm-stone">AI-Powered</span>
                         </span>
                       </div>
-                      <CardTitle className="text-xl font-display text-rich-black/70">
+                      <CardTitle className="text-xl font-display text-rich-black group-hover:text-warm-stone transition-colors">
                         {tool.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <CardDescription className="text-muted-foreground/70 mb-4">
+                      <CardDescription className="text-muted-foreground mb-4">
                         {tool.description}
                       </CardDescription>
+                      <div className="flex items-center text-warm-stone font-semibold text-sm group-hover:gap-2 transition-all">
+                        <span>Get Started</span>
+                        <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </div>
                     </CardContent>
                   </Card>
-                ) : (
-                  <Link to={tool.route}>
-                    <Card
-                      variant="glass"
-                      className={`group h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-warm-stone/20 ${tool.featured ? 'ring-1 ring-warm-stone/20' : ''}`}
-                    >
-                      <CardHeader className="pb-4">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} shadow-md group-hover:scale-110 transition-transform`}>
-                            <tool.icon className="h-6 w-6 text-pure-white" />
-                          </div>
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warm-stone/10 border border-warm-stone/20">
-                            <Sparkles className="h-3 w-3 text-warm-stone" />
-                            <span className="text-xs font-semibold text-warm-stone">AI-Powered</span>
-                          </span>
-                        </div>
-                        <CardTitle className="text-xl font-display text-rich-black group-hover:text-warm-stone transition-colors">
-                          {tool.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <CardDescription className="text-muted-foreground mb-4">
-                          {tool.description}
-                        </CardDescription>
-                        <div className="flex items-center text-warm-stone font-semibold text-sm group-hover:gap-2 transition-all">
-                          <span>Get Started</span>
-                          <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                )}
+                </Link>
               </motion.div>
             ))}
           </motion.div>
