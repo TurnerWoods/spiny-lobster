@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, Sparkles, Shield } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, Sparkles, Shield, AlertCircle } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
 import IntakeFormProgress from "@/components/intake/IntakeFormProgress";
 import HealthGoalsStep from "@/components/intake/HealthGoalsStep";
@@ -20,6 +20,21 @@ const steps = [
   { id: 4, name: "Review" },
 ];
 
+// Inline error message component for better accessibility
+const InlineError = ({ message }: { message: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: -10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+    role="alert"
+    aria-live="polite"
+  >
+    <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+    <span>{message}</span>
+  </motion.div>
+);
+
 const Intake = () => {
   const { user, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -29,6 +44,7 @@ const Intake = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [hasPrefilledData, setHasPrefilledData] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   // Form data
   const [healthGoals, setHealthGoals] = useState({
@@ -62,31 +78,31 @@ const Intake = () => {
       try {
         const parsed = JSON.parse(symptomData);
         const { answers, resultLevel } = parsed;
-        
+
         // Map symptom checker answers to intake form
         const secondaryGoals: string[] = [];
-        
+
         // Energy -> "Increase energy levels"
         if (answers.energy >= 2) secondaryGoals.push("Increase energy levels");
-        
-        // Sleep -> "Improve sleep quality"  
+
+        // Sleep -> "Improve sleep quality"
         if (answers.sleep >= 2) secondaryGoals.push("Improve sleep quality");
-        
+
         // Muscle -> "Build muscle mass"
         if (answers.muscle >= 2) secondaryGoals.push("Build muscle mass");
-        
+
         // Mood -> "Improve mood"
         if (answers.mood >= 2) secondaryGoals.push("Improve mood");
-        
+
         // Focus -> "Enhance mental clarity"
         if (answers.focus >= 2) secondaryGoals.push("Enhance mental clarity");
-        
+
         // Libido -> "Boost libido"
         if (answers.libido >= 2) secondaryGoals.push("Boost libido");
-        
+
         // Set primary goal based on result level
-        const primaryGoal = resultLevel === "high" || resultLevel === "moderate" 
-          ? "hormone-therapy" 
+        const primaryGoal = resultLevel === "high" || resultLevel === "moderate"
+          ? "hormone-therapy"
           : "";
 
         // Map sleep hours from symptom checker
@@ -133,11 +149,18 @@ const Intake = () => {
     }
   }, [user, authLoading, navigate]);
 
+  // Clear validation error when step changes
+  useEffect(() => {
+    setValidationError(null);
+  }, [currentStep]);
+
   const validateStep = (step: number): boolean => {
+    setValidationError(null);
+
     switch (step) {
       case 1:
         if (!healthGoals.primaryGoal) {
-          toast.error("Please select your primary health goal");
+          setValidationError("Please select your primary health goal to continue");
           return false;
         }
         return true;
@@ -147,7 +170,7 @@ const Intake = () => {
         return true; // Lifestyle is optional
       case 4:
         if (!agreedToTerms) {
-          toast.error("Please agree to the terms to continue");
+          setValidationError("Please agree to the terms and conditions to submit");
           return false;
         }
         return true;
@@ -218,7 +241,7 @@ const Intake = () => {
           .from("symptom_checker_results")
           .update({ user_id: user.id })
           .eq("id", symptomResultId);
-        
+
         // Clean up localStorage
         localStorage.removeItem("symptom_checker_result_id");
         localStorage.removeItem("symptom_checker_data");
@@ -238,7 +261,7 @@ const Intake = () => {
   if (authLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
-        <Loader2 className="h-8 w-8 animate-spin text-warm-stone" />
+        <Loader2 className="h-8 w-8 animate-spin text-warm-stone" aria-label="Loading" />
       </div>
     );
   }
@@ -248,8 +271,8 @@ const Intake = () => {
       <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
         <header className="border-b border-warm-stone/10 bg-pure-white/70 backdrop-blur-xl">
           <div className="container flex h-16 items-center px-4">
-            <Link to="/" className="flex items-center gap-2">
-              <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
+            <Link to="/" className="flex items-center gap-2" aria-label="Elevare Health - Home">
+              <img src={logoIcon} alt="" className="h-8 w-auto" aria-hidden="true" />
               <span className="font-display text-lg font-bold text-rich-black">
                 Elevare<span className="text-warm-stone">Health</span>
               </span>
@@ -261,9 +284,11 @@ const Intake = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="max-w-md text-center"
+            role="status"
+            aria-live="polite"
           >
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-success/10">
-              <CheckCircle2 className="h-10 w-10 text-success" />
+              <CheckCircle2 className="h-10 w-10 text-success" aria-hidden="true" />
             </div>
             <h1 className="font-display text-2xl font-bold text-rich-black">Intake Submitted!</h1>
             <p className="mt-3 text-muted-foreground">
@@ -286,33 +311,50 @@ const Intake = () => {
     );
   }
 
+  // Get step descriptions for optional labels
+  const getStepDescription = (step: number) => {
+    switch (step) {
+      case 1:
+        return null; // Required step
+      case 2:
+        return "All fields on this page are optional";
+      case 3:
+        return "All fields on this page are optional";
+      case 4:
+        return null;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
       {/* Header */}
       <header className="border-b border-warm-stone/10 bg-pure-white/70 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
+          <Link to="/" className="flex items-center gap-2" aria-label="Elevare Health - Home">
+            <img src={logoIcon} alt="" className="h-8 w-auto" aria-hidden="true" />
             <span className="font-display text-lg font-bold text-rich-black">
               Elevare<span className="text-warm-stone">Health</span>
             </span>
           </Link>
           <Link to="/" className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-warm-stone">
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Exit
           </Link>
         </div>
       </header>
 
-      <div className="container max-w-3xl px-4 py-8">
+      <main id="main-content" className="container max-w-3xl px-4 py-8" role="main">
         {/* Pre-filled indicator */}
         {hasPrefilledData && currentStep === 1 && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-4 flex items-center gap-2 rounded-xl border border-warm-stone/20 bg-warm-stone/10 px-4 py-3 text-sm text-warm-stone"
+            role="status"
           >
-            <Sparkles className="h-4 w-4" />
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
             <span>Some fields have been pre-filled based on your symptom quiz results</span>
           </motion.div>
         )}
@@ -326,6 +368,22 @@ const Intake = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mt-12 rounded-2xl border border-pure-white/40 bg-pure-white/80 p-6 shadow-xl backdrop-blur-xl sm:p-8"
         >
+          {/* Optional fields indicator */}
+          {getStepDescription(currentStep) && (
+            <p className="mb-6 text-sm text-muted-foreground italic">
+              {getStepDescription(currentStep)}
+            </p>
+          )}
+
+          {/* Validation Error */}
+          <AnimatePresence>
+            {validationError && (
+              <div className="mb-6">
+                <InlineError message={validationError} />
+              </div>
+            )}
+          </AnimatePresence>
+
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
@@ -364,30 +422,34 @@ const Intake = () => {
 
           {/* Navigation */}
           <div className="mt-8 flex items-center justify-between border-t border-warm-stone/10 pt-6">
-            <Button
-              variant="ghost"
-              onClick={handleBack}
-              disabled={currentStep === 1}
-              className={currentStep === 1 ? "invisible" : "text-muted-foreground hover:text-warm-stone"}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Button>
+            {currentStep > 1 ? (
+              <Button
+                variant="ghost"
+                onClick={handleBack}
+                className="text-muted-foreground hover:text-warm-stone"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+                Back
+              </Button>
+            ) : (
+              <div /> // Empty div to maintain justify-between spacing
+            )}
 
             {currentStep < 4 ? (
               <Button onClick={handleNext} className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90">
                 Continue
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Button>
             ) : (
               <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !agreedToTerms}
-                className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90"
+                className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90 disabled:opacity-50"
+                aria-describedby={!agreedToTerms ? "terms-required" : undefined}
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                     Submitting...
                   </>
                 ) : (
@@ -396,14 +458,19 @@ const Intake = () => {
               </Button>
             )}
           </div>
+          {currentStep === 4 && !agreedToTerms && (
+            <p id="terms-required" className="sr-only">
+              You must agree to the terms and conditions before submitting
+            </p>
+          )}
         </motion.div>
 
         {/* Trust Badge */}
         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-          <Shield className="h-4 w-4 text-warm-stone" />
-          <span>HIPAA Compliant • 256-bit Encryption</span>
+          <Shield className="h-4 w-4 text-warm-stone" aria-hidden="true" />
+          <span>HIPAA Compliant &bull; 256-bit Encryption</span>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

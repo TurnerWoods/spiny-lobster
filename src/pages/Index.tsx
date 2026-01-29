@@ -18,7 +18,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <ScrollProgress />
       <Header />
-      <main>
+      <main id="main-content" role="main">
         <Hero />
         <TrustMarquee />
         <TreatmentCategories />
