@@ -368,7 +368,7 @@ const FAQ = () => {
                 <h2 className="mb-4 font-display text-2xl font-bold text-pure-white sm:text-3xl">
                   Still Have Questions?
                 </h2>
-                <p className="mb-6 text-warm-gray">
+                <p className="mb-6 text-pure-white/70">
                   Our team is here to help. Reach out and we'll get back to you within 24 hours.
                 </p>
                 <div className="flex flex-col justify-center gap-4 sm:flex-row">

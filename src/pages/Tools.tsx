@@ -323,7 +323,7 @@ const Tools = () => {
             <h2 className="text-2xl md:text-3xl font-display font-bold text-pure-white mb-4">
               Ready to Start Your Health Journey?
             </h2>
-            <p className="text-warm-gray mb-6 max-w-xl">
+            <p className="text-pure-white/70 mb-6 max-w-xl">
               Complete your health assessment and get personalized treatment recommendations from our medical team.
             </p>
             <Link to="/intake">
