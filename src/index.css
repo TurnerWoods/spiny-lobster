@@ -32,8 +32,8 @@
     --secondary: 226 33% 95%; /* light-cloud #EEF0F7 */
     --secondary-foreground: 240 11% 4%;
 
-    --muted: 45 10% 83%; /* warm-gray #D7D5CF */
-    --muted-foreground: 270 5% 40%;
+    --muted: 45 10% 90%; /* warm-gray #E8E6E1 */
+    --muted-foreground: 270 5% 35%;
 
     /* Accent - Deep Charcoal */
     --accent: 270 5% 18%; /* deep-charcoal #2F2B31 */
@@ -60,7 +60,7 @@
     --warm-stone: 30 12% 40%;
     --soft-linen: 40 15% 96%;
     --rich-black: 240 11% 4%;
-    --warm-gray: 45 10% 83%;
+    --warm-gray: 45 8% 45%;
     --light-cloud: 226 33% 95%;
     --neutral-gray: 0 0% 88%;
 
