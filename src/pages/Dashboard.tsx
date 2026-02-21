@@ -61,6 +61,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isMessagingOpen, setIsMessagingOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -75,37 +76,42 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     if (!user) return;
+    setError(null);
 
     try {
       // Fetch profile
-      const { data: profileData } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from("profiles")
         .select("first_name, last_name")
         .eq("user_id", user.id)
         .maybeSingle();
 
+      if (profileError) throw profileError;
       if (profileData) setProfile(profileData);
 
       // Fetch treatments
-      const { data: treatmentsData } = await supabase
+      const { data: treatmentsData, error: treatmentsError } = await supabase
         .from("treatments")
         .select("*")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
 
+      if (treatmentsError) throw treatmentsError;
       if (treatmentsData) setTreatments(treatmentsData as Treatment[]);
 
       // Fetch unread message count
-      const { count } = await supabase
+      const { count, error: messagesError } = await supabase
         .from("messages")
         .select("*", { count: "exact", head: true })
         .eq("user_id", user.id)
         .eq("is_read", false)
         .neq("sender_role", "patient");
 
+      if (messagesError) throw messagesError;
       setUnreadCount(count || 0);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setError("Unable to load your data. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -191,6 +197,30 @@ const Dashboard = () => {
       </header>
 
       <main className="container px-4 py-8 md:py-12">
+        {/* Error State */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6"
+          >
+            <Card variant="glass" className="p-4 border-destructive/30 bg-destructive/5">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0" />
+                <p className="text-sm text-destructive flex-1">{error}</p>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={fetchData}
+                  className="border-destructive/30 text-destructive hover:bg-destructive/10"
+                >
+                  Retry
+                </Button>
+              </div>
+            </Card>
+          </motion.div>
+        )}
+
         {/* Welcome Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -331,10 +361,10 @@ const Dashboard = () => {
                             </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <div className={`hidden sm:flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium ${status.color}`}>
-                            <StatusIcon className="h-4 w-4" />
-                            {status.label}
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className={`flex items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium ${status.color}`}>
+                            <StatusIcon className="h-3 w-3 sm:h-4 sm:w-4" />
+                            <span className="hidden xs:inline sm:inline">{status.label}</span>
                           </div>
                           <ChevronRight className="h-5 w-5 text-warm-stone/60 transition-transform group-hover:translate-x-1" />
                         </div>

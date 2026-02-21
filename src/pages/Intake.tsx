@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, Sparkles, Shield, Save, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, Sparkles, Shield, Save, X, AlertCircle } from "lucide-react";
 import IntakeFormProgress from "@/components/intake/IntakeFormProgress";
 import HealthGoalsStep from "@/components/intake/HealthGoalsStep";
 import MedicalHistoryStep from "@/components/intake/MedicalHistoryStep";
@@ -47,6 +47,7 @@ const Intake = () => {
   const [hasPrefilledData, setHasPrefilledData] = useState(false);
   const [hasSavedProgress, setHasSavedProgress] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   // Form data
   const [healthGoals, setHealthGoals] = useState({
@@ -181,17 +182,18 @@ const Intake = () => {
     }
   }, [hasPrefilledData]);
 
-  useEffect(() => {
-    if (!authLoading && !user) {
-      navigate("/login", { state: { from: "/intake" } });
-    }
-  }, [user, authLoading, navigate]);
+  // Auth is NOT required to start the assessment.
+  // Users create an account only at submission (step 4).
+  // This maximizes top-of-funnel conversions.
 
   const validateStep = (step: number): boolean => {
+    setValidationError(null);
     switch (step) {
       case 1:
         if (!healthGoals.primaryGoal) {
-          toast.error("Please select your primary health goal");
+          const errorMsg = "Select your primary health goal to continue";
+          setValidationError(errorMsg);
+          toast.error(errorMsg);
           return false;
         }
         return true;
@@ -201,7 +203,9 @@ const Intake = () => {
         return true; // Lifestyle is optional
       case 4:
         if (!agreedToTerms) {
-          toast.error("Please agree to the terms to continue");
+          const errorMsg = "Please review and accept the terms to submit your assessment";
+          setValidationError(errorMsg);
+          toast.error(errorMsg);
           return false;
         }
         return true;
@@ -212,8 +216,8 @@ const Intake = () => {
 
   const handleNext = () => {
     if (validateStep(currentStep)) {
+      setValidationError(null);
       setCurrentStep((prev) => Math.min(prev + 1, 4));
-      // Scroll to top on mobile
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -233,7 +237,13 @@ const Intake = () => {
 
   const handleSubmit = async () => {
     if (!user) {
-      toast.error("Please sign in to submit your intake form");
+      toast.info("Create a free account to save your assessment", {
+        action: {
+          label: "Sign Up",
+          onClick: () => navigate("/signup", { state: { from: "/intake" } }),
+        },
+      });
+      navigate("/signup", { state: { from: "/intake" } });
       return;
     }
 
@@ -469,6 +479,20 @@ const Intake = () => {
               )}
             </motion.div>
           </AnimatePresence>
+
+          {/* Inline Validation Error */}
+          {validationError && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 flex items-center gap-2 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+              role="alert"
+              aria-live="polite"
+            >
+              <AlertCircle className="h-4 w-4 flex-shrink-0" />
+              <span>{validationError}</span>
+            </motion.div>
+          )}
 
           {/* Navigation - Mobile optimized */}
           <div className="mt-8 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-warm-stone/10 pt-6">

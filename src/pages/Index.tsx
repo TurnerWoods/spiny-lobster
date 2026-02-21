@@ -10,6 +10,7 @@ import TreatmentCategories from "@/components/TreatmentCategories";
 
 // Lazy load below-fold components for better initial load performance
 const HowItWorks = lazy(() => import("@/components/HowItWorks"));
+const ProviderSection = lazy(() => import("@/components/ProviderSection"));
 const TestimonialsCarousel = lazy(() => import("@/components/TestimonialsCarousel"));
 const FAQ = lazy(() => import("@/components/FAQ"));
 const FinalCTA = lazy(() => import("@/components/FinalCTA"));
@@ -40,6 +41,14 @@ const Index = () => {
           <SectionErrorBoundary sectionName="HowItWorks">
             <Suspense fallback={<SectionLoader />}>
               <HowItWorks />
+            </Suspense>
+          </SectionErrorBoundary>
+        </LazySection>
+
+        <LazySection minHeight="400px" rootMargin="200px 0px">
+          <SectionErrorBoundary sectionName="ProviderSection">
+            <Suspense fallback={<SectionLoader />}>
+              <ProviderSection />
             </Suspense>
           </SectionErrorBoundary>
         </LazySection>

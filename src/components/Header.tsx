@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, User, X, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetContent,
@@ -22,9 +23,15 @@ import {
 
 const Header = () => {
   const { user, isLoading } = useAuth();
+  const location = useLocation();
   const [showPromo, setShowPromo] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isActivePath = (href: string) => {
+    if (href === "/") return location.pathname === "/";
+    return location.pathname.startsWith(href);
+  };
 
   // Handle scroll effect for sticky header with requestAnimationFrame for better mobile performance
   useEffect(() => {
@@ -316,12 +323,14 @@ const Header = () => {
                 variant="ghost"
                 size="icon"
                 aria-label="Open navigation menu"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
                 className="min-h-[44px] min-w-[44px] h-11 w-11 hover:bg-neutral-gray/10 active:bg-neutral-gray/20 transition-colors duration-200 rounded-full"
               >
                 <Menu className="h-6 w-6 text-rich-black/80" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full sm:w-[380px] sm:max-w-[380px] p-0 border-l-0">
+            <SheetContent side="right" className="w-full sm:w-[380px] sm:max-w-[380px] p-0 border-l-0" id="mobile-menu">
               {/* Mobile Header - Compact with proper spacing for close button */}
               <SheetHeader className="border-b border-neutral-gray/15 bg-pure-white px-5 sm:px-6 py-4 pr-16">
                 <SheetTitle className="flex items-center min-h-[44px]">
@@ -346,12 +355,19 @@ const Header = () => {
                         key={item.name}
                         to={item.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="group flex items-center justify-between rounded-xl px-4 min-h-[48px] py-3 transition-all duration-200 hover:bg-soft-linen active:bg-soft-linen/80 active:scale-[0.99]"
+                        className={cn(
+                          "group flex items-center justify-between rounded-xl px-4 min-h-[48px] py-3 transition-all duration-200 hover:bg-soft-linen active:bg-soft-linen/80 active:scale-[0.99]",
+                          isActivePath(item.href) && "bg-warm-stone/10 border-l-2 border-warm-stone"
+                        )}
+                        aria-current={isActivePath(item.href) ? "page" : undefined}
                         style={{
                           animationDelay: `${index * 50}ms`,
                         }}
                       >
-                        <span className="text-[15px] font-medium text-rich-black/90 group-hover:text-rich-black transition-colors">
+                        <span className={cn(
+                          "text-[15px] font-medium transition-colors",
+                          isActivePath(item.href) ? "text-warm-stone" : "text-rich-black/90 group-hover:text-rich-black"
+                        )}>
                           {item.name}
                         </span>
                         <span className="text-[11px] font-medium text-warm-stone/60 tracking-wide">
