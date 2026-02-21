@@ -4,76 +4,71 @@ import heroImage from "@/assets/hero-weight-loss.jpg";
 const treatment: TreatmentData = {
   category: "Weight Loss",
   title: "Medical Weight Loss",
-  subtitle: "Clinically Proven GLP-1 & Peptide Therapies",
-  description: "Break through weight loss plateaus with physician-supervised therapies that work with your body's natural systems. Our medical weight loss protocols help reduce appetite, boost metabolism, and support lasting results.",
-  price: "$149/mo",
+  subtitle: "GLP-1 & Peptide Therapies",
+  description: "Physician-supervised therapies to reduce appetite and boost metabolism.",
+  price: "$149",
   heroImage,
   productImage: "/images/products/tirzepatide-prep.png",
+  stacks: [
+    { name: "Ultimate Weight Loss", tagline: "Maximum Results Protocol", products: ["Tirzepatide", "AOD-9604", "Lipotropics"], price: "$349/mo", savings: "Save $98", popular: true },
+    { name: "GLP-1 Accelerator", tagline: "Enhanced Fat Burning", products: ["Semaglutide", "AOD-9604"], price: "$249/mo", savings: "Save $49" },
+    { name: "Metabolic Reset", tagline: "Visceral Fat Protocol", products: ["Tesamorelin", "Lipotropics"], price: "$249/mo", savings: "Save $49" }
+  ],
   medications: [
     {
       name: "Semaglutide",
-      description: "GLP-1 receptor agonist that reduces appetite, slows gastric emptying, and improves blood sugar control. The same active ingredient in Ozempic® and Wegovy®.",
-      price: "$149/mo",
-      image: "/images/products/semaglutide-vial.png"
+      description: "GLP-1 that reduces appetite and improves blood sugar control.",
+      price: "$149/mo"
     },
     {
       name: "Tirzepatide",
-      description: "Dual GIP/GLP-1 receptor agonist for enhanced weight loss. The same active ingredient in Mounjaro® and Zepbound®. Our most effective option.",
-      price: "$199/mo",
-      image: "/images/products/tirzepatide-prep.png"
+      description: "Dual GIP/GLP-1 agonist for enhanced weight loss.",
+      price: "$199/mo"
     },
     {
       name: "Tesamorelin",
-      description: "Growth hormone releasing peptide that specifically targets stubborn visceral and abdominal fat while preserving lean muscle mass.",
+      description: "Targets visceral fat while preserving lean muscle.",
       price: "$199/mo"
     },
     {
       name: "AOD-9604",
-      description: "Fat-burning peptide derived from growth hormone that stimulates lipolysis without affecting blood sugar or growth.",
+      description: "Fat-burning peptide that stimulates lipolysis.",
       price: "$149/mo"
     },
     {
       name: "Lipotropic Injections",
-      description: "B12 + MIC (Methionine, Inositol, Choline) injections that support fat metabolism, energy, and liver function.",
-      price: "$99/mo",
-      image: "/images/products/injection-supplies.png"
+      description: "B12 + MIC for fat metabolism and energy.",
+      price: "$99/mo"
     }
   ],
   symptoms: [
-    "Stubborn belly fat that won't respond to diet and exercise",
-    "Constant food cravings and difficulty controlling appetite",
-    "Slow metabolism despite healthy eating habits",
-    "Weight regain after previous diet attempts",
-    "Fatigue and low energy levels",
-    "Pre-diabetic or metabolic syndrome concerns",
-    "Difficulty losing weight after age 35-40",
-    "Emotional or stress eating patterns"
+    "Stubborn belly fat",
+    "Constant food cravings",
+    "Slow metabolism",
+    "Weight regain after dieting",
+    "Fatigue and low energy",
+    "Pre-diabetic concerns"
   ],
   benefits: [
-    "Significant, sustainable weight loss",
-    "Reduced appetite and food cravings",
-    "Improved blood sugar control",
-    "Increased energy levels",
-    "Better cardiovascular health markers",
+    "Sustainable weight loss",
+    "Reduced appetite",
+    "Improved blood sugar",
+    "Increased energy",
     "Reduced visceral fat",
-    "Improved metabolic function",
-    "Enhanced mood and confidence"
+    "Better confidence"
   ],
   timeline: [
-    { period: "Week 1-2", description: "Appetite reduction and decreased food cravings begin. Some patients notice early weight loss." },
-    { period: "Week 3-4", description: "Noticeable weight loss typically 3-5 lbs. Improved energy and blood sugar stability." },
-    { period: "Month 2-3", description: "Significant weight loss progress. Improved body composition and metabolic markers." },
-    { period: "Month 3-6", description: "Optimal results with 10-20% body weight reduction common. Lifestyle changes become sustainable habits." }
+    { period: "Week 1-2", description: "Appetite reduction begins." },
+    { period: "Week 3-4", description: "3-5 lbs weight loss typical." },
+    { period: "Month 2-3", description: "Significant progress visible." },
+    { period: "Month 3-6", description: "10-20% body weight reduction." }
   ],
   results: [
-    { id: "wl-1", metric: "Body Weight", before: "245 lbs", after: "198 lbs", timeframe: "6 months", improvement: "-47 lbs (19%)" },
-    { id: "wl-2", metric: "Waist Size", before: '42"', after: '34"', timeframe: "5 months", improvement: '-8 inches' },
-    { id: "wl-3", metric: "A1C Level", before: "6.8%", after: "5.4%", timeframe: "4 months", improvement: "Now normal range" },
-    { id: "wl-4", metric: "Body Fat %", before: "32%", after: "22%", timeframe: "6 months", improvement: "-10% body fat" },
-    { id: "wl-5", metric: "Appetite Score", before: "9/10", after: "3/10", timeframe: "2 weeks", improvement: "67% reduction" },
-    { id: "wl-6", metric: "Energy Level", before: "3/10", after: "8/10", timeframe: "1 month", improvement: "+167% energy" }
+    { id: "wl-1", metric: "Body Weight", before: "245 lbs", after: "198 lbs", timeframe: "6 months", improvement: "-47 lbs" },
+    { id: "wl-2", metric: "Waist Size", before: '42"', after: '34"', timeframe: "5 months", improvement: "-8 inches" },
+    { id: "wl-3", metric: "Body Fat %", before: "32%", after: "22%", timeframe: "6 months", improvement: "-10%" }
   ],
-  safetyNote: "GLP-1 medications may cause nausea, especially initially. We start with low doses and titrate slowly. Not recommended for those with personal or family history of medullary thyroid cancer or MEN2 syndrome. See full safety information."
+  safetyNote: "GLP-1 medications may cause nausea initially. Not for those with thyroid cancer history."
 };
 
 const WeightLossPage = () => {

@@ -1,77 +1,143 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Star } from "lucide-react";
+import { ArrowRight, Shield, Award, CheckCircle2, Truck } from "lucide-react";
 import { Link } from "react-router-dom";
+import { easing, duration, viewportSettings } from "@/lib/motion";
+
+// Trust badges for CTA
+const ctaTrustBadges = [
+  { icon: Award, label: "US-Licensed Physicians" },
+  { icon: CheckCircle2, label: "FDA-Approved" },
+  { icon: Shield, label: "HIPAA Compliant" },
+  { icon: Truck, label: "Free Shipping" },
+];
+
+// Premium easing
+const premiumEase = [0.16, 1, 0.3, 1] as const;
+
+// Orchestrated content animation
+const contentVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const contentItem = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: duration.slower,
+      ease: premiumEase,
+    },
+  },
+};
+
+// Trust indicators animation
+const trustVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const trustItem = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: duration.normal,
+      ease: easing.smooth,
+    },
+  },
+};
 
 const FinalCTA = () => {
   return (
-    <section className="relative overflow-hidden py-12 sm:py-16 md:py-20">
-      {/* Background Image */}
+    <section className="relative overflow-hidden bg-deep-charcoal py-20 xs:py-24 sm:py-32 md:py-40 lg:py-48">
+      {/* Subtle gradient accent */}
       <div className="absolute inset-0">
-        <img 
-          src="/images/heroes/man-terrace.png" 
-          alt="Premium lifestyle"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-deep-charcoal/90 via-warm-stone/80 to-deep-charcoal/90" />
-      </div>
-      <div className="absolute inset-0">
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-pure-white/5 sm:-right-20 sm:-top-20 sm:h-60 sm:w-60" />
-        <div className="absolute -bottom-10 -left-10 h-60 w-60 rounded-full bg-pure-white/5 sm:-bottom-20 sm:-left-20 sm:h-80 sm:w-80" />
+        <div className="absolute -left-1/4 top-0 h-full w-1/2 bg-gradient-to-r from-warm-stone/5 to-transparent" />
+        <div className="absolute bottom-0 right-0 h-1/2 w-1/3 bg-gradient-to-t from-warm-stone/5 to-transparent" />
       </div>
 
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mx-auto max-w-3xl text-center"
+          variants={contentVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="mx-auto max-w-2xl text-center"
         >
-          {/* Trust Badge - Glassmorphic */}
-          <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-pure-white/30 bg-pure-white/15 px-3 py-1.5 text-xs font-medium text-pure-white/90 backdrop-blur-md sm:mb-6 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
-            <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span>HIPAA Compliant • No Commitment</span>
-          </div>
-
-          {/* Headline */}
-          <h2 className="mb-4 font-display text-2xl font-bold text-pure-white sm:mb-6 sm:text-3xl md:text-4xl lg:text-5xl">
-            Ready to Feel Like Yourself Again?
-          </h2>
+          {/* Headline - Mobile-optimized typography */}
+          <motion.h2
+            variants={contentItem}
+            className="mb-6 sm:mb-8 font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-light leading-tight tracking-tight text-soft-linen"
+          >
+            Ready to feel like
+            <br />
+            yourself again?
+          </motion.h2>
 
           {/* Subtitle */}
-          <p className="mx-auto mb-6 max-w-xl px-2 text-base text-pure-white/80 sm:mb-8 sm:px-0 sm:text-lg">
-            Start your free assessment today. Takes 5 minutes. Completely confidential.
-          </p>
+          <motion.p
+            variants={contentItem}
+            className="text-base sm:text-lg mx-auto mb-8 sm:mb-12 max-w-md text-soft-linen/60 leading-relaxed"
+          >
+            Start your assessment today. Takes five minutes. Completely confidential.
+          </motion.p>
 
-          {/* CTAs */}
-          <div className="mb-6 flex flex-col items-center justify-center gap-3 sm:mb-8 sm:flex-row sm:gap-4">
-            <Link to="/intake" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                className="w-full bg-pure-white text-warm-stone shadow-lg hover:bg-pure-white/90 sm:w-auto"
+          {/* CTA - Full width on mobile, auto on larger screens */}
+          <motion.div variants={contentItem}>
+            <Link to="/intake" className="block w-full sm:inline-block sm:w-auto">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: duration.fast, ease: easing.smooth }}
               >
-                Start Free Assessment
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-              </Button>
+                <Button
+                  size="xl"
+                  variant="premium"
+                  className="group w-full min-h-[52px] px-8 sm:w-auto sm:px-12 uppercase tracking-[0.1em] sm:tracking-[0.15em]"
+                >
+                  Begin Assessment
+                  <ArrowRight className="ml-3 transition-transform duration-300 ease-out group-hover:translate-x-1" />
+                </Button>
+              </motion.div>
             </Link>
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full border-pure-white/40 bg-pure-white/10 text-pure-white backdrop-blur-sm hover:bg-pure-white/20 sm:w-auto"
-            >
-              Video Consultation - $99
-            </Button>
-          </div>
+          </motion.div>
 
-          {/* Rating */}
-          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400 sm:h-5 sm:w-5" />
-              ))}
-            </div>
-            <span className="text-xs text-pure-white/80 sm:text-sm">4.9/5 from verified patients</span>
-          </div>
+          {/* Trust indicators - Grid on mobile, inline on desktop */}
+          <motion.div
+            variants={trustVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mt-8 sm:mt-12 grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-6"
+          >
+            {ctaTrustBadges.map((badge, index) => (
+              <motion.div
+                key={badge.label}
+                variants={trustItem}
+                className="flex items-center justify-center gap-2 text-soft-linen/40 sm:justify-start"
+              >
+                <badge.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={1.5} />
+                <span className="text-[10px] sm:text-xs font-light uppercase tracking-[0.1em] sm:tracking-[0.15em]">
+                  {badge.label}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </section>

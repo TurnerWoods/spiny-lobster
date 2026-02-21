@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Info } from "lucide-react";
 
 interface MedicalHistoryStepProps {
   data: {
@@ -50,76 +51,104 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
         <p className="mt-1 text-muted-foreground">
           This information helps our providers create a safe, personalized treatment plan
         </p>
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="currentWeight" className="text-rich-black">Current Weight (lbs)</Label>
-          <Input
-            id="currentWeight"
-            type="number"
-            placeholder="e.g., 180"
-            value={data.currentWeight}
-            onChange={(e) => onChange({ currentWeight: e.target.value })}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="targetWeight" className="text-rich-black">Target Weight (lbs)</Label>
-          <Input
-            id="targetWeight"
-            type="number"
-            placeholder="e.g., 160"
-            value={data.targetWeight}
-            onChange={(e) => onChange({ targetWeight: e.target.value })}
-          />
+        <div className="mt-3 flex items-start gap-2 rounded-lg bg-soft-linen/50 border border-warm-stone/10 p-3 text-sm text-warm-gray">
+          <Info className="h-4 w-4 text-warm-stone mt-0.5 flex-shrink-0" />
+          <span>All fields on this page are optional. Share what you're comfortable with - you can always add more details later.</span>
         </div>
       </div>
 
-      <div>
-        <Label className="text-base text-rich-black">Height</Label>
-        <div className="mt-2 flex gap-4">
-          <div className="w-24">
-            <Select value={data.heightFeet} onValueChange={(value) => onChange({ heightFeet: value })}>
-              <SelectTrigger>
-                <SelectValue placeholder="Feet" />
-              </SelectTrigger>
-              <SelectContent>
-                {[4, 5, 6, 7].map((ft) => (
-                  <SelectItem key={ft} value={ft.toString()}>
-                    {ft} ft
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+      {/* Weight & Height - Simplified layout for mobile */}
+      <div className="space-y-4">
+        <Label className="text-base font-semibold text-rich-black">Basic Measurements</Label>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="currentWeight" className="text-sm text-rich-black">Current Weight</Label>
+            <div className="relative">
+              <Input
+                id="currentWeight"
+                type="number"
+                inputMode="numeric"
+                placeholder="180"
+                value={data.currentWeight}
+                onChange={(e) => onChange({ currentWeight: e.target.value })}
+                className="pr-10"
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">lbs</span>
+            </div>
           </div>
-          <div className="w-24">
-            <Select value={data.heightInches} onValueChange={(value) => onChange({ heightInches: value })}>
-              <SelectTrigger>
-                <SelectValue placeholder="Inches" />
-              </SelectTrigger>
-              <SelectContent>
-                {Array.from({ length: 12 }, (_, i) => (
-                  <SelectItem key={i} value={i.toString()}>
-                    {i} in
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="space-y-2">
+            <Label htmlFor="targetWeight" className="text-sm text-rich-black">Goal Weight</Label>
+            <div className="relative">
+              <Input
+                id="targetWeight"
+                type="number"
+                inputMode="numeric"
+                placeholder="160"
+                value={data.targetWeight}
+                onChange={(e) => onChange({ targetWeight: e.target.value })}
+                className="pr-10"
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">lbs</span>
+            </div>
           </div>
         </div>
+
+        <div>
+          <Label className="text-sm text-rich-black">Height</Label>
+          <div className="mt-2 flex gap-3">
+            <div className="flex-1">
+              <Select value={data.heightFeet} onValueChange={(value) => onChange({ heightFeet: value })}>
+                <SelectTrigger className="h-12 sm:h-11">
+                  <SelectValue placeholder="Feet" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[4, 5, 6, 7].map((ft) => (
+                    <SelectItem key={ft} value={ft.toString()}>
+                      {ft} ft
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex-1">
+              <Select value={data.heightInches} onValueChange={(value) => onChange({ heightInches: value })}>
+                <SelectTrigger className="h-12 sm:h-11">
+                  <SelectValue placeholder="Inches" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <SelectItem key={i} value={i.toString()}>
+                      {i} in
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
       </div>
 
+      {/* Medical Conditions - Better touch targets */}
       <div>
         <Label className="text-base font-semibold text-rich-black">Do you have any of the following conditions?</Label>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <p className="mt-1 mb-3 text-sm text-muted-foreground">Select all that apply</p>
+        <div className="grid gap-2 sm:grid-cols-2">
           {medicalConditionOptions.map((condition) => (
-            <div key={condition} className="flex items-center space-x-2">
+            <div
+              key={condition}
+              className={`flex items-center space-x-3 rounded-lg border p-3 cursor-pointer transition-colors ${
+                data.medicalConditions.includes(condition)
+                  ? "border-warm-stone bg-warm-stone/5"
+                  : "border-warm-stone/20 hover:border-warm-stone/40"
+              }`}
+              onClick={() => handleConditionChange(condition, !data.medicalConditions.includes(condition))}
+            >
               <Checkbox
                 id={condition}
                 checked={data.medicalConditions.includes(condition)}
                 onCheckedChange={(checked) => handleConditionChange(condition, checked as boolean)}
               />
-              <Label htmlFor={condition} className="text-sm font-normal cursor-pointer text-rich-black">
+              <Label htmlFor={condition} className="text-sm font-normal cursor-pointer text-rich-black flex-1">
                 {condition}
               </Label>
             </div>
@@ -127,36 +156,51 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
         </div>
       </div>
 
+      {/* Medications - Simplified */}
       <div className="space-y-2">
-        <Label htmlFor="currentMedications" className="text-rich-black">Current Medications</Label>
+        <Label htmlFor="currentMedications" className="text-base font-semibold text-rich-black">
+          Current Medications
+        </Label>
+        <p className="text-sm text-muted-foreground mb-2">Include prescription medications, supplements, and over-the-counter drugs</p>
         <Textarea
           id="currentMedications"
-          placeholder="List any medications you're currently taking, including dosages..."
+          placeholder="e.g., Metformin 500mg, Vitamin D 2000IU, Advil as needed..."
           value={data.currentMedications}
           onChange={(e) => onChange({ currentMedications: e.target.value })}
           rows={3}
+          className="resize-none"
         />
       </div>
 
+      {/* Allergies - Simplified */}
       <div className="space-y-2">
-        <Label htmlFor="allergies" className="text-rich-black">Allergies</Label>
+        <Label htmlFor="allergies" className="text-base font-semibold text-rich-black">
+          Known Allergies
+        </Label>
         <Textarea
           id="allergies"
-          placeholder="List any known allergies to medications or substances..."
+          placeholder="e.g., Penicillin, shellfish, latex, or 'None known'"
           value={data.allergies}
           onChange={(e) => onChange({ allergies: e.target.value })}
           rows={2}
+          className="resize-none"
         />
       </div>
 
+      {/* Previous Treatments - Optional with expandable */}
       <div className="space-y-2">
-        <Label htmlFor="previousTreatments" className="text-rich-black">Previous Weight Loss or Hormone Treatments</Label>
+        <Label htmlFor="previousTreatments" className="text-base font-semibold text-rich-black">
+          Previous Treatments
+          <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
+        </Label>
+        <p className="text-sm text-muted-foreground mb-2">Have you tried weight loss or hormone treatments before?</p>
         <Textarea
           id="previousTreatments"
-          placeholder="Describe any previous treatments you've tried and their outcomes..."
+          placeholder="e.g., 'Tried Wegovy for 3 months with good results' or 'No previous treatments'"
           value={data.previousTreatments}
           onChange={(e) => onChange({ previousTreatments: e.target.value })}
-          rows={3}
+          rows={2}
+          className="resize-none"
         />
       </div>
     </div>

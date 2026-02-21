@@ -4,6 +4,7 @@ import { MessageCircle, X, Send, Bot, User, Loader2, Mail, Phone, CheckCircle } 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { easing, duration } from "@/lib/motion";
 
 type Message = {
   role: "user" | "assistant";
@@ -325,31 +326,78 @@ const AIChatWidget = () => {
 
   const showSuggestedPrompts = messages.length === 1 && !isLoading;
 
+  // Premium widget animations
+  const buttonVariants = {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: duration.normal,
+        ease: easing.entrance,
+      },
+    },
+    exit: {
+      scale: 0.8,
+      opacity: 0,
+      transition: {
+        duration: duration.fast,
+        ease: easing.exit,
+      },
+    },
+  };
+
+  const windowVariants = {
+    initial: { opacity: 0, y: 16, scale: 0.96 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: duration.normal,
+        ease: easing.entrance,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 16,
+      scale: 0.96,
+      transition: {
+        duration: duration.fast,
+        ease: easing.exit,
+      },
+    },
+  };
+
   return (
     <>
-      {/* Chat Button - positioned higher to avoid scrollbar */}
+      {/* Chat Button - positioned higher on mobile to avoid MobileBottomCTA */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
+            variants={buttonVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-20 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform hover:scale-105"
+            className="fixed bottom-28 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg sm:bottom-20 sm:right-6 sm:h-14 sm:w-14 md:bottom-6"
           >
-            <MessageCircle className="h-6 w-6" />
+            <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Chat Window */}
+      {/* Chat Window - Full screen on mobile, positioned on desktop */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-20 right-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border bg-card shadow-2xl"
+            variants={windowVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="fixed inset-x-0 bottom-0 top-auto z-50 flex h-[85vh] max-h-[600px] flex-col overflow-hidden rounded-t-2xl border bg-card shadow-2xl sm:inset-auto sm:bottom-20 sm:right-6 sm:h-[500px] sm:w-[380px] sm:max-w-[calc(100vw-3rem)] sm:rounded-2xl md:bottom-6"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b bg-primary px-4 py-3 text-white">
@@ -364,7 +412,8 @@ const AIChatWidget = () => {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="rounded-full p-1 transition-colors hover:bg-white/20"
+                className="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/20 active:bg-white/30 -mr-2"
+                aria-label="Close chat"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -405,7 +454,7 @@ const AIChatWidget = () => {
                   </div>
                 ))}
 
-                {/* Suggested Prompts */}
+                {/* Suggested Prompts - Touch-friendly with 44px minimum height */}
                 {showSuggestedPrompts && (
                   <div className="mt-2 flex flex-col gap-2">
                     <p className="text-xs font-medium text-muted-foreground">Quick questions:</p>
@@ -414,7 +463,7 @@ const AIChatWidget = () => {
                         <button
                           key={index}
                           onClick={() => handleSend(prompt)}
-                          className="rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/10 hover:border-primary/50"
+                          className="rounded-full border border-primary/30 bg-primary/5 px-4 py-2.5 min-h-[44px] text-sm font-medium text-primary transition-colors hover:bg-primary/10 hover:border-primary/50 active:bg-primary/15"
                         >
                           {prompt}
                         </button>
@@ -476,7 +525,7 @@ const AIChatWidget = () => {
                       <button
                         type="button"
                         onClick={() => setShowLeadCapture(false)}
-                        className="w-full text-xs text-muted-foreground hover:text-foreground"
+                        className="w-full min-h-[44px] py-2 text-sm text-muted-foreground hover:text-foreground active:text-foreground/80 transition-colors"
                       >
                         Maybe later
                       </button>
@@ -489,7 +538,7 @@ const AIChatWidget = () => {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="mt-3 flex items-center gap-2 rounded-lg bg-green-500/10 p-3 text-green-700"
+                    className="mt-3 flex items-center gap-2 rounded-lg bg-accent-gold/10 p-3 text-[#9A8444]"
                   >
                     <CheckCircle className="h-5 w-5" />
                     <span className="text-sm font-medium">Contact info saved!</span>

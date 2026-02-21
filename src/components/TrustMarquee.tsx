@@ -1,3 +1,4 @@
+import { useState, useEffect, memo } from "react";
 import { Shield, Clock, Truck, UserCheck, Building2, CreditCard, Headphones, Package } from "lucide-react";
 
 const badges = [
@@ -11,32 +12,56 @@ const badges = [
   { icon: Package, text: "Cancel Anytime" },
 ];
 
+// Memoized badge item for performance
+const BadgeItem = memo(({ icon: Icon, text }: { icon: typeof Shield; text: string }) => (
+  <div className="flex items-center gap-1.5 whitespace-nowrap px-3 text-xs font-medium text-pure-white sm:gap-2 sm:px-6 sm:text-sm">
+    <Icon className="h-3.5 w-3.5 flex-shrink-0 text-warm-stone sm:h-4 sm:w-4" />
+    <span>{text}</span>
+    <span className="ml-3 text-pure-white/40 sm:ml-6" aria-hidden="true">-</span>
+  </div>
+));
+
+BadgeItem.displayName = "BadgeItem";
+
 const TrustMarquee = () => {
+  // Check for reduced motion preference
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener?.("change", handleChange) ||
+      mediaQuery.addListener?.(handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener?.("change", handleChange) ||
+        mediaQuery.removeListener?.(handleChange);
+    };
+  }, []);
+
   return (
-    <section className="overflow-hidden bg-deep-charcoal/90 backdrop-blur-md py-3 sm:py-4">
+    <section
+      className="overflow-hidden bg-deep-charcoal/90 backdrop-blur-md py-3 sm:py-4"
+      aria-label="Trust badges"
+    >
       <div className="relative">
-        <div className="flex animate-marquee hover:[animation-play-state:paused]">
+        {/* Use GPU-accelerated transform animation */}
+        <div
+          className={`flex ${
+            prefersReducedMotion
+              ? ""
+              : "animate-marquee hover:[animation-play-state:paused]"
+          } will-change-transform gpu-accelerated`}
+        >
           {/* First set */}
           {badges.map((badge, index) => (
-            <div
-              key={`first-${index}`}
-              className="flex items-center gap-1.5 whitespace-nowrap px-3 text-xs font-medium text-pure-white sm:gap-2 sm:px-6 sm:text-sm"
-            >
-              <badge.icon className="h-3.5 w-3.5 flex-shrink-0 text-warm-stone sm:h-4 sm:w-4" />
-              <span>{badge.text}</span>
-              <span className="ml-3 text-pure-white/40 sm:ml-6">•</span>
-            </div>
+            <BadgeItem key={`first-${index}`} icon={badge.icon} text={badge.text} />
           ))}
-          {/* Duplicate set for seamless loop */}
-          {badges.map((badge, index) => (
-            <div
-              key={`second-${index}`}
-              className="flex items-center gap-1.5 whitespace-nowrap px-3 text-xs font-medium text-pure-white sm:gap-2 sm:px-6 sm:text-sm"
-            >
-              <badge.icon className="h-3.5 w-3.5 flex-shrink-0 text-warm-stone sm:h-4 sm:w-4" />
-              <span>{badge.text}</span>
-              <span className="ml-3 text-pure-white/40 sm:ml-6">•</span>
-            </div>
+          {/* Duplicate set for seamless loop - only render when animating */}
+          {!prefersReducedMotion && badges.map((badge, index) => (
+            <BadgeItem key={`second-${index}`} icon={badge.icon} text={badge.text} />
           ))}
         </div>
       </div>
@@ -44,4 +69,4 @@ const TrustMarquee = () => {
   );
 };
 
-export default TrustMarquee;
+export default memo(TrustMarquee);

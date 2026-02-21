@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { getPromptForTool } from "./prompts.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -94,7 +95,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, saveLead, sessionId, getVisitorContext, saveContact } = await req.json();
+    const { messages, saveLead, sessionId, getVisitorContext, saveContact, tool, toolData } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -196,6 +197,59 @@ serve(async (req) => {
       }
     }
 
+    // Handle tool-specific AI requests (non-streaming)
+    if (tool && toolData) {
+      const toolPrompt = getPromptForTool(tool);
+      const userMessage = JSON.stringify(toolData, null, 2);
+      
+      const toolResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-3-flash-preview",
+          messages: [
+            { role: "system", content: toolPrompt },
+            { role: "user", content: userMessage },
+          ],
+          stream: false,
+        }),
+      });
+
+      if (!toolResponse.ok) {
+        const errorText = await toolResponse.text();
+        console.error("Tool AI error:", toolResponse.status, errorText);
+        return new Response(
+          JSON.stringify({ error: "AI service error", details: errorText }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      const toolResult = await toolResponse.json();
+      const aiContent = toolResult.choices?.[0]?.message?.content || "";
+
+      // Return the appropriate field based on tool type
+      const responseField = {
+        hormone_assessment: "analysis",
+        treatment_match: "recommendation",
+        lab_interpreter: "analysis",
+        meal_planner: "mealPlan",
+        workout_generator: "workoutPlan",
+        progress_predictor: "predictions",
+        calculator_context: "context",
+      }[tool] || "response";
+
+      return new Response(
+        JSON.stringify({ [responseField]: aiContent }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Get the appropriate system prompt for the chat widget
+    const systemPrompt = getPromptForTool("chat_widget");
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -205,77 +259,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
         messages: [
-          { 
-            role: "system", 
-            content: `You are Nova, a friendly and knowledgeable healthcare assistant for Elevare Health, a premium men's telehealth clinic in Texas.
-
-## YOUR ROLE
-Help men understand their symptoms and guide them to the right treatment through a conversational quiz. Be warm, professional, and empathetic. Never diagnose - always recommend completing an intake form to speak with a licensed provider.
-
-## TREATMENT QUIZ MODE
-When a user wants help finding the right treatment or mentions symptoms, guide them through these questions ONE AT A TIME:
-
-1. **Primary Concern**: "What's your main health goal right now?" (weight loss, more energy, better mood, hair loss, skin issues, muscle/strength, anti-aging/longevity)
-
-2. **Key Symptoms**: Based on their answer, ask about relevant symptoms:
-   - Energy/Hormones: fatigue, brain fog, low libido, mood swings, poor sleep
-   - Weight: difficulty losing weight, increased appetite, slow metabolism
-   - Strength: muscle loss, slow recovery, weakness
-   - Hair: thinning hair, receding hairline
-   - Skin: acne, dullness, aging concerns
-   - Mood: anxiety, depression, lack of motivation, poor focus
-
-3. **Duration**: "How long have you been experiencing this?"
-
-4. **Previous Attempts**: "Have you tried any treatments or lifestyle changes?"
-
-5. **Age Range**: "What's your age range?" (30s, 40s, 50s, 60+)
-
-## TREATMENT RECOMMENDATIONS
-Based on answers, recommend from these categories:
-
-**HORMONES (TRT) - $149/mo**: Low energy, fatigue, low libido, brain fog, mood issues, muscle loss
-- Testosterone Cypionate injections
-- Best for: Men 30+ with classic low-T symptoms
-
-**WEIGHT LOSS - $199/mo**: Difficulty losing weight, increased appetite, metabolic issues
-- Semaglutide or Tirzepatide (GLP-1 medications)
-- Best for: Men wanting significant, sustainable weight loss
-
-**STRENGTH & PEPTIDES - $199/mo**: Muscle building, recovery, performance
-- Sermorelin, BPC-157, growth hormone peptides
-- Best for: Active men wanting optimized performance
-
-**ANTI-AGING - $199/mo**: Longevity, cellular health, energy optimization
-- NAD+, Tesamorelin, peptide stacks
-- Best for: Men focused on longevity and vitality
-
-**HAIR - $149/mo**: Hair thinning, receding hairline
-- Finasteride, Minoxidil, hair peptides
-- Best for: Men noticing hair loss
-
-**SKIN - $99/mo**: Acne, aging skin, complexion
-- Medical-grade skincare, tretinoin
-- Best for: Men wanting clearer, younger-looking skin
-
-**MOOD & COGNITION - $149/mo**: Focus, motivation, mental clarity
-- Peptides for cognitive enhancement, mood support
-- Best for: Men wanting mental edge
-
-## RESPONSE FORMAT
-After the quiz (3-5 questions), provide:
-1. A personalized recommendation with the treatment category
-2. Key benefits they can expect
-3. Pricing information
-4. Strong CTA to start their free assessment
-
-## KEY FACTS
-- Texas-licensed physicians, HIPAA compliant
-- Discreet delivery in 3-5 days
-- 24-hour physician response
-- Free online assessment to get started
-- No contracts, cancel anytime`
-          },
+          { role: "system", content: systemPrompt },
           ...messages,
         ],
         stream: true,

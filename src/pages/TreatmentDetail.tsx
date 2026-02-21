@@ -27,7 +27,6 @@ import {
   Info,
   TrendingUp,
 } from "lucide-react";
-import logoIcon from "@/assets/logo-icon.png";
 
 interface Treatment {
   id: string;
@@ -42,40 +41,41 @@ interface Treatment {
   updated_at: string;
 }
 
+// Status config using warm luxury palette instead of clinical colors
 const statusConfig: Record<string, { label: string; color: string; icon: any; description: string }> = {
-  pending: { 
-    label: "Pending Review", 
-    color: "bg-amber-100 text-amber-700 border-amber-200", 
+  pending: {
+    label: "Pending Review",
+    color: "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
     icon: Clock,
     description: "Your treatment request is awaiting provider review."
   },
-  under_review: { 
-    label: "Under Review", 
-    color: "bg-blue-100 text-blue-700 border-blue-200", 
+  under_review: {
+    label: "Under Review",
+    color: "bg-warm-stone/15 text-warm-stone border-warm-stone/25",
     icon: AlertCircle,
     description: "A provider is currently reviewing your treatment plan."
   },
-  approved: { 
-    label: "Approved", 
-    color: "bg-green-100 text-green-700 border-green-200", 
+  approved: {
+    label: "Approved",
+    color: "bg-accent-gold/10 text-[#9A8444] border-accent-gold/20",
     icon: CheckCircle2,
     description: "Your treatment has been approved and will ship soon."
   },
-  active: { 
-    label: "Active", 
-    color: "bg-warm-stone/15 text-foreground border-warm-stone/30",
+  active: {
+    label: "Active",
+    color: "bg-accent-gold/15 text-[#9A8444] border-accent-gold/25",
     icon: CheckCircle2,
     description: "Your treatment is active. Follow dosage instructions carefully."
   },
-  completed: { 
-    label: "Completed", 
-    color: "bg-gray-100 text-gray-600 border-gray-200", 
+  completed: {
+    label: "Completed",
+    color: "bg-warm-gray/30 text-warm-stone border-warm-gray/40",
     icon: CheckCircle2,
     description: "This treatment cycle has been completed."
   },
-  cancelled: { 
-    label: "Cancelled", 
-    color: "bg-red-100 text-red-700 border-red-200", 
+  cancelled: {
+    label: "Cancelled",
+    color: "bg-[#A67563]/10 text-[#8B5A4A] border-[#A67563]/20",
     icon: AlertCircle,
     description: "This treatment has been cancelled."
   },
@@ -132,7 +132,7 @@ interface TimelineEvent {
   upcoming?: boolean;
 }
 
-// Generate mock timeline events
+// Generate mock timeline events - using warm luxury palette
 const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
   const events: TimelineEvent[] = [
     {
@@ -140,7 +140,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Treatment Requested",
       description: "You submitted your treatment intake form",
       icon: FileText,
-      color: "bg-blue-500",
+      color: "bg-warm-stone",
     },
   ];
 
@@ -150,7 +150,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Provider Review Started",
       description: "A provider began reviewing your case",
       icon: AlertCircle,
-      color: "bg-amber-500",
+      color: "bg-[#B8956A]", // Warm amber-brown
     });
   }
 
@@ -160,7 +160,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Treatment Approved",
       description: "Your treatment plan was approved",
       icon: CheckCircle2,
-      color: "bg-green-500",
+      color: "bg-accent-gold",
     });
   }
 
@@ -180,7 +180,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Upcoming Refill",
       description: "Next refill scheduled",
       icon: RefreshCw,
-      color: "bg-purple-500",
+      color: "bg-deep-charcoal",
       upcoming: true,
     });
   }
@@ -295,16 +295,19 @@ const TreatmentDetail = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
-            <span className="font-display text-lg font-bold">
-              Elevare<span className="text-primary">Health</span>
-            </span>
+          <Link to="/" className="flex items-center">
+            <img
+              src="/elevar-logo.svg"
+              alt="Elevar Health logo"
+              loading="eager"
+              className="h-8 w-auto max-w-full"
+            />
           </Link>
           <Link to="/dashboard">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Dashboard
+              <span className="hidden sm:inline">Back to Dashboard</span>
+              <span className="sm:hidden">Back</span>
             </Button>
           </Link>
         </div>
@@ -326,7 +329,7 @@ const TreatmentDetail = () => {
           </Link>
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1 className="font-display text-3xl font-bold text-foreground">
+              <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
                 {treatment.treatment_type}
               </h1>
               <p className="mt-1 text-lg text-muted-foreground">
@@ -371,8 +374,8 @@ const TreatmentDetail = () => {
               className="rounded-2xl border bg-card p-6 shadow-sm"
             >
               <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/15">
-                  <Pill className="h-5 w-5 text-foreground" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-light">
+                  <Pill className="h-5 w-5 text-primary" />
                 </div>
                 <h3 className="font-display text-lg font-semibold text-foreground">
                   Medication & Dosage
@@ -407,15 +410,15 @@ const TreatmentDetail = () => {
               </div>
 
               {/* Dosage Instructions */}
-              <div className="rounded-xl border border-warm-stone/30 bg-warm-stone/10 p-4">
+              <div className="rounded-xl border border-primary/20 bg-primary-light/50 p-4">
                 <div className="mb-3 flex items-center gap-2">
-                  <Info className="h-5 w-5 text-foreground" />
-                  <span className="font-semibold text-foreground">Important Instructions</span>
+                  <Info className="h-5 w-5 text-primary" />
+                  <span className="font-semibold text-primary">Important Instructions</span>
                 </div>
                 <ul className="space-y-2">
                   {dosageInfo.notes.map((note, index) => (
                     <li key={index} className="flex items-start gap-2 text-sm text-foreground">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-warm-stone" />
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
                       {note}
                     </li>
                   ))}
@@ -431,8 +434,8 @@ const TreatmentDetail = () => {
               className="rounded-2xl border bg-card p-6 shadow-sm"
             >
               <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100">
-                  <TrendingUp className="h-5 w-5 text-purple-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-gold/15">
+                  <TrendingUp className="h-5 w-5 text-accent-gold" />
                 </div>
                 <h3 className="font-display text-lg font-semibold text-foreground">
                   Treatment Timeline
@@ -454,16 +457,16 @@ const TreatmentDetail = () => {
                       {/* Icon */}
                       <div className={cn(
                         "relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-white",
-                        isUpcoming ? "border-2 border-dashed border-purple-400 bg-background" : event.color
+                        isUpcoming ? "border-2 border-dashed border-warm-stone bg-background" : event.color
                       )}>
-                        <EventIcon className={cn("h-5 w-5", isUpcoming && "text-purple-500")} />
+                        <EventIcon className={cn("h-5 w-5", isUpcoming && "text-warm-stone")} />
                       </div>
                       {/* Content */}
                       <div className={cn("flex-1 pb-2", isUpcoming && "opacity-75")}>
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="font-semibold text-foreground">{event.title}</span>
                           {isUpcoming && (
-                            <span className="rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-600">
+                            <span className="rounded-full bg-warm-stone/10 px-2 py-0.5 text-xs font-medium text-warm-stone">
                               Upcoming
                             </span>
                           )}
@@ -492,8 +495,8 @@ const TreatmentDetail = () => {
               className="rounded-2xl border bg-card p-6 shadow-sm"
             >
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
-                  <RefreshCw className="h-5 w-5 text-green-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-gold/15">
+                  <RefreshCw className="h-5 w-5 text-accent-gold" />
                 </div>
                 <h3 className="font-display text-lg font-semibold text-foreground">
                   Refill Schedule
@@ -564,8 +567,8 @@ const TreatmentDetail = () => {
               className="rounded-2xl border bg-card p-6 shadow-sm"
             >
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
-                  <FileText className="h-5 w-5 text-blue-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10">
+                  <FileText className="h-5 w-5 text-warm-stone" />
                 </div>
                 <h3 className="font-display text-lg font-semibold text-foreground">
                   Treatment Details

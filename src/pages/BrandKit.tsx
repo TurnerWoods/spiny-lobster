@@ -32,6 +32,7 @@ const typography = [
 ];
 
 const logos = [
+  { name: "Primary Logo (SVG)", file: "/elevar-logo.svg", filename: "elevar-logo.svg", bg: "bg-soft-linen" },
   { name: "Primary Logo", file: logoElevare, filename: "elevare-logo-primary.png", bg: "bg-soft-linen" },
   { name: "Logo Icon", file: logoIcon, filename: "elevare-logo-icon.png", bg: "bg-soft-linen" },
   { name: "Logo Icon (New)", file: logoIconNew, filename: "elevare-logo-icon-new.png", bg: "bg-soft-linen" },
@@ -206,10 +207,11 @@ const BrandKit = () => {
               {logos.map((logo) => (
                 <Card key={logo.name} className="glass-card overflow-hidden">
                   <div className={`${logo.bg} p-8 flex items-center justify-center min-h-[140px]`}>
-                    <img 
-                      src={logo.file} 
-                      alt={logo.name} 
-                      className="max-h-16 w-auto object-contain"
+                    <img
+                      src={logo.file}
+                      alt={`${logo.name} logo`}
+                      loading="lazy"
+                      className="max-h-16 w-auto max-w-full object-contain"
                     />
                   </div>
                   <CardContent className="p-4">
@@ -259,7 +261,7 @@ const BrandKit = () => {
                       >
                         <span>{color.hex}</span>
                         {copiedColor === `${color.name}-hex` ? (
-                          <Check className="w-4 h-4 text-green-500" />
+                          <Check className="w-4 h-4 text-accent-gold" />
                         ) : (
                           <Copy className="w-4 h-4" />
                         )}
@@ -270,7 +272,7 @@ const BrandKit = () => {
                       >
                         <span>HSL({color.hsl})</span>
                         {copiedColor === `${color.name}-hsl` ? (
-                          <Check className="w-4 h-4 text-green-500" />
+                          <Check className="w-4 h-4 text-accent-gold" />
                         ) : (
                           <Copy className="w-4 h-4" />
                         )}
@@ -347,19 +349,19 @@ const BrandKit = () => {
                     <h3 className="font-semibold text-foreground mb-3">Do's</h3>
                     <ul className="space-y-2 text-muted-foreground">
                       <li className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-green-500 mt-1 shrink-0" />
+                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" />
                         Use adequate spacing around the logo
                       </li>
                       <li className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-green-500 mt-1 shrink-0" />
+                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" />
                         Maintain color consistency across all materials
                       </li>
                       <li className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-green-500 mt-1 shrink-0" />
+                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" />
                         Use the white logo on dark backgrounds
                       </li>
                       <li className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-green-500 mt-1 shrink-0" />
+                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" />
                         Keep the glassmorphic aesthetic in UI designs
                       </li>
                     </ul>

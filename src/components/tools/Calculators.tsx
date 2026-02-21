@@ -84,14 +84,15 @@ const BaseCalculator: React.FC<CalculatorProps> = ({
         </header>
 
         {/* Form */}
-        <div className="bg-white rounded-[20px] p-9 shadow-lg border border-warm-stone/20">
-          <div className="grid grid-cols-2 gap-5">
+        <div className="bg-white rounded-[20px] p-5 sm:p-9 shadow-lg border border-warm-stone/20 overflow-hidden">
+          {/* Mobile-first: single column stacked, then 2-col on sm+ for number fields */}
+          <div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
             {fields.map(field => (
-              <div key={field.id} className={`flex flex-col gap-2 ${field.type === 'select' ? 'col-span-2' : ''}`}>
-                <label className="text-sm font-semibold text-deep-charcoal">{field.label}</label>
+              <div key={field.id} className={`flex flex-col gap-2 ${field.type === 'select' ? 'sm:col-span-2' : ''}`}>
+                <label className="block text-sm font-semibold text-deep-charcoal">{field.label}</label>
                 {field.type === 'select' ? (
                   <select
-                    className="px-4 py-3.5 border-2 border-warm-stone/30 rounded-xl text-base bg-white focus:outline-none focus:border-warm-stone focus:ring-4 focus:ring-warm-stone/10 transition-all"
+                    className="w-full h-12 sm:h-auto px-4 py-3.5 border-2 border-warm-stone/30 rounded-xl text-base bg-white focus:outline-none focus:border-warm-stone focus:ring-4 focus:ring-warm-stone/10 transition-all appearance-none"
                     value={values[field.id] || ''}
                     onChange={(e) => handleChange(field.id, e.target.value)}
                   >
@@ -103,7 +104,8 @@ const BaseCalculator: React.FC<CalculatorProps> = ({
                 ) : (
                   <input
                     type="number"
-                    className="px-4 py-3.5 border-2 border-warm-stone/30 rounded-xl text-base focus:outline-none focus:border-warm-stone focus:ring-4 focus:ring-warm-stone/10 transition-all"
+                    inputMode="numeric"
+                    className="w-full h-12 sm:h-auto px-4 py-3.5 border-2 border-warm-stone/30 rounded-xl text-base focus:outline-none focus:border-warm-stone focus:ring-4 focus:ring-warm-stone/10 transition-all"
                     placeholder={field.placeholder}
                     min={field.min}
                     max={field.max}
@@ -116,11 +118,11 @@ const BaseCalculator: React.FC<CalculatorProps> = ({
           </div>
 
           <button
-            className="w-full mt-7 py-4 bg-gradient-to-br from-warm-stone to-deep-charcoal text-white rounded-[14px] text-lg font-semibold hover:translate-y-[-2px] hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full mt-7 py-4 h-14 sm:h-auto bg-gradient-to-br from-warm-stone to-deep-charcoal text-white rounded-[14px] text-lg font-semibold hover:translate-y-[-2px] hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleCalculate}
             disabled={!isValid()}
           >
-            Calculate →
+            Calculate
           </button>
         </div>
 
@@ -233,10 +235,10 @@ export const BMICalculator: React.FC = () => {
     const heightIn = v.height_feet * 12 + Number(v.height_inches);
     const bmi = (v.weight / (heightIn * heightIn)) * 703;
     let category = 'Normal';
-    let color = '#14B870';
-    if (bmi < 18.5) { category = 'Underweight'; color = '#3B82F6'; }
-    else if (bmi >= 25 && bmi < 30) { category = 'Overweight'; color = '#F59E0B'; }
-    else if (bmi >= 30) { category = 'Obese'; color = '#EF4444'; }
+    let color = '#C9A962'; // Accent gold for optimal/normal
+    if (bmi < 18.5) { category = 'Underweight'; color = '#A89078'; } // Warm tan
+    else if (bmi >= 25 && bmi < 30) { category = 'Overweight'; color = '#B8956A'; } // Warm amber-brown
+    else if (bmi >= 30) { category = 'Obese'; color = '#A67563'; } // Warm terracotta-red
     return { bmi: bmi.toFixed(1), category, color };
   };
 
@@ -249,10 +251,10 @@ export const BMICalculator: React.FC = () => {
       </div>
       <div className="mt-6">
         <div className="flex rounded-lg overflow-hidden text-white text-xs font-semibold">
-          <div className="flex-1 py-2 bg-[#3B82F6]">{'<18.5'}</div>
-          <div className="flex-1 py-2 bg-[#14B870]">18.5-24.9</div>
-          <div className="flex-1 py-2 bg-[#F59E0B]">25-29.9</div>
-          <div className="flex-1 py-2 bg-[#EF4444]">30+</div>
+          <div className="flex-1 py-2 bg-[#A89078]">{'<18.5'}</div>
+          <div className="flex-1 py-2 bg-[#C9A962]">18.5-24.9</div>
+          <div className="flex-1 py-2 bg-[#B8956A]">25-29.9</div>
+          <div className="flex-1 py-2 bg-[#A67563]">30+</div>
         </div>
       </div>
     </div>

@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, Sparkles, Shield, AlertCircle } from "lucide-react";
-import logoIcon from "@/assets/logo-icon.png";
+import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, Sparkles, Shield, Save, X } from "lucide-react";
 import IntakeFormProgress from "@/components/intake/IntakeFormProgress";
 import HealthGoalsStep from "@/components/intake/HealthGoalsStep";
 import MedicalHistoryStep from "@/components/intake/MedicalHistoryStep";
 import LifestyleStep from "@/components/intake/LifestyleStep";
 import ReviewStep from "@/components/intake/ReviewStep";
+
+const STORAGE_KEY = "intake_form_progress";
 
 const steps = [
   { id: 1, name: "Goals" },
@@ -20,31 +21,32 @@ const steps = [
   { id: 4, name: "Review" },
 ];
 
-// Inline error message component for better accessibility
-const InlineError = ({ message }: { message: string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: -10 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -10 }}
-    className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
-    role="alert"
-    aria-live="polite"
-  >
-    <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
-    <span>{message}</span>
-  </motion.div>
-);
+// Get action-oriented CTA text based on current step
+const getCtaText = (step: number): string => {
+  switch (step) {
+    case 1:
+      return "Continue to Medical History";
+    case 2:
+      return "Continue to Lifestyle";
+    case 3:
+      return "Review Your Answers";
+    case 4:
+      return "Submit & Get Your Plan";
+    default:
+      return "Continue";
+  }
+};
 
 const Intake = () => {
   const { user, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [hasPrefilledData, setHasPrefilledData] = useState(false);
-  const [validationError, setValidationError] = useState<string | null>(null);
+  const [hasSavedProgress, setHasSavedProgress] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
   // Form data
   const [healthGoals, setHealthGoals] = useState({
@@ -71,6 +73,56 @@ const Intake = () => {
     stressLevel: "",
   });
 
+  // Load saved progress from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        if (data.healthGoals) setHealthGoals(data.healthGoals);
+        if (data.medicalHistory) setMedicalHistory(data.medicalHistory);
+        if (data.lifestyle) setLifestyle(data.lifestyle);
+        if (data.currentStep) setCurrentStep(data.currentStep);
+        setHasSavedProgress(true);
+        toast.info("Your progress has been restored", {
+          icon: <Save className="h-4 w-4" />,
+          duration: 3000
+        });
+      } catch (e) {
+        console.error("Error loading saved progress:", e);
+      }
+    }
+  }, []);
+
+  // Save progress to localStorage (debounced)
+  const saveProgress = useCallback(() => {
+    const data = {
+      healthGoals,
+      medicalHistory,
+      lifestyle,
+      currentStep,
+      savedAt: new Date().toISOString(),
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    setLastSaved(new Date());
+  }, [healthGoals, medicalHistory, lifestyle, currentStep]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (healthGoals.primaryGoal || medicalHistory.currentWeight || lifestyle.exerciseFrequency) {
+        saveProgress();
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [healthGoals, medicalHistory, lifestyle, currentStep, saveProgress]);
+
+  // Clear saved progress
+  const clearSavedProgress = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setHasSavedProgress(false);
+    toast.success("Saved progress cleared");
+  };
+
   // Pre-fill from symptom checker data
   useEffect(() => {
     const symptomData = localStorage.getItem("symptom_checker_data");
@@ -82,37 +134,23 @@ const Intake = () => {
         // Map symptom checker answers to intake form
         const secondaryGoals: string[] = [];
 
-        // Energy -> "Increase energy levels"
         if (answers.energy >= 2) secondaryGoals.push("Increase energy levels");
-
-        // Sleep -> "Improve sleep quality"
         if (answers.sleep >= 2) secondaryGoals.push("Improve sleep quality");
-
-        // Muscle -> "Build muscle mass"
         if (answers.muscle >= 2) secondaryGoals.push("Build muscle mass");
-
-        // Mood -> "Improve mood"
         if (answers.mood >= 2) secondaryGoals.push("Improve mood");
-
-        // Focus -> "Enhance mental clarity"
         if (answers.focus >= 2) secondaryGoals.push("Enhance mental clarity");
-
-        // Libido -> "Boost libido"
         if (answers.libido >= 2) secondaryGoals.push("Boost libido");
 
-        // Set primary goal based on result level
         const primaryGoal = resultLevel === "high" || resultLevel === "moderate"
           ? "hormone-therapy"
           : "";
 
-        // Map sleep hours from symptom checker
         let sleepHours = "";
         if (answers.sleep === 0) sleepHours = "7-8";
         else if (answers.sleep === 1) sleepHours = "6-7";
         else if (answers.sleep === 2) sleepHours = "5-6";
         else if (answers.sleep === 3) sleepHours = "less-than-5";
 
-        // Map exercise frequency from recovery question
         let exerciseFrequency = "";
         if (answers.recovery !== undefined) {
           if (answers.recovery === 0) exerciseFrequency = "5-plus";
@@ -149,18 +187,11 @@ const Intake = () => {
     }
   }, [user, authLoading, navigate]);
 
-  // Clear validation error when step changes
-  useEffect(() => {
-    setValidationError(null);
-  }, [currentStep]);
-
   const validateStep = (step: number): boolean => {
-    setValidationError(null);
-
     switch (step) {
       case 1:
         if (!healthGoals.primaryGoal) {
-          setValidationError("Please select your primary health goal to continue");
+          toast.error("Please select your primary health goal");
           return false;
         }
         return true;
@@ -170,7 +201,7 @@ const Intake = () => {
         return true; // Lifestyle is optional
       case 4:
         if (!agreedToTerms) {
-          setValidationError("Please agree to the terms and conditions to submit");
+          toast.error("Please agree to the terms to continue");
           return false;
         }
         return true;
@@ -182,11 +213,22 @@ const Intake = () => {
   const handleNext = () => {
     if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, 4));
+      // Scroll to top on mobile
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleBack = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSaveAndExit = () => {
+    saveProgress();
+    toast.success("Your progress has been saved. Come back anytime!", {
+      icon: <Save className="h-4 w-4" />,
+    });
+    navigate("/");
   };
 
   const handleSubmit = async () => {
@@ -242,11 +284,13 @@ const Intake = () => {
           .update({ user_id: user.id })
           .eq("id", symptomResultId);
 
-        // Clean up localStorage
         localStorage.removeItem("symptom_checker_result_id");
         localStorage.removeItem("symptom_checker_data");
         localStorage.removeItem("symptom_checker_session");
       }
+
+      // Clear intake progress
+      localStorage.removeItem(STORAGE_KEY);
 
       setIsComplete(true);
       toast.success("Your intake form has been submitted!");
@@ -261,7 +305,7 @@ const Intake = () => {
   if (authLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
-        <Loader2 className="h-8 w-8 animate-spin text-warm-stone" aria-label="Loading" />
+        <Loader2 className="h-8 w-8 animate-spin text-warm-stone" />
       </div>
     );
   }
@@ -271,11 +315,13 @@ const Intake = () => {
       <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
         <header className="border-b border-warm-stone/10 bg-pure-white/70 backdrop-blur-xl">
           <div className="container flex h-16 items-center px-4">
-            <Link to="/" className="flex items-center gap-2" aria-label="Elevare Health - Home">
-              <img src={logoIcon} alt="" className="h-8 w-auto" aria-hidden="true" />
-              <span className="font-display text-lg font-bold text-rich-black">
-                Elevare<span className="text-warm-stone">Health</span>
-              </span>
+            <Link to="/" className="flex items-center">
+              <img
+                src="/elevar-logo.svg"
+                alt="Elevar Health logo"
+                loading="eager"
+                className="h-8 w-auto max-w-full"
+              />
             </Link>
           </div>
         </header>
@@ -284,23 +330,24 @@ const Intake = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="max-w-md text-center"
-            role="status"
-            aria-live="polite"
           >
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-success/10">
-              <CheckCircle2 className="h-10 w-10 text-success" aria-hidden="true" />
+              <CheckCircle2 className="h-10 w-10 text-success" />
             </div>
-            <h1 className="font-display text-2xl font-bold text-rich-black">Intake Submitted!</h1>
+            <h1 className="font-display text-2xl font-bold text-rich-black">You're All Set!</h1>
             <p className="mt-3 text-muted-foreground">
               Thank you for completing your intake form. Our medical team will review your information within 24-48
               hours and reach out with your personalized treatment plan.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Link to="/dashboard">
-                <Button className="w-full bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90 sm:w-auto">Go to Dashboard</Button>
+                <Button variant="secondary" className="w-full sm:w-auto">
+                  View My Dashboard
+                  <ArrowRight className="ml-2" />
+                </Button>
               </Link>
               <Link to="/">
-                <Button variant="outline" className="w-full border-warm-stone/30 hover:bg-warm-stone/10 sm:w-auto">
+                <Button variant="outline" className="w-full sm:w-auto">
                   Back to Home
                 </Button>
               </Link>
@@ -311,51 +358,70 @@ const Intake = () => {
     );
   }
 
-  // Get step descriptions for optional labels
-  const getStepDescription = (step: number) => {
-    switch (step) {
-      case 1:
-        return null; // Required step
-      case 2:
-        return "All fields on this page are optional";
-      case 3:
-        return "All fields on this page are optional";
-      case 4:
-        return null;
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-soft-linen via-pure-white to-light-cloud">
       {/* Header */}
-      <header className="border-b border-warm-stone/10 bg-pure-white/70 backdrop-blur-xl">
+      <header className="border-b border-warm-stone/10 bg-pure-white/70 backdrop-blur-xl sticky top-0 z-50">
         <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2" aria-label="Elevare Health - Home">
-            <img src={logoIcon} alt="" className="h-8 w-auto" aria-hidden="true" />
-            <span className="font-display text-lg font-bold text-rich-black">
-              Elevare<span className="text-warm-stone">Health</span>
-            </span>
+          <Link to="/" className="flex items-center">
+            <img
+              src="/elevar-logo.svg"
+              alt="Elevar Health logo"
+              loading="eager"
+              className="h-8 w-auto max-w-full"
+            />
           </Link>
-          <Link to="/" className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-warm-stone">
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Exit
-          </Link>
+          <div className="flex items-center gap-2">
+            {lastSaved && (
+              <span className="text-xs text-muted-foreground hidden sm:inline">
+                Auto-saved {lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleSaveAndExit}
+              className="text-muted-foreground hover:text-warm-stone"
+            >
+              <Save className="h-4 w-4 mr-1.5 sm:mr-2" />
+              <span className="hidden sm:inline">Save & Exit</span>
+              <span className="sm:hidden">Save</span>
+            </Button>
+          </div>
         </div>
       </header>
 
-      <main id="main-content" className="container max-w-3xl px-4 py-8" role="main">
+      <div className="container max-w-3xl px-4 py-6 sm:py-8">
         {/* Pre-filled indicator */}
         {hasPrefilledData && currentStep === 1 && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-4 flex items-center gap-2 rounded-xl border border-warm-stone/20 bg-warm-stone/10 px-4 py-3 text-sm text-warm-stone"
-            role="status"
           >
-            <Sparkles className="h-4 w-4" aria-hidden="true" />
-            <span>Some fields have been pre-filled based on your symptom quiz results</span>
+            <Sparkles className="h-4 w-4 flex-shrink-0" />
+            <span>Some fields have been pre-filled based on your symptom quiz</span>
+          </motion.div>
+        )}
+
+        {/* Saved progress indicator */}
+        {hasSavedProgress && currentStep === 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 flex items-center justify-between gap-2 rounded-xl border border-accent-gold/25 bg-accent-gold/10 px-4 py-3 text-sm text-[#9A8444]"
+          >
+            <div className="flex items-center gap-2">
+              <Save className="h-4 w-4 flex-shrink-0" />
+              <span>Continuing from where you left off</span>
+            </div>
+            <button
+              onClick={clearSavedProgress}
+              className="text-[#9A8444] hover:text-accent-gold p-1"
+              aria-label="Clear saved progress"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </motion.div>
         )}
 
@@ -366,24 +432,8 @@ const Intake = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-12 rounded-2xl border border-pure-white/40 bg-pure-white/80 p-6 shadow-xl backdrop-blur-xl sm:p-8"
+          className="mt-8 sm:mt-12 rounded-2xl border border-pure-white/40 bg-pure-white/80 p-5 sm:p-8 shadow-xl backdrop-blur-xl"
         >
-          {/* Optional fields indicator */}
-          {getStepDescription(currentStep) && (
-            <p className="mb-6 text-sm text-muted-foreground italic">
-              {getStepDescription(currentStep)}
-            </p>
-          )}
-
-          {/* Validation Error */}
-          <AnimatePresence>
-            {validationError && (
-              <div className="mb-6">
-                <InlineError message={validationError} />
-              </div>
-            )}
-          </AnimatePresence>
-
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
@@ -420,57 +470,61 @@ const Intake = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation */}
-          <div className="mt-8 flex items-center justify-between border-t border-warm-stone/10 pt-6">
+          {/* Navigation - Mobile optimized */}
+          <div className="mt-8 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-warm-stone/10 pt-6">
             {currentStep > 1 ? (
               <Button
                 variant="ghost"
                 onClick={handleBack}
-                className="text-muted-foreground hover:text-warm-stone"
+                className="text-muted-foreground hover:text-warm-stone w-full sm:w-auto"
               >
-                <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+                <ArrowLeft className="mr-2 h-4 w-4" />
                 Back
               </Button>
             ) : (
-              <div /> // Empty div to maintain justify-between spacing
+              <div className="hidden sm:block" /> // Spacer for alignment
             )}
 
             {currentStep < 4 ? (
-              <Button onClick={handleNext} className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90">
-                Continue
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+              <Button
+                onClick={handleNext}
+                variant="secondary"
+                className="w-full sm:w-auto"
+                size="lg"
+              >
+                {getCtaText(currentStep)}
+                <ArrowRight className="ml-2" />
               </Button>
             ) : (
               <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !agreedToTerms}
-                className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90 disabled:opacity-50"
-                aria-describedby={!agreedToTerms ? "terms-required" : undefined}
+                variant="secondary"
+                className="w-full sm:w-auto"
+                size="lg"
+                isLoading={isSubmitting}
+                loadingText="Submitting..."
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit Intake"
-                )}
+                {getCtaText(currentStep)}
+                <ArrowRight className="ml-2" />
               </Button>
             )}
           </div>
-          {currentStep === 4 && !agreedToTerms && (
-            <p id="terms-required" className="sr-only">
-              You must agree to the terms and conditions before submitting
+
+          {/* Skip optional steps hint */}
+          {(currentStep === 2 || currentStep === 3) && (
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              These fields are optional. You can skip ahead or fill them in later.
             </p>
           )}
         </motion.div>
 
         {/* Trust Badge */}
         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-          <Shield className="h-4 w-4 text-warm-stone" aria-hidden="true" />
-          <span>HIPAA Compliant &bull; 256-bit Encryption</span>
+          <Shield className="h-4 w-4 text-warm-stone" />
+          <span>HIPAA Compliant • 256-bit Encryption</span>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

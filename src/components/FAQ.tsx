@@ -1,23 +1,19 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
+import { easing, duration, viewportSettings } from "@/lib/motion";
+
+// Premium easing
+const premiumEase = [0.16, 1, 0.3, 1] as const;
 
 const faqs = [
   {
     question: "How does the intake process work?",
-    answer: "Complete a brief 5-minute health assessment from any device. A licensed physician reviews your information and creates a personalized treatment plan, typically within 24 hours."
-  },
-  {
-    question: "Do I have to talk to a doctor?",
-    answer: "Not necessarily. Most patients complete care through our secure online pathway. A live video consultation ($99) is optional for those who prefer face-to-face discussion."
+    answer: "Complete a brief health assessment from any device. A licensed physician reviews your information and creates a personalized treatment plan, typically within 24 hours."
   },
   {
     question: "Will I be charged if I'm not approved?",
     answer: "No. Your payment method is stored securely but only charged if your physician approves treatment. If you're not a candidate, you pay nothing."
-  },
-  {
-    question: "Do I need insurance?",
-    answer: "No. Elevare operates on a direct-pay model with transparent pricing. This keeps your health information private and off insurance records."
   },
   {
     question: "How long until I feel results?",
@@ -28,44 +24,139 @@ const faqs = [
     answer: "Yes. We use enterprise-grade encryption and HIPAA-compliant systems. Your health information is never shared without your explicit consent."
   },
   {
-    question: "How is medication shipped?",
-    answer: "All shipments arrive in discreet, unmarked packaging within 3-5 business days after your prescription is processed."
-  },
-  {
     question: "Can I cancel anytime?",
     answer: "Yes. There are no contracts or commitments. You can pause or stop services at any time without penalty."
   },
 ];
 
-const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolean; onClick: () => void }) => {
+// Premium accordion animation
+const accordionVariants = {
+  hidden: {
+    height: 0,
+    opacity: 0,
+  },
+  visible: {
+    height: "auto",
+    opacity: 1,
+    transition: {
+      height: {
+        duration: duration.normal,
+        ease: easing.smooth,
+      },
+      opacity: {
+        duration: duration.normal,
+        delay: 0.05,
+        ease: easing.smooth,
+      },
+    },
+  },
+  exit: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      height: {
+        duration: duration.fast,
+        ease: easing.smooth,
+      },
+      opacity: {
+        duration: duration.fast,
+        ease: easing.smooth,
+      },
+    },
+  },
+};
+
+// Header animation
+const headerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const headerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: duration.slow,
+      ease: premiumEase,
+    },
+  },
+};
+
+// FAQ item entry animation
+const faqItemVariants = {
+  hidden: { opacity: 0 },
+  visible: (index: number) => ({
+    opacity: 1,
+    transition: {
+      duration: duration.normal,
+      delay: index * 0.06,
+      ease: easing.smooth,
+    },
+  }),
+};
+
+const FAQItem = ({
+  faq,
+  isOpen,
+  onClick,
+  index
+}: {
+  faq: typeof faqs[0];
+  isOpen: boolean;
+  onClick: () => void;
+  index: number;
+}) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="border-b border-border last:border-0"
+      className="border-b border-neutral-gray/20 last:border-0"
+      custom={index}
+      variants={faqItemVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-30px" }}
     >
-      <button
+      {/* Touch-friendly button with minimum 48px height for mobile accessibility */}
+      <motion.button
         onClick={onClick}
-        className="flex w-full items-center justify-between gap-3 py-4 text-left transition-colors hover:text-primary sm:gap-4 sm:py-5"
+        className="flex w-full items-start justify-between gap-4 py-4 text-left sm:py-8 min-h-[56px]"
+        whileHover={{ x: 2 }}
+        transition={{ duration: duration.fast, ease: easing.smooth }}
       >
-        <span className="font-display text-base font-semibold text-foreground sm:text-lg">{faq.question}</span>
-        <span className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border transition-all sm:h-8 sm:w-8 ${
-          isOpen ? "rotate-180 border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground"
-        }`}>
-          {isOpen ? <Minus className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> : <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}
+        <span className="font-display text-base sm:text-lg font-medium tracking-normal text-rich-black leading-relaxed">
+          {faq.question}
         </span>
-      </button>
-      <AnimatePresence>
+        {/* Touch target: 44px minimum with visual icon inside */}
+        <motion.span
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center -mr-2 -mt-1"
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: duration.normal, ease: easing.smooth }}
+        >
+          {isOpen ? (
+            <Minus className="h-5 w-5 text-warm-stone" />
+          ) : (
+            <Plus className="h-5 w-5 text-warm-stone" />
+          )}
+        </motion.span>
+      </motion.button>
+      <AnimatePresence mode="wait">
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            variants={accordionVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="overflow-hidden"
           >
-            <p className="pb-4 text-sm text-muted-foreground sm:pb-5">{faq.answer}</p>
+            <p className="text-body pb-6 text-muted-foreground sm:pb-8">
+              {faq.answer}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -77,49 +168,48 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-muted/30 py-12 sm:py-16 md:py-20">
+    <section id="faq" className="bg-pure-white py-24 sm:py-32 md:py-40">
       <div className="container px-4 md:px-6">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-2xl">
           {/* Section Header */}
-          <div className="mb-8 text-center sm:mb-12">
+          <motion.div
+            variants={headerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportSettings}
+            className="mb-12 sm:mb-16"
+          >
             <motion.span
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-3 inline-block rounded-full bg-warm-stone/15 px-3 py-1 text-xs font-medium text-foreground sm:mb-4 sm:px-4 sm:text-sm"
+              variants={headerItem}
+              className="text-overline mb-6 block text-warm-stone/60"
             >
-              FAQ
+              Questions
             </motion.span>
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-3 font-display text-2xl font-bold text-foreground sm:mb-4 sm:text-3xl md:text-4xl"
+              variants={headerItem}
+              className="font-display text-4xl font-light leading-tight tracking-tight text-rich-black"
             >
-              Frequently Asked Questions
+              Frequently asked
             </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-base text-muted-foreground sm:text-lg"
-            >
-              Everything you need to know about getting started
-            </motion.p>
-          </div>
+          </motion.div>
 
-          {/* FAQ List - Glassmorphic */}
-          <div className="rounded-xl border border-neutral-gray/50 bg-pure-white/80 p-3 shadow-md backdrop-blur-sm sm:rounded-2xl sm:p-6 md:p-6">
+          {/* FAQ List */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: duration.slow, delay: 0.1, ease: premiumEase }}
+          >
             {faqs.map((faq, index) => (
               <FAQItem
                 key={index}
                 faq={faq}
                 isOpen={openIndex === index}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                index={index}
               />
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

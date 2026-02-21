@@ -1,7 +1,15 @@
 import { motion } from "framer-motion";
-import { Check, X, ArrowRight } from "lucide-react";
+import { Check, X, ArrowRight, Shield, Award, CheckCircle2, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+
+// Trust badges
+const trustBadges = [
+  { icon: Award, label: "US-Licensed Physicians" },
+  { icon: CheckCircle2, label: "FDA-Approved" },
+  { icon: Shield, label: "HIPAA Compliant" },
+  { icon: Truck, label: "Free Shipping" },
+];
 
 const comparisonData = [
   {
@@ -66,10 +74,10 @@ const included = [
 const PricingComparison = () => {
   const renderValue = (value: string | boolean) => {
     if (value === true) {
-      return <Check className="mx-auto h-5 w-5 text-green-500" />;
+      return <Check className="mx-auto h-5 w-5 text-accent-gold" />;
     }
     if (value === false) {
-      return <X className="mx-auto h-5 w-5 text-red-400" />;
+      return <X className="mx-auto h-5 w-5 text-warm-stone/50" />;
     }
     return <span className="text-sm">{value}</span>;
   };
@@ -114,11 +122,11 @@ const PricingComparison = () => {
           className="mx-auto mb-8 max-w-4xl overflow-hidden rounded-xl border bg-card shadow-sm sm:mb-12 sm:rounded-2xl"
         >
           {/* Table Header */}
-          <div className="grid grid-cols-4 gap-2 border-b bg-muted/50 p-3 text-center text-xs font-semibold sm:gap-4 sm:p-4 sm:text-sm">
+          <div className="grid grid-cols-2 gap-2 border-b bg-muted/50 p-3 text-center text-xs font-semibold sm:grid-cols-4 sm:gap-4 sm:p-4 sm:text-sm">
             <div className="text-left text-foreground">Feature</div>
             <div className="rounded-lg bg-primary/10 py-1 text-primary">Elevare</div>
-            <div className="text-muted-foreground">Traditional Clinic</div>
-            <div className="text-muted-foreground">Online Competitors</div>
+            <div className="hidden text-muted-foreground sm:block">Traditional</div>
+            <div className="hidden text-muted-foreground sm:block">Competitors</div>
           </div>
 
           {/* Table Body */}
@@ -130,7 +138,7 @@ const PricingComparison = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.03 }}
-                className="grid grid-cols-4 gap-2 p-3 text-center transition-colors hover:bg-muted/30 sm:gap-4 sm:p-4"
+                className="grid grid-cols-2 gap-2 p-3 text-center transition-colors hover:bg-muted/30 sm:grid-cols-4 sm:gap-4 sm:p-4"
               >
                 <div className="text-left text-xs font-medium text-foreground sm:text-sm">
                   {row.feature}
@@ -138,10 +146,10 @@ const PricingComparison = () => {
                 <div className="font-semibold text-primary">
                   {renderValue(row.elevare)}
                 </div>
-                <div className="text-muted-foreground">
+                <div className="hidden text-muted-foreground sm:block">
                   {renderValue(row.traditional)}
                 </div>
-                <div className="text-muted-foreground">
+                <div className="hidden text-muted-foreground sm:block">
                   {renderValue(row.competitors)}
                 </div>
               </motion.div>
@@ -168,6 +176,26 @@ const PricingComparison = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </motion.div>
+
+        {/* Trust Badges */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mx-auto mb-8 max-w-3xl"
+        >
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            {trustBadges.map((badge) => (
+              <div
+                key={badge.label}
+                className="flex items-center gap-2 text-muted-foreground"
+              >
+                <badge.icon className="h-4 w-4 text-warm-stone" strokeWidth={1.5} />
+                <span className="text-xs sm:text-sm font-medium">{badge.label}</span>
+              </div>
+            ))}
           </div>
         </motion.div>
 

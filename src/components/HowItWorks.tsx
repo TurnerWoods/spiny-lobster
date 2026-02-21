@@ -1,146 +1,181 @@
 import { motion } from "framer-motion";
-import { ClipboardList, UserCheck, Video, Truck, MessageSquare, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { easing, duration, viewportSettings } from "@/lib/motion";
 
-// Process step images
-const stepImages = {
-  assessment: "/images/process/video-consultation.png",
-  physician: "/images/process/physician-consultation.png",
-  delivery: "/images/process/discreet-delivery.png",
-};
+// Premium easing
+const premiumEase = [0.16, 1, 0.3, 1] as const;
 
 const steps = [
   {
-    icon: ClipboardList,
     number: "01",
-    title: "Complete Assessment",
-    description: "Answer questions about your symptoms, health history, and goals. Takes about 5 minutes from any device.",
-    highlight: "5-minute form",
-    image: stepImages.assessment,
+    title: "Assessment",
+    description: "Complete a brief health questionnaire from any device. Takes approximately five minutes.",
   },
   {
-    icon: UserCheck,
     number: "02",
     title: "Physician Review",
-    description: "A Texas-licensed physician reviews your profile and creates a personalized treatment plan within 24 hours.",
-    highlight: "24hr response",
-    image: stepImages.physician,
+    description: "A licensed physician reviews your profile and creates a personalized treatment plan within 24 hours.",
   },
   {
-    icon: Truck,
     number: "03",
-    title: "Discreet Delivery",
-    description: "Your prescription ships in unmarked packaging directly to your home or office within 3-5 business days.",
-    highlight: "3-5 day shipping",
-    image: stepImages.delivery,
+    title: "Delivery",
+    description: "Your prescription ships in discreet packaging directly to your door within 3-5 business days.",
   },
 ];
 
+// Orchestrated header animation
+const headerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const headerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: duration.slower,
+      ease: premiumEase,
+    },
+  },
+};
+
+// Step card animation with custom index-based delay
+const stepVariants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: duration.slower,
+      delay: index * 0.12,
+      ease: premiumEase,
+    },
+  }),
+};
+
 const HowItWorks = () => {
   return (
-    <section id="how-it-works" className="py-12 sm:py-16 md:py-20">
+    <section id="how-it-works" className="bg-deep-charcoal py-16 xs:py-20 sm:py-28 md:py-36 lg:py-40">
       <div className="container px-4 md:px-6">
         {/* Section Header */}
-        <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-16">
+        <motion.div
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="mb-12 xs:mb-16 sm:mb-20 md:mb-24 max-w-xl"
+        >
           <motion.span
+            variants={headerItem}
+            className="text-overline mb-4 xs:mb-5 sm:mb-6 block text-soft-linen/40 text-[10px] xs:text-xs"
+          >
+            The Process
+          </motion.span>
+          <motion.h2
+            variants={headerItem}
+            className="font-display text-[1.625rem] xs:text-3xl sm:text-4xl md:text-5xl font-light leading-[1.15] tracking-tight text-soft-linen"
+          >
+            Three steps to
+            <br />
+            feeling yourself again
+          </motion.h2>
+        </motion.div>
+
+        {/* Steps */}
+        <div className="grid gap-10 xs:gap-12 sm:gap-16 md:gap-20 lg:grid-cols-3 lg:gap-12">
+          {steps.map((step, index) => (
+            <motion.div
+              key={step.number}
+              custom={index}
+              variants={stepVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              className="relative"
+            >
+              {/* Step number */}
+              <motion.span
+                className="text-stat mb-4 xs:mb-5 sm:mb-6 md:mb-8 block text-5xl xs:text-6xl text-warm-stone/30 sm:text-7xl"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: duration.slow,
+                  delay: index * 0.12 + 0.1,
+                  ease: easing.entrance,
+                }}
+              >
+                {step.number}
+              </motion.span>
+
+              {/* Content */}
+              <h3 className="mb-3 xs:mb-4 font-display text-xl xs:text-2xl font-normal tracking-normal text-soft-linen">
+                {step.title}
+              </h3>
+              <p className="text-sm xs:text-base leading-relaxed text-soft-linen/60">
+                {step.description}
+              </p>
+
+              {/* Connector line for desktop - animated */}
+              {index < steps.length - 1 && (
+                <motion.div
+                  className="absolute right-0 top-12 hidden h-px w-12 bg-gradient-to-r from-warm-stone/30 to-transparent lg:block"
+                  initial={{ scaleX: 0, originX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: duration.slow,
+                    delay: index * 0.12 + 0.3,
+                    ease: easing.smooth,
+                  }}
+                />
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* CTA - Full width on mobile */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: duration.slower, delay: 0.3, ease: premiumEase }}
+          className="mt-12 xs:mt-16 sm:mt-20 md:mt-24"
+        >
+          <Link to="/intake" className="block w-full sm:inline-block sm:w-auto">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: duration.fast, ease: easing.smooth }}
+            >
+              <Button
+                size="xl"
+                variant="premium"
+                className="group w-full min-h-[52px] px-6 sm:w-auto sm:px-10 uppercase tracking-[0.1em] sm:tracking-[0.15em]"
+              >
+                Begin Your Assessment
+                <ArrowRight className="ml-3 transition-transform duration-300 ease-out group-hover:translate-x-1" />
+              </Button>
+            </motion.div>
+          </Link>
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mb-3 inline-block rounded-full border border-warm-stone/20 bg-warm-stone/10 px-3 py-1 text-xs font-medium text-warm-stone sm:mb-4 sm:px-4 sm:text-sm"
+            transition={{ duration: duration.normal, delay: 0.5, ease: easing.smooth }}
+            className="text-caption mt-6 text-soft-linen/40"
           >
-            Premium Care. Zero Friction.
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-3 font-display text-2xl font-bold text-foreground sm:mb-4 sm:text-3xl md:text-4xl"
-          >
-            How It Works
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-base text-muted-foreground sm:text-lg"
-          >
-            Three steps to feeling like yourself again. No waiting rooms.
+            No charge unless approved
           </motion.p>
-        </div>
-
-        {/* Steps - Mobile Vertical / Desktop Horizontal */}
-        <div className="relative mx-auto max-w-5xl">
-          <div className="grid gap-6 sm:gap-8 lg:grid-cols-3 lg:gap-6">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.number}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-                className="group"
-              >
-                {/* Card with Image */}
-                <div className="h-full overflow-hidden rounded-xl border border-neutral-gray/50 bg-pure-white/80 shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:border-warm-stone/30 sm:rounded-2xl">
-                  {/* Image Section */}
-                  <div className="relative h-48 overflow-hidden sm:h-56">
-                    <img 
-                      src={step.image} 
-                      alt={step.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/70 via-deep-charcoal/20 to-transparent" />
-                    
-                    {/* Step Number Badge */}
-                    <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone text-pure-white font-display font-bold shadow-lg sm:h-12 sm:w-12">
-                      {step.number}
-                    </div>
-                    
-                    {/* Icon */}
-                    <div className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full border border-pure-white/30 bg-pure-white/90 text-warm-stone shadow-lg backdrop-blur-sm sm:h-14 sm:w-14">
-                      <step.icon className="h-5 w-5 sm:h-6 sm:w-6" />
-                    </div>
-                  </div>
-
-                  {/* Content Section */}
-                  <div className="p-4 sm:p-6">
-                    <h3 className="mb-2 font-display text-lg font-bold text-rich-black sm:mb-3 sm:text-xl">
-                      {step.title}
-                    </h3>
-                    <p className="mb-3 text-sm text-muted-foreground sm:mb-4">{step.description}</p>
-                    <span className="inline-flex items-center rounded-full border border-warm-stone/20 bg-warm-stone/10 px-3 py-1 text-xs font-semibold text-warm-stone sm:px-4 sm:py-1.5 sm:text-sm">
-                      {step.highlight}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-10 text-center sm:mt-16"
-        >
-          <p className="mb-3 text-sm text-muted-foreground sm:mb-4">
-            Your card is only charged if you're approved.
-          </p>
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-            <Link to="/intake" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full bg-primary hover:bg-primary-dark sm:w-auto">
-                Start Free Assessment
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-              </Button>
-            </Link>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto">
-              Video Consultation - $99
-            </Button>
-          </div>
         </motion.div>
       </div>
     </section>

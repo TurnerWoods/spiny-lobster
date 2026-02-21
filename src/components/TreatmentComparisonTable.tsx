@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Info, Search, X, Filter } from "lucide-react";
+import { Check, Info, Search, X, Filter, Star, Flame } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -20,27 +20,75 @@ interface Treatment {
   symptoms: string[];
   goals: string[];
   popular?: boolean;
+  bestseller?: boolean;
+  rating?: number;
 }
+
+// Star Rating Component
+const TableStarRating = ({ rating }: { rating: number }) => (
+  <div className="flex items-center gap-0.5">
+    {Array.from({ length: 5 }).map((_, index) => (
+      <Star
+        key={index}
+        className={`h-3 w-3 ${
+          index < Math.floor(rating)
+            ? "fill-amber-400 text-amber-400"
+            : "fill-gray-200 text-gray-200"
+        }`}
+      />
+    ))}
+    <span className="ml-1 text-xs text-muted-foreground">{rating}</span>
+  </div>
+);
+
+// Product Badge Component
+const TableProductBadge = ({ type }: { type: "popular" | "bestseller" }) => {
+  const config = {
+    popular: {
+      label: "Most Popular",
+      icon: Flame,
+      className: "bg-gradient-to-r from-amber-500 to-orange-500 text-white",
+    },
+    bestseller: {
+      label: "Best Seller",
+      icon: Star,
+      className: "bg-gradient-to-r from-warm-stone to-warm-stone/80 text-white",
+    },
+  };
+
+  const { label, icon: Icon, className } = config[type];
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${className}`}
+    >
+      <Icon className="h-2.5 w-2.5" />
+      {label}
+    </span>
+  );
+};
 
 const treatments: Treatment[] = [
   {
     name: "Semaglutide",
     category: "Weight Loss",
-    price: "$299/mo",
+    price: "$149/mo",
     benefits: ["Appetite suppression", "Metabolic boost", "Sustainable weight loss"],
     bestFor: "Significant weight loss goals",
     symptoms: ["weight gain", "overeating", "slow metabolism", "hunger", "cravings"],
     goals: ["lose weight", "fat loss", "appetite control", "metabolism"],
-    popular: true,
+    bestseller: true,
+    rating: 4.9,
   },
   {
     name: "Tirzepatide",
     category: "Weight Loss",
-    price: "$399/mo",
+    price: "$199/mo",
     benefits: ["Dual-action formula", "Enhanced appetite control", "Blood sugar support"],
     bestFor: "Maximum weight loss results",
     symptoms: ["weight gain", "blood sugar issues", "insulin resistance", "obesity"],
     goals: ["weight loss", "blood sugar control", "appetite suppression"],
+    rating: 4.8,
   },
   {
     name: "Testosterone Cypionate",
@@ -51,6 +99,7 @@ const treatments: Treatment[] = [
     symptoms: ["fatigue", "low energy", "muscle loss", "brain fog", "low libido", "erectile dysfunction"],
     goals: ["energy", "muscle building", "mental clarity", "testosterone", "TRT"],
     popular: true,
+    rating: 4.8,
   },
   {
     name: "Testosterone Enanthate",
@@ -60,6 +109,7 @@ const treatments: Treatment[] = [
     bestFor: "Hormone optimization",
     symptoms: ["hormone imbalance", "poor sleep", "low sex drive", "mood swings"],
     goals: ["hormone balance", "libido", "sleep quality", "testosterone"],
+    rating: 4.7,
   },
   {
     name: "Sermorelin",
@@ -69,6 +119,8 @@ const treatments: Treatment[] = [
     bestFor: "Natural GH stimulation",
     symptoms: ["slow recovery", "aging skin", "decreased stamina", "poor sleep"],
     goals: ["anti-aging", "recovery", "growth hormone", "youthfulness"],
+    popular: true,
+    rating: 4.7,
   },
   {
     name: "Tesamorelin",
@@ -78,6 +130,7 @@ const treatments: Treatment[] = [
     bestFor: "Targeted fat reduction",
     symptoms: ["belly fat", "visceral fat", "metabolic issues", "stubborn fat"],
     goals: ["body composition", "fat reduction", "metabolism", "lean body"],
+    rating: 4.7,
   },
   {
     name: "NAD+",
@@ -87,6 +140,7 @@ const treatments: Treatment[] = [
     bestFor: "Cellular rejuvenation",
     symptoms: ["mental fatigue", "aging", "low energy", "brain fog", "cognitive decline"],
     goals: ["longevity", "brain health", "cellular health", "energy", "anti-aging"],
+    rating: 4.8,
   },
   {
     name: "BPC-157",
@@ -96,15 +150,19 @@ const treatments: Treatment[] = [
     bestFor: "Recovery & healing",
     symptoms: ["joint pain", "injuries", "gut issues", "slow healing", "inflammation"],
     goals: ["recovery", "healing", "joint health", "gut health", "injury repair"],
+    popular: true,
+    rating: 4.7,
   },
   {
     name: "Finasteride",
     category: "Hair",
-    price: "$49/mo",
+    price: "$29/mo",
     benefits: ["DHT blocking", "Hair preservation", "Regrowth support"],
     bestFor: "Hair loss prevention",
     symptoms: ["hair loss", "thinning hair", "receding hairline", "balding"],
     goals: ["hair growth", "prevent hair loss", "thicker hair", "DHT blocking"],
+    bestseller: true,
+    rating: 4.6,
   },
   {
     name: "Minoxidil",
@@ -114,6 +172,7 @@ const treatments: Treatment[] = [
     bestFor: "Hair regrowth",
     symptoms: ["hair thinning", "bald spots", "slow hair growth"],
     goals: ["hair regrowth", "thicker hair", "scalp health"],
+    rating: 4.5,
   },
   {
     name: "Tretinoin",
@@ -123,6 +182,7 @@ const treatments: Treatment[] = [
     bestFor: "Anti-aging skincare",
     symptoms: ["wrinkles", "fine lines", "acne", "uneven skin", "aging skin"],
     goals: ["younger skin", "clear skin", "anti-wrinkle", "skin health"],
+    rating: 4.6,
   },
 ];
 
@@ -338,18 +398,24 @@ const TreatmentComparisonTable = () => {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className={`border-b last:border-b-0 transition-colors hover:bg-muted/30 ${
-                              treatment.popular ? "bg-primary/5" : ""
+                              treatment.popular || treatment.bestseller ? "bg-primary/5" : ""
                             }`}
                           >
                             <td className="px-6 py-4">
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium text-foreground">
-                                  {treatment.name}
-                                </span>
-                                {treatment.popular && (
-                                  <Badge variant="secondary" className="bg-primary/10 text-primary text-xs">
-                                    Popular
-                                  </Badge>
+                              <div className="flex flex-col gap-1">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-medium text-foreground">
+                                    {treatment.name}
+                                  </span>
+                                  {treatment.bestseller && (
+                                    <TableProductBadge type="bestseller" />
+                                  )}
+                                  {treatment.popular && !treatment.bestseller && (
+                                    <TableProductBadge type="popular" />
+                                  )}
+                                </div>
+                                {treatment.rating && (
+                                  <TableStarRating rating={treatment.rating} />
                                 )}
                               </div>
                             </td>
@@ -403,22 +469,21 @@ const TreatmentComparisonTable = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className={`rounded-xl border bg-card p-4 ${
-                        treatment.popular ? "ring-2 ring-primary/20" : ""
+                      className={`relative rounded-xl border bg-card p-4 ${
+                        treatment.popular || treatment.bestseller ? "ring-2 ring-primary/20" : ""
                       }`}
                     >
-                      <div className="mb-3 flex items-start justify-between">
+                      {/* Badge positioned at top */}
+                      {(treatment.bestseller || treatment.popular) && (
+                        <div className="absolute -top-2.5 left-4">
+                          <TableProductBadge type={treatment.bestseller ? "bestseller" : "popular"} />
+                        </div>
+                      )}
+                      <div className={`mb-3 flex items-start justify-between ${(treatment.bestseller || treatment.popular) ? "mt-1" : ""}`}>
                         <div>
-                          <div className="flex items-center gap-2">
-                            <h3 className="font-display font-bold text-foreground">
-                              {treatment.name}
-                            </h3>
-                            {treatment.popular && (
-                              <Badge variant="secondary" className="bg-primary/10 text-primary text-xs">
-                                Popular
-                              </Badge>
-                            )}
-                          </div>
+                          <h3 className="font-display font-bold text-foreground">
+                            {treatment.name}
+                          </h3>
                           <span
                             className={`mt-1 inline-block rounded-full border px-2 py-0.5 text-xs font-medium ${
                               categoryColors[treatment.category] || "bg-muted text-muted-foreground"
@@ -426,6 +491,11 @@ const TreatmentComparisonTable = () => {
                           >
                             {treatment.category}
                           </span>
+                          {treatment.rating && (
+                            <div className="mt-1.5">
+                              <TableStarRating rating={treatment.rating} />
+                            </div>
+                          )}
                         </div>
                         <span className="text-lg font-bold text-primary">{treatment.price}</span>
                       </div>

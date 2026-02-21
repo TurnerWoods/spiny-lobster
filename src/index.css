@@ -1,18 +1,64 @@
+/* Font imports must come first */
+/* Premium Font Stack: DM Sans (body), Plus Jakarta Sans (display), Crimson Pro (serif accents) */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&display=swap");
-
-/* Elevare Health Design System - Light & Glassmorphic */
+/* ============================================
+   ELEVARE HEALTH DESIGN SYSTEM
+   Premium Typography & Luxury Aesthetics
+   ============================================ */
 
 @layer base {
   :root {
-    /* Light Theme - Soft Linen & Warm Stone */
+    /* ----------------------------------------
+       TYPOGRAPHY SCALE (Based on 1.25 ratio)
+       Perfect for luxury/premium branding
+       ---------------------------------------- */
+
+    /* Font Sizes - Fluid Typography (Mobile-first, 16px+ minimum) */
+    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8125rem);    /* 12-13px - minimum readable on mobile */
+    --text-sm: clamp(0.875rem, 0.825rem + 0.25vw, 0.9375rem); /* 14-15px - comfortable small text */
+    --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);    /* 16-17px - WCAG compliant base */
+    --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.1875rem);  /* 18-19px */
+    --text-xl: clamp(1.25rem, 1.15rem + 0.45vw, 1.375rem);    /* 20-22px */
+    --text-2xl: clamp(1.5rem, 1.35rem + 0.7vw, 1.75rem);      /* 24-28px */
+    --text-3xl: clamp(1.75rem, 1.55rem + 0.9vw, 2.125rem);    /* 28-34px */
+    --text-4xl: clamp(2rem, 1.7rem + 1.4vw, 2.75rem);         /* 32-44px */
+    --text-5xl: clamp(2.25rem, 1.85rem + 2vw, 3.25rem);       /* 36-52px - scaled for mobile */
+    --text-6xl: clamp(2.5rem, 2rem + 2.5vw, 3.75rem);         /* 40-60px */
+    --text-7xl: clamp(2.75rem, 2.25rem + 2.5vw, 4.25rem);     /* 44-68px */
+
+    /* Line Heights - Optimized for mobile readability */
+    --leading-none: 1;
+    --leading-tight: 1.2;         /* Headlines - slightly increased for mobile */
+    --leading-snug: 1.35;         /* Subheadings - better mobile readability */
+    --leading-normal: 1.5;        /* Default - WCAG minimum for body */
+    --leading-relaxed: 1.65;      /* Body copy - comfortable reading */
+    --leading-loose: 1.8;         /* Long-form text - spacious */
+
+    /* Letter Spacing - Mobile-optimized luxury refinement */
+    --tracking-tighter: -0.02em;  /* Large headlines - slightly less tight for mobile */
+    --tracking-tight: -0.01em;    /* Headlines - improved mobile legibility */
+    --tracking-normal: 0em;       /* Body text */
+    --tracking-wide: 0.02em;      /* Small text, labels - subtle spacing */
+    --tracking-wider: 0.04em;     /* Buttons, badges */
+    --tracking-widest: 0.08em;    /* All caps, luxury labels - not too wide on mobile */
+
+    /* Font Weights */
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+
+    /* ----------------------------------------
+       COLOR SYSTEM
+       Light Theme - Soft Linen & Warm Stone
+       ---------------------------------------- */
     --background: 40 15% 96%; /* soft-linen #F6F5F3 */
     --foreground: 240 11% 4%; /* rich-black #08080A */
 
@@ -48,11 +94,24 @@
 
     --radius: 0.75rem;
 
-    /* Extended Palette */
-    --success: 160 84% 39%;
-    --success-light: 160 76% 92%;
-    --warning: 38 92% 50%;
-    --info: 217 91% 60%;
+    /* Extended Palette - Warm Luxury Semantic Colors */
+    --success: 41 51% 50%; /* Warm gold-based success */
+    --success-light: 41 45% 92%; /* Light gold tint */
+    --warning: 30 70% 50%; /* Warm amber */
+    --info: 30 12% 50%; /* Warm stone variant */
+
+    /* Status Colors - Warm Palette (replaces clinical blue/green) */
+    --status-optimal: 41 51% 59%; /* Accent gold - for optimal/positive */
+    --status-good: 41 45% 50%; /* Darker gold - for good states */
+    --status-caution: 30 70% 50%; /* Warm amber - for caution */
+    --status-attention: 20 60% 50%; /* Warm terracotta - for attention needed */
+    --status-critical: 10 50% 45%; /* Muted warm red - for critical */
+
+    /* BMI/Health Chart Colors - Warm Palette */
+    --chart-underweight: 30 50% 55%; /* Warm tan */
+    --chart-normal: 41 51% 59%; /* Accent gold - optimal */
+    --chart-overweight: 25 60% 50%; /* Warm amber-brown */
+    --chart-obese: 15 50% 45%; /* Warm terracotta-red */
 
     /* Custom Brand Colors */
     --deep-charcoal: 270 5% 18%;
@@ -63,6 +122,7 @@
     --warm-gray: 45 8% 45%;
     --light-cloud: 226 33% 95%;
     --neutral-gray: 0 0% 88%;
+    --accent-gold: 41 51% 59%; /* #C9A962 */
 
     /* Glassmorphism */
     --glass-bg: 0 0% 100% / 0.7;
@@ -99,9 +159,9 @@
 
     --sidebar: 0 0% 99%;
     --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-serif: 'Crimson Pro', ui-serif, Georgia, serif;
     --font-mono: 'SF Mono', ui-monospace, monospace;
-    --tracking-normal: 0em;
     --spacing: 0.25rem;
   }
 }
@@ -113,24 +173,230 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    letter-spacing: var(--tracking-normal);
+    font-weight: var(--font-normal);
+    font-feature-settings: 'kern' 1, 'liga' 1;
   }
 
+  /* ----------------------------------------
+     HEADING HIERARCHY
+     Premium serif + sans-serif pairing
+     ---------------------------------------- */
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    @apply font-bold tracking-tight;
+    font-family: var(--font-display);
+    font-weight: var(--font-bold);
+    color: hsl(var(--foreground));
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--text-5xl);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tighter);
+    font-weight: var(--font-bold);
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    font-weight: var(--font-bold);
+  }
+
+  h3 {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    font-weight: var(--font-semibold);
+  }
+
+  h4 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-normal);
+    font-weight: var(--font-semibold);
+  }
+
+  h5 {
+    font-size: var(--text-xl);
+    line-height: var(--leading-normal);
+    letter-spacing: var(--tracking-normal);
+    font-weight: var(--font-medium);
+  }
+
+  h6 {
+    font-size: var(--text-lg);
+    line-height: var(--leading-normal);
+    letter-spacing: var(--tracking-normal);
+    font-weight: var(--font-medium);
+  }
+
+  /* Paragraph styles */
+  p {
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Lead paragraph - for introductory text */
+  .lead {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Small text */
+  small, .text-small {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+  }
+
+  /* Links */
+  a {
+    color: inherit;
+    text-decoration-skip-ink: auto;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: hsl(var(--warm-stone) / 0.2);
+    color: hsl(var(--foreground));
   }
 }
 
 @layer utilities {
+  /* ----------------------------------------
+     TYPOGRAPHY UTILITIES
+     Premium text styling classes
+     ---------------------------------------- */
+
+  /* Gradient text effect */
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(var(--warm-stone)) 0%, hsl(var(--deep-charcoal)) 100%);
   }
+
+  /* Serif accent text - for luxury quotes, taglines */
+  .text-serif {
+    font-family: var(--font-serif);
+  }
+
+  .text-serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    letter-spacing: 0.01em;
+  }
+
+  /* Display text - for hero headlines */
+  .text-display {
+    font-family: var(--font-display);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tighter);
+  }
+
+  /* Luxury label text - all caps with wide spacing */
+  .text-label {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+  }
+
+  .text-label-sm {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+
+  /* Caption text */
+  .text-caption {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Overline text - small label above headlines */
+  .text-overline {
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: hsl(var(--warm-stone));
+  }
+
+  /* Eyebrow text - subtle label */
+  .text-eyebrow {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    letter-spacing: var(--tracking-wide);
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Body variants */
+  .text-body {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+  }
+
+  .text-body-lg {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+  }
+
+  .text-body-sm {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+  }
+
+  /* Quote styling */
+  .text-quote {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: var(--leading-relaxed);
+    color: hsl(var(--foreground));
+  }
+
+  /* Number/stat styling */
+  .text-stat {
+    font-family: var(--font-display);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-none);
+  }
+
+  /* Balanced text wrapping */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Letter spacing utilities */
+  .tracking-luxury {
+    letter-spacing: var(--tracking-widest);
+  }
+
+  .tracking-headline {
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* ----------------------------------------
+     GRADIENT BACKGROUNDS
+     ---------------------------------------- */
 
   .gradient-bg {
     background: linear-gradient(135deg, hsl(var(--warm-stone)) 0%, hsl(var(--primary-light)) 100%);
@@ -144,11 +410,10 @@
     box-shadow: var(--shadow-glow);
   }
 
-  .text-balance {
-    text-wrap: balance;
-  }
+  /* ----------------------------------------
+     GLASSMORPHISM UTILITIES
+     ---------------------------------------- */
 
-  /* Glassmorphism utilities */
   .glass {
     background: hsl(var(--pure-white) / 0.7);
     backdrop-filter: blur(16px);
@@ -169,5 +434,589 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid hsl(var(--warm-gray) / 0.2);
+  }
+
+  /* ----------------------------------------
+     MOBILE-SPECIFIC UTILITIES
+     ---------------------------------------- */
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .mobile-full-height {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Touch-friendly tap targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* ----------------------------------------
+     FORM FOCUS STATES
+     Premium input styling
+     ---------------------------------------- */
+
+  /* Focus ring utility for form elements */
+  .focus-ring-premium {
+    @apply transition-all duration-200 ease-out;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply focus:ring-warm-stone/30 focus:ring-offset-pure-white;
+  }
+
+  /* Input glow effect on focus */
+  .input-glow:focus {
+    box-shadow: 0 0 0 4px rgba(114, 102, 88, 0.08);
+  }
+
+  /* Error state glow */
+  .input-error-glow {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
+  }
+
+  /* Success state glow */
+  .input-success-glow {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.08);
+  }
+
+  /* Form field animation */
+  .form-field-animate {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  /* Animated error message */
+  .error-message-animate {
+    animation: slideInFromTop 0.2s ease-out;
+  }
+
+  @keyframes slideInFromTop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Button loading state */
+  .btn-loading {
+    position: relative;
+    pointer-events: none;
+  }
+
+  .btn-loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    border-radius: inherit;
+    opacity: 0.7;
+  }
+}
+
+/* Mobile-specific responsive fixes */
+@media (max-width: 639px) {
+  /* Prevent horizontal overflow on mobile */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* WCAG-compliant base font size on mobile (16px minimum) */
+  html {
+    font-size: 16px;
+  }
+
+  /* Mobile typography enhancements */
+  body {
+    line-height: 1.65; /* Increased line height for mobile readability */
+    -webkit-text-size-adjust: 100%; /* Prevent iOS text size adjustment */
+    text-size-adjust: 100%;
+  }
+
+  /* Mobile heading optimizations */
+  h1 {
+    font-size: var(--text-4xl); /* Scale down from 5xl to 4xl on mobile */
+    line-height: 1.2;
+    letter-spacing: -0.015em; /* Slightly less tight on mobile */
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  h2 {
+    font-size: var(--text-3xl); /* Scale down from 4xl to 3xl on mobile */
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-size: var(--text-2xl); /* Scale down from 3xl to 2xl on mobile */
+    line-height: 1.3;
+  }
+
+  h4 {
+    font-size: var(--text-xl); /* Scale down from 2xl to xl on mobile */
+    line-height: 1.35;
+  }
+
+  h5 {
+    font-size: var(--text-lg); /* Scale down from xl to lg on mobile */
+    line-height: 1.4;
+  }
+
+  h6 {
+    font-size: var(--text-base); /* Scale down from lg to base on mobile */
+    line-height: 1.5;
+  }
+
+  /* Ensure paragraph text is comfortable to read */
+  p {
+    line-height: 1.7; /* Extra generous line height for mobile paragraphs */
+    max-width: 100%; /* Prevent text overflow */
+  }
+
+  /* Lead text adjustment */
+  .lead {
+    font-size: var(--text-base); /* Scale down lead text on mobile */
+    line-height: 1.6;
+  }
+
+  /* Small text - ensure minimum readability */
+  small, .text-small, .text-caption {
+    font-size: var(--text-sm); /* Minimum 14px on mobile */
+    line-height: 1.5;
+  }
+
+  /* Label text - ensure readability while maintaining style */
+  .text-label, .text-label-sm, .text-overline {
+    font-size: var(--text-xs); /* Minimum 12px on mobile */
+    letter-spacing: 0.06em; /* Slightly reduced for mobile */
+    line-height: 1.4;
+  }
+
+  /* Quote text scaling */
+  .text-quote {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+  }
+
+  /* Stat/number text - scale appropriately */
+  .text-stat {
+    letter-spacing: -0.01em; /* Less tight on mobile */
+  }
+
+  /* Ensure container doesn't overflow */
+  .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Improve tap targets for links in text */
+  p a, li a {
+    padding: 0.125rem 0; /* Small vertical padding for easier tapping */
+  }
+}
+
+/* Small mobile devices (320px - 374px) */
+@media (max-width: 374px) {
+  html {
+    font-size: 15px; /* Slightly smaller base for very small screens, but still readable */
+  }
+
+  h1 {
+    font-size: var(--text-3xl); /* Further scale down for tiny screens */
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+  }
+
+  h3 {
+    font-size: var(--text-xl);
+  }
+}
+
+/* Tablet portrait optimization (640px - 767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    line-height: 1.6;
+  }
+
+  h1 {
+    line-height: 1.15;
+  }
+
+  h2, h3 {
+    line-height: 1.25;
+  }
+}
+
+/* ============================================
+   ADDITIONAL RESPONSIVE UTILITIES
+   For smooth responsive experience
+   ============================================ */
+
+/* Extra-small devices (320px) specific fixes */
+@media (max-width: 320px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  /* Prevent button text from wrapping awkwardly */
+  button, .btn, [role="button"] {
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  /* Stack flex items vertically on tiny screens */
+  .flex-row-to-col-320 {
+    flex-direction: column !important;
+  }
+}
+
+/* Medium phones (375px - 389px) - iPhone SE, iPhone Mini */
+@media (min-width: 375px) and (max-width: 389px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Standard phones (390px - 411px) - iPhone 14, Pixel */
+@media (min-width: 390px) and (max-width: 411px) {
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Large phones (412px - 639px) - iPhone Pro Max, Samsung */
+@media (min-width: 412px) and (max-width: 639px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Prevent content overflow at all breakpoints */
+@layer utilities {
+  .overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+  }
+
+  .break-word {
+    word-break: break-word;
+  }
+
+  /* Responsive text utilities */
+  .text-responsive-sm {
+    font-size: clamp(0.75rem, 2vw + 0.25rem, 0.875rem);
+  }
+
+  .text-responsive-base {
+    font-size: clamp(0.875rem, 2.5vw + 0.25rem, 1rem);
+  }
+
+  .text-responsive-lg {
+    font-size: clamp(1rem, 3vw + 0.25rem, 1.25rem);
+  }
+
+  .text-responsive-xl {
+    font-size: clamp(1.25rem, 4vw + 0.5rem, 1.75rem);
+  }
+
+  .text-responsive-2xl {
+    font-size: clamp(1.5rem, 5vw + 0.5rem, 2.25rem);
+  }
+
+  .text-responsive-3xl {
+    font-size: clamp(1.75rem, 6vw + 0.5rem, 3rem);
+  }
+
+  /* Mobile-first grid utilities */
+  .grid-auto-fit-sm {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 1rem;
+  }
+
+  .grid-auto-fit-md {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.5rem;
+  }
+
+  .grid-auto-fit-lg {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 2rem;
+  }
+
+  /* Responsive spacing utilities */
+  .py-responsive {
+    padding-top: clamp(2rem, 6vw, 4rem);
+    padding-bottom: clamp(2rem, 6vw, 4rem);
+  }
+
+  .px-responsive {
+    padding-left: clamp(1rem, 4vw, 2rem);
+    padding-right: clamp(1rem, 4vw, 2rem);
+  }
+
+  .gap-responsive {
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  /* Ensure images never overflow */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Ensure iframes/videos are responsive */
+  iframe, video, embed, object {
+    max-width: 100%;
+  }
+
+  /* Horizontal scroll container for mobile */
+  .scroll-x-mobile {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scroll-x-mobile::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Touch-friendly spacing for interactive elements */
+  .touch-spacing > * + * {
+    margin-top: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .touch-spacing > * + * {
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+/* Fix for horizontal overflow on all pages */
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Ensure sections don't overflow */
+section, main, header, footer, article, aside, nav {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Reduced motion support for accessibility and performance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable Framer Motion animations */
+  [data-framer-component-type],
+  [style*="transform"],
+  [style*="opacity"] {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Keep marquee but make it static */
+  .animate-marquee {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* GPU acceleration utilities */
+@layer utilities {
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Contain layout for better performance */
+  .contain-layout {
+    contain: layout;
+  }
+
+  .contain-paint {
+    contain: paint;
+  }
+
+  .contain-strict {
+    contain: strict;
+  }
+
+  /* Touch action optimizations */
+  .touch-pan-y {
+    touch-action: pan-y;
+  }
+
+  .touch-pan-x {
+    touch-action: pan-x;
+  }
+
+  /* Passive scroll optimization hint */
+  .passive-scroll {
+    overscroll-behavior: contain;
+  }
+}
+
+/* Optimize scroll performance */
+.scroll-smooth-mobile {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize images for mobile */
+@layer base {
+  img {
+    content-visibility: auto;
+  }
+
+  /* Lazy-loaded images - prevent layout shift */
+  img[loading="lazy"] {
+    background-color: hsl(var(--muted));
+  }
+}
+
+/* Mobile animation simplifications */
+@media (max-width: 768px) {
+  /* Reduce marquee animation speed on mobile for battery */
+  .animate-marquee {
+    animation-duration: 40s !important;
+  }
+
+  /* Simplify backdrop blur on mobile (expensive on GPU) */
+  .backdrop-blur-xl {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .backdrop-blur-lg {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Reduce shadow complexity on mobile */
+  .shadow-2xl {
+    box-shadow: 0 15px 30px -8px hsl(0 0% 0% / 0.12);
+  }
+
+  /* Mobile-optimized animations - shorter duration */
+  .motion-reduce-mobile {
+    transition-duration: 150ms !important;
+    animation-duration: 150ms !important;
+  }
+}
+
+/* Intersection Observer lazy loading placeholder */
+.lazy-section {
+  min-height: 200px;
+  contain: layout style paint;
+}
+
+.lazy-section[data-loaded="true"] {
+  contain: none;
+}
+
+/* Skeleton loading for lazy components */
+.skeleton-pulse {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--muted-foreground) / 0.1) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes skeleton-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Smooth scroll behavior with passive listeners hint */
+html {
+  scroll-padding-top: 80px; /* Account for fixed header */
+}
+
+/* Prevent layout shift from lazy-loaded content */
+.aspect-placeholder {
+  aspect-ratio: 16 / 9;
+  background-color: hsl(var(--muted));
+}
+
+/* Optimize fixed/sticky elements for mobile */
+@media (max-width: 768px) {
+  .fixed, [class*="fixed"] {
+    transform: translateZ(0);
+  }
+
+  .sticky, [class*="sticky"] {
+    transform: translateZ(0);
   }
 }
