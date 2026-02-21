@@ -3,78 +3,77 @@ import heroImage from "@/assets/hero-mood.jpg";
 
 const treatment: TreatmentData = {
   category: "Mood & Cognitive",
-  title: "Mental Wellness Support",
-  subtitle: "Optimize Your Mind for Peak Performance",
-  description: "Your mental performance matters as much as your physical health. Our cognitive and mood support protocols help sharpen focus, stabilize mood, and enhance mental clarity without the side effects of traditional medications.",
-  price: "$99/mo",
+  title: "Mental Wellness",
+  subtitle: "Peak Cognitive Performance",
+  description: "Sharpen focus, stabilize mood, and enhance mental clarity.",
+  price: "$79",
   heroImage,
+  productImage: "/images/products/semax-selank-vials.png",
+  stacks: [
+    {
+      name: "The Brain Stack",
+      tagline: "Complete Cognitive Enhancement Protocol",
+      products: ["Semax", "Selank"],
+      price: "$149/mo",
+      savings: "Save $49",
+      popular: true
+    }
+  ],
   medications: [
     {
-      name: "PT-141 (Bremelanotide)",
-      description: "Peptide that works on the central nervous system to enhance desire and arousal. Addresses psychological aspects of sexual health.",
-      price: "$149/mo"
-    },
-    {
       name: "Selank",
-      description: "Nootropic peptide with anxiolytic properties. Reduces anxiety and stress while improving cognitive function and focus.",
+      description: "Nootropic peptide that reduces anxiety and improves focus.",
       price: "$99/mo"
     },
     {
       name: "Semax",
-      description: "Cognitive-enhancing peptide that improves memory, focus, and mental clarity. Supports BDNF production for brain health.",
+      description: "Cognitive enhancer for memory and mental clarity.",
       price: "$99/mo"
     },
     {
-      name: "NAD+ for Cognitive Support",
-      description: "Essential coenzyme that supports brain energy, mental clarity, and may help with mood regulation.",
+      name: "NAD+",
+      description: "Supports brain energy and mental clarity.",
       price: "$199/mo"
     },
     {
       name: "Methylene Blue",
-      description: "Mitochondrial support for enhanced cognitive function, memory, and neuroprotection. Low-dose pharmaceutical grade.",
+      description: "Mitochondrial support for cognitive function.",
       price: "$79/mo"
     },
     {
       name: "Dihexa",
-      description: "Potent nootropic peptide that supports memory formation and cognitive enhancement. For advanced cognitive support.",
+      description: "Advanced nootropic for memory formation.",
       price: "$179/mo"
     }
   ],
   symptoms: [
-    "Brain fog and mental fatigue",
-    "Difficulty concentrating or focusing",
-    "Low motivation and drive",
-    "Mild anxiety or stress",
+    "Brain fog",
+    "Poor concentration",
+    "Low motivation",
+    "Mild anxiety",
     "Memory concerns",
-    "Afternoon mental crashes",
-    "Feeling mentally dull or slow",
-    "Decreased sexual desire (psychological)"
+    "Mental fatigue"
   ],
   benefits: [
-    "Enhanced mental clarity and focus",
-    "Improved memory and recall",
-    "Reduced anxiety and stress",
-    "Better mood stability",
-    "Increased motivation and drive",
-    "Sharper cognitive performance",
-    "Improved sexual desire",
-    "Greater mental resilience"
+    "Enhanced clarity",
+    "Better memory",
+    "Reduced anxiety",
+    "Stable mood",
+    "More motivation",
+    "Sharper focus"
   ],
   timeline: [
-    { period: "Week 1-2", description: "Initial improvements in focus and mental clarity. Reduced brain fog." },
-    { period: "Week 3-4", description: "Noticeable improvements in mood stability and anxiety reduction." },
-    { period: "Month 2-3", description: "Enhanced cognitive performance, better memory, and sustained mental energy." },
-    { period: "Month 3+", description: "Optimal cognitive benefits. Long-term brain health support with continued use." }
+    { period: "Week 1-2", description: "Focus and clarity improve." },
+    { period: "Week 3-4", description: "Mood stabilizes." },
+    { period: "Month 2-3", description: "Cognitive gains compound." },
+    { period: "Month 3+", description: "Optimal brain health." }
   ],
   results: [
     { id: "mood-1", metric: "Focus Score", before: "3/10", after: "9/10", timeframe: "3 weeks", improvement: "+200%" },
-    { id: "mood-2", metric: "Anxiety Level", before: "8/10", after: "3/10", timeframe: "4 weeks", improvement: "-63% anxiety" },
-    { id: "mood-3", metric: "Brain Fog", before: "Daily", after: "Rare", timeframe: "2 weeks", improvement: "Cleared" },
-    { id: "mood-4", metric: "Memory Recall", before: "Poor", after: "Sharp", timeframe: "6 weeks", improvement: "+85%" },
-    { id: "mood-5", metric: "Work Output", before: "4 hrs/day", after: "7 hrs/day", timeframe: "1 month", improvement: "+75% productive" },
-    { id: "mood-6", metric: "Libido (PT-141)", before: "2/10", after: "8/10", timeframe: "Same day", improvement: "+300%" }
+    { id: "mood-2", metric: "Anxiety", before: "8/10", after: "3/10", timeframe: "4 weeks", improvement: "-63%" },
+    { id: "mood-3", metric: "Work Output", before: "4 hrs", after: "7 hrs", timeframe: "1 month", improvement: "+75%" }
   ],
-  safetyNote: "Cognitive peptides are not FDA-approved and are compounded medications. They are not intended to treat clinical depression or anxiety disorders. Consult your physician if you have diagnosed mental health conditions."
+  safetyNote: "Not intended to treat clinical depression or anxiety disorders."
 };
 
 const MoodPage = () => {

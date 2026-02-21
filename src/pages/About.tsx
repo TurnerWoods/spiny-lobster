@@ -46,10 +46,11 @@ const About = () => {
         <section className="relative py-16 md:py-24 overflow-hidden">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
-            <img 
-              src="/images/heroes/houston-skyline.png" 
-              alt="Texas Executive"
-              className="h-full w-full object-cover"
+            <img
+              src="/images/heroes/houston-skyline.png"
+              alt="Houston skyline background"
+              loading="eager"
+              className="h-full w-full max-w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-soft-linen via-soft-linen/95 to-soft-linen/80" />
           </div>
@@ -68,7 +69,7 @@ const About = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="mb-6 font-display text-4xl font-bold text-rich-black md:text-5xl lg:text-6xl"
+                className="mb-6 font-display text-5xl font-bold leading-tight tracking-tight text-rich-black lg:text-6xl"
               >
                 Healthcare Built for{" "}
                 <span className="text-warm-stone">How You Live</span>
@@ -77,7 +78,7 @@ const About = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-warm-gray leading-relaxed"
+                className="lead text-warm-gray"
               >
                 Elevare Health was founded on a simple observation: successful men don't have time for traditional healthcare, but they need it more than ever. The demands of building careers, leading teams, and raising families take a physical toll. Yet the healthcare system isn't built for people with packed calendars and high standards.
               </motion.p>
@@ -99,9 +100,9 @@ const About = () => {
                   <CardContent className="p-8 md:p-10">
                     <div className="flex items-center gap-3 mb-4">
                       <Sparkles className="h-5 w-5 text-warm-stone" />
-                      <h2 className="font-display text-2xl font-bold text-rich-black md:text-3xl">Our Mission</h2>
+                      <h2 className="font-display text-3xl font-semibold tracking-tight text-rich-black">Our Mission</h2>
                     </div>
-                    <p className="text-warm-gray leading-relaxed">
+                    <p className="text-body text-warm-gray">
                       We created Elevare to bridge that gap. Our platform combines the expertise of board-certified physicians with the convenience of modern technology. No waiting rooms. No insurance paperwork. No judgment. Just personalized care delivered on your terms.
                     </p>
                   </CardContent>
@@ -117,7 +118,7 @@ const About = () => {
               >
                 <div className="flex items-center gap-3 mb-6">
                   <Target className="h-5 w-5 text-warm-stone" />
-                  <h2 className="font-display text-2xl font-bold text-rich-black md:text-3xl">Our Approach</h2>
+                  <h2 className="font-display text-3xl font-semibold tracking-tight text-rich-black">Our Approach</h2>
                 </div>
                 <div className="grid gap-4 md:grid-cols-2">
                   {[
@@ -135,8 +136,8 @@ const About = () => {
                     >
                       <Card variant="glass" className="h-full transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
                         <CardContent className="p-6">
-                          <h3 className="mb-2 font-display text-lg font-bold text-warm-stone">{item.title}</h3>
-                          <p className="text-sm text-warm-gray leading-relaxed">{item.desc}</p>
+                          <h3 className="mb-2 font-display text-xl font-semibold tracking-normal text-warm-stone">{item.title}</h3>
+                          <p className="text-body-sm text-warm-gray">{item.desc}</p>
                         </CardContent>
                       </Card>
                     </motion.div>
@@ -158,7 +159,7 @@ const About = () => {
               >
                 <div className="flex items-center justify-center gap-3 mb-8">
                   <Users className="h-5 w-5 text-warm-stone" />
-                  <h2 className="text-center font-display text-2xl font-bold text-rich-black md:text-3xl">Leadership Team</h2>
+                  <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-rich-black">Leadership Team</h2>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
                   <motion.div
@@ -171,9 +172,9 @@ const About = () => {
                         <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-warm-stone/10 to-warm-stone/20 text-warm-stone shadow-inner">
                           <span className="font-display text-3xl font-bold">PM</span>
                         </div>
-                        <h3 className="mb-1 font-display text-xl font-bold text-rich-black">Dr. Paul Myers, DO</h3>
-                        <p className="mb-4 text-sm font-medium text-warm-stone">Co-Founder & Medical Director</p>
-                        <p className="text-sm text-warm-gray leading-relaxed">
+                        <h3 className="mb-1 font-display text-2xl font-semibold tracking-normal text-rich-black">Dr. Paul Myers, DO</h3>
+                        <p className="text-eyebrow mb-4 text-warm-stone">Co-Founder & Medical Director</p>
+                        <p className="text-body-sm text-warm-gray">
                           Graduated from Lake Erie College of Osteopathic Medicine (2010). Board-certified emergency medicine physician with 15+ years clinical experience. Oversees all clinical care and personally treats patients.
                         </p>
                       </CardContent>
@@ -190,9 +191,9 @@ const About = () => {
                         <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-warm-stone/10 to-warm-stone/20 text-warm-stone shadow-inner">
                           <span className="font-display text-3xl font-bold">PE</span>
                         </div>
-                        <h3 className="mb-1 font-display text-xl font-bold text-rich-black">Paul Eckdale</h3>
-                        <p className="mb-4 text-sm font-medium text-warm-stone">Co-Founder</p>
-                        <p className="text-sm text-warm-gray leading-relaxed">
+                        <h3 className="mb-1 font-display text-2xl font-semibold tracking-normal text-rich-black">Paul Eckdale</h3>
+                        <p className="text-eyebrow mb-4 text-warm-stone">Co-Founder</p>
+                        <p className="text-body-sm text-warm-gray">
                           16+ years medical field experience. Focus on pharmacy operations and provider-pharmacy coordination. Oversees pharmacy relationships.
                         </p>
                       </CardContent>
@@ -224,8 +225,8 @@ const About = () => {
                     >
                       <Card variant="glass" className="h-full transition-all duration-300 hover:shadow-lg">
                         <CardContent className="p-5 text-center">
-                          <p className="mb-1 font-display text-xl font-bold text-warm-stone md:text-2xl">{stat.value}</p>
-                          <p className="text-xs text-warm-gray">{stat.label}</p>
+                          <p className="text-stat mb-1 text-2xl text-warm-stone">{stat.value}</p>
+                          <p className="text-caption">{stat.label}</p>
                         </CardContent>
                       </Card>
                     </motion.div>
@@ -247,7 +248,7 @@ const About = () => {
               >
                 <div className="flex items-center justify-center gap-3 mb-8">
                   <Shield className="h-5 w-5 text-warm-stone" />
-                  <h2 className="text-center font-display text-2xl font-bold text-rich-black md:text-3xl">Core Values</h2>
+                  <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-rich-black">Core Values</h2>
                 </div>
                 <div className="grid gap-5 md:grid-cols-2">
                   {values.map((value, index) => (
@@ -264,8 +265,8 @@ const About = () => {
                             <value.icon className="h-6 w-6" />
                           </div>
                           <div>
-                            <h3 className="mb-2 font-display text-lg font-bold text-rich-black">{value.title}</h3>
-                            <p className="text-sm text-warm-gray leading-relaxed">{value.description}</p>
+                            <h3 className="mb-2 font-display text-xl font-semibold tracking-normal text-rich-black">{value.title}</h3>
+                            <p className="text-body-sm text-warm-gray">{value.description}</p>
                           </div>
                         </CardContent>
                       </Card>
@@ -288,7 +289,7 @@ const About = () => {
               >
                 <Card variant="glass">
                   <CardContent className="p-8">
-                    <h3 className="mb-6 font-display text-xl font-bold text-rich-black text-center">Get in Touch</h3>
+                    <h3 className="mb-6 font-display text-2xl font-semibold tracking-normal text-rich-black text-center">Get in Touch</h3>
                     <div className="grid gap-4 md:grid-cols-3">
                       <div className="flex items-center gap-3 justify-center md:justify-start">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10">
@@ -331,8 +332,8 @@ const About = () => {
               <Card variant="glassDark" className="overflow-hidden">
                 <CardContent className="p-8 text-center md:p-12">
                   <Sparkles className="mx-auto mb-4 h-8 w-8 text-warm-stone" />
-                  <h2 className="mb-4 font-display text-3xl font-bold text-pure-white">Ready to Get Started?</h2>
-                  <p className="mb-8 text-pure-white/70 max-w-md mx-auto">
+                  <h2 className="mb-4 font-display text-4xl font-semibold tracking-tight text-pure-white">Ready to Get Started?</h2>
+                  <p className="text-body-lg mb-8 text-pure-white/70 max-w-md mx-auto">
                     Take the first step toward feeling like yourself again. Our free assessment takes just 5 minutes.
                   </p>
                   <Link to="/intake">

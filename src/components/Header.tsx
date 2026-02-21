@@ -1,8 +1,8 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, User, ChevronRight } from "lucide-react";
+import { Menu, User, X, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import logoIcon from "@/assets/logo-icon.png";
 import {
   Sheet,
   SheetContent,
@@ -11,152 +11,470 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 const Header = () => {
   const { user, isLoading } = useAuth();
+  const [showPromo, setShowPromo] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = [
-    { name: "Treatments", href: "/#treatments" },
-    { name: "Tools", href: "/tools" },
-    { name: "How It Works", href: "/how-it-works" },
-    { name: "Pricing", href: "/pricing" },
-    { name: "About", href: "/about" },
-    { name: "FAQ", href: "/#faq" },
+  // Handle scroll effect for sticky header with requestAnimationFrame for better mobile performance
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 10);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Eden-style navigation - individual treatments with medications/tools in dropdowns
+  const weightLossDropdown = {
+    title: "Weight Loss",
+    href: "/treatments/weight-loss",
+    treatments: [
+      { name: "Semaglutide", href: "/treatments/weight-loss#semaglutide", rx: true, price: "$149/mo" },
+      { name: "Tirzepatide", href: "/treatments/weight-loss#tirzepatide", rx: true, price: "$199/mo" },
+      { name: "Lipotropic Injections", href: "/treatments/weight-loss#lipotropic", rx: true, price: "$99/mo" },
+    ],
+    tools: [
+      { name: "BMI Calculator", href: "/tools/calculators/bmi" },
+      { name: "TDEE Calculator", href: "/tools/calculators/tdee" },
+      { name: "Calorie Calculator", href: "/tools/calculators/calorie" },
+    ],
+  };
+
+  const testosteroneDropdown = {
+    title: "Testosterone",
+    href: "/treatments/hormones",
+    treatments: [
+      { name: "Testosterone Cypionate", href: "/treatments/hormones#cypionate", rx: true, price: "$149/mo" },
+      { name: "Testosterone Enanthate", href: "/treatments/hormones#enanthate", rx: true, price: "$149/mo" },
+      { name: "Gonadorelin", href: "/treatments/hormones#gonadorelin", rx: true, price: "$99/mo" },
+    ],
+    tools: [
+      { name: "Hormone Quiz", href: "/tools/hormone-assessment" },
+      { name: "Lab Interpreter", href: "/tools/lab-interpreter" },
+    ],
+  };
+
+  const peptidesDropdown = {
+    title: "Peptides",
+    href: "/treatments/strength",
+    treatments: [
+      { name: "Sermorelin", href: "/treatments/strength#sermorelin", rx: true, price: "$199/mo" },
+      { name: "BPC-157", href: "/treatments/strength#bpc157", rx: true, price: "$149/mo" },
+      { name: "NAD+", href: "/treatments/anti-aging#nad", rx: true, price: "$199/mo" },
+    ],
+    tools: [
+      { name: "Protein Calculator", href: "/tools/calculators/protein" },
+      { name: "AI Workout Generator", href: "/tools/workout-generator" },
+    ],
+  };
+
+  const hairDropdown = {
+    title: "Hair Growth",
+    href: "/treatments/hair",
+    treatments: [
+      { name: "Finasteride", href: "/treatments/hair#finasteride", rx: true, price: "$29/mo" },
+      { name: "Minoxidil", href: "/treatments/hair#minoxidil", rx: false, price: "$39/mo" },
+      { name: "Fin + Min Combo", href: "/treatments/hair#combo", rx: true, price: "$59/mo" },
+    ],
+    tools: [
+      { name: "Treatment Match Quiz", href: "/tools/treatment-match-quiz" },
+    ],
+  };
+
+  const moreDropdown = {
+    title: "More",
+    items: [
+      { name: "Anti-Aging", href: "/treatments/anti-aging" },
+      { name: "Mood & Focus", href: "/treatments/mood" },
+      { name: "Skin Care", href: "/treatments/skin" },
+      { name: "All Tools", href: "/tools" },
+      { name: "Pricing", href: "/pricing" },
+      { name: "About Us", href: "/about" },
+      { name: "FAQ", href: "/faq" },
+    ],
+  };
+
+  // For mobile
+  const allTreatments = [
+    { name: "Weight Loss", href: "/treatments/weight-loss", price: "from $149/mo" },
+    { name: "Testosterone", href: "/treatments/hormones", price: "from $149/mo" },
+    { name: "Peptides", href: "/treatments/strength", price: "from $149/mo" },
+    { name: "Hair Growth", href: "/treatments/hair", price: "from $29/mo" },
+    { name: "Anti-Aging", href: "/treatments/anti-aging", price: "from $199/mo" },
+    { name: "Mood & Focus", href: "/treatments/mood", price: "from $99/mo" },
   ];
 
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/20 bg-white/70 backdrop-blur-xl supports-[backdrop-filter]:bg-white/60 shadow-sm">
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logoIcon} alt="Elevare Health" className="h-10 w-auto" />
-          <span className="hidden font-display text-xl font-bold text-foreground sm:inline-block">
-            Elevare<span className="text-primary">Health</span>
-          </span>
-        </Link>
+  // Reusable dropdown component with premium styling
+  const TreatmentDropdown = ({ dropdown }: { dropdown: typeof weightLossDropdown }) => (
+    <NavigationMenuItem>
+      <NavigationMenuTrigger className="group relative text-[13px] font-medium tracking-wide text-rich-black/90 bg-transparent px-4 py-2 hover:bg-transparent hover:text-rich-black data-[state=open]:bg-transparent data-[state=open]:text-rich-black transition-colors duration-200">
+        {dropdown.title}
+        <span className="absolute bottom-0 left-4 right-4 h-[1.5px] bg-warm-stone scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 transition-transform duration-300 origin-left" />
+      </NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <div className="w-[340px] p-5">
+          {/* Treatments Section */}
+          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-warm-stone/70 mb-3 pl-1">Treatments</p>
+          <ul className="space-y-0.5 mb-5">
+            {dropdown.treatments.map((item) => (
+              <li key={item.name}>
+                <NavigationMenuLink asChild>
+                  <Link
+                    to={item.href}
+                    className="group/item flex items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-all duration-200 hover:bg-soft-linen"
+                  >
+                    <span className="font-medium text-rich-black/90 group-hover/item:text-rich-black transition-colors">
+                      {item.name}
+                      {item.rx && <sup className="ml-1.5 text-[9px] font-semibold text-warm-stone/80 tracking-wide">Rx</sup>}
+                    </span>
+                    <span className="text-[11px] text-warm-stone/70 font-medium tracking-wide">{item.price}</span>
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+            ))}
+          </ul>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-6 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </nav>
-
-        {/* CTA Buttons */}
-        <div className="hidden items-center gap-3 md:flex">
-          {!isLoading && (
+          {/* Tools Section */}
+          {dropdown.tools.length > 0 && (
             <>
-              {user ? (
-                <Link to="/dashboard">
-                  <Button size="sm" className="bg-primary hover:bg-primary-dark">
-                    <User className="mr-2 h-4 w-4" />
-                    My Dashboard
-                  </Button>
-                </Link>
-              ) : (
-                <>
-                  <Link to="/login">
-                    <Button variant="outline" size="sm">
-                      Sign In
-                    </Button>
-                  </Link>
-                  <Link to="/intake">
-                    <Button size="sm" className="bg-primary hover:bg-primary-dark">
-                      Get Started
-                    </Button>
-                  </Link>
-                </>
-              )}
+              <div className="h-px bg-neutral-gray/40 mb-4" />
+              <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-warm-stone/70 mb-3 pl-1">Tools</p>
+              <ul className="space-y-0.5">
+                {dropdown.tools.map((tool) => (
+                  <li key={tool.name}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        to={tool.href}
+                        className="block rounded-lg px-3 py-2 text-[13px] text-rich-black/60 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black"
+                      >
+                        {tool.name}
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                ))}
+              </ul>
             </>
           )}
+
+          {/* View All Link */}
+          <Link
+            to={dropdown.href}
+            className="group/all mt-5 flex items-center justify-center gap-2 rounded-lg border border-warm-stone/20 px-4 py-2.5 text-[12px] font-medium uppercase tracking-[0.1em] text-warm-stone transition-all duration-300 hover:bg-warm-stone hover:text-pure-white hover:border-warm-stone"
+          >
+            View All {dropdown.title}
+            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/all:translate-x-0.5" />
+          </Link>
         </div>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  );
 
-        {/* Mobile Menu */}
-        <Sheet>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon" aria-label="Open menu">
-              <Menu className="h-6 w-6" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[300px] p-0">
-            <SheetHeader className="border-b border-warm-stone/20 bg-soft-linen/50 p-4">
-              <SheetTitle className="flex items-center gap-2">
-                <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
-                <span className="font-display text-lg font-bold text-rich-black">
-                  Elevare<span className="text-warm-stone">Health</span>
-                </span>
-              </SheetTitle>
-            </SheetHeader>
-            <ScrollArea className="h-[calc(100vh-80px)]">
-              <div className="flex flex-col p-4">
-                {/* Navigation Links */}
-                <nav className="flex flex-col gap-1">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.name}
-                      to={link.href}
-                      className="flex items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-rich-black transition-colors hover:bg-warm-stone/10 hover:text-warm-stone"
+  return (
+    <>
+      {/* Promo Banner - Minimal & Elegant */}
+      {showPromo && (
+        <div className="relative bg-rich-black text-pure-white text-center py-2.5 px-10 sm:px-6">
+          <span className="text-[11px] sm:text-[12px] font-medium tracking-[0.05em]">
+            <span className="hidden sm:inline">Limited time: </span>
+            <span className="font-semibold">Save $50</span>
+            <span className="mx-1.5 text-pure-white/40">|</span>
+            GLP-1 Weight Loss
+          </span>
+          <Link
+            to="/treatments/weight-loss"
+            className="ml-2 sm:ml-3 inline-flex items-center gap-1 text-[11px] sm:text-[12px] font-medium text-pure-white/90 hover:text-pure-white transition-colors duration-200 group"
+          >
+            Shop now
+            <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </Link>
+          <button
+            onClick={() => setShowPromo(false)}
+            className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 text-pure-white/50 hover:text-pure-white active:text-pure-white transition-colors duration-200 min-h-[44px] min-w-[44px] flex items-center justify-center"
+            aria-label="Close promotional banner"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Main Header - Glassmorphism with scroll effect */}
+      <header
+        className={`sticky top-0 z-50 w-full transition-all duration-500 ease-out ${
+          isScrolled
+            ? "bg-pure-white/80 backdrop-blur-xl border-b border-neutral-gray/20 shadow-[0_1px_3px_0_rgb(0_0_0/0.04)]"
+            : "bg-pure-white/95 backdrop-blur-sm border-b border-transparent"
+        }`}
+      >
+        <div className="container flex h-14 sm:h-16 md:h-[68px] items-center justify-between px-4 md:px-6 lg:px-8">
+          {/* Logo - Mobile-optimized sizing with proper touch target */}
+          <Link to="/" className="flex items-center group min-h-[44px] min-w-[44px]">
+            <img
+              src="/elevar-logo.svg"
+              alt="Elevar Health - Premium Men's Health & Wellness"
+              loading="eager"
+              className="h-7 sm:h-8 md:h-9 w-auto max-w-full transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </Link>
+
+          {/* Desktop Navigation - Clean & Minimal */}
+          <NavigationMenu className="hidden lg:flex">
+            <NavigationMenuList className="gap-1">
+              <TreatmentDropdown dropdown={weightLossDropdown} />
+              <TreatmentDropdown dropdown={testosteroneDropdown} />
+              <TreatmentDropdown dropdown={peptidesDropdown} />
+              <TreatmentDropdown dropdown={hairDropdown} />
+
+              {/* More Dropdown - Refined */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="group relative text-[13px] font-medium tracking-wide text-rich-black/90 bg-transparent px-4 py-2 hover:bg-transparent hover:text-rich-black data-[state=open]:bg-transparent data-[state=open]:text-rich-black transition-colors duration-200">
+                  More
+                  <span className="absolute bottom-0 left-4 right-4 h-[1.5px] bg-warm-stone scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 transition-transform duration-300 origin-left" />
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="w-[200px] p-3">
+                    {moreDropdown.items.map((item) => (
+                      <li key={item.name}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={item.href}
+                            className="block rounded-lg px-3 py-2 text-[13px] text-rich-black/80 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black"
+                          >
+                            {item.name}
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          {/* CTA Buttons - Premium styling */}
+          <div className="hidden items-center gap-3 lg:flex">
+            {!isLoading && (
+              <>
+                {user ? (
+                  <Link to="/dashboard">
+                    <Button
+                      size="sm"
+                      className="h-9 px-5 bg-rich-black hover:bg-rich-black/90 text-pure-white text-[12px] font-medium tracking-wide rounded-full transition-all duration-300 hover:shadow-lg"
                     >
-                      {link.name}
-                      <ChevronRight className="h-4 w-4 text-warm-stone/60" />
-                    </Link>
-                  ))}
-                </nav>
-
-                {/* Divider */}
-                <div className="my-4 h-px bg-warm-stone/20" />
-
-                {/* Auth Buttons */}
-                {!isLoading && (
-                  <div className="flex flex-col gap-3">
-                    {user ? (
-                      <Link to="/dashboard">
-                        <Button className="w-full bg-primary hover:bg-primary-dark">
-                          <User className="mr-2 h-4 w-4" />
-                          My Dashboard
-                        </Button>
-                      </Link>
-                    ) : (
-                      <>
-                        <Link to="/intake">
-                          <Button className="w-full bg-primary hover:bg-primary-dark">
-                            Get Started
-                          </Button>
-                        </Link>
-                        <Link to="/login">
-                          <Button variant="outline" className="w-full">
-                            Sign In
-                          </Button>
-                        </Link>
-                      </>
-                    )}
-                  </div>
-                )}
-
-                {/* Additional Info */}
-                <div className="mt-6 rounded-xl border border-warm-stone/20 bg-soft-linen/60 backdrop-blur-sm p-4">
-                  <p className="text-sm font-medium text-rich-black">Need help?</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Our team is available 24/7 to answer your questions.
-                  </p>
-                  <Link to="/contact" className="mt-3 block">
-                    <Button variant="outline" size="sm" className="w-full border-warm-stone/30 hover:bg-warm-stone/10">
-                      Contact Support
+                      <User className="mr-2 h-3.5 w-3.5" />
+                      Dashboard
                     </Button>
                   </Link>
+                ) : (
+                  <>
+                    <Link to="/login">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-9 px-4 text-[12px] font-medium tracking-wide text-rich-black/80 hover:text-rich-black hover:bg-transparent transition-colors duration-200"
+                      >
+                        Sign In
+                      </Button>
+                    </Link>
+                    <Link to="/intake">
+                      <Button
+                        size="sm"
+                        className="h-9 px-5 bg-rich-black hover:bg-deep-charcoal text-pure-white text-[12px] font-medium tracking-wide rounded-full transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
+                      >
+                        Get Started
+                      </Button>
+                    </Link>
+                  </>
+                )}
+              </>
+            )}
+          </div>
+
+          {/* Mobile Menu - Premium slide-in */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Open navigation menu"
+                className="min-h-[44px] min-w-[44px] h-11 w-11 hover:bg-neutral-gray/10 active:bg-neutral-gray/20 transition-colors duration-200 rounded-full"
+              >
+                <Menu className="h-6 w-6 text-rich-black/80" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-full sm:w-[380px] sm:max-w-[380px] p-0 border-l-0">
+              {/* Mobile Header - Compact with proper spacing for close button */}
+              <SheetHeader className="border-b border-neutral-gray/15 bg-pure-white px-5 sm:px-6 py-4 pr-16">
+                <SheetTitle className="flex items-center min-h-[44px]">
+                  <img
+                    src="/elevar-logo.svg"
+                    alt="Elevar Health logo"
+                    loading="eager"
+                    className="h-7 sm:h-8 w-auto max-w-full"
+                  />
+                </SheetTitle>
+              </SheetHeader>
+
+              <ScrollArea className="h-[calc(100vh-76px)] sm:h-[calc(100vh-80px)]">
+                <div className="flex flex-col px-4 sm:px-5 py-5 sm:py-6">
+                  {/* Treatments Section */}
+                  <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-warm-stone/60">
+                    Treatments
+                  </p>
+                  <nav className="flex flex-col gap-1 mb-6" role="navigation" aria-label="Treatment categories">
+                    {allTreatments.map((item, index) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="group flex items-center justify-between rounded-xl px-4 min-h-[48px] py-3 transition-all duration-200 hover:bg-soft-linen active:bg-soft-linen/80 active:scale-[0.99]"
+                        style={{
+                          animationDelay: `${index * 50}ms`,
+                        }}
+                      >
+                        <span className="text-[15px] font-medium text-rich-black/90 group-hover:text-rich-black transition-colors">
+                          {item.name}
+                        </span>
+                        <span className="text-[11px] font-medium text-warm-stone/60 tracking-wide">
+                          {item.price}
+                        </span>
+                      </Link>
+                    ))}
+                  </nav>
+
+                  {/* Divider */}
+                  <div className="h-px bg-neutral-gray/20 mb-6" />
+
+                  {/* Tools Section */}
+                  <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-warm-stone/60">
+                    Tools
+                  </p>
+                  <nav className="flex flex-col gap-1 mb-6" role="navigation" aria-label="Tools and calculators">
+                    <Link
+                      to="/tools/hormone-assessment"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                    >
+                      Hormone Quiz
+                    </Link>
+                    <Link
+                      to="/tools/treatment-match-quiz"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                    >
+                      Treatment Match
+                    </Link>
+                    <Link
+                      to="/tools"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                    >
+                      All Calculators
+                    </Link>
+                  </nav>
+
+                  {/* Divider */}
+                  <div className="h-px bg-neutral-gray/20 mb-6" />
+
+                  {/* Other Links */}
+                  <nav className="flex flex-col gap-1 mb-6" role="navigation" aria-label="Additional pages">
+                    <Link
+                      to="/pricing"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                    >
+                      Pricing
+                    </Link>
+                    <Link
+                      to="/about"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                    >
+                      About Us
+                    </Link>
+                    <Link
+                      to="/faq"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                    >
+                      FAQ
+                    </Link>
+                  </nav>
+
+                  {/* Auth Buttons - Touch-optimized with 48px minimum height */}
+                  {!isLoading && (
+                    <div className="flex flex-col gap-3 mt-4">
+                      {user ? (
+                        <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                          <Button className="w-full min-h-[48px] h-12 bg-rich-black hover:bg-deep-charcoal active:bg-rich-black/80 text-[14px] font-medium tracking-wide rounded-xl transition-all duration-200">
+                            <User className="mr-2 h-4.5 w-4.5" />
+                            My Dashboard
+                          </Button>
+                        </Link>
+                      ) : (
+                        <>
+                          <Link to="/intake" onClick={() => setMobileMenuOpen(false)}>
+                            <Button className="w-full min-h-[48px] h-12 bg-rich-black hover:bg-deep-charcoal active:bg-rich-black/80 text-[14px] font-medium tracking-wide rounded-xl transition-all duration-200">
+                              Get Started
+                              <ArrowRight className="ml-2 h-4.5 w-4.5" />
+                            </Button>
+                          </Link>
+                          <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                            <Button
+                              variant="outline"
+                              className="w-full min-h-[48px] h-12 text-[14px] font-medium tracking-wide rounded-xl border-neutral-gray/30 hover:bg-soft-linen hover:border-neutral-gray/50 active:bg-soft-linen/80 transition-all duration-200"
+                            >
+                              Sign In
+                            </Button>
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Trust Banner - Minimal */}
+                  <div className="mt-8 rounded-2xl bg-soft-linen/60 border border-neutral-gray/10 p-5">
+                    <div className="space-y-2.5">
+                      <div className="flex items-center gap-2.5 text-[12px] text-rich-black/50">
+                        <div className="h-1 w-1 rounded-full bg-warm-stone/40" />
+                        <span>FSA/HSA Eligible</span>
+                      </div>
+                      <div className="flex items-center gap-2.5 text-[12px] text-rich-black/50">
+                        <div className="h-1 w-1 rounded-full bg-warm-stone/40" />
+                        <span>Free Discreet Shipping</span>
+                      </div>
+                      <div className="flex items-center gap-2.5 text-[12px] text-rich-black/50">
+                        <div className="h-1 w-1 rounded-full bg-warm-stone/40" />
+                        <span>100% Online Care</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </ScrollArea>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </header>
+              </ScrollArea>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </header>
+    </>
   );
 };
 

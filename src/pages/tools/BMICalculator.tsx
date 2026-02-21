@@ -16,33 +16,34 @@ interface BMIResult {
   context: string;
 }
 
+// BMI result categories using warm luxury palette instead of clinical colors
 function getBMIResult(bmi: number): BMIResult {
   if (bmi < 18.5) {
     return {
       bmi,
       category: "Underweight",
-      color: "text-blue-600",
+      color: "text-warm-stone", // Warm tan for underweight
       context: "A BMI below 18.5 may indicate insufficient body weight. Consider consulting a healthcare provider about nutrition and hormone levels that could affect weight.",
     };
   } else if (bmi < 25) {
     return {
       bmi,
       category: "Normal",
-      color: "text-green-600",
+      color: "text-accent-gold", // Accent gold for optimal/normal
       context: "A BMI between 18.5 and 24.9 is considered a healthy weight range. Maintaining balanced hormones can help sustain this healthy range.",
     };
   } else if (bmi < 30) {
     return {
       bmi,
       category: "Overweight",
-      color: "text-yellow-600",
+      color: "text-[#B8956A]", // Warm amber-brown for caution
       context: "A BMI between 25 and 29.9 may indicate above-normal body weight. Hormonal imbalances, especially low testosterone, can contribute to weight gain.",
     };
   } else {
     return {
       bmi,
       category: "Obese",
-      color: "text-red-600",
+      color: "text-[#A67563]", // Warm terracotta for attention
       context: "A BMI of 30 or above may indicate obesity. Hormonal optimization combined with medical weight management can help. Speaking with our physicians is recommended.",
     };
   }

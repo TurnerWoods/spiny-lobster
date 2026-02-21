@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { motion } from "framer-motion";
-import { Mail, MapPin, Clock, Phone, MessageSquare, Users, Plus, Minus, Shield, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, MapPin, Clock, Phone, MessageSquare, Users, Plus, Minus, Shield, Sparkles, AlertCircle, CheckCircle2, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+// Validation schema
+const contactFormSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string()
+    .optional()
+    .refine(
+      (val) => !val || /^[\d\s\-\(\)\+]{10,}$/.test(val),
+      "Please enter a valid phone number"
+    ),
+  subject: z.string().min(3, "Subject must be at least 3 characters").max(200, "Subject is too long"),
+  message: z.string().min(10, "Message must be at least 10 characters").max(2000, "Message is too long"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const faqs = [
   {
@@ -66,30 +85,56 @@ const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolea
 
 const Contact = () => {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+    },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message Sent",
-      description: "We'll get back to you within 24 hours.",
-    });
-    
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    setIsSubmitting(false);
+  const onSubmit = async (data: ContactFormData) => {
+    setSubmitStatus("idle");
+
+    try {
+      // Simulate form submission (replace with actual API call)
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // Simulate 90% success rate for demo
+          if (Math.random() > 0.1) {
+            resolve(data);
+          } else {
+            reject(new Error("Network error"));
+          }
+        }, 1500);
+      });
+
+      setSubmitStatus("success");
+      toast({
+        title: "Message Sent Successfully",
+        description: "Thank you for reaching out. We'll get back to you within 24 hours.",
+      });
+
+      reset();
+    } catch (error) {
+      setSubmitStatus("error");
+      toast({
+        variant: "destructive",
+        title: "Failed to Send Message",
+        description: "Something went wrong. Please try again or contact us directly at info@elevarehealth.com",
+      });
+    }
   };
 
   return (
@@ -100,10 +145,11 @@ const Contact = () => {
         <section className="relative overflow-hidden py-16 sm:py-20">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
-            <img 
-              src="/images/process/physician-consultation.png" 
-              alt="Physician consultation"
-              className="h-full w-full object-cover"
+            <img
+              src="/images/process/physician-consultation.png"
+              alt="Physician consultation background"
+              loading="eager"
+              className="h-full w-full max-w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-soft-linen via-soft-linen/95 to-soft-linen/80" />
           </div>
@@ -236,81 +282,173 @@ const Contact = () => {
               >
                 <Card variant="glass" className="p-6 shadow-xl sm:p-8">
                   <h2 className="mb-6 font-display text-2xl font-bold text-rich-black">Send Us a Message</h2>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <div className="space-y-2">
-                        <Label htmlFor="name" className="text-rich-black">Full Name</Label>
+
+                  {/* Success Message Banner */}
+                  {submitStatus === "success" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-6 rounded-lg border border-accent-gold/25 bg-accent-gold/10 p-4"
+                    >
+                      <p className="text-sm font-medium text-[#9A8444]">
+                        Your message has been sent successfully. We'll be in touch soon!
+                      </p>
+                    </motion.div>
+                  )}
+
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                    {/* Full-width stacked on mobile, 2-col grid on sm+ */}
+                    <div className="space-y-5 sm:grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="name" required>Full Name</Label>
                         <Input
                           id="name"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          type="text"
+                          autoComplete="name"
+                          {...register("name")}
                           placeholder="John Smith"
-                          required
-                          className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
+                          disabled={isSubmitting}
+                          aria-invalid={!!errors.name}
+                          error={!!errors.name}
                         />
+                        <AnimatePresence>
+                          {errors.name && (
+                            <motion.p
+                              initial={{ opacity: 0, y: -5 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -5 }}
+                              className="flex items-center gap-1.5 text-xs text-red-600 mt-1.5"
+                            >
+                              <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                              {errors.name.message}
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email" className="text-rich-black">Email Address</Label>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="email" required>Email Address</Label>
                         <Input
                           id="email"
                           type="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          autoComplete="email"
+                          inputMode="email"
+                          {...register("email")}
                           placeholder="john@example.com"
-                          required
-                          className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
+                          disabled={isSubmitting}
+                          aria-invalid={!!errors.email}
+                          error={!!errors.email}
                         />
+                        <AnimatePresence>
+                          {errors.email && (
+                            <motion.p
+                              initial={{ opacity: 0, y: -5 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -5 }}
+                              className="flex items-center gap-1.5 text-xs text-red-600 mt-1.5"
+                            >
+                              <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                              {errors.email.message}
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
                       </div>
                     </div>
-                    
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-rich-black">Phone Number</Label>
+
+                    <div className="space-y-5 sm:grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="phone">Phone Number</Label>
                         <Input
                           id="phone"
                           type="tel"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          autoComplete="tel"
+                          inputMode="tel"
+                          {...register("phone")}
                           placeholder="(512) 555-0123"
-                          className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
+                          disabled={isSubmitting}
+                          aria-invalid={!!errors.phone}
+                          error={!!errors.phone}
                         />
+                        <AnimatePresence>
+                          {errors.phone && (
+                            <motion.p
+                              initial={{ opacity: 0, y: -5 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -5 }}
+                              className="flex items-center gap-1.5 text-xs text-red-600 mt-1.5"
+                            >
+                              <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                              {errors.phone.message}
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="subject" className="text-rich-black">Subject</Label>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="subject" required>Subject</Label>
                         <Input
                           id="subject"
-                          value={formData.subject}
-                          onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                          type="text"
+                          {...register("subject")}
                           placeholder="How can we help?"
-                          required
-                          className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
+                          disabled={isSubmitting}
+                          aria-invalid={!!errors.subject}
+                          error={!!errors.subject}
                         />
+                        <AnimatePresence>
+                          {errors.subject && (
+                            <motion.p
+                              initial={{ opacity: 0, y: -5 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -5 }}
+                              className="flex items-center gap-1.5 text-xs text-red-600 mt-1.5"
+                            >
+                              <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                              {errors.subject.message}
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
                       </div>
                     </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="message" className="text-rich-black">Message</Label>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="message" required>Message</Label>
                       <Textarea
                         id="message"
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        {...register("message")}
                         placeholder="Tell us more about your inquiry..."
                         rows={5}
-                        required
-                        className="border-warm-stone/20 bg-pure-white/60 backdrop-blur-sm focus:border-warm-stone"
+                        disabled={isSubmitting}
+                        aria-invalid={!!errors.message}
+                        error={!!errors.message}
                       />
+                      <AnimatePresence>
+                        {errors.message && (
+                          <motion.p
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            className="flex items-center gap-1.5 text-xs text-red-600 mt-1.5"
+                          >
+                            <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                            {errors.message.message}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
                     </div>
-                    
-                    <p className="text-xs text-warm-gray">
-                      Note: Please do not include personal health information in this form.
+
+                    <p className="text-xs text-warm-gray/80">
+                      Please do not include personal health information in this form.
                     </p>
-                    
+
                     <Button
                       type="submit"
-                      className="w-full bg-warm-stone text-pure-white shadow-lg transition-all hover:bg-warm-stone/90 hover:shadow-xl"
-                      disabled={isSubmitting}
+                      variant="secondary"
+                      size="lg"
+                      className="w-full"
+                      isLoading={isSubmitting}
+                      loadingText="Sending..."
                     >
-                      {isSubmitting ? "Sending..." : "Send Message"}
+                      <Send className="h-4 w-4 mr-2" />
+                      Send Message
                     </Button>
                   </form>
 

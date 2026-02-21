@@ -1,76 +1,150 @@
 import { Link } from "react-router-dom";
-import { Mail, MapPin, Phone } from "lucide-react";
-import logoIcon from "@/assets/logo-icon.png";
+import { Mail, MapPin, Phone, Shield, Award, CheckCircle2, Truck, Instagram, Facebook, Linkedin, Twitter } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const treatments = [
     { name: "Weight Loss", href: "/treatments/weight-loss" },
-    { name: "Hormones", href: "/treatments/hormones" },
-    { name: "Strength", href: "/treatments/strength" },
+    { name: "Hormone Therapy", href: "/treatments/hormones" },
+    { name: "Strength & Performance", href: "/treatments/strength" },
     { name: "Anti-Aging", href: "/treatments/anti-aging" },
-    { name: "Hair", href: "/treatments/hair" },
-    { name: "Skin", href: "/treatments/skin" },
+    { name: "Hair Restoration", href: "/treatments/hair" },
+    { name: "Skin Health", href: "/treatments/skin" },
+    { name: "Sexual Health", href: "/treatments/sexual-health" },
+    { name: "Mood & Wellness", href: "/treatments/mood" },
   ];
 
   const company = [
     { name: "How It Works", href: "/how-it-works" },
     { name: "Pricing", href: "/pricing" },
-    { name: "About", href: "/about" },
+    { name: "About Us", href: "/about" },
     { name: "Contact", href: "/contact" },
-    { name: "Tools", href: "/tools" },
-    { name: "Brand Kit", href: "/brand-kit" },
+    { name: "FAQ", href: "/faq" },
+  ];
+
+  const resources = [
+    { name: "Health Tools", href: "/tools" },
+    { name: "Symptom Checker", href: "/symptom-checker" },
+    { name: "BMI Calculator", href: "/tools/bmi" },
+    { name: "Lab Interpreter", href: "/tools/lab-interpreter" },
   ];
 
   const legal = [
-    { name: "Privacy", href: "/privacy" },
-    { name: "Terms", href: "/terms" },
-    { name: "HIPAA", href: "/hipaa" },
-    { name: "Safety", href: "/safety" },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Terms of Use", href: "/terms" },
+    { name: "HIPAA Notice", href: "/hipaa" },
+    { name: "Safety Information", href: "/safety" },
+  ];
+
+  const socialLinks = [
+    { name: "Instagram", icon: Instagram, href: "https://instagram.com/elevarehealth" },
+    { name: "Facebook", icon: Facebook, href: "https://facebook.com/elevarehealth" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/company/elevarehealth" },
+    { name: "Twitter", icon: Twitter, href: "https://twitter.com/elevarehealth" },
+  ];
+
+  const trustBadges = [
+    { icon: Award, label: "US-Licensed Physicians" },
+    { icon: CheckCircle2, label: "FDA-Approved Medications" },
+    { icon: Shield, label: "HIPAA Compliant" },
+    { icon: Truck, label: "Free Shipping" },
   ];
 
   return (
-    <footer className="relative border-t border-warm-gray/30 bg-gradient-to-b from-soft-linen to-pure-white">
-      {/* Subtle glass overlay */}
-      <div className="absolute inset-0 bg-pure-white/40 backdrop-blur-sm" />
-      
-      <div className="container relative z-10 px-4 py-8 sm:py-12 md:px-6 md:py-16">
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5">
-          {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-2">
-            <Link to="/" className="mb-4 flex items-center gap-2">
-              <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto sm:h-10" />
-              <span className="font-display text-lg font-bold text-rich-black sm:text-xl">
-                Elevare<span className="text-warm-stone">Health</span>
+    <footer className="relative border-t border-warm-gray/20 bg-gradient-to-b from-soft-linen via-soft-linen/50 to-pure-white">
+      {/* Subtle texture overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-warm-stone/[0.02] to-transparent" />
+
+      <div className="container relative z-10 px-5 py-10 sm:px-6 sm:py-16 lg:py-20">
+        {/* Trust Badges Section - Stacks vertically on mobile */}
+        <div className="mb-10 flex flex-col items-center gap-4 border-b border-warm-gray/20 pb-8 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-8 lg:mb-16 lg:gap-10 lg:pb-12">
+          {trustBadges.map((badge) => (
+            <div key={badge.label} className="flex items-center gap-3 text-warm-stone">
+              <badge.icon className="h-5 w-5 flex-shrink-0 sm:h-6 sm:w-6" strokeWidth={1.5} />
+              <span className="text-sm font-medium tracking-wide text-rich-black/80 sm:text-base">
+                {badge.label}
               </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Main Footer Grid - Single column on mobile for better readability */}
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-10 lg:grid-cols-6 lg:gap-8">
+          {/* Brand Column - Full width on mobile */}
+          <div className="col-span-1 sm:col-span-2 lg:col-span-2 lg:pr-8">
+            <Link
+              to="/"
+              className="mb-5 inline-flex min-h-[44px] items-center py-1 transition-opacity hover:opacity-80 active:opacity-70"
+            >
+              <img
+                src="/elevar-logo.svg"
+                alt="Elevar Health - Premium Men's Health & Wellness"
+                loading="lazy"
+                className="h-8 w-auto max-w-full sm:h-10 md:h-12"
+              />
             </Link>
-            <p className="mb-4 max-w-sm text-sm text-muted-foreground sm:mb-6">
-              Premium testosterone therapy and men's health optimization. Serving 30+ states with a primary hub in Austin, Texas.
+            <p className="mb-6 max-w-sm text-[15px] leading-relaxed text-muted-foreground sm:text-base">
+              Premium testosterone therapy and men's health optimization. Physician-led care, delivered to your door.
             </p>
-            <div className="space-y-2.5 text-sm text-muted-foreground">
-              <a href="tel:512-270-8701" className="flex items-center gap-2 transition-colors hover:text-warm-stone">
-                <Phone className="h-4 w-4 text-warm-stone" />
-                512-270-8701
+
+            {/* Contact Info - Improved touch targets (min 48px height) */}
+            <div className="mb-6 -mx-2 space-y-1 text-sm text-muted-foreground">
+              <a
+                href="tel:512-270-8701"
+                className="group flex min-h-[48px] items-center gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10"
+              >
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/15">
+                  <Phone className="h-4 w-4 text-warm-stone" />
+                </span>
+                <span className="font-medium text-[15px]">(512) 270-8701</span>
               </a>
-              <a href="mailto:info@elevarehealth.com" className="flex items-center gap-2 transition-colors hover:text-warm-stone">
-                <Mail className="h-4 w-4 text-warm-stone" />
-                info@elevarehealth.com
+              <a
+                href="mailto:info@elevarehealth.com"
+                className="group flex min-h-[48px] items-center gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10"
+              >
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/15">
+                  <Mail className="h-4 w-4 text-warm-stone" />
+                </span>
+                <span className="font-medium text-[15px] break-all sm:break-normal">info@elevarehealth.com</span>
               </a>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 flex-shrink-0 text-warm-stone" />
-                1401 Lavaca St, Austin, TX
+              <div className="flex min-h-[48px] items-center gap-3 rounded-xl px-2 py-2">
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                  <MapPin className="h-4 w-4 text-warm-stone" />
+                </span>
+                <span className="text-[15px]">1401 Lavaca St, Austin, TX 78701</span>
               </div>
+            </div>
+
+            {/* Social Links - 44px minimum touch targets for accessibility */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-warm-gray/30 bg-pure-white text-muted-foreground transition-all hover:border-warm-stone/50 hover:bg-warm-stone/5 hover:text-warm-stone active:scale-95 active:bg-warm-stone/10 sm:h-10 sm:w-10"
+                  aria-label={`Follow us on ${social.name}`}
+                >
+                  <social.icon className="h-5 w-5 sm:h-4 sm:w-4" />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Treatments */}
-          <div>
-            <h4 className="mb-3 font-display font-semibold text-rich-black sm:mb-4">Treatments</h4>
-            <ul className="space-y-2">
+          {/* Treatments - Full width on mobile with proper tap targets */}
+          <div className="col-span-1">
+            <h4 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-rich-black sm:mb-4">
+              Treatments
+            </h4>
+            <ul className="-mx-2 space-y-0.5 sm:mx-0 sm:space-y-1">
               {treatments.map((item) => (
                 <li key={item.name}>
-                  <Link to={item.href} className="text-sm text-muted-foreground transition-colors hover:text-warm-stone">
+                  <Link
+                    to={item.href}
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                  >
                     {item.name}
                   </Link>
                 </li>
@@ -78,13 +152,18 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Company */}
-          <div>
-            <h4 className="mb-3 font-display font-semibold text-rich-black sm:mb-4">Company</h4>
-            <ul className="space-y-2">
+          {/* Company - Full width on mobile with proper tap targets */}
+          <div className="col-span-1">
+            <h4 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-rich-black sm:mb-4">
+              Company
+            </h4>
+            <ul className="-mx-2 space-y-0.5 sm:mx-0 sm:space-y-1">
               {company.map((item) => (
                 <li key={item.name}>
-                  <Link to={item.href} className="text-sm text-muted-foreground transition-colors hover:text-warm-stone">
+                  <Link
+                    to={item.href}
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                  >
                     {item.name}
                   </Link>
                 </li>
@@ -92,13 +171,37 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal */}
-          <div>
-            <h4 className="mb-3 font-display font-semibold text-rich-black sm:mb-4">Legal</h4>
-            <ul className="space-y-2">
+          {/* Resources - Full width on mobile with proper tap targets */}
+          <div className="col-span-1">
+            <h4 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-rich-black sm:mb-4">
+              Resources
+            </h4>
+            <ul className="-mx-2 space-y-0.5 sm:mx-0 sm:space-y-1">
+              {resources.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal - Full width on mobile with proper tap targets */}
+          <div className="col-span-1">
+            <h4 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-rich-black sm:mb-4">
+              Legal
+            </h4>
+            <ul className="-mx-2 space-y-0.5 sm:mx-0 sm:space-y-1">
               {legal.map((item) => (
                 <li key={item.name}>
-                  <Link to={item.href} className="text-sm text-muted-foreground transition-colors hover:text-warm-stone">
+                  <Link
+                    to={item.href}
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                  >
                     {item.name}
                   </Link>
                 </li>
@@ -107,21 +210,35 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-8 flex flex-col items-center justify-center gap-4 border-t border-warm-gray/30 pt-6 text-center sm:mt-12 sm:pt-8 md:flex-row md:justify-between md:text-left">
-          <p className="text-xs text-muted-foreground sm:text-sm">
-            © {currentYear} Elevare Health. All rights reserved.
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Dr. Paul Myers, DO • Medical Director
-          </p>
+        {/* Bottom Bar - Improved mobile spacing and readability */}
+        <div className="mt-10 border-t border-warm-gray/20 pt-6 sm:mt-12 sm:pt-8 lg:mt-16">
+          <div className="flex flex-col items-center gap-5 text-center sm:gap-4 md:flex-row md:justify-between md:text-left">
+            <div className="flex flex-col items-center gap-1.5 md:items-start">
+              <p className="text-[15px] text-muted-foreground sm:text-sm">
+                {currentYear} Elevare Health. All rights reserved.
+              </p>
+              <p className="text-sm text-muted-foreground/70 sm:text-xs">
+                Serving patients in 30+ states across the United States.
+              </p>
+            </div>
+            <div className="flex flex-col items-center gap-1.5 md:items-end">
+              <p className="text-[15px] font-medium text-rich-black/80 sm:text-sm">
+                Medical Director: Paul Myers, DO
+              </p>
+              <p className="text-sm text-muted-foreground/70 sm:text-xs">
+                Board Certified Physician
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Disclaimer - Glassmorphic */}
-        <div className="mt-6 rounded-xl border border-neutral-gray/40 bg-pure-white/60 p-3 text-center text-[10px] text-muted-foreground backdrop-blur-sm sm:mt-8 sm:p-4 sm:text-xs">
-          <p>
-            Elevare Health MSO LLC does not practice medicine or dispense medications. All care provided by licensed physicians.
-            Compounded medications are not FDA-approved. Telehealth services available in 30+ states.
+        {/* Disclaimer - Better mobile padding and text sizing */}
+        <div className="mt-6 rounded-2xl border border-warm-gray/25 bg-gradient-to-br from-pure-white/80 to-soft-linen/40 p-4 backdrop-blur-sm sm:mt-8 sm:p-6">
+          <p className="text-center text-[13px] leading-relaxed text-muted-foreground sm:text-sm sm:leading-relaxed">
+            <span className="font-medium text-rich-black/70">Important Notice:</span>{" "}
+            Elevare Health MSO LLC does not practice medicine or dispense medications. All medical care is provided by
+            independently licensed physicians. Compounded medications are prepared by licensed pharmacies and are not
+            FDA-approved. Individual results may vary. Telehealth services are available where permitted by state law.
           </p>
         </div>
       </div>

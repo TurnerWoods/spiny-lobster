@@ -413,10 +413,12 @@ const TreatmentMatchQuiz: React.FC = () => {
             <p className="text-warm-stone mb-8">
               Enter your email to receive your personalized treatment recommendations.
             </p>
-            <form onSubmit={handleEmailSubmit} className="max-w-sm mx-auto space-y-4">
+            <form onSubmit={handleEmailSubmit} className="max-w-sm mx-auto space-y-4 px-4 sm:px-0">
               <input
                 type="email"
-                className="w-full px-5 py-4 border-2 border-warm-stone/30 rounded-xl text-base focus:outline-none focus:border-warm-stone focus:ring-4 focus:ring-warm-stone/10 transition-all"
+                inputMode="email"
+                autoComplete="email"
+                className="w-full h-14 sm:h-auto px-5 py-4 border-2 border-warm-stone/30 rounded-xl text-base focus:outline-none focus:border-warm-stone focus:ring-4 focus:ring-warm-stone/10 transition-all"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -424,9 +426,9 @@ const TreatmentMatchQuiz: React.FC = () => {
               />
               <button
                 type="submit"
-                className="w-full py-4 bg-gradient-to-br from-warm-stone to-deep-charcoal text-white rounded-xl font-semibold hover:translate-y-[-2px] hover:shadow-xl transition-all"
+                className="w-full h-14 sm:h-auto py-4 bg-gradient-to-br from-warm-stone to-deep-charcoal text-white rounded-xl font-semibold hover:translate-y-[-2px] hover:shadow-xl transition-all"
               >
-                Get My Recommendations →
+                Get My Recommendations
               </button>
             </form>
             <p className="text-xs text-warm-stone mt-4">
@@ -549,7 +551,7 @@ const TreatmentMatchQuiz: React.FC = () => {
                   }`}
                 >
                   <div className={`absolute top-5 right-5 px-4 py-2 rounded-full text-xs font-bold text-white ${
-                    index === 0 ? 'bg-green-500' : 'bg-gradient-to-r from-warm-stone to-deep-charcoal'
+                    index === 0 ? 'bg-accent-gold' : 'bg-gradient-to-r from-warm-stone to-deep-charcoal'
                   }`}>
                     {rec.matchScore}% Match
                   </div>
@@ -569,7 +571,7 @@ const TreatmentMatchQuiz: React.FC = () => {
                   <div className="flex flex-wrap gap-2.5 mb-5">
                     {rec.benefits.map((benefit, i) => (
                       <span key={i} className="flex items-center gap-1.5 px-3.5 py-2 bg-soft-linen rounded-full text-sm font-medium">
-                        <span className="text-green-500 font-bold">✓</span>
+                        <span className="text-accent-gold font-bold">✓</span>
                         {benefit}
                       </span>
                     ))}

@@ -128,19 +128,20 @@ const getResultLevel = (score: number, maxScore: number): ResultLevel => {
   return "high";
 };
 
+// Results config using warm luxury palette instead of clinical colors
 const RESULTS: Record<ResultLevel, { title: string; description: string; icon: typeof CheckCircle; color: string; recommendation: string }> = {
   low: {
     title: "Low Likelihood",
     description: "Based on your answers, you're showing few signs of low testosterone. Your symptoms may have other causes, but it never hurts to get checked.",
     icon: CheckCircle,
-    color: "text-green-500",
+    color: "text-accent-gold", // Warm gold for optimal/positive
     recommendation: "While your symptoms don't strongly suggest low T, maintaining optimal hormone levels can enhance your quality of life. Consider a baseline check to know your numbers.",
   },
   moderate: {
     title: "Moderate Likelihood",
     description: "Your answers suggest you may be experiencing some symptoms commonly associated with low testosterone. A proper evaluation could provide clarity.",
     icon: AlertTriangle,
-    color: "text-yellow-500",
+    color: "text-warm-stone", // Warm stone for moderate/caution
     recommendation: "We recommend getting your testosterone levels tested. Many men in your situation find that optimizing their hormones significantly improves their quality of life.",
   },
   high: {
@@ -462,8 +463,8 @@ const SymptomChecker = () => {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2, type: "spring" }}
                   className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full ${
-                    resultLevel === "low" ? "bg-green-500/10" :
-                    resultLevel === "moderate" ? "bg-yellow-500/10" : "bg-primary/10"
+                    resultLevel === "low" ? "bg-accent-gold/15" :
+                    resultLevel === "moderate" ? "bg-warm-stone/15" : "bg-primary/10"
                   }`}
                 >
                   <ResultIcon className={`h-10 w-10 ${result.color}`} />

@@ -46,7 +46,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import logoIcon from "@/assets/logo-icon-new.png";
 
 interface FileObject {
   name: string;
@@ -436,10 +435,10 @@ const MediaManager = () => {
 
     const mimetype = item.metadata?.mimetype || "";
     if (mimetype.startsWith("image/")) {
-      return <Image className="h-8 w-8 text-blue-500" />;
+      return <Image className="h-8 w-8 text-accent-gold" />;
     }
     if (mimetype.startsWith("video/")) {
-      return <Video className="h-8 w-8 text-purple-500" />;
+      return <Video className="h-8 w-8 text-warm-stone" />;
     }
     return <File className="h-8 w-8 text-warm-gray" />;
   };
@@ -530,11 +529,13 @@ const MediaManager = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
-            <span className="font-display text-lg font-bold text-rich-black">
-              Elevare<span className="text-warm-stone">Health</span>
-            </span>
+          <Link to="/" className="flex items-center transition-opacity hover:opacity-80">
+            <img
+              src="/elevar-logo.svg"
+              alt="Elevar Health logo"
+              loading="eager"
+              className="h-8 w-auto max-w-full"
+            />
           </Link>
           <div className="flex items-center gap-2">
             <Link to="/dashboard">
@@ -743,8 +744,8 @@ const MediaManager = () => {
                     {item.metadata?.mimetype?.startsWith("image/") ? (
                       <img
                         src={getFileUrl(item.name)}
-                        alt={item.name}
-                        className="h-full w-full object-cover cursor-pointer"
+                        alt={`Media file: ${item.name}`}
+                        className="h-full w-full max-w-full object-cover cursor-pointer"
                         loading="lazy"
                         onClick={() => openImagePreview(item.name)}
                       />
@@ -872,7 +873,7 @@ const MediaManager = () => {
                       onClick={() => copyToClipboard(item.name)}
                     >
                       {copiedUrl === item.name ? (
-                        <Check className="h-4 w-4 text-green-500" />
+                        <Check className="h-4 w-4 text-accent-gold" />
                       ) : (
                         <Copy className="h-4 w-4" />
                       )}

@@ -1,5 +1,29 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback, memo, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
+import { easing, duration, prefersReducedMotion } from "@/lib/motion";
+
+// Premium easing
+const premiumEase = [0.16, 1, 0.3, 1] as const;
+
+// Check for reduced motion preference
+const usePrefersReducedMotion = () => {
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(prefersReducedMotion);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleChange = () => setShouldReduceMotion(mediaQuery.matches);
+
+    mediaQuery.addEventListener?.("change", handleChange) ||
+      mediaQuery.addListener?.(handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener?.("change", handleChange) ||
+        mediaQuery.removeListener?.(handleChange);
+    };
+  }, []);
+
+  return shouldReduceMotion;
+};
 
 interface Stat {
   value: string;
@@ -15,29 +39,68 @@ const stats: Stat[] = [
   { value: "3", suffix: "", label: "Texas Markets", numericValue: 3 },
 ];
 
-const AnimatedNumber = ({ value, suffix, inView, isRange }: { value: number; suffix: string; inView: boolean; isRange?: boolean }) => {
-  const [displayValue, setDisplayValue] = useState(0);
+// Easing function for smoother counting (ease-out quart)
+const easeOutQuart = (t: number): number => {
+  return 1 - Math.pow(1 - t, 4);
+};
+
+const AnimatedNumber = memo(({
+  value,
+  suffix,
+  inView,
+  isRange,
+  delay = 0,
+  reduceMotion = false
+}: {
+  value: number;
+  suffix: string;
+  inView: boolean;
+  isRange?: boolean;
+  delay?: number;
+  reduceMotion?: boolean;
+}) => {
+  const [displayValue, setDisplayValue] = useState(reduceMotion ? value : 0);
 
   useEffect(() => {
-    if (!inView) return;
-    
-    const duration = 2000;
-    const steps = 60;
-    const increment = value / steps;
-    let current = 0;
-    
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= value) {
-        setDisplayValue(value);
-        clearInterval(timer);
-      } else {
-        setDisplayValue(Math.floor(current));
-      }
-    }, duration / steps);
+    // Skip animation if reduced motion is preferred
+    if (!inView || reduceMotion) {
+      setDisplayValue(value);
+      return;
+    }
 
-    return () => clearInterval(timer);
-  }, [value, inView]);
+    const animationDuration = 1800; // Slightly faster for sophistication
+    const startTime = performance.now() + delay;
+    let animationFrame: number;
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+
+      if (elapsed < 0) {
+        animationFrame = requestAnimationFrame(animate);
+        return;
+      }
+
+      const progress = Math.min(elapsed / animationDuration, 1);
+      const easedProgress = easeOutQuart(progress);
+      const currentValue = Math.floor(easedProgress * value);
+
+      setDisplayValue(currentValue);
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [value, inView, delay, reduceMotion]);
 
   const formatNumber = (num: number) => {
     if (num >= 1000) {
@@ -60,33 +123,66 @@ const AnimatedNumber = ({ value, suffix, inView, isRange }: { value: number; suf
       {formatNumber(displayValue)}{suffix}
     </span>
   );
+});
+
+AnimatedNumber.displayName = "AnimatedNumber";
+
+// Stat item animation
+const statItemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: duration.normal,
+      delay: index * 0.1,
+      ease: easing.entrance,
+    },
+  }),
 };
 
 const StatsCounter = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reduceMotion = usePrefersReducedMotion();
+
+  // Memoize animation variants based on reduced motion preference
+  const containerAnimation = useMemo(() => ({
+    initial: { opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 32 },
+    animate: isInView ? { opacity: 1, y: 0 } : {},
+    transition: { duration: reduceMotion ? 0.01 : duration.slower, delay: reduceMotion ? 0 : 0.4, ease: premiumEase }
+  }), [isInView, reduceMotion]);
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.5 }}
-      className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-pure-white/20 bg-pure-white/10 p-4 shadow-xl backdrop-blur-lg sm:mt-16 sm:gap-6 sm:p-6 md:grid-cols-4 md:gap-8 md:p-8"
+      initial={containerAnimation.initial}
+      animate={containerAnimation.animate}
+      transition={containerAnimation.transition}
+      className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-pure-white/20 bg-pure-white/10 p-4 shadow-xl backdrop-blur-lg sm:mt-16 sm:gap-6 sm:p-6 md:grid-cols-4 md:gap-8 md:p-8 contain-paint"
     >
       {stats.map((stat, index) => (
-        <div key={index} className="text-center">
-          <AnimatedNumber 
-            value={stat.numericValue} 
-            suffix={stat.suffix} 
-            inView={isInView} 
+        <motion.div
+          key={index}
+          custom={index}
+          variants={statItemVariants}
+          initial={reduceMotion ? "visible" : "hidden"}
+          animate={isInView ? "visible" : "hidden"}
+          className="text-center"
+        >
+          <AnimatedNumber
+            value={stat.numericValue}
+            suffix={stat.suffix}
+            inView={isInView}
             isRange={stat.value.includes("-")}
+            delay={reduceMotion ? 0 : index * 100}
+            reduceMotion={reduceMotion}
           />
           <p className="mt-1 text-xs font-medium text-pure-white/75 sm:mt-2 sm:text-sm">{stat.label}</p>
-        </div>
+        </motion.div>
       ))}
     </motion.div>
   );
 };
 
-export default StatsCounter;
+export default memo(StatsCounter);

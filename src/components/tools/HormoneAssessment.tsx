@@ -339,11 +339,12 @@ const HormoneAssessment: React.FC = () => {
   };
 
   const getRiskColor = (level: string): string => {
+    // Warm luxury palette - replaces clinical green/orange/red
     const colors: Record<string, string> = {
-      low: '#14B870',
-      moderate: '#F59E0B',
-      elevated: '#F97316',
-      high: '#EF4444'
+      low: '#C9A962',      // Accent gold - optimal
+      moderate: '#B8956A', // Warm amber-brown - caution
+      elevated: '#A67563', // Warm terracotta - attention
+      high: '#8B5A4A'      // Muted warm red-brown - critical
     };
     return colors[level] || '#726658';
   };
@@ -388,10 +389,12 @@ const HormoneAssessment: React.FC = () => {
             <p className="text-warm-stone mb-8">
               Enter your email to receive your personalized hormone health analysis and treatment recommendations.
             </p>
-            <form onSubmit={handleEmailSubmit} className="max-w-sm mx-auto space-y-4">
+            <form onSubmit={handleEmailSubmit} className="max-w-sm mx-auto space-y-4 px-4 sm:px-0">
               <input
                 type="email"
-                className="w-full px-5 py-4 border-2 border-warm-stone/30 rounded-xl text-base focus:outline-none focus:border-warm-stone focus:ring-4 focus:ring-warm-stone/10 transition-all"
+                inputMode="email"
+                autoComplete="email"
+                className="w-full h-14 sm:h-auto px-5 py-4 border-2 border-warm-stone/30 rounded-xl text-base focus:outline-none focus:border-warm-stone focus:ring-4 focus:ring-warm-stone/10 transition-all"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -399,9 +402,9 @@ const HormoneAssessment: React.FC = () => {
               />
               <button
                 type="submit"
-                className="w-full py-4 bg-gradient-to-br from-warm-stone to-deep-charcoal text-white rounded-xl font-semibold hover:translate-y-[-2px] hover:shadow-xl transition-all"
+                className="w-full h-14 sm:h-auto py-4 bg-gradient-to-br from-warm-stone to-deep-charcoal text-white rounded-xl font-semibold hover:translate-y-[-2px] hover:shadow-xl transition-all"
               >
-                Get My Results →
+                Get My Results
               </button>
             </form>
             <p className="text-xs text-warm-stone mt-4">
@@ -462,7 +465,7 @@ const HormoneAssessment: React.FC = () => {
                             className="h-full rounded-full transition-all duration-700"
                             style={{
                               width: `${percentage}%`,
-                              background: percentage > 66 ? '#EF4444' : percentage > 33 ? '#F59E0B' : '#14B870'
+                              background: percentage > 66 ? '#A67563' : percentage > 33 ? '#B8956A' : '#C9A962'
                             }}
                           />
                         </div>
@@ -482,7 +485,7 @@ const HormoneAssessment: React.FC = () => {
               <div className="space-y-3">
                 {results.treatments.map((treatment, index) => (
                   <div key={index} className="flex items-center gap-3 p-4 bg-soft-linen rounded-xl">
-                    <div className="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">
+                    <div className="w-7 h-7 bg-accent-gold rounded-full flex items-center justify-center text-white text-sm">
                       ✓
                     </div>
                     <span className="font-semibold">{treatment}</span>

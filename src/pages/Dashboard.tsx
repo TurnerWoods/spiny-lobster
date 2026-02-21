@@ -5,13 +5,18 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  User, 
-  Pill, 
-  MessageCircle, 
-  Calendar, 
-  LogOut, 
-  Plus, 
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  QuickActionsGridSkeleton,
+  DashboardTreatmentListSkeleton,
+} from "@/components/ui/treatment-card-skeleton";
+import {
+  User,
+  Pill,
+  MessageCircle,
+  Calendar,
+  LogOut,
+  Plus,
   Clock,
   CheckCircle2,
   AlertCircle,
@@ -21,7 +26,6 @@ import {
   Sparkles,
   Activity
 } from "lucide-react";
-import logoIcon from "@/assets/logo-icon.png";
 import PatientMessaging from "@/components/dashboard/PatientMessaging";
 
 interface Profile {
@@ -112,17 +116,46 @@ const Dashboard = () => {
     navigate("/");
   };
 
+  // Show skeleton loading state
   if (authLoading || isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center gap-4"
-        >
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-warm-stone border-t-transparent" />
-          <p className="text-sm text-warm-gray">Loading your dashboard...</p>
-        </motion.div>
+      <div className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
+        {/* Header skeleton */}
+        <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/80 backdrop-blur-xl">
+          <div className="container flex h-16 items-center justify-between px-4">
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <Skeleton className="h-5 w-32" />
+            </div>
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-9 w-20" />
+              <Skeleton className="h-9 w-24" />
+            </div>
+          </div>
+        </header>
+
+        <main className="container px-4 py-8 md:py-12">
+          {/* Welcome section skeleton */}
+          <div className="mb-8">
+            <Skeleton className="mb-4 h-10 w-48 rounded-full" />
+            <Skeleton className="h-10 w-72" />
+            <Skeleton className="mt-2 h-5 w-64" />
+          </div>
+
+          {/* Quick actions skeleton */}
+          <div className="mb-10">
+            <QuickActionsGridSkeleton count={4} />
+          </div>
+
+          {/* Treatments section skeleton */}
+          <div>
+            <div className="mb-5 flex items-center justify-between">
+              <Skeleton className="h-7 w-40" />
+              <Skeleton className="h-9 w-32" />
+            </div>
+            <DashboardTreatmentListSkeleton count={3} />
+          </div>
+        </main>
       </div>
     );
   }
@@ -134,11 +167,13 @@ const Dashboard = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <img src={logoIcon} alt="Elevare Health" className="h-8 w-auto" />
-            <span className="font-display text-lg font-bold text-rich-black">
-              Elevare<span className="text-warm-stone">Health</span>
-            </span>
+          <Link to="/" className="flex items-center transition-opacity hover:opacity-80">
+            <img
+              src="/elevar-logo.svg"
+              alt="Elevar Health logo"
+              loading="eager"
+              className="h-8 w-auto max-w-full"
+            />
           </Link>
           <div className="flex items-center gap-2">
             <Link to="/">

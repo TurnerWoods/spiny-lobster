@@ -163,21 +163,24 @@ const PatientMessaging = ({ isOpen, onClose }: PatientMessagingProps) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           onClick={(e) => e.stopPropagation()}
-          className="flex h-[80vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border bg-card shadow-xl"
+          className="flex h-[80vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-warm-stone/10 bg-pure-white shadow-2xl"
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b bg-muted/50 px-4 py-3">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-light">
-                <Stethoscope className="h-5 w-5 text-primary" />
+          <div className="flex items-center justify-between border-b border-warm-stone/10 bg-soft-linen/50 px-5 py-4">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
+                <Stethoscope className="h-6 w-6 text-warm-stone" />
               </div>
               <div>
-                <h2 className="font-semibold text-foreground">Care Team</h2>
-                <p className="text-xs text-muted-foreground">Usually responds within 24 hours</p>
+                <h2 className="font-display font-bold text-rich-black">Care Team</h2>
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-accent-gold animate-pulse" />
+                  <p className="text-xs text-warm-gray">Usually responds within 24 hours</p>
+                </div>
               </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="h-5 w-5" />
+            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full hover:bg-warm-stone/10">
+              <X className="h-5 w-5 text-warm-gray" />
             </Button>
           </div>
 
@@ -222,19 +225,19 @@ const PatientMessaging = ({ isOpen, onClose }: PatientMessagingProps) => {
                           )}
                           <div
                             className={cn(
-                              "max-w-[80%] rounded-2xl px-4 py-2",
+                              "max-w-[80%] rounded-2xl px-4 py-3 shadow-sm",
                               message.sender_role === "patient"
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-muted"
+                                ? "bg-warm-stone text-pure-white"
+                                : "bg-soft-linen/80 border border-warm-stone/10"
                             )}
                           >
-                            <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                            <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
                             <p
                               className={cn(
-                                "mt-1 text-xs",
+                                "mt-1.5 text-xs",
                                 message.sender_role === "patient"
-                                  ? "text-primary-foreground/70"
-                                  : "text-muted-foreground"
+                                  ? "text-pure-white/70"
+                                  : "text-warm-gray"
                               )}
                             >
                               {formatTime(message.created_at)}
@@ -255,31 +258,32 @@ const PatientMessaging = ({ isOpen, onClose }: PatientMessagingProps) => {
           </ScrollArea>
 
           {/* Input */}
-          <div className="border-t bg-muted/30 p-4">
-            <div className="flex gap-2">
+          <div className="border-t border-warm-stone/10 bg-soft-linen/30 p-4">
+            <div className="flex gap-3">
               <Textarea
                 ref={textareaRef}
-                placeholder="Type a message..."
+                placeholder="Type your message..."
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="min-h-[44px] max-h-32 resize-none"
+                className="min-h-[48px] max-h-32 resize-none rounded-xl"
                 rows={1}
               />
               <Button
                 onClick={handleSend}
                 disabled={!newMessage.trim() || isSending}
-                className="flex-shrink-0 bg-primary hover:bg-primary-dark"
+                variant="secondary"
                 size="icon"
+                className="flex-shrink-0 h-12 w-12 rounded-xl"
               >
                 {isSending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
-                  <Send className="h-4 w-4" />
+                  <Send className="h-5 w-5" />
                 )}
               </Button>
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">
+            <p className="mt-2 text-xs text-warm-gray">
               Press Enter to send, Shift+Enter for new line
             </p>
           </div>

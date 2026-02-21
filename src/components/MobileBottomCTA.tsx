@@ -46,18 +46,18 @@ const MobileBottomCTA = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur-md p-3 shadow-lg md:hidden"
+          className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur-md p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] shadow-lg md:hidden"
         >
           <div className="flex items-center gap-2">
             <Link to="/intake" className="flex-1">
-              <Button className="w-full bg-primary hover:bg-primary-dark" size="lg">
+              <Button className="w-full" variant="default" size="lg">
                 Start Free Assessment
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2" />
               </Button>
             </Link>
             <Link to="/contact">
-              <Button variant="outline" size="lg" className="px-3">
-                <MessageCircle className="h-5 w-5" />
+              <Button variant="outline" size="icon-lg">
+                <MessageCircle />
               </Button>
             </Link>
           </div>

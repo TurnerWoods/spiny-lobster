@@ -2,10 +2,18 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TreatmentComparisonTable from "@/components/TreatmentComparisonTable";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Sparkles } from "lucide-react";
+import { Check, ArrowRight, Sparkles, Shield, Award, CheckCircle2, Truck, Star, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+
+// Trust badges for pricing page
+const pricingTrustBadges = [
+  { icon: Award, label: "US-Licensed Physicians" },
+  { icon: CheckCircle2, label: "FDA-Approved Medications" },
+  { icon: Shield, label: "HIPAA Compliant" },
+  { icon: Truck, label: "Free Shipping" },
+];
 
 const consultationOptions = [
   {
@@ -35,11 +43,57 @@ const consultationOptions = [
 ];
 
 const treatments = [
-  { name: "Testosterone Cypionate", price: "$149/month", description: "The gold standard for TRT" },
-  { name: "Sermorelin", price: "$199/month", description: "Growth hormone support" },
-  { name: "Tesamorelin", price: "$199/month", description: "Metabolic optimization" },
-  { name: "NAD+", price: "$199/month", description: "Cellular energy & anti-aging" },
+  { name: "Testosterone Cypionate", price: "$149/month", description: "The gold standard for TRT", badge: "popular" as const, rating: 4.8 },
+  { name: "Semaglutide", price: "$149/month", description: "GLP-1 weight loss therapy", badge: "bestseller" as const, rating: 4.9 },
+  { name: "Sermorelin", price: "$199/month", description: "Growth hormone support", badge: null, rating: 4.7 },
+  { name: "Tesamorelin", price: "$199/month", description: "Metabolic optimization", badge: null, rating: 4.7 },
+  { name: "NAD+", price: "$199/month", description: "Cellular energy & anti-aging", badge: null, rating: 4.8 },
+  { name: "BPC-157", price: "$149/month", description: "Recovery & healing peptide", badge: "popular" as const, rating: 4.7 },
 ];
+
+// Star Rating Component for Pricing Page
+const TreatmentStarRating = ({ rating }: { rating: number }) => (
+  <div className="flex items-center gap-0.5">
+    {Array.from({ length: 5 }).map((_, index) => (
+      <Star
+        key={index}
+        className={`h-3 w-3 ${
+          index < Math.floor(rating)
+            ? "fill-amber-400 text-amber-400"
+            : "fill-gray-200 text-gray-200"
+        }`}
+      />
+    ))}
+    <span className="ml-1 text-xs text-muted-foreground">{rating}</span>
+  </div>
+);
+
+// Product Badge for Pricing
+const TreatmentBadge = ({ type }: { type: "popular" | "bestseller" }) => {
+  const config = {
+    popular: {
+      label: "Most Popular",
+      icon: Flame,
+      className: "bg-gradient-to-r from-amber-500 to-orange-500",
+    },
+    bestseller: {
+      label: "Best Seller",
+      icon: Star,
+      className: "bg-gradient-to-r from-warm-stone to-warm-stone/80",
+    },
+  };
+
+  const { label, icon: Icon, className } = config[type];
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold text-white ${className}`}
+    >
+      <Icon className="h-2.5 w-2.5" />
+      {label}
+    </span>
+  );
+};
 
 const included = [
   "Prescribed medication fulfilled by licensed U.S. pharmacies",
@@ -59,10 +113,11 @@ const PricingPage = () => {
         <section className="relative overflow-hidden py-20">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
-            <img 
-              src="/images/lifestyle/executive-contemplating.png" 
-              alt="Executive lifestyle"
-              className="h-full w-full object-cover object-top"
+            <img
+              src="/images/lifestyle/executive-contemplating.png"
+              alt="Executive lifestyle background"
+              loading="eager"
+              className="h-full w-full max-w-full object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-soft-linen via-soft-linen/95 to-soft-linen/80" />
           </div>
@@ -80,7 +135,7 @@ const PricingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="mb-6 font-display text-4xl font-bold text-rich-black md:text-5xl"
+                className="mb-6 font-display text-5xl font-bold leading-tight tracking-tight text-rich-black"
               >
                 Clear Pricing. No Surprises.
               </motion.h1>
@@ -88,10 +143,30 @@ const PricingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-warm-gray"
+                className="lead mb-8 text-warm-gray"
               >
                 We believe you shouldn't need a decoder ring to understand healthcare costs. One monthly price covers your medication, pharmacy fulfillment, and unlimited access to your care team.
               </motion.p>
+
+              {/* Trust Badges */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="flex flex-wrap items-center justify-center gap-4 sm:gap-6"
+              >
+                {pricingTrustBadges.map((badge) => (
+                  <div
+                    key={badge.label}
+                    className="flex items-center gap-2 rounded-lg border border-warm-stone/10 bg-pure-white/60 px-3 py-2 backdrop-blur-sm"
+                  >
+                    <badge.icon className="h-4 w-4 text-warm-stone" strokeWidth={1.5} />
+                    <span className="text-xs font-medium text-rich-black/70">
+                      {badge.label}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
             </div>
           </div>
         </section>
@@ -104,7 +179,7 @@ const PricingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="mb-8 text-center font-display text-3xl font-bold text-rich-black"
+                className="mb-8 text-center font-display text-4xl font-semibold tracking-tight text-rich-black"
               >
                 Consultation Options
               </motion.h2>
@@ -128,11 +203,11 @@ const PricingPage = () => {
                           Recommended for Most Patients
                         </span>
                       )}
-                      <h3 className="mb-2 font-display text-2xl font-bold text-rich-black">
+                      <h3 className="mb-2 font-display text-2xl font-semibold tracking-normal text-rich-black">
                         {option.name}
                       </h3>
-                      <p className="mb-4 text-4xl font-bold text-warm-stone">{option.price}</p>
-                      <p className="mb-6 text-sm text-warm-gray">{option.description}</p>
+                      <p className="text-stat mb-4 text-4xl text-warm-stone">{option.price}</p>
+                      <p className="text-body-sm mb-6 text-warm-gray">{option.description}</p>
                       <ul className="space-y-3">
                         {option.features.map((feature, i) => (
                           <li key={i} className="flex items-center gap-3 text-sm text-warm-gray">
@@ -163,11 +238,11 @@ const PricingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="mb-8 text-center font-display text-3xl font-bold text-rich-black"
+                className="mb-8 text-center font-display text-4xl font-semibold tracking-tight text-rich-black"
               >
                 Treatment Pricing
               </motion.h2>
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {treatments.map((treatment, index) => (
                   <motion.div
                     key={treatment.name}
@@ -176,12 +251,30 @@ const PricingPage = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card variant="glass" className="flex items-center justify-between p-6">
-                      <div>
-                        <h3 className="font-display text-lg font-bold text-rich-black">{treatment.name}</h3>
-                        <p className="text-sm text-warm-gray">{treatment.description}</p>
+                    <Card
+                      variant="glass"
+                      className={`relative h-full p-6 ${
+                        treatment.badge ? "ring-1 ring-warm-stone/20" : ""
+                      }`}
+                    >
+                      {/* Badge */}
+                      {treatment.badge && (
+                        <div className="absolute -top-2.5 left-4">
+                          <TreatmentBadge type={treatment.badge} />
+                        </div>
+                      )}
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-start justify-between gap-3">
+                          <h3 className="font-display text-xl font-semibold tracking-normal text-rich-black">
+                            {treatment.name}
+                          </h3>
+                          <p className="text-stat whitespace-nowrap text-xl text-warm-stone">
+                            {treatment.price}
+                          </p>
+                        </div>
+                        <p className="text-body-sm text-warm-gray">{treatment.description}</p>
+                        <TreatmentStarRating rating={treatment.rating} />
                       </div>
-                      <p className="text-xl font-bold text-warm-stone">{treatment.price}</p>
                     </Card>
                   </motion.div>
                 ))}
@@ -204,7 +297,7 @@ const PricingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="mb-8 text-center font-display text-3xl font-bold text-rich-black"
+                className="mb-8 text-center font-display text-4xl font-semibold tracking-tight text-rich-black"
               >
                 Every Elevare Patient Gets
               </motion.h2>
@@ -240,10 +333,26 @@ const PricingPage = () => {
               viewport={{ once: true }}
             >
               <Card variant="glassDark" className="mx-auto max-w-2xl p-8 text-center md:p-12">
-                <h2 className="mb-4 font-display text-3xl font-bold text-pure-white">Ready to Get Started?</h2>
-                <p className="mb-8 text-warm-gray">
+                <h2 className="mb-4 font-display text-4xl font-semibold tracking-tight text-pure-white">Ready to Get Started?</h2>
+                <p className="text-body-lg mb-6 text-warm-gray">
                   Take the first step toward feeling like yourself again. Your card is only charged if you're approved.
                 </p>
+
+                {/* Trust badges in CTA */}
+                <div className="mb-8 flex flex-wrap items-center justify-center gap-4">
+                  {pricingTrustBadges.map((badge) => (
+                    <div
+                      key={badge.label}
+                      className="flex items-center gap-1.5 text-pure-white/60"
+                    >
+                      <badge.icon className="h-3.5 w-3.5" strokeWidth={1.5} />
+                      <span className="text-xs font-light">
+                        {badge.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
                 <Link to="/intake">
                   <Button size="lg" className="bg-warm-stone hover:bg-warm-stone/90 text-pure-white">
                     Start Your Free Assessment

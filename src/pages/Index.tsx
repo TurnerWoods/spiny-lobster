@@ -1,37 +1,89 @@
+import { lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import TrustMarquee from "@/components/TrustMarquee";
+import LazySection from "@/components/LazySection";
+import { SectionErrorBoundary } from "@/components/ErrorBoundary";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+
+// Critical path - load immediately (above the fold)
 import TreatmentCategories from "@/components/TreatmentCategories";
-import HowItWorks from "@/components/HowItWorks";
-import PricingComparison from "@/components/PricingComparison";
-import TestimonialsCarousel from "@/components/TestimonialsCarousel";
-import FAQ from "@/components/FAQ";
-import FinalCTA from "@/components/FinalCTA";
-import Footer from "@/components/Footer";
-import AIChatWidget from "@/components/AIChatWidget";
-import MobileBottomCTA from "@/components/MobileBottomCTA";
-import ScrollToTop from "@/components/ScrollToTop";
-import ScrollProgress from "@/components/ScrollProgress";
+
+// Lazy load below-fold components for better initial load performance
+const HowItWorks = lazy(() => import("@/components/HowItWorks"));
+const TestimonialsCarousel = lazy(() => import("@/components/TestimonialsCarousel"));
+const FAQ = lazy(() => import("@/components/FAQ"));
+const FinalCTA = lazy(() => import("@/components/FinalCTA"));
+const Footer = lazy(() => import("@/components/Footer"));
+const AIChatWidget = lazy(() => import("@/components/AIChatWidget"));
+const ScrollToTop = lazy(() => import("@/components/ScrollToTop"));
+
+// Minimal loading placeholder with improved spinner
+const SectionLoader = () => (
+  <div className="flex items-center justify-center py-16">
+    <LoadingSpinner size="default" />
+  </div>
+);
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <ScrollProgress />
       <Header />
       <main>
+        {/* Hero - critical, loads immediately */}
         <Hero />
-        <TrustMarquee />
+
+        {/* Treatments - visible on scroll, loads immediately */}
         <TreatmentCategories />
-        <HowItWorks />
-        <PricingComparison />
-        <TestimonialsCarousel />
-        <FAQ />
-        <FinalCTA />
+
+        {/* Below-fold content - lazy loaded with intersection observer and error boundaries */}
+        <LazySection minHeight="400px" rootMargin="300px 0px">
+          <SectionErrorBoundary sectionName="HowItWorks">
+            <Suspense fallback={<SectionLoader />}>
+              <HowItWorks />
+            </Suspense>
+          </SectionErrorBoundary>
+        </LazySection>
+
+        <LazySection minHeight="300px" rootMargin="200px 0px">
+          <SectionErrorBoundary sectionName="TestimonialsCarousel">
+            <Suspense fallback={<SectionLoader />}>
+              <TestimonialsCarousel />
+            </Suspense>
+          </SectionErrorBoundary>
+        </LazySection>
+
+        <LazySection minHeight="400px" rootMargin="200px 0px">
+          <SectionErrorBoundary sectionName="FAQ">
+            <Suspense fallback={<SectionLoader />}>
+              <FAQ />
+            </Suspense>
+          </SectionErrorBoundary>
+        </LazySection>
+
+        <LazySection minHeight="300px" rootMargin="200px 0px">
+          <SectionErrorBoundary sectionName="FinalCTA">
+            <Suspense fallback={<SectionLoader />}>
+              <FinalCTA />
+            </Suspense>
+          </SectionErrorBoundary>
+        </LazySection>
       </main>
-      <Footer />
-      <AIChatWidget />
-      <MobileBottomCTA />
-      <ScrollToTop />
+
+      <LazySection as="div" minHeight="400px" rootMargin="100px 0px">
+        <SectionErrorBoundary sectionName="Footer">
+          <Suspense fallback={<SectionLoader />}>
+            <Footer />
+          </Suspense>
+        </SectionErrorBoundary>
+      </LazySection>
+
+      {/* Chat widget and scroll-to-top - load after main content */}
+      <Suspense fallback={null}>
+        <AIChatWidget />
+      </Suspense>
+      <Suspense fallback={null}>
+        <ScrollToTop />
+      </Suspense>
     </div>
   );
 };
