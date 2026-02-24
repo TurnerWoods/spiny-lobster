@@ -505,7 +505,7 @@ const HormoneAssessment: React.FC = () => {
                   href="/intake"
                   className="px-9 py-4 bg-warm-stone text-white rounded-xl font-semibold hover:bg-warm-stone/90 hover:translate-y-[-2px] transition-all"
                 >
-                  Start Free Consultation
+                  Start Free Assessment
                 </a>
                 <button
                   onClick={resetAssessment}

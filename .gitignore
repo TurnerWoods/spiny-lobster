@@ -25,3 +25,6 @@ dist-ssr
 
 # Large media archive (originals kept locally, not in git)
 public/media-archive/
+
+# Local Netlify folder
+.netlify

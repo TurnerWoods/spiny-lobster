@@ -10,7 +10,3 @@
   to = "/index.html"
   status = 200
 
-# Edge function for password protection
-[[edge_functions]]
-  path = "/*"
-  function = "auth"

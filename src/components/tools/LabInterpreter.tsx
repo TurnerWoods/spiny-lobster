@@ -687,7 +687,7 @@ const LabInterpreter: React.FC = () => {
                     href="/intake"
                     className="px-8 py-4 bg-warm-stone text-white rounded-xl font-semibold hover:bg-warm-stone/90 transition-all"
                   >
-                    Start Free Consultation
+                    Start Free Assessment
                   </a>
                   <button
                     onClick={resetForm}

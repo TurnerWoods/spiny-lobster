@@ -612,7 +612,7 @@ const TreatmentMatchQuiz: React.FC = () => {
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
                 <a href="/intake" className="px-9 py-4 bg-warm-stone text-white rounded-xl font-semibold hover:bg-warm-stone/90 hover:translate-y-[-2px] transition-all">
-                  Start Free Consultation
+                  Start Free Assessment
                 </a>
                 <button onClick={resetQuiz} className="px-9 py-4 bg-transparent border-2 border-white/30 text-white rounded-xl font-semibold hover:border-white transition-all">
                   Retake Quiz

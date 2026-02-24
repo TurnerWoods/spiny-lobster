@@ -18,38 +18,22 @@ interface BeforeAfterGalleryProps {
   subtitle?: string;
 }
 
-// Animated number component that counts up when in view
-const AnimatedValue = ({
-  value,
-  inView,
-  isAfter = false
-}: {
-  value: string;
-  inView: boolean;
-  isAfter?: boolean;
-}) => {
+const AnimatedValue = ({ value, inView, isAfter = false }: { value: string; inView: boolean; isAfter?: boolean }) => {
   const [displayValue, setDisplayValue] = useState(value);
-
-  // Extract numeric part and suffix
   const numericMatch = value.match(/^([\d.]+)/);
   const numericValue = numericMatch ? parseFloat(numericMatch[1]) : null;
-  const suffix = numericMatch ? value.replace(numericMatch[1], '') : '';
+  const suffix = numericMatch ? value.replace(numericMatch[1], "") : "";
 
   useEffect(() => {
     if (!inView || numericValue === null) {
       setDisplayValue(value);
       return;
     }
-
-    // Start from 0 or a lower value
-    const startValue = 0;
-    const duration = 1500;
-    const steps = 40;
-    const increment = (numericValue - startValue) / steps;
-    let current = startValue;
-
-    // Small delay for "after" values to create sequential effect
-    const delay = isAfter ? 600 : 0;
+    const duration = 1200;
+    const steps = 30;
+    const increment = numericValue / steps;
+    let current = 0;
+    const delay = isAfter ? 400 : 0;
 
     const timeoutId = setTimeout(() => {
       const timer = setInterval(() => {
@@ -58,178 +42,62 @@ const AnimatedValue = ({
           setDisplayValue(value);
           clearInterval(timer);
         } else {
-          // Handle decimal values
-          const displayNum = numericValue % 1 !== 0
-            ? current.toFixed(1)
-            : Math.floor(current).toString();
+          const displayNum = numericValue % 1 !== 0 ? current.toFixed(1) : Math.floor(current).toString();
           setDisplayValue(displayNum + suffix);
         }
       }, duration / steps);
-
       return () => clearInterval(timer);
     }, delay);
-
     return () => clearTimeout(timeoutId);
   }, [value, inView, numericValue, suffix, isAfter]);
 
   return <>{displayValue}</>;
 };
 
-// Individual result card with its own inView tracking
-const ResultCard = ({
-  result,
-  index
-}: {
-  result: BeforeAfterResult;
-  index: number;
-}) => {
+const ResultCard = ({ result, index }: { result: BeforeAfterResult; index: number }) => {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
 
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        delay: index * 0.1,
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }}
-      whileHover={{
-        y: -8,
-        scale: 1.02,
-        transition: { duration: 0.3, ease: "easeOut" }
-      }}
-      className="group relative overflow-hidden rounded-xl border bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30"
+      transition={{ delay: index * 0.08, duration: 0.4 }}
+      className="rounded-xl border border-neutral-gray/20 bg-pure-white p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
     >
-      {/* Subtle gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-success/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-      {/* Metric Label */}
-      <div className="relative mb-4 flex items-center justify-between">
-        <motion.span
-          className="rounded-full bg-primary-light px-3 py-1 text-xs font-medium text-primary"
-          whileHover={{ scale: 1.05 }}
-        >
+      <div className="mb-4 flex items-center justify-between">
+        <span className="rounded-full bg-warm-stone/10 px-3 py-1 text-xs font-medium text-warm-stone">
           {result.metric}
-        </motion.span>
+        </span>
         <span className="text-xs text-muted-foreground">{result.timeframe}</span>
       </div>
 
-      {/* Before/After Values */}
-      <div className="relative mb-4 flex items-center justify-between gap-4">
+      <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex-1 text-center">
-          <p className="mb-1 text-xs font-medium uppercase text-muted-foreground">Before</p>
-          <motion.p
-            className="font-display text-xl font-bold text-foreground sm:text-2xl"
-            initial={{ opacity: 0.5 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.3 }}
-          >
+          <p className="mb-1 text-[10px] font-medium uppercase text-muted-foreground">Before</p>
+          <p className="font-display text-xl font-bold text-rich-black">
             <AnimatedValue value={result.before} inView={isInView} />
-          </motion.p>
+          </p>
         </div>
 
-        {/* Animated Arrow */}
-        <motion.div
-          className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10"
-          animate={isInView ? {
-            boxShadow: [
-              "0 0 0 0 hsla(30, 12%, 40%, 0)",
-              "0 0 0 8px hsla(30, 12%, 40%, 0.15)",
-              "0 0 0 0 hsla(30, 12%, 40%, 0)"
-            ]
-          } : {}}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: index * 0.1 + 0.5
-          }}
-        >
-          <motion.div
-            animate={isInView ? { x: [0, 3, 0] } : {}}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: index * 0.1 + 0.3
-            }}
-          >
-            <ArrowRight className="h-5 w-5 text-primary" />
-          </motion.div>
-        </motion.div>
+        <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+          <ArrowRight className="h-4 w-4 text-warm-stone" />
+        </div>
 
         <div className="flex-1 text-center">
-          <p className="mb-1 text-xs font-medium uppercase text-muted-foreground">After</p>
-          <motion.p
-            className="font-display text-xl font-bold text-primary sm:text-2xl"
-            initial={{ opacity: 0.5 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.3, delay: 0.5 }}
-          >
+          <p className="mb-1 text-[10px] font-medium uppercase text-muted-foreground">After</p>
+          <p className="font-display text-xl font-bold text-warm-stone">
             <AnimatedValue value={result.after} inView={isInView} isAfter />
-          </motion.p>
+          </p>
         </div>
       </div>
 
-      {/* Improvement Badge with pulse/glow effect */}
-      <motion.div
-        className="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-success/10 py-2"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ delay: index * 0.1 + 0.8, duration: 0.4 }}
-      >
-        {/* Animated gradient background */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-success/0 via-success/20 to-success/0"
-          animate={{
-            x: ["-100%", "100%"]
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "linear",
-            delay: index * 0.2
-          }}
-        />
-
-        {/* Subtle pulsing glow */}
-        <motion.div
-          className="absolute inset-0 rounded-lg"
-          animate={{
-            boxShadow: [
-              "inset 0 0 0 0 rgba(34, 197, 94, 0)",
-              "inset 0 0 20px 0 rgba(34, 197, 94, 0.15)",
-              "inset 0 0 0 0 rgba(34, 197, 94, 0)"
-            ]
-          }}
-          transition={{
-            duration: 2.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: index * 0.15
-          }}
-        />
-
-        <motion.div
-          animate={{
-            rotate: [0, 10, 0],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: index * 0.1 + 1
-          }}
-        >
-          <TrendingUp className="relative h-4 w-4 text-success" />
-        </motion.div>
-        <span className="relative text-sm font-semibold text-success">{result.improvement}</span>
-      </motion.div>
+      <div className="flex items-center justify-center gap-1.5 rounded-lg bg-green-50 py-2">
+        <TrendingUp className="h-3.5 w-3.5 text-green-600" />
+        <span className="text-sm font-semibold text-green-600">{result.improvement}</span>
+      </div>
     </motion.div>
   );
 };
@@ -237,65 +105,33 @@ const ResultCard = ({
 const BeforeAfterGallery = ({
   results,
   title = "Real Patient Results",
-  subtitle = "Anonymized results from actual Elevare patients. Individual results may vary."
+  subtitle = "Anonymized results from actual Elevare patients. Individual results may vary.",
 }: BeforeAfterGalleryProps) => {
   if (!results || results.length === 0) return null;
 
-  // Container animation variants for staggered children
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
   return (
-    <section className="py-12 sm:py-20">
-      <div className="container px-4 md:px-6">
-        <div className="mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-8 text-center"
-          >
-            <h2 className="mb-2 font-display text-2xl font-bold text-foreground sm:text-3xl">
-              {title}
-            </h2>
-            <p className="text-sm text-muted-foreground">{subtitle}</p>
-          </motion.div>
+    <div className="mt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+        className="mb-6 text-center"
+      >
+        <h3 className="mb-1 font-display text-lg font-bold text-rich-black">{title}</h3>
+        <p className="text-xs text-muted-foreground">{subtitle}</p>
+      </motion.div>
 
-          <motion.div
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {results.map((result, index) => (
-              <ResultCard key={result.id} result={result} index={index} />
-            ))}
-          </motion.div>
-
-          {/* Disclaimer */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="mt-6 text-center text-xs text-muted-foreground"
-          >
-            * Results based on anonymized patient data. Individual results may vary.
-            All patients followed prescribed treatment protocols under physician supervision.
-          </motion.p>
-        </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {results.map((result, index) => (
+          <ResultCard key={result.id} result={result} index={index} />
+        ))}
       </div>
-    </section>
+
+      <p className="mt-4 text-center text-[10px] text-muted-foreground">
+        * Individual results may vary. All patients followed prescribed protocols under physician supervision.
+      </p>
+    </div>
   );
 };
 
