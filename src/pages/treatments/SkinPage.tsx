@@ -10,40 +10,60 @@ const treatment: TreatmentData = {
   heroImage,
   productImage: "/images/products/ghk-cu-vial.png",
   stacks: [
-    { name: "Anti-Aging Stack", tagline: "Complete Rejuvenation Protocol", products: ["Tretinoin", "GHK-Cu", "Glutathione"], price: "$229/mo", savings: "Save $48", popular: true },
-    { name: "Clear Skin Stack", tagline: "Acne + Brightening", products: ["Acne Protocol", "Glutathione"], price: "$149/mo", savings: "Save $29" },
-    { name: "Glow Stack", tagline: "Radiance & Tone", products: ["Custom Compound", "GHK-Cu"], price: "$199/mo", savings: "Save $29" }
+    { name: "Anti-Aging Stack", tagline: "Complete Rejuvenation Protocol", products: ["Tretinoin", "GHK-Cu", "Glutathione"], price: "$229/mo", savings: "Save $48", popular: true, image: "/images/products/ghk-cu-vial.png" },
+    { name: "Clear Skin Stack", tagline: "Acne + Brightening", products: ["Acne Protocol", "Glutathione"], price: "$149/mo", savings: "Save $29", image: "/images/products/medication-package.png" },
+    { name: "Glow Stack", tagline: "Radiance & Tone", products: ["Custom Compound", "GHK-Cu"], price: "$199/mo", savings: "Save $29", image: "/images/products/hair-growth-dropper.png" }
   ],
   medications: [
     {
       name: "Tretinoin",
       description: "Gold standard for anti-aging and collagen building.",
-      price: "$49/mo"
+      price: "$49/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.9,
+      reviewCount: 3654,
+      bestSeller: true
     },
     {
       name: "Custom Compound",
       description: "Tretinoin + Niacinamide + Hyaluronic Acid formula.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/hair-growth-dropper.png",
+      rating: 4.8,
+      reviewCount: 1876,
+      mostPopular: true
     },
     {
       name: "GHK-Cu",
       description: "Peptide for collagen and skin rejuvenation.",
-      price: "$129/mo"
+      price: "$129/mo",
+      image: "/images/products/ghk-cu-vial.png",
+      rating: 4.8,
+      reviewCount: 1234
     },
     {
       name: "Glutathione",
       description: "Antioxidant that brightens and reduces spots.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.7,
+      reviewCount: 987
     },
     {
       name: "Acne Protocol",
       description: "Compounded treatment for adult acne.",
-      price: "$79/mo"
+      price: "$79/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.6,
+      reviewCount: 654
     },
     {
       name: "Melasma Rx",
       description: "For stubborn hyperpigmentation.",
-      price: "$89/mo"
+      price: "$89/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.5,
+      reviewCount: 432
     }
   ],
   symptoms: [

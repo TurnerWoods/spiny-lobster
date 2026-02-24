@@ -32,32 +32,52 @@ const treatment: TreatmentData = {
     {
       name: "Sermorelin",
       description: "Growth hormone releasing peptide for natural GH production and recovery.",
-      price: "$199/mo"
+      price: "$199/mo",
+      image: "/images/products/sermorelin-vial.png",
+      rating: 4.8,
+      reviewCount: 1567
     },
     {
       name: "CJC-1295 / Ipamorelin",
       description: "Sustained GH release for enhanced recovery and body composition.",
-      price: "$249/mo"
+      price: "$249/mo",
+      image: "/images/products/cjc-1295-vial.png",
+      rating: 4.9,
+      reviewCount: 2134,
+      bestSeller: true
     },
     {
       name: "BPC-157",
       description: "Body Protection Compound that accelerates healing of muscles and tendons.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/bpc-157-vial.png",
+      rating: 4.9,
+      reviewCount: 2876,
+      mostPopular: true
     },
     {
       name: "TB-500",
       description: "Promotes tissue repair and reduces inflammation for faster recovery.",
-      price: "$179/mo"
+      price: "$179/mo",
+      image: "/images/products/tb-500-vial.png",
+      rating: 4.8,
+      reviewCount: 1923
     },
     {
       name: "MK-677",
       description: "Oral GH secretagogue that increases IGF-1 levels for muscle growth.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.6,
+      reviewCount: 892
     },
     {
       name: "GHK-Cu",
       description: "Copper peptide for tissue regeneration and anti-inflammatory benefits.",
-      price: "$129/mo"
+      price: "$129/mo",
+      image: "/images/products/ghk-cu-vial.png",
+      rating: 4.7,
+      reviewCount: 743
     }
   ],
   symptoms: [

@@ -10,35 +10,52 @@ const treatment: TreatmentData = {
   heroImage,
   productImage: "/images/products/hair-restoration-kit.png",
   stacks: [
-    { name: "Complete Hair Stack", tagline: "Maximum Regrowth Protocol", products: ["Finasteride", "Oral Minoxidil", "GHK-Cu"], price: "$129/mo", savings: "Save $28", popular: true },
-    { name: "Hair Essentials", tagline: "Core Treatment", products: ["Finasteride", "Oral Minoxidil"], price: "$49/mo", savings: "Save $9" },
-    { name: "Topical Protocol", tagline: "No Pills Required", products: ["Topical Fin/Min", "GHK-Cu"], price: "$149/mo", savings: "Save $29" }
+    { name: "Complete Hair Stack", tagline: "Maximum Regrowth Protocol", products: ["Finasteride", "Oral Minoxidil", "GHK-Cu"], price: "$129/mo", savings: "Save $28", popular: true, image: "/images/products/hair-restoration-kit.png" },
+    { name: "Hair Essentials", tagline: "Core Treatment", products: ["Finasteride", "Oral Minoxidil"], price: "$49/mo", savings: "Save $9", image: "/images/products/medication-package.png" },
+    { name: "Topical Protocol", tagline: "No Pills Required", products: ["Topical Fin/Min", "GHK-Cu"], price: "$149/mo", savings: "Save $29", image: "/images/products/hair-growth-dropper.png" }
   ],
   medications: [
     {
       name: "Finasteride",
       description: "FDA-approved DHT blocker to stop hair loss.",
-      price: "$29/mo"
+      price: "$29/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.8,
+      reviewCount: 4521,
+      bestSeller: true
     },
     {
       name: "Oral Minoxidil",
       description: "Low-dose oral for convenient regrowth.",
-      price: "$29/mo"
+      price: "$29/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.7,
+      reviewCount: 2876
     },
     {
       name: "Topical Fin/Min",
       description: "Combined topical solution for scalp application.",
-      price: "$79/mo"
+      price: "$79/mo",
+      image: "/images/products/hair-growth-dropper.png",
+      rating: 4.8,
+      reviewCount: 1923,
+      mostPopular: true
     },
     {
       name: "GHK-Cu Peptide",
       description: "Copper peptide for follicle health.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/ghk-cu-vial.png",
+      rating: 4.6,
+      reviewCount: 743
     },
     {
       name: "Dutasteride",
       description: "Potent DHT blocker when finasteride is insufficient.",
-      price: "$49/mo"
+      price: "$49/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.5,
+      reviewCount: 654
     }
   ],
   symptoms: [

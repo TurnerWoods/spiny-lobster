@@ -10,35 +10,52 @@ const treatment: TreatmentData = {
   heroImage,
   productImage: "/images/products/tirzepatide-prep.png",
   stacks: [
-    { name: "Ultimate Weight Loss", tagline: "Maximum Results Protocol", products: ["Tirzepatide", "AOD-9604", "Lipotropics"], price: "$349/mo", savings: "Save $98", popular: true },
-    { name: "GLP-1 Accelerator", tagline: "Enhanced Fat Burning", products: ["Semaglutide", "AOD-9604"], price: "$249/mo", savings: "Save $49" },
-    { name: "Metabolic Reset", tagline: "Visceral Fat Protocol", products: ["Tesamorelin", "Lipotropics"], price: "$249/mo", savings: "Save $49" }
+    { name: "Ultimate Weight Loss", tagline: "Maximum Results Protocol", products: ["Tirzepatide", "AOD-9604", "Lipotropics"], price: "$349/mo", savings: "Save $98", popular: true, image: "/images/products/tirzepatide-prep.png" },
+    { name: "GLP-1 Accelerator", tagline: "Enhanced Fat Burning", products: ["Semaglutide", "AOD-9604"], price: "$249/mo", savings: "Save $49", image: "/images/products/semaglutide-vial.png" },
+    { name: "Metabolic Reset", tagline: "Visceral Fat Protocol", products: ["Tesamorelin", "Lipotropics"], price: "$249/mo", savings: "Save $49", image: "/images/products/sermorelin-vial.png" }
   ],
   medications: [
     {
       name: "Semaglutide",
       description: "GLP-1 that reduces appetite and improves blood sugar control.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/semaglutide-vial.png",
+      rating: 4.9,
+      reviewCount: 2847,
+      bestSeller: true
     },
     {
       name: "Tirzepatide",
       description: "Dual GIP/GLP-1 agonist for enhanced weight loss.",
-      price: "$199/mo"
+      price: "$199/mo",
+      image: "/images/products/tirzepatide-prep.png",
+      rating: 4.8,
+      reviewCount: 1523,
+      mostPopular: true
     },
     {
       name: "Tesamorelin",
       description: "Targets visceral fat while preserving lean muscle.",
-      price: "$199/mo"
+      price: "$199/mo",
+      image: "/images/products/sermorelin-vial.png",
+      rating: 4.7,
+      reviewCount: 892
     },
     {
       name: "AOD-9604",
       description: "Fat-burning peptide that stimulates lipolysis.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.6,
+      reviewCount: 634
     },
     {
       name: "Lipotropic Injections",
       description: "B12 + MIC for fat metabolism and energy.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/injection-supplies.png",
+      rating: 4.5,
+      reviewCount: 1105
     }
   ],
   symptoms: [

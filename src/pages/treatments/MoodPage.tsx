@@ -16,34 +16,52 @@ const treatment: TreatmentData = {
       products: ["Semax", "Selank"],
       price: "$149/mo",
       savings: "Save $49",
-      popular: true
+      popular: true,
+      image: "/images/products/semax-selank-vials.png"
     }
   ],
   medications: [
     {
       name: "Selank",
       description: "Nootropic peptide that reduces anxiety and improves focus.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/selank-vial.png",
+      rating: 4.8,
+      reviewCount: 1432,
+      bestSeller: true
     },
     {
       name: "Semax",
       description: "Cognitive enhancer for memory and mental clarity.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/semax-vial.png",
+      rating: 4.9,
+      reviewCount: 1876,
+      mostPopular: true
     },
     {
       name: "NAD+",
       description: "Supports brain energy and mental clarity.",
-      price: "$199/mo"
+      price: "$199/mo",
+      image: "/images/products/nad-vial.png",
+      rating: 4.8,
+      reviewCount: 1234
     },
     {
       name: "Methylene Blue",
       description: "Mitochondrial support for cognitive function.",
-      price: "$79/mo"
+      price: "$79/mo",
+      image: "/images/products/methylene-blue-vial.png",
+      rating: 4.6,
+      reviewCount: 654
     },
     {
       name: "Dihexa",
       description: "Advanced nootropic for memory formation.",
-      price: "$179/mo"
+      price: "$179/mo",
+      image: "/images/products/dihexa-vial.png",
+      rating: 4.7,
+      reviewCount: 543
     }
   ],
   symptoms: [

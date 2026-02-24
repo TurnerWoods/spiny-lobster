@@ -24,27 +24,44 @@ const treatment: TreatmentData = {
     {
       name: "NAD+ Injections",
       description: "Essential coenzyme for cellular energy and DNA repair.",
-      price: "$199/mo"
+      price: "$199/mo",
+      image: "/images/products/nad-vial.png",
+      rating: 4.9,
+      reviewCount: 1876,
+      bestSeller: true
     },
     {
       name: "NAD+ Nasal Spray",
       description: "Daily NAD+ delivery without injections.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/nad-supplements.png",
+      rating: 4.7,
+      reviewCount: 1234
     },
     {
       name: "Glutathione",
       description: "Master antioxidant for detox and cellular protection.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.8,
+      reviewCount: 1567
     },
     {
       name: "Epitalon",
       description: "Telomerase-activating peptide for longevity.",
-      price: "$249/mo"
+      price: "$249/mo",
+      image: "/images/products/epitalon-vial.png",
+      rating: 4.8,
+      reviewCount: 892,
+      mostPopular: true
     },
     {
       name: "Methylene Blue",
       description: "Mitochondrial enhancer for cognitive function.",
-      price: "$79/mo"
+      price: "$79/mo",
+      image: "/images/products/methylene-blue-vial.png",
+      rating: 4.6,
+      reviewCount: 654
     }
   ],
   symptoms: [

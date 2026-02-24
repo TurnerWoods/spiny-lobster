@@ -10,35 +10,51 @@ const treatment: TreatmentData = {
   heroImage,
   productImage: "/images/products/testosterone-vial.png",
   stacks: [
-    { name: "Complete TRT Protocol", tagline: "Full Hormone Optimization", products: ["Testosterone Cypionate", "HCG", "Anastrozole"], price: "$249/mo", savings: "Save $78", popular: true },
-    { name: "TRT + Fertility", tagline: "Preserve Natural Function", products: ["Testosterone", "Gonadorelin", "Anastrozole"], price: "$279/mo", savings: "Save $48" },
-    { name: "TRT Essentials", tagline: "Core Protocol", products: ["Testosterone Cypionate", "Anastrozole"], price: "$169/mo", savings: "Save $29" }
+    { name: "Complete TRT Protocol", tagline: "Full Hormone Optimization", products: ["Testosterone Cypionate", "HCG", "Anastrozole"], price: "$249/mo", savings: "Save $78", popular: true, image: "/images/products/testosterone-vial.png" },
+    { name: "TRT + Fertility", tagline: "Preserve Natural Function", products: ["Testosterone", "Gonadorelin", "Anastrozole"], price: "$279/mo", savings: "Save $48", image: "/images/products/hcg-vial.png" },
+    { name: "TRT Essentials", tagline: "Core Protocol", products: ["Testosterone Cypionate", "Anastrozole"], price: "$169/mo", savings: "Save $29", image: "/images/products/testosterone-vial.png" }
   ],
   medications: [
     {
       name: "Testosterone Cypionate",
       description: "Gold standard for TRT with stable weekly dosing.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/testosterone-vial.png",
+      rating: 4.9,
+      reviewCount: 3241,
+      bestSeller: true
     },
     {
       name: "Testosterone Enanthate",
       description: "Alternative ester with similar benefits.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/testosterone-vial.png",
+      rating: 4.8,
+      reviewCount: 1876
     },
     {
       name: "HCG",
       description: "Maintains fertility and testicular function.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/hcg-vial.png",
+      rating: 4.7,
+      reviewCount: 1432
     },
     {
       name: "Anastrozole",
       description: "Manages estrogen levels when needed.",
-      price: "Included"
+      price: "Included",
+      image: "/images/products/anastrozole-bottle.png",
+      rating: 4.6,
+      reviewCount: 987
     },
     {
       name: "Gonadorelin",
       description: "Alternative to HCG for natural production.",
-      price: "$79/mo"
+      price: "$79/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.5,
+      reviewCount: 654
     }
   ],
   symptoms: [

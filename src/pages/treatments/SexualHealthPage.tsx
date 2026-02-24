@@ -26,27 +26,43 @@ const treatment: TreatmentData = {
       name: "PT-141 + Tadalafil Combo",
       description: "Best-selling combination for comprehensive enhancement. Combines desire and performance in one convenient protocol.",
       price: "$149/mo",
+      image: "/images/products/performance-stack.png",
+      rating: 4.9,
+      reviewCount: 2341,
       bestSeller: true
     },
     {
       name: "PT-141 (Bremelanotide)",
       description: "Peptide that enhances desire and arousal through central nervous system activation.",
-      price: "$149/mo"
+      price: "$149/mo",
+      image: "/images/products/pt141-vial.png",
+      rating: 4.8,
+      reviewCount: 1876,
+      mostPopular: true
     },
     {
       name: "Kisspeptin",
       description: "Stimulates reproductive hormones naturally for enhanced libido and hormone balance.",
-      price: "$179/mo"
+      price: "$179/mo",
+      image: "/images/products/kisspeptin-vial.png",
+      rating: 4.7,
+      reviewCount: 892
     },
     {
       name: "Oxytocin",
       description: "Bonding hormone for emotional intimacy and deeper connection.",
-      price: "$99/mo"
+      price: "$99/mo",
+      image: "/images/products/oxytocin-spray.png",
+      rating: 4.6,
+      reviewCount: 654
     },
     {
       name: "Tadalafil (Cialis)",
       description: "Long-acting for improved blood flow (up to 36 hrs). Allows for spontaneity.",
-      price: "$49/mo"
+      price: "$49/mo",
+      image: "/images/products/tadalafil-tablets.png",
+      rating: 4.8,
+      reviewCount: 3421
     }
   ],
   symptoms: [
