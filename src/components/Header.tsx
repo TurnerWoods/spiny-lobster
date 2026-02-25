@@ -139,6 +139,19 @@ const Header = () => {
     ],
   };
 
+  const sexualHealthDropdown = {
+    title: "Sexual Health",
+    href: "/treatments/sexual-health",
+    treatments: [
+      { name: "PT-141 (Bremelanotide)", href: "/treatments/sexual-health#pt141", rx: true, price: "$149/mo" },
+      { name: "Tadalafil", href: "/treatments/sexual-health#tadalafil", rx: true, price: "$49/mo" },
+      { name: "Oxytocin Nasal Spray", href: "/treatments/sexual-health#oxytocin", rx: true, price: "$79/mo" },
+    ],
+    tools: [
+      { name: "Hormone Quiz", href: "/tools/hormone-assessment" },
+    ],
+  };
+
   const moreDropdown = {
     title: "More",
     items: [
@@ -158,6 +171,7 @@ const Header = () => {
     { name: "Testosterone", href: "/treatments/hormones", price: "from $149/mo" },
     { name: "Peptides", href: "/treatments/strength", price: "from $149/mo" },
     { name: "Hair Growth", href: "/treatments/hair", price: "from $29/mo" },
+    { name: "Sexual Health", href: "/treatments/sexual-health", price: "from $49/mo" },
     { name: "Anti-Aging", href: "/treatments/anti-aging", price: "from $199/mo" },
     { name: "Mood & Focus", href: "/treatments/mood", price: "from $99/mo" },
   ];
@@ -299,6 +313,7 @@ const Header = () => {
               <TreatmentDropdown dropdown={testosteroneDropdown} />
               <TreatmentDropdown dropdown={peptidesDropdown} />
               <TreatmentDropdown dropdown={hairDropdown} />
+              <TreatmentDropdown dropdown={sexualHealthDropdown} />
 
               {/* More Dropdown - Refined */}
               <NavigationMenuItem>
