@@ -190,7 +190,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                         )}
                         {stack.image && (
                           <div className="aspect-[16/10] overflow-hidden bg-soft-linen">
-                            <img src={stack.image} alt={stack.name} loading="lazy" className="h-full w-full object-cover" />
+                            <img src={stack.image} alt={stack.name} loading="lazy" decoding="async" fetchPriority="low" className="h-full w-full object-cover" />
                           </div>
                         )}
                         <div className="p-5">
@@ -232,7 +232,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                   >
                     <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-soft-linen to-warm-stone/5">
                       {med.image ? (
-                        <img src={med.image} alt={med.name} loading="lazy" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={med.image} alt={med.name} loading="lazy" decoding="async" fetchPriority="low" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center">
                           <Pill className="h-10 w-10 text-warm-stone/30" />
