@@ -20,6 +20,7 @@ const treatments = [
     rating: 4.9,
     reviewCount: 2847,
     badge: "bestseller" as const,
+    categoryColor: { bg: "bg-[hsl(100,15%,78%)]", overlay: "from-[hsl(100,20%,35%)]/30", btn: "bg-[hsl(100,20%,30%)]" },
   },
   {
     title: "Testosterone",
@@ -30,6 +31,7 @@ const treatments = [
     rating: 4.8,
     reviewCount: 3156,
     badge: "popular" as const,
+    categoryColor: { bg: "bg-[hsl(0,35%,72%)]", overlay: "from-[hsl(0,30%,40%)]/30", btn: "bg-[hsl(0,30%,35%)]" },
   },
   {
     title: "Peptides",
@@ -40,6 +42,7 @@ const treatments = [
     rating: 4.7,
     reviewCount: 1284,
     badge: null,
+    categoryColor: { bg: "bg-[hsl(195,25%,75%)]", overlay: "from-[hsl(195,30%,35%)]/30", btn: "bg-[hsl(195,30%,30%)]" },
   },
   {
     title: "Anti-Aging",
@@ -50,6 +53,7 @@ const treatments = [
     rating: 4.8,
     reviewCount: 956,
     badge: null,
+    categoryColor: { bg: "bg-[hsl(195,25%,75%)]", overlay: "from-[hsl(195,30%,35%)]/30", btn: "bg-[hsl(195,30%,30%)]" },
   },
   {
     title: "Hair Restoration",
@@ -60,6 +64,7 @@ const treatments = [
     rating: 4.6,
     reviewCount: 1823,
     badge: "popular" as const,
+    categoryColor: { bg: "bg-[hsl(100,15%,78%)]", overlay: "from-[hsl(100,20%,35%)]/30", btn: "bg-[hsl(100,20%,30%)]" },
   },
   {
     title: "Mood & Cognitive",
@@ -70,6 +75,7 @@ const treatments = [
     rating: 4.7,
     reviewCount: 742,
     badge: null,
+    categoryColor: { bg: "bg-[hsl(45,20%,78%)]", overlay: "from-[hsl(45,25%,35%)]/30", btn: "bg-[hsl(45,25%,30%)]" },
   },
   {
     title: "Sexual Health",
@@ -80,7 +86,7 @@ const treatments = [
     rating: 4.9,
     reviewCount: 1456,
     badge: "popular" as const,
-    categoryColor: "#5D3A4A",
+    categoryColor: { bg: "bg-[hsl(330,25%,72%)]", overlay: "from-[hsl(330,25%,35%)]/30", btn: "bg-[hsl(330,25%,30%)]" },
   },
 ];
 
@@ -218,34 +224,34 @@ const TreatmentCategories = () => {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
             >
-              <Link
-                to={`/treatments/${treatment.slug}`}
-                className="group block overflow-hidden rounded-lg bg-white shadow-sm transition-shadow duration-300 hover:shadow-md sm:rounded-none sm:bg-soft-linen sm:shadow-none"
-              >
-                {/* Image - Taller aspect on mobile for better visual impact */}
-                <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[4/3]">
-                  <OptimizedImage
-                    src={treatment.image}
-                    alt={treatment.title}
-                    className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-105"
-                    objectFit="cover"
-                    showSkeleton={true}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent sm:bg-none" />
-                  <div className="absolute inset-0 bg-deep-charcoal/0 transition-colors duration-500 group-hover:bg-deep-charcoal/10" />
+                <Link
+                  to={`/treatments/${treatment.slug}`}
+                  className="group block overflow-hidden rounded-lg shadow-sm transition-shadow duration-300 hover:shadow-md sm:rounded-none sm:shadow-none"
+                >
+                  {/* Image - Color-themed background */}
+                  <div className={`relative aspect-[16/10] overflow-hidden sm:aspect-[4/3] ${treatment.categoryColor.bg}`}>
+                    <OptimizedImage
+                      src={treatment.image}
+                      alt={treatment.title}
+                      className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-105"
+                      objectFit="cover"
+                      showSkeleton={true}
+                    />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${treatment.categoryColor.overlay} to-transparent`} />
+                    <div className="absolute inset-0 bg-deep-charcoal/0 transition-colors duration-500 group-hover:bg-deep-charcoal/10" />
 
-                  {/* Product Badge (Most Popular / Best Seller) */}
-                  {treatment.badge && (
-                    <div className="absolute left-3 top-3">
-                      <ProductBadge type={treatment.badge} />
+                    {/* Product Badge (Most Popular / Best Seller) */}
+                    {treatment.badge && (
+                      <div className="absolute left-3 top-3">
+                        <ProductBadge type={treatment.badge} />
+                      </div>
+                    )}
+
+                    {/* Mobile Price Badge - Clearly visible on image */}
+                    <div className="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-xs font-medium text-rich-black shadow-sm backdrop-blur-sm sm:hidden">
+                      {treatment.price}
                     </div>
-                  )}
-
-                  {/* Mobile Price Badge - Clearly visible on image */}
-                  <div className="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-xs font-medium text-rich-black shadow-sm backdrop-blur-sm sm:hidden">
-                    {treatment.price}
                   </div>
-                </div>
 
                 {/* Content - Stacked layout on mobile, side-by-side on larger screens */}
                 <div className="p-4 sm:p-6 md:p-8">
