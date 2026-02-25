@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, User, X, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Sheet,
   SheetContent,
@@ -27,6 +28,36 @@ const Header = () => {
   const [showPromo, setShowPromo] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  const dropdownVariants = prefersReducedMotion
+    ? { hidden: {}, visible: {}, exit: {} }
+    : {
+        hidden: { opacity: 0, y: -4, scale: 0.98 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: { duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] as const },
+        },
+        exit: {
+          opacity: 0,
+          y: -4,
+          scale: 0.98,
+          transition: { duration: 0.15, ease: [0.25, 0.46, 0.45, 0.94] as const },
+        },
+      };
+
+  const itemVariants = prefersReducedMotion
+    ? { hidden: {}, visible: {} }
+    : {
+        hidden: { opacity: 0, x: -6 },
+        visible: (i: number) => ({
+          opacity: 1,
+          x: 0,
+          transition: { delay: 0.03 * i, duration: 0.2, ease: "easeOut" as const },
+        }),
+      };
 
   const isActivePath = (href: string) => {
     if (href === "/") return location.pathname === "/";
@@ -139,12 +170,24 @@ const Header = () => {
         <span className="absolute bottom-0 left-4 right-4 h-[1.5px] bg-warm-stone scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 transition-transform duration-300 origin-left" />
       </NavigationMenuTrigger>
       <NavigationMenuContent>
-        <div className="w-[340px] p-5">
+        <motion.div
+          className="w-[340px] p-5"
+          variants={dropdownVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
           {/* Treatments Section */}
           <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-warm-stone/70 mb-3 pl-1">Treatments</p>
           <ul className="space-y-0.5 mb-5">
-            {dropdown.treatments.map((item) => (
-              <li key={item.name}>
+            {dropdown.treatments.map((item, i) => (
+              <motion.li
+                key={item.name}
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                custom={i}
+              >
                 <NavigationMenuLink asChild>
                   <Link
                     to={item.href}
@@ -157,7 +200,7 @@ const Header = () => {
                     <span className="text-[11px] text-warm-stone/70 font-medium tracking-wide">{item.price}</span>
                   </Link>
                 </NavigationMenuLink>
-              </li>
+              </motion.li>
             ))}
           </ul>
 
@@ -167,8 +210,14 @@ const Header = () => {
               <div className="h-px bg-neutral-gray/40 mb-4" />
               <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-warm-stone/70 mb-3 pl-1">Tools</p>
               <ul className="space-y-0.5">
-                {dropdown.tools.map((tool) => (
-                  <li key={tool.name}>
+                {dropdown.tools.map((tool, i) => (
+                  <motion.li
+                    key={tool.name}
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={dropdown.treatments.length + i}
+                  >
                     <NavigationMenuLink asChild>
                       <Link
                         to={tool.href}
@@ -177,7 +226,7 @@ const Header = () => {
                         {tool.name}
                       </Link>
                     </NavigationMenuLink>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </>
@@ -191,7 +240,7 @@ const Header = () => {
             View All {dropdown.title}
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/all:translate-x-0.5" />
           </Link>
-        </div>
+        </motion.div>
       </NavigationMenuContent>
     </NavigationMenuItem>
   );
@@ -258,9 +307,21 @@ const Header = () => {
                   <span className="absolute bottom-0 left-4 right-4 h-[1.5px] bg-warm-stone scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 transition-transform duration-300 origin-left" />
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="w-[200px] p-3">
-                    {moreDropdown.items.map((item) => (
-                      <li key={item.name}>
+                  <motion.ul
+                    className="w-[200px] p-3"
+                    variants={dropdownVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                  >
+                    {moreDropdown.items.map((item, i) => (
+                      <motion.li
+                        key={item.name}
+                        variants={itemVariants}
+                        initial="hidden"
+                        animate="visible"
+                        custom={i}
+                      >
                         <NavigationMenuLink asChild>
                           <Link
                             to={item.href}
@@ -269,9 +330,9 @@ const Header = () => {
                             {item.name}
                           </Link>
                         </NavigationMenuLink>
-                      </li>
+                      </motion.li>
                     ))}
-                  </ul>
+                  </motion.ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
