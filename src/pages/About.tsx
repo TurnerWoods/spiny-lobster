@@ -174,9 +174,19 @@ const About = () => {
                         </div>
                         <h3 className="mb-1 font-display text-2xl font-semibold tracking-normal text-rich-black">Dr. Paul Myers, DO</h3>
                         <p className="text-eyebrow mb-4 text-warm-stone">Co-Founder & Medical Director</p>
-                        <p className="text-body-sm text-warm-gray">
+                        <p className="text-body-sm text-warm-gray mb-4">
                           Graduated from Lake Erie College of Osteopathic Medicine (2010). Board-certified emergency medicine physician with 15+ years clinical experience. Oversees all clinical care and personally treats patients.
                         </p>
+                        <Button
+                          variant="outline"
+                          className="border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10"
+                          onClick={() => {
+                            const dialog = document.getElementById('healthie-booking-dialog') as HTMLDialogElement;
+                            dialog?.showModal();
+                          }}
+                        >
+                          Book with Dr. Myers
+                        </Button>
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -347,6 +357,43 @@ const About = () => {
             </motion.div>
           </div>
         </section>
+        {/* Healthie Booking Dialog */}
+        <dialog
+          id="healthie-booking-dialog"
+          className="w-full max-w-3xl rounded-2xl border border-warm-stone/20 bg-pure-white p-0 backdrop:bg-rich-black/60 backdrop:backdrop-blur-sm"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              (e.target as HTMLDialogElement).close();
+            }
+          }}
+        >
+          <div className="flex items-center justify-between border-b border-warm-stone/10 px-6 py-4">
+            <h3 className="font-display text-lg font-semibold text-rich-black">Book with Dr. Paul Myers</h3>
+            <button
+              className="rounded-full p-1 text-warm-gray hover:bg-warm-stone/10 hover:text-rich-black"
+              onClick={() => {
+                const dialog = document.getElementById('healthie-booking-dialog') as HTMLDialogElement;
+                dialog?.close();
+              }}
+            >
+              ✕
+            </button>
+          </div>
+          <div className="p-2">
+            <iframe
+              src="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=13804905&provider_ids=%5B13804905%5D&appt_type_ids=%5B515479,515480,515481%5D"
+              className="w-full border-0"
+              style={{ minHeight: '600px' }}
+              title="Book an appointment with Dr. Paul Myers"
+            />
+            <p className="py-2 text-center text-xs text-warm-gray">
+              Booking Provided by{' '}
+              <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-warm-stone">
+                Healthie
+              </a>
+            </p>
+          </div>
+        </dialog>
       </main>
       <Footer />
     </div>
