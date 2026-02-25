@@ -889,10 +889,15 @@ body {
   max-width: 100vw;
 }
 
-/* Ensure sections don't overflow */
-section, main, header, footer, article, aside, nav {
+/* Ensure sections don't overflow - exclude header/nav so dropdown menus can render */
+section, main, footer, article, aside {
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+header, nav {
+  max-width: 100vw;
+  /* No overflow-x: hidden — dropdown panels must render outside */
 }
 
 /* ============================================
