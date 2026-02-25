@@ -115,14 +115,23 @@ const HowItWorksPage = () => {
                 return (
                   <motion.div
                     key={step.number}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={{
+                      hidden: {},
+                      visible: { transition: { staggerChildren: 0.15, delayChildren: 0.05 } },
+                    }}
                     className={`flex flex-col items-center gap-8 md:flex-row md:gap-12 ${isEven ? "md:flex-row-reverse" : ""}`}
                   >
                     {/* Image */}
-                    <div className="w-full md:w-1/2">
+                    <motion.div
+                      className="w-full md:w-1/2"
+                      variants={{
+                        hidden: { opacity: 0, x: isEven ? 40 : -40, scale: 0.95 },
+                        visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+                      }}
+                    >
                       <div className="overflow-hidden rounded-2xl shadow-lg">
                         <img
                           src={step.image}
@@ -131,24 +140,42 @@ const HowItWorksPage = () => {
                           className="aspect-[4/3] w-full object-cover"
                         />
                       </div>
-                    </div>
+                    </motion.div>
 
                     {/* Content */}
                     <div className="w-full md:w-1/2">
-                      <div className="flex items-center gap-3 mb-4">
+                      <motion.div
+                        className="flex items-center gap-3 mb-4"
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+                        }}
+                      >
                         <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone text-pure-white shadow-md">
                           <step.icon className="h-6 w-6" />
                         </div>
                         <span className="text-sm font-bold uppercase tracking-wider text-warm-stone">
                           Step {step.number}
                         </span>
-                      </div>
-                      <h3 className="mb-4 font-display text-2xl font-bold text-rich-black md:text-3xl">
+                      </motion.div>
+                      <motion.h3
+                        className="mb-4 font-display text-2xl font-bold text-rich-black md:text-3xl"
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+                        }}
+                      >
                         {step.title}
-                      </h3>
-                      <p className="text-base leading-relaxed text-muted-foreground">
+                      </motion.h3>
+                      <motion.p
+                        className="text-base leading-relaxed text-muted-foreground"
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+                        }}
+                      >
                         {step.description}
-                      </p>
+                      </motion.p>
                     </div>
                   </motion.div>
                 );
