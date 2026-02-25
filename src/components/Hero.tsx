@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Award, CheckCircle2, Truck } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroVideo from "@/assets/hero-video.mp4";
+import heroImage from "@/assets/hero-vials.jpg";
 import { easing, prefersReducedMotion } from "@/lib/motion";
 
 // Trust badge data for hero
@@ -101,22 +101,18 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden">
-      {/* Background with Video */}
+      {/* Background with Image */}
       <div className="absolute inset-0 z-0">
         {/* Base gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-deep-charcoal to-[#2a2520]" />
 
-        {/* Video Background */}
+        {/* Image Background */}
         <div className="absolute inset-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
+          <img
+            src={heroImage}
+            alt="Elevare Health branded medication vials"
             className="h-full w-full object-cover opacity-60"
-          >
-            <source src={heroVideo} type="video/mp4" />
-          </video>
+          />
         </div>
 
         {/* Gradient overlay for text readability */}
