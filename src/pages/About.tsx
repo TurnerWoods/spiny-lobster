@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import heroVideo from "@/assets/hero-video.mp4";
+import heroImage from "@/assets/hero-vials.jpg";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
@@ -46,16 +46,13 @@ const About = () => {
     <div className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
       <Header />
       <main>
-        {/* Hero Section with Video */}
+        {/* Hero Section with Image */}
         <section className="relative py-16 md:py-24 overflow-hidden">
-          {/* Background Video */}
+          {/* Background Image */}
           <div className="absolute inset-0 z-0">
-            <video
-              src={heroVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
+            <img
+              src={heroImage}
+              alt="Elevare Health branded medication vials"
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-soft-linen via-soft-linen/95 to-soft-linen/80" />
