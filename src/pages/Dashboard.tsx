@@ -44,6 +44,34 @@ interface Treatment {
   created_at: string;
 }
 
+// Map treatment types to product images
+const treatmentImages: Record<string, string> = {
+  "Weight Loss": "/images/products/semaglutide-vial.png",
+  "Testosterone": "/images/products/testosterone-vial.png",
+  "TRT": "/images/products/testosterone-vial.png",
+  "Hormones": "/images/products/testosterone-vial.png",
+  "Peptides": "/images/products/wolverine-stack.png",
+  "Strength": "/images/products/wolverine-stack.png",
+  "Anti-Aging": "/images/products/longevity-stack.png",
+  "Hair": "/images/products/hair-restoration-kit.png",
+  "Hair Restoration": "/images/products/hair-restoration-kit.png",
+  "Mood": "/images/products/semax-selank-vials.png",
+  "Mood & Cognitive": "/images/products/semax-selank-vials.png",
+  "Sexual Health": "/images/products/pt141-vial.png",
+  "NAD+": "/images/products/nad-vial.png",
+  "GLP-1": "/images/products/semaglutide-vial.png",
+  "Semaglutide": "/images/products/semaglutide-vial.png",
+  "Tirzepatide": "/images/products/tirzepatide-prep.png",
+};
+
+const getTreatmentImage = (type: string): string | null => {
+  // Direct match
+  if (treatmentImages[type]) return treatmentImages[type];
+  // Partial match
+  const key = Object.keys(treatmentImages).find(k => type.toLowerCase().includes(k.toLowerCase()));
+  return key ? treatmentImages[key] : null;
+};
+
 const statusConfig: Record<string, { label: string; color: string; icon: any }> = {
   pending: { label: "Pending Review", color: "bg-warm-stone/20 text-warm-stone border border-warm-stone/30", icon: Clock },
   under_review: { label: "Under Review", color: "bg-warm-stone/30 text-warm-stone border border-warm-stone/40", icon: AlertCircle },
@@ -351,9 +379,18 @@ const Dashboard = () => {
                     <Link to={`/treatment/${treatment.id}`} className="group block">
                       <Card variant="glass" className="flex items-center justify-between p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
                         <div className="flex items-center gap-4">
-                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
-                            <Pill className="h-6 w-6 text-warm-stone" />
-                          </div>
+                          {(() => {
+                            const img = getTreatmentImage(treatment.treatment_type);
+                            return img ? (
+                              <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-full bg-warm-stone/5">
+                                <img src={img} alt={treatment.treatment_type} className="h-full w-full object-cover" />
+                              </div>
+                            ) : (
+                              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                                <Pill className="h-6 w-6 text-warm-stone" />
+                              </div>
+                            );
+                          })()}
                           <div>
                             <p className="font-semibold text-rich-black">{treatment.treatment_type}</p>
                             <p className="text-sm text-warm-gray">
