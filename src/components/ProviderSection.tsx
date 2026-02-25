@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Shield, Award, BadgeCheck, Stethoscope } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface Provider {
   name: string;
@@ -43,6 +45,7 @@ const trustCredentials = [
 ];
 
 const ProviderSection = () => {
+  const [showBooking, setShowBooking] = useState(false);
   return (
     <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-pure-white to-soft-linen/50">
       <div className="container px-4 sm:px-6">
@@ -92,8 +95,30 @@ const ProviderSection = () => {
                       {provider.specialty}
                     </span>
                   </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-3 border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10"
+                    onClick={() => setShowBooking(!showBooking)}
+                  >
+                    {showBooking ? "Close Booking" : "Book with Dr. Myers"}
+                  </Button>
                 </div>
               </Card>
+              {showBooking && (
+                <div className="mt-4 rounded-xl border border-warm-stone/20 bg-pure-white overflow-hidden">
+                  <iframe
+                    src="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=13804905&provider_ids=%5B13804905%5D&appt_type_ids=%5B515479,515480,515481%5D"
+                    className="w-full border-0"
+                    style={{ minHeight: '600px' }}
+                    title="Book an appointment with Dr. Paul Myers"
+                  />
+                  <p className="py-2 text-center text-xs text-warm-gray">
+                    Booking Provided by{' '}
+                    <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-warm-stone">Healthie</a>
+                  </p>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
