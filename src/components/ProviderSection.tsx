@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Shield, Award, BadgeCheck, Stethoscope } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -105,20 +105,30 @@ const ProviderSection = () => {
                   </Button>
                 </div>
               </Card>
-              {showBooking && (
-                <div className="mt-4 rounded-xl border border-warm-stone/20 bg-pure-white overflow-hidden">
-                  <iframe
-                    src="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=13804905&provider_ids=%5B13804905%5D&appt_type_ids=%5B515479,515480,515481%5D"
-                    className="w-full border-0"
-                    style={{ minHeight: '600px' }}
-                    title="Book an appointment with Dr. Paul Myers"
-                  />
-                  <p className="py-2 text-center text-xs text-warm-gray">
-                    Booking Provided by{' '}
-                    <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-warm-stone">Healthie</a>
-                  </p>
-                </div>
-              )}
+              <AnimatePresence>
+                {showBooking && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-4 rounded-xl border border-warm-stone/20 bg-pure-white overflow-hidden">
+                      <iframe
+                        src="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=13804905&provider_ids=%5B13804905%5D&appt_type_ids=%5B515479,515480,515481%5D"
+                        className="w-full border-0"
+                        style={{ minHeight: '600px' }}
+                        title="Book an appointment with Dr. Paul Myers"
+                      />
+                      <p className="py-2 text-center text-xs text-warm-gray">
+                        Booking Provided by{' '}
+                        <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-warm-stone">Healthie</a>
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>
