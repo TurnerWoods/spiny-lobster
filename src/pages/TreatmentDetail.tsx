@@ -81,6 +81,84 @@ const statusConfig: Record<string, { label: string; color: string; icon: any; de
   },
 };
 
+// Map treatment types and medication names to matching product images
+const getProductImage = (treatmentType: string, medication: string | null): string => {
+  const medLower = (medication || "").toLowerCase();
+  const typeLower = treatmentType.toLowerCase();
+
+  // Match by specific medication name first
+  const medMap: Record<string, string> = {
+    "semaglutide": "/images/products/semaglutide-vial.png",
+    "tirzepatide": "/images/products/tirzepatide-prep.png",
+    "testosterone": "/images/products/testosterone-vial.png",
+    "testosterone cypionate": "/images/products/testosterone-vial.png",
+    "testosterone cream": "/images/products/medication-package.png",
+    "hcg": "/images/products/hcg-vial.png",
+    "gonadorelin": "/images/products/hcg-vial.png",
+    "anastrozole": "/images/products/anastrozole-bottle.png",
+    "bpc-157": "/images/products/bpc-157-vial.png",
+    "bpc": "/images/products/bpc-157-vial.png",
+    "tb-500": "/images/products/tb-500-vial.png",
+    "tb500": "/images/products/tb-500-vial.png",
+    "ghk-cu": "/images/products/ghk-cu-vial.png",
+    "ghk": "/images/products/ghk-cu-vial.png",
+    "sermorelin": "/images/products/sermorelin-vial.png",
+    "cjc-1295": "/images/products/cjc-1295-vial.png",
+    "ipamorelin": "/images/products/ipamorelin-vial.png",
+    "ghrp-2": "/images/products/ghrp-2-vial.png",
+    "pt-141": "/images/products/pt141-vial.png",
+    "pt141": "/images/products/pt141-vial.png",
+    "bremelanotide": "/images/products/pt141-vial.png",
+    "tadalafil": "/images/products/tadalafil-tablets.png",
+    "cialis": "/images/products/tadalafil-tablets.png",
+    "kisspeptin": "/images/products/kisspeptin-vial.png",
+    "oxytocin": "/images/products/oxytocin-spray.png",
+    "semax": "/images/products/semax-vial.png",
+    "selank": "/images/products/selank-vial.png",
+    "dihexa": "/images/products/dihexa-vial.png",
+    "mots-c": "/images/products/mots-c-vial.png",
+    "methylene blue": "/images/products/methylene-blue-vial.png",
+    "nad+": "/images/products/nad-vial.png",
+    "nad": "/images/products/nad-vial.png",
+    "epitalon": "/images/products/epitalon-vial.png",
+    "thymosin": "/images/products/thymosin-alpha-vial.png",
+    "finasteride": "/images/products/medication-package.png",
+    "minoxidil": "/images/products/hair-growth-dropper.png",
+    "tretinoin": "/images/products/medication-package.png",
+  };
+
+  for (const [key, img] of Object.entries(medMap)) {
+    if (medLower.includes(key)) return img;
+  }
+
+  // Fallback by treatment category
+  const typeMap: Record<string, string> = {
+    "weight loss": "/images/products/semaglutide-vial.png",
+    "weight": "/images/products/semaglutide-vial.png",
+    "metabolic": "/images/products/semaglutide-vial.png",
+    "hormone": "/images/products/testosterone-vial.png",
+    "trt": "/images/products/testosterone-vial.png",
+    "testosterone": "/images/products/testosterone-vial.png",
+    "peptide": "/images/products/bpc-157-vial.png",
+    "strength": "/images/products/wolverine-stack.png",
+    "recovery": "/images/products/bpc-157-vial.png",
+    "sexual": "/images/products/pt141-vial.png",
+    "intimate": "/images/products/pt141-vial.png",
+    "mood": "/images/products/semax-selank-vials.png",
+    "cognitive": "/images/products/semax-selank-vials.png",
+    "anti-aging": "/images/products/longevity-stack.png",
+    "longevity": "/images/products/longevity-stack.png",
+    "hair": "/images/products/hair-restoration-kit.png",
+    "skin": "/images/products/ghk-cu-vial.png",
+  };
+
+  for (const [key, img] of Object.entries(typeMap)) {
+    if (typeLower.includes(key)) return img;
+  }
+
+  return "/images/products/medication-package.png";
+};
+
 // Mock dosage instructions based on treatment type
 const getDosageInstructions = (treatmentType: string, dosage: string | null) => {
   const instructions: Record<string, { frequency: string; timing: string; notes: string[] }> = {
@@ -285,6 +363,7 @@ const TreatmentDetail = () => {
   const StatusIcon = status.icon;
   const dosageInfo = getDosageInstructions(treatment.treatment_type, treatment.dosage);
   const timelineEvents = generateTimelineEvents(treatment);
+  const productImage = getProductImage(treatment.treatment_type, treatment.medication);
 
   const refillDaysRemaining = treatment.next_refill_date
     ? Math.ceil((new Date(treatment.next_refill_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
@@ -314,7 +393,7 @@ const TreatmentDetail = () => {
       </header>
 
       <main className="container px-4 py-8">
-        {/* Back Link & Title */}
+        {/* Back Link & Title with Product Image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -327,18 +406,30 @@ const TreatmentDetail = () => {
             <ArrowLeft className="mr-1 h-4 w-4" />
             My Treatments
           </Link>
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                {treatment.treatment_type}
-              </h1>
-              <p className="mt-1 text-lg text-muted-foreground">
-                {treatment.medication || "Medication pending assignment"}
-              </p>
+          <div className="flex items-start gap-5">
+            {/* Product Image */}
+            <div className="hidden sm:block flex-shrink-0">
+              <div className="h-20 w-20 overflow-hidden rounded-2xl border border-neutral-gray/20 bg-gradient-to-br from-soft-linen to-warm-stone/5 p-2 shadow-sm">
+                <img
+                  src={productImage}
+                  alt={treatment.medication || treatment.treatment_type}
+                  className="h-full w-full object-contain"
+                />
+              </div>
             </div>
-            <div className={cn("flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium", status.color)}>
-              <StatusIcon className="h-4 w-4" />
-              {status.label}
+            <div className="flex flex-1 flex-wrap items-start justify-between gap-4">
+              <div>
+                <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+                  {treatment.treatment_type}
+                </h1>
+                <p className="mt-1 text-lg text-muted-foreground">
+                  {treatment.medication || "Medication pending assignment"}
+                </p>
+              </div>
+              <div className={cn("flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium", status.color)}>
+                <StatusIcon className="h-4 w-4" />
+                {status.label}
+              </div>
             </div>
           </div>
         </motion.div>
