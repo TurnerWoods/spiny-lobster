@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
 import { ArrowRight, TrendingUp } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 
@@ -59,13 +59,10 @@ const ResultCard = ({ result, index }: { result: BeforeAfterResult; index: numbe
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
 
   return (
-    <motion.div
+    <div
       ref={cardRef}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ delay: index * 0.08, duration: 0.4 }}
-      className="rounded-xl border border-neutral-gray/20 bg-pure-white p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
+      className="rounded-xl border border-neutral-gray/20 bg-pure-white p-5 shadow-sm hover:shadow-md transition-shadow duration-300 animate-in fade-in duration-500"
+      style={{ animationDelay: `${index * 80}ms` }}
     >
       <div className="mb-4 flex items-center justify-between">
         <span className="rounded-full bg-warm-stone/10 px-3 py-1 text-xs font-medium text-warm-stone">
@@ -98,7 +95,7 @@ const ResultCard = ({ result, index }: { result: BeforeAfterResult; index: numbe
         <TrendingUp className="h-3.5 w-3.5 text-green-600" />
         <span className="text-sm font-semibold text-green-600">{result.improvement}</span>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -111,16 +108,12 @@ const BeforeAfterGallery = ({
 
   return (
     <div className="mt-10">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4 }}
-        className="mb-6 text-center"
+      <div
+        className="mb-6 text-center animate-in fade-in duration-500"
       >
         <h3 className="mb-1 font-display text-lg font-bold text-rich-black">{title}</h3>
         <p className="text-xs text-muted-foreground">{subtitle}</p>
-      </motion.div>
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {results.map((result, index) => (

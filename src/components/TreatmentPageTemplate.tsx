@@ -53,13 +53,8 @@ interface TreatmentPageTemplateProps {
   treatment: TreatmentData;
 }
 
-// Minimal, purposeful fade-in for sections
-const sectionFade = {
-  initial: { opacity: 0, y: 16 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" as const },
-  transition: { duration: 0.5 },
-};
+// No animation classes - sections render immediately visible
+const sectionFadeClass = "";
 
 const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
   return (
@@ -134,7 +129,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
         <section className="py-12 sm:py-16 lg:py-20">
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-6xl">
-              <motion.div {...sectionFade} className="mb-8">
+              <div className={`mb-8 ${sectionFadeClass}`}>
                 <div className="flex items-center gap-2 text-xs font-medium text-warm-stone mb-2">
                   <BadgeCheck className="h-4 w-4" />
                   FDA-Approved Medications
@@ -142,7 +137,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                 <h2 className="font-display text-2xl font-bold text-rich-black sm:text-3xl">
                   Available Treatments
                 </h2>
-              </motion.div>
+              </div>
 
               {/* Stacks (if any) */}
               {treatment.stacks && treatment.stacks.length > 0 && (
@@ -269,7 +264,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-5xl">
               {/* Benefits as compact pills (not individual animated cards) */}
-              <motion.div {...sectionFade} className="mb-10 text-center">
+              <div className={`mb-10 text-center ${sectionFadeClass}`}>
                 <h2 className="mb-6 font-display text-2xl font-bold text-rich-black sm:text-3xl">
                   Why Patients Choose This Treatment
                 </h2>
@@ -281,7 +276,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </div>
 
               {/* Before/After Results */}
               {treatment.results && treatment.results.length > 0 && (
@@ -290,7 +285,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
 
               {/* Symptoms - compact two-column */}
               {treatment.symptoms.length > 0 && (
-                <motion.div {...sectionFade} className="mt-10">
+                <div className={`mt-10 ${sectionFadeClass}`}>
                   <h3 className="mb-4 text-center font-display text-lg font-bold text-rich-black">
                     Common Symptoms We Address
                   </h3>
@@ -302,7 +297,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
           </div>
@@ -312,11 +307,11 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
         <section className="py-12 sm:py-16 lg:py-20">
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-4xl">
-              <motion.div {...sectionFade} className="mb-10 text-center">
+              <div className={`mb-10 text-center ${sectionFadeClass}`}>
                 <h2 className="font-display text-2xl font-bold text-rich-black sm:text-3xl">
                   How It Works
                 </h2>
-              </motion.div>
+              </div>
 
               <div className="grid sm:grid-cols-3 gap-6">
                 {[
@@ -324,13 +319,10 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                   { step: "2", title: "Physician Review", desc: "A licensed Texas physician reviews your profile and prescribes treatment within 24 hours.", icon: Award },
                   { step: "3", title: "Delivered to You", desc: "FDA-approved medications shipped free and discreetly to your door in 3-5 days.", icon: Truck },
                 ].map((item, i) => (
-                  <motion.div
+                  <div
                     key={i}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.4 }}
-                    className="text-center"
+                    className={`text-center ${sectionFadeClass}`}
+                    style={{ animationDelay: `${i * 100}ms` }}
                   >
                     <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-warm-stone to-warm-stone/80 text-pure-white shadow-lg">
                       <item.icon className="h-6 w-6" />
@@ -338,13 +330,13 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                     <p className="text-xs font-bold uppercase tracking-wider text-warm-stone mb-1">Step {item.step}</p>
                     <h3 className="font-display text-lg font-bold text-rich-black mb-2">{item.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 
               {/* Timeline (compact, if provided) */}
               {treatment.timeline.length > 0 && (
-                <motion.div {...sectionFade} className="mt-12">
+                <div className={`mt-12 ${sectionFadeClass}`}>
                   <h3 className="mb-4 text-center font-display text-lg font-bold text-rich-black flex items-center justify-center gap-2">
                     <Clock className="h-5 w-5 text-warm-stone" /> Expected Timeline
                   </h3>
@@ -361,7 +353,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
           </div>
