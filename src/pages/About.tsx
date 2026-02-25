@@ -1,7 +1,8 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { motion } from "framer-motion";
-import { Users, Target, Shield, HeartHandshake, Building2, Sparkles, MapPin, Phone, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Users, Target, Shield, HeartHandshake, Building2, Sparkles, MapPin, Phone, Mail, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -38,6 +39,8 @@ const values = [
 ];
 
 const About = () => {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
       <Header />
@@ -180,10 +183,7 @@ const About = () => {
                         <Button
                           variant="outline"
                           className="border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10"
-                          onClick={() => {
-                            const dialog = document.getElementById('healthie-booking-dialog') as HTMLDialogElement;
-                            dialog?.showModal();
-                          }}
+                          onClick={() => setIsBookingOpen(true)}
                         >
                           Book with Dr. Myers
                         </Button>
@@ -357,43 +357,61 @@ const About = () => {
             </motion.div>
           </div>
         </section>
-        {/* Healthie Booking Dialog */}
-        <dialog
-          id="healthie-booking-dialog"
-          className="w-full max-w-3xl rounded-2xl border border-warm-stone/20 bg-pure-white p-0 backdrop:bg-rich-black/60 backdrop:backdrop-blur-sm"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              (e.target as HTMLDialogElement).close();
-            }
-          }}
-        >
-          <div className="flex items-center justify-between border-b border-warm-stone/10 px-6 py-4">
-            <h3 className="font-display text-lg font-semibold text-rich-black">Book with Dr. Paul Myers</h3>
-            <button
-              className="rounded-full p-1 text-warm-gray hover:bg-warm-stone/10 hover:text-rich-black"
-              onClick={() => {
-                const dialog = document.getElementById('healthie-booking-dialog') as HTMLDialogElement;
-                dialog?.close();
-              }}
+        {/* Booking Modal */}
+        <AnimatePresence>
+          {isBookingOpen && (
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsBookingOpen(false)}
             >
-              ✕
-            </button>
-          </div>
-          <div className="p-2">
-            <iframe
-              src="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=13804905&provider_ids=%5B13804905%5D&appt_type_ids=%5B515479,515480,515481%5D"
-              className="w-full border-0"
-              style={{ minHeight: '600px' }}
-              title="Book an appointment with Dr. Paul Myers"
-            />
-            <p className="py-2 text-center text-xs text-warm-gray">
-              Booking Provided by{' '}
-              <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-warm-stone">
-                Healthie
-              </a>
-            </p>
-          </div>
-        </dialog>
+              {/* Backdrop */}
+              <motion.div
+                className="absolute inset-0 bg-rich-black/60 backdrop-blur-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              />
+
+              {/* Modal */}
+              <motion.div
+                className="relative w-full max-w-3xl rounded-2xl border border-warm-stone/20 bg-pure-white shadow-2xl"
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center justify-between border-b border-warm-stone/10 px-6 py-4">
+                  <h3 className="font-display text-lg font-semibold text-rich-black">Book with Dr. Paul Myers</h3>
+                  <button
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-warm-gray transition-colors hover:bg-warm-stone/10 hover:text-rich-black"
+                    onClick={() => setIsBookingOpen(false)}
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="p-2">
+                  <iframe
+                    src="https://secure.gethealthie.com/appointments/embed_appt?dietitian_id=13804905&provider_ids=%5B13804905%5D&appt_type_ids=%5B515479,515480,515481%5D"
+                    className="w-full border-0"
+                    style={{ minHeight: '600px' }}
+                    title="Book an appointment with Dr. Paul Myers"
+                  />
+                  <p className="py-2 text-center text-xs text-warm-gray">
+                    Booking Provided by{' '}
+                    <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-warm-stone">
+                      Healthie
+                    </a>
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
       <Footer />
     </div>
