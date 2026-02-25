@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Download, Copy, Check, FileImage, Type, Palette, BookOpen } from "lucide-react";
+import { Download, Copy, Check, FileImage, Type, Palette, BookOpen, Share2, Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -20,9 +20,9 @@ const brandColors = [
   { name: "Soft Linen", hex: "#F6F5F3", hsl: "40 15% 96%", usage: "Page backgrounds, subtle sections" },
   { name: "Pure White", hex: "#FDFDFD", hsl: "0 0% 99%", usage: "Card backgrounds, content areas" },
   { name: "Rich Black", hex: "#08080A", hsl: "240 11% 4%", usage: "Headings, primary text" },
+  { name: "Accent Gold", hex: "#C9A962", hsl: "40 47% 59%", usage: "Badges, trust signals, premium accents" },
   { name: "Warm Gray", hex: "#D7D5CF", hsl: "45 10% 83%", usage: "Borders, dividers, muted elements" },
   { name: "Light Cloud", hex: "#EEF0F7", hsl: "226 33% 95%", usage: "Secondary backgrounds, hover states" },
-  { name: "Neutral Gray", hex: "#E0E0E0", hsl: "0 0% 88%", usage: "Input borders, subtle dividers" },
 ];
 
 const typography = [
@@ -37,6 +37,46 @@ const logos = [
   { name: "Logo Icon", file: logoIcon, filename: "elevare-logo-icon.png", bg: "bg-soft-linen" },
   { name: "Logo Icon (New)", file: logoIconNew, filename: "elevare-logo-icon-new.png", bg: "bg-soft-linen" },
   { name: "White Logo", file: logoWhite, filename: "elevare-logo-white.png", bg: "bg-deep-charcoal" },
+];
+
+// Social media asset specs
+const socialAssets = [
+  {
+    platform: "Instagram",
+    icon: Instagram,
+    assets: [
+      { name: "Profile Picture", size: "320 × 320", canvasW: 320, canvasH: 320 },
+      { name: "Post (Square)", size: "1080 × 1080", canvasW: 1080, canvasH: 1080 },
+      { name: "Story / Reel", size: "1080 × 1920", canvasW: 1080, canvasH: 1920 },
+    ],
+  },
+  {
+    platform: "Twitter / X",
+    icon: Twitter,
+    assets: [
+      { name: "Profile Picture", size: "400 × 400", canvasW: 400, canvasH: 400 },
+      { name: "Header Banner", size: "1500 × 500", canvasW: 1500, canvasH: 500 },
+      { name: "Post Image", size: "1200 × 675", canvasW: 1200, canvasH: 675 },
+    ],
+  },
+  {
+    platform: "LinkedIn",
+    icon: Linkedin,
+    assets: [
+      { name: "Profile Picture", size: "400 × 400", canvasW: 400, canvasH: 400 },
+      { name: "Cover Photo", size: "1584 × 396", canvasW: 1584, canvasH: 396 },
+      { name: "Post Image", size: "1200 × 627", canvasW: 1200, canvasH: 627 },
+    ],
+  },
+  {
+    platform: "YouTube",
+    icon: Youtube,
+    assets: [
+      { name: "Profile Picture", size: "800 × 800", canvasW: 800, canvasH: 800 },
+      { name: "Channel Banner", size: "2560 × 1440", canvasW: 2560, canvasH: 1440 },
+      { name: "Thumbnail", size: "1280 × 720", canvasW: 1280, canvasH: 720 },
+    ],
+  },
 ];
 
 const BrandKit = () => {
@@ -66,6 +106,61 @@ const BrandKit = () => {
       toast.error("Failed to download logo");
     }
   };
+
+  const generateSocialAsset = useCallback(async (canvasW: number, canvasH: number, label: string) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvasW;
+    canvas.height = canvasH;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Background gradient (Soft Linen → white)
+    const grad = ctx.createLinearGradient(0, 0, canvasW, canvasH);
+    grad.addColorStop(0, "#F6F5F3");
+    grad.addColorStop(1, "#FDFDFD");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvasW, canvasH);
+
+    // Subtle warm stone accent bar at bottom
+    ctx.fillStyle = "#726658";
+    ctx.fillRect(0, canvasH - Math.max(4, canvasH * 0.005), canvasW, Math.max(4, canvasH * 0.005));
+
+    // Load and draw logo centered
+    try {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = reject;
+        img.src = logoElevare;
+      });
+      const maxLogoW = canvasW * 0.5;
+      const maxLogoH = canvasH * 0.3;
+      const scale = Math.min(maxLogoW / img.width, maxLogoH / img.height);
+      const w = img.width * scale;
+      const h = img.height * scale;
+      ctx.drawImage(img, (canvasW - w) / 2, (canvasH - h) / 2, w, h);
+    } catch {
+      // Fallback text if image fails
+      ctx.fillStyle = "#08080A";
+      ctx.font = `bold ${Math.round(canvasW * 0.06)}px 'Plus Jakarta Sans', sans-serif`;
+      ctx.textAlign = "center";
+      ctx.fillText("ELEVARE HEALTH", canvasW / 2, canvasH / 2);
+    }
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `elevare-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${canvasW}x${canvasH}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success(`Downloaded ${canvasW}×${canvasH} asset`);
+    }, "image/png");
+  }, []);
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -326,6 +421,61 @@ const BrandKit = () => {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </motion.section>
+
+          {/* Social Media Assets */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="mb-12"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Share2 className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="font-display text-2xl font-bold text-rich-black">Social Media Assets</h2>
+            </div>
+            <p className="text-sm text-muted-foreground mb-6">
+              Download platform-ready branded assets with the Elevare logo centered on the brand palette. Each file is sized to spec — no design tool needed.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {socialAssets.map((platform) => {
+                const Icon = platform.icon;
+                return (
+                  <Card key={platform.platform} className="glass-card overflow-hidden">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-lg">
+                        <Icon className="h-5 w-5 text-warm-stone" />
+                        {platform.platform}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      {platform.assets.map((asset) => (
+                        <div
+                          key={asset.name}
+                          className="flex items-center justify-between rounded-lg border border-neutral-gray/20 bg-soft-linen/50 px-4 py-3"
+                        >
+                          <div>
+                            <p className="text-sm font-medium text-foreground">{asset.name}</p>
+                            <p className="text-xs text-muted-foreground">{asset.size} px</p>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => generateSocialAsset(asset.canvasW, asset.canvasH, `${platform.platform}-${asset.name}`)}
+                          >
+                            <Download className="h-4 w-4 mr-1.5" />
+                            PNG
+                          </Button>
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </motion.section>
 
