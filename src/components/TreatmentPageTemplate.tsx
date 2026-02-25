@@ -125,6 +125,33 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
           </div>
         </section>
 
+        {/* ── QUALITY GUARANTEE BADGE ── */}
+        <section className="border-y border-neutral-gray/15 bg-pure-white">
+          <div className="container px-4 md:px-6">
+            <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-6 gap-y-2 py-4 text-xs text-muted-foreground sm:gap-x-8 sm:text-sm">
+              <span className="flex items-center gap-1.5 font-medium text-rich-black">
+                <Shield className="h-4 w-4 text-accent-gold" />
+                ≥98% Purity Guaranteed
+              </span>
+              <span className="hidden h-4 w-px bg-neutral-gray/30 sm:block" />
+              <span className="flex items-center gap-1.5">
+                <BadgeCheck className="h-4 w-4 text-accent-gold" />
+                503B Pharmacy Sourced
+              </span>
+              <span className="hidden h-4 w-px bg-neutral-gray/30 sm:block" />
+              <span className="flex items-center gap-1.5">
+                <Award className="h-4 w-4 text-accent-gold" />
+                COA Available
+              </span>
+              <span className="hidden h-4 w-px bg-neutral-gray/30 sm:block" />
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-accent-gold" />
+                FDA-Registered · cGMP
+              </span>
+            </div>
+          </div>
+        </section>
+
         {/* ── SECTION 2: MEDICATIONS ── */}
         <section className="py-12 sm:py-16 lg:py-20">
           <div className="container px-4 md:px-6">

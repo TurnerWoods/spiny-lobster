@@ -2,22 +2,22 @@ import TreatmentPageTemplate, { TreatmentData } from "@/components/TreatmentPage
 import heroImage from "@/assets/hero-weight-loss.jpg";
 
 const treatment: TreatmentData = {
-  category: "Weight Loss",
+  category: "Weight Loss & Metabolic",
   title: "Medical Weight Loss",
   subtitle: "GLP-1 & Peptide Therapies",
   description: "Physician-supervised therapies to reduce appetite and boost metabolism.",
   price: "$149",
   heroImage,
-  productImage: "/images/products/tirzepatide-prep.png",
+  productImage: "/images/products/semaglutide-vial.png",
   stacks: [
-    { name: "Ultimate Weight Loss", tagline: "Maximum Results Protocol", products: ["Tirzepatide", "AOD-9604", "Lipotropics"], price: "$349/mo", savings: "Save $98", popular: true, image: "/images/products/tirzepatide-prep.png" },
-    { name: "GLP-1 Accelerator", tagline: "Enhanced Fat Burning", products: ["Semaglutide", "AOD-9604"], price: "$249/mo", savings: "Save $49", image: "/images/products/semaglutide-vial.png" },
-    { name: "Metabolic Reset", tagline: "Visceral Fat Protocol", products: ["Tesamorelin", "Lipotropics"], price: "$249/mo", savings: "Save $49", image: "/images/products/sermorelin-vial.png" }
+    { name: "The Metabolic Reset", tagline: "Enhanced Fat Burning Protocol", products: ["Semaglutide", "AOD-9604"], price: "$249/mo", savings: "Save $49", popular: true, image: "/images/products/semaglutide-vial.png" },
+    { name: "Ultimate Weight Loss", tagline: "Maximum Results Protocol", products: ["Tirzepatide", "AOD-9604", "Lipotropics"], price: "$349/mo", savings: "Save $98", image: "/images/products/tirzepatide-prep.png" },
+    { name: "GH + Fat Loss", tagline: "Dual Benefit Protocol", products: ["CJC-1295/Ipamorelin", "AOD-9604"], price: "$349/mo", savings: "Save $49", image: "/images/products/cjc-1295-vial.png" }
   ],
   medications: [
     {
       name: "Semaglutide",
-      description: "GLP-1 that reduces appetite and improves blood sugar control.",
+      description: "GLP-1 agonist that reduces appetite and improves blood sugar control. #1 search term in men's health.",
       price: "$149/mo",
       image: "/images/products/semaglutide-vial.png",
       rating: 4.9,
@@ -26,7 +26,7 @@ const treatment: TreatmentData = {
     },
     {
       name: "Tirzepatide",
-      description: "Dual GIP/GLP-1 agonist for enhanced weight loss.",
+      description: "Dual GIP/GLP-1 agonist — fastest-growing segment with superior efficacy data. 15-25% body weight loss in clinical trials.",
       price: "$199/mo",
       image: "/images/products/tirzepatide-prep.png",
       rating: 4.8,
@@ -34,28 +34,36 @@ const treatment: TreatmentData = {
       mostPopular: true
     },
     {
-      name: "Tesamorelin",
-      description: "Targets visceral fat while preserving lean muscle.",
-      price: "$199/mo",
-      image: "/images/products/sermorelin-vial.png",
+      name: "AOD-9604",
+      description: "Peptide alternative to GLP-1 that stimulates lipolysis without appetite suppression side effects.",
+      price: "$149/mo",
+      image: "/images/products/medication-package.png",
       rating: 4.7,
       reviewCount: 892
     },
     {
-      name: "AOD-9604",
-      description: "Fat-burning peptide that stimulates lipolysis.",
-      price: "$149/mo",
-      image: "/images/products/medication-package.png",
-      rating: 4.6,
+      name: "Tesamorelin",
+      description: "Targets visceral fat while preserving lean muscle. Cross-listed with GH category.",
+      price: "$199/mo",
+      image: "/images/products/sermorelin-vial.png",
+      rating: 4.7,
       reviewCount: 634
     },
     {
-      name: "Lipotropic Injections",
-      description: "B12 + MIC for fat metabolism and energy.",
-      price: "$99/mo",
-      image: "/images/products/injection-supplies.png",
-      rating: 4.5,
-      reviewCount: 1105
+      name: "CJC-1295/Ipamorelin",
+      description: "Sustained GH release for fat loss and body composition improvement.",
+      price: "$249/mo",
+      image: "/images/products/cjc-1295-vial.png",
+      rating: 4.8,
+      reviewCount: 1284
+    },
+    {
+      name: "5-Amino-1MQ",
+      description: "Novel NNMT inhibitor — unique mechanism no competitor carries. Boosts cellular energy and fat metabolism.",
+      price: "$149/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.6,
+      reviewCount: 312
     }
   ],
   symptoms: [

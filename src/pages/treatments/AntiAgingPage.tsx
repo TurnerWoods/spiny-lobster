@@ -6,16 +6,16 @@ const treatment: TreatmentData = {
   title: "Cellular Optimization",
   subtitle: "Turn Back the Clock",
   description: "Target the root causes of aging with cellular energy and DNA repair protocols.",
-  price: "$79",
+  price: "$129",
   heroImage,
   productImage: "/images/products/longevity-stack.png",
   stacks: [
     {
       name: "The Longevity Stack",
       tagline: "Complete Cellular Rejuvenation & DNA Repair Protocol",
-      products: ["NAD+", "Epitalon"],
-      price: "$349/mo",
-      savings: "Save $99",
+      products: ["NAD+", "GHK-Cu", "Epitalon"],
+      price: "$449/mo",
+      savings: "Save $78",
       popular: true,
       image: "/images/products/longevity-stack.png"
     }
@@ -23,7 +23,7 @@ const treatment: TreatmentData = {
   medications: [
     {
       name: "NAD+ Injections",
-      description: "Essential coenzyme for cellular energy and DNA repair.",
+      description: "Essential coenzyme for cellular energy and DNA repair. Longevity community staple.",
       price: "$199/mo",
       image: "/images/products/nad-vial.png",
       rating: 4.9,
@@ -31,37 +31,37 @@ const treatment: TreatmentData = {
       bestSeller: true
     },
     {
-      name: "NAD+ Nasal Spray",
-      description: "Daily NAD+ delivery without injections.",
-      price: "$149/mo",
-      image: "/images/products/nad-supplements.png",
-      rating: 4.7,
-      reviewCount: 1234
-    },
-    {
-      name: "Glutathione",
-      description: "Master antioxidant for detox and cellular protection.",
-      price: "$99/mo",
-      image: "/images/products/medication-package.png",
+      name: "GHK-Cu",
+      description: "Copper peptide for collagen production, tissue rejuvenation, and anti-inflammatory benefits.",
+      price: "$129/mo",
+      image: "/images/products/ghk-cu-vial.png",
       rating: 4.8,
-      reviewCount: 1567
-    },
-    {
-      name: "Epitalon",
-      description: "Telomerase-activating peptide for longevity.",
-      price: "$249/mo",
-      image: "/images/products/epitalon-vial.png",
-      rating: 4.8,
-      reviewCount: 892,
+      reviewCount: 1234,
       mostPopular: true
     },
     {
-      name: "Methylene Blue",
-      description: "Mitochondrial enhancer for cognitive function.",
-      price: "$79/mo",
-      image: "/images/products/methylene-blue-vial.png",
-      rating: 4.6,
-      reviewCount: 654
+      name: "Thymosin Alpha-1",
+      description: "Immune modulation peptide for deep cellular defense. LIVV carries, others don't.",
+      price: "$249/mo",
+      image: "/images/products/thymosin-alpha-vial.png",
+      rating: 4.7,
+      reviewCount: 543
+    },
+    {
+      name: "Epitalon",
+      description: "Telomerase-activating peptide for telomere support and longevity biohacking.",
+      price: "$199/mo",
+      image: "/images/products/epitalon-vial.png",
+      rating: 4.8,
+      reviewCount: 892
+    },
+    {
+      name: "MOTS-c",
+      description: "Mitochondrial peptide for cellular energy, metabolic health, and cognition.",
+      price: "$199/mo",
+      image: "/images/products/mots-c-vial.png",
+      rating: 4.7,
+      reviewCount: 412
     }
   ],
   symptoms: [

@@ -6,64 +6,47 @@ const treatment: TreatmentData = {
   title: "Medical Skincare",
   subtitle: "Prescription-Strength Results",
   description: "Target aging, acne, and skin health at the cellular level.",
-  price: "$49",
+  price: "$39",
   heroImage,
   productImage: "/images/products/ghk-cu-vial.png",
   stacks: [
-    { name: "Anti-Aging Stack", tagline: "Complete Rejuvenation Protocol", products: ["Tretinoin", "GHK-Cu", "Glutathione"], price: "$229/mo", savings: "Save $48", popular: true, image: "/images/products/ghk-cu-vial.png" },
-    { name: "Clear Skin Stack", tagline: "Acne + Brightening", products: ["Acne Protocol", "Glutathione"], price: "$149/mo", savings: "Save $29", image: "/images/products/medication-package.png" },
-    { name: "Glow Stack", tagline: "Radiance & Tone", products: ["Custom Compound", "GHK-Cu"], price: "$199/mo", savings: "Save $29", image: "/images/products/hair-growth-dropper.png" }
+    { name: "Anti-Aging Stack", tagline: "Complete Rejuvenation Protocol", products: ["Tretinoin", "GHK-Cu"], price: "$149/mo", savings: "Save $19", popular: true, image: "/images/products/ghk-cu-vial.png" },
+    { name: "Peptide Skin Stack", tagline: "Collagen & Elastin Boost", products: ["GHK-Cu", "Argireline", "Matrixyl"], price: "$249/mo", savings: "Save $48", image: "/images/products/medication-package.png" }
   ],
   medications: [
     {
       name: "Tretinoin",
-      description: "Gold standard for anti-aging and collagen building.",
-      price: "$49/mo",
+      description: "Gold standard topical for anti-aging and collagen building. Proven, high margin.",
+      price: "$39/mo",
       image: "/images/products/medication-package.png",
       rating: 4.9,
       reviewCount: 3654,
       bestSeller: true
     },
     {
-      name: "Custom Compound",
-      description: "Tretinoin + Niacinamide + Hyaluronic Acid formula.",
-      price: "$99/mo",
-      image: "/images/products/hair-growth-dropper.png",
-      rating: 4.8,
-      reviewCount: 1876,
-      mostPopular: true
-    },
-    {
       name: "GHK-Cu",
-      description: "Peptide for collagen and skin rejuvenation.",
+      description: "Peptide for collagen production, anti-wrinkle, and skin rejuvenation.",
       price: "$129/mo",
       image: "/images/products/ghk-cu-vial.png",
       rating: 4.8,
-      reviewCount: 1234
+      reviewCount: 1234,
+      mostPopular: true
     },
     {
-      name: "Glutathione",
-      description: "Antioxidant that brightens and reduces spots.",
-      price: "$99/mo",
+      name: "Argireline",
+      description: "Topical 'botox alternative' — consumer-friendly peptide for expression lines.",
+      price: "$89/mo",
       image: "/images/products/medication-package.png",
       rating: 4.7,
-      reviewCount: 987
+      reviewCount: 876
     },
     {
-      name: "Acne Protocol",
-      description: "Compounded treatment for adult acne.",
-      price: "$79/mo",
+      name: "Matrixyl",
+      description: "Collagen + elastin stimulating peptide. Pairs synergistically with GHK-Cu.",
+      price: "$99/mo",
       image: "/images/products/medication-package.png",
       rating: 4.6,
       reviewCount: 654
-    },
-    {
-      name: "Melasma Rx",
-      description: "For stubborn hyperpigmentation.",
-      price: "$89/mo",
-      image: "/images/products/medication-package.png",
-      rating: 4.5,
-      reviewCount: 432
     }
   ],
   symptoms: [

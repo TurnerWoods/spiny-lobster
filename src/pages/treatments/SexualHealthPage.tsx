@@ -13,7 +13,7 @@ const treatment: TreatmentData = {
   stacks: [
     {
       name: "Performance Stack",
-      tagline: "Complete Enhancement Protocol for Desire & Performance",
+      tagline: "Complete Enhancement — Neurological + Vascular Dual Pathway",
       products: ["PT-141", "Tadalafil"],
       price: "$149/mo",
       savings: "Save $49",
@@ -24,7 +24,7 @@ const treatment: TreatmentData = {
   medications: [
     {
       name: "PT-141 + Tadalafil Combo",
-      description: "Best-selling combination for comprehensive enhancement. Combines desire and performance in one convenient protocol.",
+      description: "Best-selling combination — neurological arousal + vascular performance in one convenient protocol. Most complete approach available.",
       price: "$149/mo",
       image: "/images/products/performance-stack.png",
       rating: 4.9,
@@ -32,17 +32,25 @@ const treatment: TreatmentData = {
       bestSeller: true
     },
     {
-      name: "PT-141 (Bremelanotide)",
-      description: "Peptide that enhances desire and arousal through central nervous system activation.",
-      price: "$149/mo",
-      image: "/images/products/pt141-vial.png",
+      name: "Tadalafil (Cialis)",
+      description: "Long-acting PDE5 inhibitor for improved blood flow (up to 36 hrs). Daily low-dose allows spontaneity.",
+      price: "$49/mo",
+      image: "/images/products/tadalafil-tablets.png",
       rating: 4.8,
-      reviewCount: 1876,
+      reviewCount: 3421,
       mostPopular: true
     },
     {
+      name: "PT-141 (Bremelanotide)",
+      description: "Peptide that enhances desire and arousal through central nervous system activation — not just blood flow.",
+      price: "$149/mo",
+      image: "/images/products/pt141-vial.png",
+      rating: 4.8,
+      reviewCount: 1876
+    },
+    {
       name: "Kisspeptin",
-      description: "Stimulates reproductive hormones naturally for enhanced libido and hormone balance.",
+      description: "Stimulates LH/FSH naturally for enhanced libido, hormone balance, and fertility support.",
       price: "$179/mo",
       image: "/images/products/kisspeptin-vial.png",
       rating: 4.7,
@@ -50,19 +58,11 @@ const treatment: TreatmentData = {
     },
     {
       name: "Oxytocin",
-      description: "Bonding hormone for emotional intimacy and deeper connection.",
+      description: "Bonding hormone for emotional intimacy, mood enhancement, and deeper connection. Nasal spray format.",
       price: "$99/mo",
       image: "/images/products/oxytocin-spray.png",
       rating: 4.6,
       reviewCount: 654
-    },
-    {
-      name: "Tadalafil (Cialis)",
-      description: "Long-acting for improved blood flow (up to 36 hrs). Allows for spontaneity.",
-      price: "$49/mo",
-      image: "/images/products/tadalafil-tablets.png",
-      rating: 4.8,
-      reviewCount: 3421
     }
   ],
   symptoms: [
