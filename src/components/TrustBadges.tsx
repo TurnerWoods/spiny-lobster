@@ -58,7 +58,7 @@ export const TrustBadges = ({
     ? {
         initial: { opacity: 0 },
         animate: { opacity: 1 },
-        transition: { duration: 1, delay: 1.2, ease: [0.22, 1, 0.36, 1] },
+        transition: { duration: 1, delay: 1.2, ease: [0.22, 1, 0.36, 1] as const },
       }
     : {};
 

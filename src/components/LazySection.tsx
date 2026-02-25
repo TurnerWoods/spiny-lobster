@@ -57,7 +57,7 @@ const LazySection = forwardRef<HTMLElement, LazySectionProps>(
 
     return (
       <Component
-        ref={ref as React.RefObject<HTMLElement>}
+        ref={ref as React.RefObject<HTMLDivElement>}
         className={cn(
           "lazy-section",
           shouldShowContent && "data-[loaded=true]",

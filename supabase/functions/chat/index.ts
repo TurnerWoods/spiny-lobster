@@ -231,7 +231,7 @@ serve(async (req) => {
       const aiContent = toolResult.choices?.[0]?.message?.content || "";
 
       // Return the appropriate field based on tool type
-      const responseField = {
+      const responseFieldMap: Record<string, string> = {
         hormone_assessment: "analysis",
         treatment_match: "recommendation",
         lab_interpreter: "analysis",
@@ -239,7 +239,8 @@ serve(async (req) => {
         workout_generator: "workoutPlan",
         progress_predictor: "predictions",
         calculator_context: "context",
-      }[tool] || "response";
+      };
+      const responseField = responseFieldMap[tool] || "response";
 
       return new Response(
         JSON.stringify({ [responseField]: aiContent }),

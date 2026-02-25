@@ -16,12 +16,18 @@ const ScrollToTop = () => {
     const handleMotionChange = (e: MediaQueryListEvent) =>
       setShouldReduceMotion(e.matches);
 
-    motionQuery.addEventListener?.("change", handleMotionChange) ||
+    if (motionQuery.addEventListener) {
+      motionQuery.addEventListener("change", handleMotionChange);
+    } else {
       motionQuery.addListener?.(handleMotionChange);
+    }
 
     return () => {
-      motionQuery.removeEventListener?.("change", handleMotionChange) ||
+      if (motionQuery.removeEventListener) {
+        motionQuery.removeEventListener("change", handleMotionChange);
+      } else {
         motionQuery.removeListener?.(handleMotionChange);
+      }
     };
   }, []);
 

@@ -75,7 +75,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Send email error:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: (error as Error).message }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
@@ -221,7 +221,7 @@ async function processEmailQueue(supabase: any, apiKey: string): Promise<Respons
         .from("email_queue")
         .update({
           status: "failed",
-          error: err.message,
+          error: (err as Error).message,
           retry_count: (email.retry_count || 0) + 1
         })
         .eq("id", email.id);
@@ -231,7 +231,7 @@ async function processEmailQueue(supabase: any, apiKey: string): Promise<Respons
         template: email.template_id,
         recipient: email.recipient_email,
         success: false,
-        error: err.message
+        error: (err as Error).message
       });
     }
 
