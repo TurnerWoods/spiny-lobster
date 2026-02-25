@@ -208,7 +208,7 @@ const HowItWorksPage = () => {
                   >
                     <Card variant="glass" className="h-full p-6">
                       <h3 className="mb-2 font-display text-lg font-bold text-rich-black">{faq.question}</h3>
-                      <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                      <p className="text-sm text-foreground/70">{faq.answer}</p>
                     </Card>
                   </motion.div>
                 ))}
