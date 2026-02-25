@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Award, CheckCircle2, Truck } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroProductImage from "@/assets/hero-product-vial.png";
+import heroVideo from "@/assets/hero-video.mp4";
 import { easing, prefersReducedMotion } from "@/lib/motion";
 
 // Trust badge data for hero
@@ -44,14 +44,7 @@ const useReducedMotion = () => {
 };
 
 const Hero = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = heroProductImage;
-    img.onload = () => setImageLoaded(true);
-  }, []);
 
   // Orchestrated stagger animation for hero content
   // Simplified animations when reduced motion is preferred
@@ -108,37 +101,26 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden">
-      {/* Background with Product Image */}
+      {/* Background with Video */}
       <div className="absolute inset-0 z-0">
         {/* Base gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-deep-charcoal to-[#2a2520]" />
 
-        {/* Product Image - hidden on very small screens, fades in on larger */}
-        <div className="absolute inset-0 flex items-center justify-end">
-          <motion.div
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: imageLoaded ? 0.9 : 0, scale: 1 }}
-            transition={{
-              duration: 1.4,
-              ease: premiumEase,
-            }}
-            className="relative h-full w-full hidden xs:block xs:w-2/3 sm:w-3/4 md:w-3/4 lg:w-2/3"
+        {/* Video Background */}
+        <div className="absolute inset-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full w-full object-cover opacity-60"
           >
-            <img
-              src={heroProductImage}
-              alt="Premium testosterone therapy vial"
-              loading="eager"
-              className="h-full w-full max-w-full object-cover object-center"
-              style={{
-                maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 90%)',
-                WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 90%)'
-              }}
-            />
-          </motion.div>
+            <source src={heroVideo} type="video/mp4" />
+          </video>
         </div>
 
-        {/* Gradient overlay for text readability - stronger on mobile */}
-        <div className="absolute inset-0 bg-gradient-to-r from-deep-charcoal via-deep-charcoal/95 to-deep-charcoal/60 xs:via-deep-charcoal/90 xs:to-transparent" />
+        {/* Gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-deep-charcoal via-deep-charcoal/90 to-deep-charcoal/40" />
       </div>
 
       <div className="container relative z-10 flex min-h-[100dvh] items-center px-4 sm:px-6">
