@@ -11,7 +11,7 @@ const treatment: TreatmentData = {
   productImage: "/images/products/hair-restoration-kit.png",
   stacks: [
     { name: "Complete Hair Stack", tagline: "Maximum Regrowth Protocol", products: ["Finasteride", "Oral Minoxidil", "GHK-Cu"], price: "$129/mo", savings: "Save $28", popular: true, image: "/images/products/hair-restoration-kit.png" },
-    { name: "Hair Essentials", tagline: "Core Treatment", products: ["Finasteride", "Oral Minoxidil"], price: "$49/mo", savings: "Save $9", image: "/images/products/medication-package.png" },
+    { name: "Hair Essentials", tagline: "Core Treatment", products: ["Finasteride", "Oral Minoxidil"], price: "$49/mo", savings: "Save $9", image: "/images/products/hair-growth-dropper.png" },
     { name: "Peptide Protocol", tagline: "Advanced Regeneration", products: ["GHK-Cu Topical", "TB-500 Topical"], price: "$199/mo", savings: "Save $29", image: "/images/products/ghk-cu-vial.png" }
   ],
   medications: [
@@ -19,7 +19,7 @@ const treatment: TreatmentData = {
       name: "Finasteride",
       description: "FDA-approved DHT blocker — standard of care to stop hair loss. Anchor product.",
       price: "$29/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/hair-growth-dropper.png",
       rating: 4.8,
       reviewCount: 4521,
       bestSeller: true
@@ -28,7 +28,7 @@ const treatment: TreatmentData = {
       name: "Oral Minoxidil",
       description: "Low-dose oral for convenient regrowth — growing preference over topical.",
       price: "$39/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/nad-supplements.png",
       rating: 4.7,
       reviewCount: 2876,
       mostPopular: true
@@ -45,7 +45,7 @@ const treatment: TreatmentData = {
       name: "PTD-DBM",
       description: "Novel mechanism — Wnt pathway activation for follicle regeneration.",
       price: "$129/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/bpc-157-vial.png",
       rating: 4.5,
       reviewCount: 312
     },
