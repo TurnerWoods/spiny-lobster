@@ -25,12 +25,18 @@ const useReducedMotion = () => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const handleChange = () => setShouldReduceMotion(mediaQuery.matches);
 
-    mediaQuery.addEventListener?.("change", handleChange) ||
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleChange);
+    } else {
       mediaQuery.addListener?.(handleChange);
+    }
 
     return () => {
-      mediaQuery.removeEventListener?.("change", handleChange) ||
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener("change", handleChange);
+      } else {
         mediaQuery.removeListener?.(handleChange);
+      }
     };
   }, []);
 

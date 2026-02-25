@@ -32,12 +32,18 @@ const TrustMarquee = () => {
     setPrefersReducedMotion(mediaQuery.matches);
 
     const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mediaQuery.addEventListener?.("change", handleChange) ||
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleChange);
+    } else {
       mediaQuery.addListener?.(handleChange);
+    }
 
     return () => {
-      mediaQuery.removeEventListener?.("change", handleChange) ||
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener("change", handleChange);
+      } else {
         mediaQuery.removeListener?.(handleChange);
+      }
     };
   }, []);
 
