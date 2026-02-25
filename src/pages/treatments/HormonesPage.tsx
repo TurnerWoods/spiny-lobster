@@ -10,14 +10,14 @@ const treatment: TreatmentData = {
   heroImage,
   productImage: "/images/products/testosterone-vial.png",
   stacks: [
-    { name: "Complete TRT Protocol", tagline: "Full Hormone Optimization", products: ["Testosterone Cypionate", "HCG", "Anastrozole"], price: "$249/mo", savings: "Save $78", popular: true, image: "/images/products/testosterone-vial.png" },
+    { name: "The Foundation Protocol", tagline: "Complete Hormone Optimization", products: ["Testosterone Cypionate", "HCG", "Anastrozole"], price: "$249/mo", savings: "Save $48", popular: true, image: "/images/products/foundation-stack.png" },
     { name: "TRT + Fertility", tagline: "Preserve Natural Function", products: ["Testosterone", "Gonadorelin", "Anastrozole"], price: "$279/mo", savings: "Save $48", image: "/images/products/hcg-vial.png" },
     { name: "TRT Essentials", tagline: "Core Protocol", products: ["Testosterone Cypionate", "Anastrozole"], price: "$169/mo", savings: "Save $29", image: "/images/products/testosterone-vial.png" }
   ],
   medications: [
     {
-      name: "Testosterone Cypionate",
-      description: "Gold standard for TRT with stable weekly dosing.",
+      name: "Testosterone Cypionate (Injectable)",
+      description: "Gold standard for TRT — anchor product with stable weekly dosing and highest volume.",
       price: "$149/mo",
       image: "/images/products/testosterone-vial.png",
       rating: 4.9,
@@ -25,16 +25,17 @@ const treatment: TreatmentData = {
       bestSeller: true
     },
     {
-      name: "Testosterone Enanthate",
-      description: "Alternative ester with similar benefits.",
-      price: "$149/mo",
-      image: "/images/products/testosterone-vial.png",
-      rating: 4.8,
-      reviewCount: 1876
+      name: "Testosterone Cream/Gel",
+      description: "Growing preference for non-injection topical alternative with steady absorption.",
+      price: "$129/mo",
+      image: "/images/products/medication-package.png",
+      rating: 4.7,
+      reviewCount: 1876,
+      mostPopular: true
     },
     {
-      name: "HCG",
-      description: "Maintains fertility and testicular function.",
+      name: "HCG (Gonadorelin)",
+      description: "Standard TRT adjunct — maintains fertility and testicular function.",
       price: "$99/mo",
       image: "/images/products/hcg-vial.png",
       rating: 4.7,
@@ -42,16 +43,16 @@ const treatment: TreatmentData = {
     },
     {
       name: "Anastrozole",
-      description: "Manages estrogen levels when needed.",
-      price: "Included",
+      description: "Estrogen management — essential adjunct for optimal hormone balance.",
+      price: "$49/mo",
       image: "/images/products/anastrozole-bottle.png",
       rating: 4.6,
       reviewCount: 987
     },
     {
-      name: "Gonadorelin",
-      description: "Alternative to HCG for natural production.",
-      price: "$79/mo",
+      name: "DHEA",
+      description: "Adrenal support for comprehensive hormone optimization.",
+      price: "$39/mo",
       image: "/images/products/medication-package.png",
       rating: 4.5,
       reviewCount: 654

@@ -22,46 +22,46 @@ const treatment: TreatmentData = {
   ],
   medications: [
     {
-      name: "Selank",
-      description: "Nootropic peptide that reduces anxiety and improves focus.",
-      price: "$99/mo",
-      image: "/images/products/selank-vial.png",
-      rating: 4.8,
-      reviewCount: 1432,
-      bestSeller: true
-    },
-    {
       name: "Semax",
-      description: "Cognitive enhancer for memory and mental clarity.",
+      description: "Nootropic peptide for memory and mental clarity. Differentiator — Hone/TryEden don't carry.",
       price: "$99/mo",
       image: "/images/products/semax-vial.png",
       rating: 4.9,
       reviewCount: 1876,
+      bestSeller: true
+    },
+    {
+      name: "Selank",
+      description: "Anxiolytic + cognitive peptide that reduces anxiety and improves focus. Pairs synergistically with Semax.",
+      price: "$99/mo",
+      image: "/images/products/selank-vial.png",
+      rating: 4.8,
+      reviewCount: 1432,
       mostPopular: true
     },
     {
-      name: "NAD+",
-      description: "Supports brain energy and mental clarity.",
-      price: "$199/mo",
-      image: "/images/products/nad-vial.png",
-      rating: 4.8,
-      reviewCount: 1234
-    },
-    {
-      name: "Methylene Blue",
-      description: "Mitochondrial support for cognitive function.",
-      price: "$79/mo",
-      image: "/images/products/methylene-blue-vial.png",
-      rating: 4.6,
-      reviewCount: 654
-    },
-    {
       name: "Dihexa",
-      description: "Advanced nootropic for memory formation.",
+      description: "Premium nootropic for advanced cognitive enhancement and memory formation.",
       price: "$179/mo",
       image: "/images/products/dihexa-vial.png",
       rating: 4.7,
       reviewCount: 543
+    },
+    {
+      name: "MOTS-c",
+      description: "Mitochondrial peptide for cellular energy, cognition, and metabolic health. Cross-listed with longevity.",
+      price: "$199/mo",
+      image: "/images/products/mots-c-vial.png",
+      rating: 4.7,
+      reviewCount: 412
+    },
+    {
+      name: "Methylene Blue",
+      description: "Mitochondrial support for cognitive function. High-margin nootropic with growing community demand.",
+      price: "$79/mo",
+      image: "/images/products/methylene-blue-vial.png",
+      rating: 4.6,
+      reviewCount: 654
     }
   ],
   symptoms: [

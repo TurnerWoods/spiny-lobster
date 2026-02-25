@@ -62,10 +62,10 @@ const treatments = [
     badge: "popular" as const,
   },
   {
-    title: "Cognitive",
+    title: "Mood & Cognitive",
     subtitle: "Focus & Clarity",
     image: "/images/products/semax-selank-vials.png",
-    price: "From $99",
+    price: "From $79",
     slug: "mood",
     rating: 4.7,
     reviewCount: 742,
