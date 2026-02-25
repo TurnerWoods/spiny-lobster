@@ -37,7 +37,7 @@ const treatment: TreatmentData = {
       name: "AOD-9604",
       description: "Peptide alternative to GLP-1 that stimulates lipolysis without appetite suppression side effects.",
       price: "$149/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/ipamorelin-vial.png",
       rating: 4.7,
       reviewCount: 892
     },
@@ -61,7 +61,7 @@ const treatment: TreatmentData = {
       name: "5-Amino-1MQ",
       description: "Novel NNMT inhibitor — unique mechanism no competitor carries. Boosts cellular energy and fat metabolism.",
       price: "$149/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/nad-supplements.png",
       rating: 4.6,
       reviewCount: 312
     }

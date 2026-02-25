@@ -28,7 +28,7 @@ const treatment: TreatmentData = {
       name: "Testosterone Cream/Gel",
       description: "Growing preference for non-injection topical alternative with steady absorption.",
       price: "$129/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/testosterone-vial.png",
       rating: 4.7,
       reviewCount: 1876,
       mostPopular: true
@@ -53,7 +53,7 @@ const treatment: TreatmentData = {
       name: "DHEA",
       description: "Adrenal support for comprehensive hormone optimization.",
       price: "$39/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/nad-supplements.png",
       rating: 4.5,
       reviewCount: 654
     }

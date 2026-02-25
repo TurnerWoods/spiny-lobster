@@ -11,14 +11,14 @@ const treatment: TreatmentData = {
   productImage: "/images/products/ghk-cu-vial.png",
   stacks: [
     { name: "Anti-Aging Stack", tagline: "Complete Rejuvenation Protocol", products: ["Tretinoin", "GHK-Cu"], price: "$149/mo", savings: "Save $19", popular: true, image: "/images/products/ghk-cu-vial.png" },
-    { name: "Peptide Skin Stack", tagline: "Collagen & Elastin Boost", products: ["GHK-Cu", "Argireline", "Matrixyl"], price: "$249/mo", savings: "Save $48", image: "/images/products/medication-package.png" }
+    { name: "Peptide Skin Stack", tagline: "Collagen & Elastin Boost", products: ["GHK-Cu", "Argireline", "Matrixyl"], price: "$249/mo", savings: "Save $48", image: "/images/products/ghk-cu-vial.png" }
   ],
   medications: [
     {
       name: "Tretinoin",
       description: "Gold standard topical for anti-aging and collagen building. Proven, high margin.",
       price: "$39/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/hair-growth-dropper.png",
       rating: 4.9,
       reviewCount: 3654,
       bestSeller: true
@@ -36,7 +36,7 @@ const treatment: TreatmentData = {
       name: "Argireline",
       description: "Topical 'botox alternative' — consumer-friendly peptide for expression lines.",
       price: "$89/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/epitalon-vial.png",
       rating: 4.7,
       reviewCount: 876
     },
@@ -44,7 +44,7 @@ const treatment: TreatmentData = {
       name: "Matrixyl",
       description: "Collagen + elastin stimulating peptide. Pairs synergistically with GHK-Cu.",
       price: "$99/mo",
-      image: "/images/products/medication-package.png",
+      image: "/images/products/ghk-cu-vial.png",
       rating: 4.6,
       reviewCount: 654
     }
