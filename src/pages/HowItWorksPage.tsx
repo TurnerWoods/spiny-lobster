@@ -12,30 +12,40 @@ const steps = [
     number: "01",
     title: "Start Your Assessment",
     description: "Click \"Get Started\" and complete our secure health assessment. You'll answer questions about your symptoms, health history, and goals. The entire process takes about 5 minutes and can be done from your phone, tablet, or computer. Your information is encrypted and stored on our HIPAA-compliant platform.",
+    image: "/images/lifestyle/executive-contemplating.png",
+    imageAlt: "Man completing health assessment on tablet",
   },
   {
     icon: UserCheck,
     number: "02",
     title: "Physician Review",
     description: "A Texas-licensed, board-certified physician reviews your complete health profile. If you're a good candidate for treatment, they'll create a personalized protocol based on your specific needs. Most patients receive their treatment plan within 24 hours. No appointment required for straightforward cases.",
+    image: "/images/process/physician-consultation.png",
+    imageAlt: "Licensed physician reviewing patient profile",
   },
   {
     icon: Video,
     number: "03",
     title: "Optional Consultation ($99)",
     description: "Prefer to speak directly with your physician? Book a 30-minute video consultation for $99. This option is ideal for patients with complex health histories or those who simply prefer face-to-face discussion. Many patients find the async pathway sufficient, but we're here either way.",
+    image: "/images/process/physician-video-call.png",
+    imageAlt: "Video consultation with physician",
   },
   {
     icon: Truck,
     number: "04",
     title: "Treatment Delivered",
     description: "Once approved, your prescription is filled by our FDA-regulated pharmacy partner and shipped directly to your home or office in discreet, unmarked packaging. Most shipments arrive within 3-5 business days. Refills are automatic unless you tell us otherwise.",
+    image: "/images/process/discreet-delivery.png",
+    imageAlt: "Discreet medication delivery to your door",
   },
   {
     icon: MessageSquare,
     number: "05",
     title: "Ongoing Support",
     description: "Your care doesn't end when your medication arrives. You have unlimited secure messaging access to your care team for questions, adjustments, or concerns. We monitor your progress and adjust your protocol as needed to ensure optimal results.",
+    image: "/images/lifestyle/morning-energy.png",
+    imageAlt: "Man feeling energized with ongoing care support",
   },
 ];
 
@@ -88,7 +98,7 @@ const HowItWorksPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-warm-gray"
+                className="text-lg text-muted-foreground"
               >
                 We built Elevare for men who value their time as much as their health. Every step is designed to fit your life, not the other way around.
               </motion.p>
@@ -99,36 +109,50 @@ const HowItWorksPage = () => {
         {/* Steps Section */}
         <section className="py-20">
           <div className="container px-4 md:px-6">
-            <div className="mx-auto max-w-3xl">
-              <div className="relative">
-                {/* Connection Line */}
-                <div className="absolute left-6 top-0 hidden h-full w-0.5 bg-gradient-to-b from-warm-stone via-warm-stone/50 to-warm-stone md:block" />
-                
-                <div className="space-y-12">
-                  {steps.map((step, index) => (
-                    <motion.div
-                      key={step.number}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className="relative flex gap-6"
-                    >
-                      {/* Icon */}
-                      <div className="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-4 border-pure-white bg-warm-stone shadow-lg">
-                        <step.icon className="h-6 w-6 text-pure-white" />
+            <div className="mx-auto max-w-5xl space-y-16 md:space-y-24">
+              {steps.map((step, index) => {
+                const isEven = index % 2 === 1;
+                return (
+                  <motion.div
+                    key={step.number}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className={`flex flex-col items-center gap-8 md:flex-row md:gap-12 ${isEven ? "md:flex-row-reverse" : ""}`}
+                  >
+                    {/* Image */}
+                    <div className="w-full md:w-1/2">
+                      <div className="overflow-hidden rounded-2xl shadow-lg">
+                        <img
+                          src={step.image}
+                          alt={step.imageAlt}
+                          loading="lazy"
+                          className="aspect-[4/3] w-full object-cover"
+                        />
                       </div>
-                      
-                      {/* Content */}
-                      <Card variant="glass" className="flex-1 p-6">
-                        <span className="mb-1 block text-sm font-bold text-warm-stone">Step {step.number}</span>
-                        <h3 className="mb-3 font-display text-xl font-bold text-rich-black">{step.title}</h3>
-                        <p className="text-warm-gray">{step.description}</p>
-                      </Card>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="w-full md:w-1/2">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone text-pure-white shadow-md">
+                          <step.icon className="h-6 w-6" />
+                        </div>
+                        <span className="text-sm font-bold uppercase tracking-wider text-warm-stone">
+                          Step {step.number}
+                        </span>
+                      </div>
+                      <h3 className="mb-4 font-display text-2xl font-bold text-rich-black md:text-3xl">
+                        {step.title}
+                      </h3>
+                      <p className="text-base leading-relaxed text-muted-foreground">
+                        {step.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -157,7 +181,7 @@ const HowItWorksPage = () => {
                   >
                     <Card variant="glass" className="h-full p-6">
                       <h3 className="mb-2 font-display text-lg font-bold text-rich-black">{faq.question}</h3>
-                      <p className="text-sm text-warm-gray">{faq.answer}</p>
+                      <p className="text-sm text-muted-foreground">{faq.answer}</p>
                     </Card>
                   </motion.div>
                 ))}
