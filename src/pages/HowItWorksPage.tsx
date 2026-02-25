@@ -117,7 +117,7 @@ const HowItWorksPage = () => {
                     key={step.number}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
+                    viewport={{ once: true, amount: 0.1 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className={`flex flex-col items-center gap-8 md:flex-row md:gap-12 ${isEven ? "md:flex-row-reverse" : ""}`}
                   >
@@ -165,7 +165,7 @@ const HowItWorksPage = () => {
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 className="mb-8 text-center font-display text-3xl font-bold text-rich-black"
               >
                 Common Questions
@@ -176,7 +176,7 @@ const HowItWorksPage = () => {
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.1 }}
                     transition={{ delay: index * 0.1 }}
                   >
                     <Card variant="glass" className="h-full p-6">
@@ -196,7 +196,7 @@ const HowItWorksPage = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.1 }}
             >
               <Card variant="glassDark" className="mx-auto max-w-2xl p-8 text-center md:p-12">
                 <h2 className="mb-4 font-display text-3xl font-bold text-pure-white">Ready to Get Started?</h2>
