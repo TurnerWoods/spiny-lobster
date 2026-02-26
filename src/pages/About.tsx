@@ -75,7 +75,8 @@ const About = () => {
                 className="mb-6 font-display text-5xl font-bold leading-tight tracking-tight text-rich-black lg:text-6xl"
               >
                 Healthcare Built for{" "}
-                <span className="text-warm-stone">How You Live</span>
+                <span className="text-warm-stone">Men & Women</span>
+                {" "}— How You Live
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
