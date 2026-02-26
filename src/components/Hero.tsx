@@ -11,7 +11,7 @@ const heroTrustBadges = [
   { icon: Award, label: "US-Licensed Physicians" },
   { icon: CheckCircle2, label: "FDA-Approved Medications" },
   { icon: Shield, label: "HIPAA Compliant" },
-  { icon: Truck, label: "Free Shipping" },
+  { icon: Truck, label: "Discreet Shipping" },
 ];
 
 // Premium easing curve - smooth, refined, no bounce

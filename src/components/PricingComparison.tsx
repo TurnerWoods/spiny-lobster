@@ -8,7 +8,7 @@ const trustBadges = [
   { icon: Award, label: "US-Licensed Physicians" },
   { icon: CheckCircle2, label: "FDA-Approved" },
   { icon: Shield, label: "HIPAA Compliant" },
-  { icon: Truck, label: "Free Shipping" },
+  { icon: Truck, label: "Discreet Shipping" },
 ];
 
 const comparisonData = [

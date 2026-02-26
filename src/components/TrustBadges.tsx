@@ -28,9 +28,9 @@ export const trustBadgeData = [
   {
     id: "shipping",
     icon: Truck,
-    label: "Free Shipping",
-    shortLabel: "Free Shipping",
-    description: "Discreet, free shipping on all orders",
+    label: "Discreet Shipping",
+    shortLabel: "Discreet Shipping",
+    description: "Discreet shipping on all orders",
   },
 ];
 
