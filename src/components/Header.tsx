@@ -87,8 +87,8 @@ const Header = () => {
     title: "Weight Loss",
     href: "/treatments/weight-loss",
     treatments: [
-      { name: "Semaglutide", href: "/treatments/weight-loss#semaglutide", rx: true, price: "$149/mo" },
       { name: "Tirzepatide", href: "/treatments/weight-loss#tirzepatide", rx: true, price: "$199/mo" },
+      { name: "Semaglutide", href: "/treatments/weight-loss#semaglutide", rx: true, price: "$149/mo" },
       { name: "Lipotropic Injections", href: "/treatments/weight-loss#lipotropic", rx: true, price: "$99/mo" },
     ],
     tools: [
