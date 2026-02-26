@@ -14,9 +14,9 @@ export const trustBadgeData = [
   {
     id: "fda",
     icon: CheckCircle2,
-    label: "FDA-Approved Medications",
-    shortLabel: "FDA-Approved",
-    description: "Only FDA-approved or FDA-regulated compounded medications",
+    label: "FDA-Registered Pharmacy Partners",
+    shortLabel: "FDA-Registered",
+    description: "Partnered with FDA-registered licensed pharmacies",
   },
   {
     id: "hipaa",

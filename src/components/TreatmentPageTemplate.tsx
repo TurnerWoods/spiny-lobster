@@ -408,7 +408,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
 
               <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-sm text-pure-white/70">
                 <span className="flex items-center gap-1.5"><Award className="h-4 w-4 text-warm-stone" /> US-Licensed</span>
-                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-warm-stone" /> FDA-Approved</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-warm-stone" /> FDA-Registered</span>
                 <span className="flex items-center gap-1.5"><Shield className="h-4 w-4 text-warm-stone" /> HIPAA</span>
                 <span className="flex items-center gap-1.5"><Truck className="h-4 w-4 text-warm-stone" /> Discreet Shipping</span>
               </div>

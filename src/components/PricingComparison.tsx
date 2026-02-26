@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 // Trust badges
 const trustBadges = [
   { icon: Award, label: "US-Licensed Physicians" },
-  { icon: CheckCircle2, label: "FDA-Approved" },
+  { icon: CheckCircle2, label: "FDA-Registered" },
   { icon: Shield, label: "HIPAA Compliant" },
   { icon: Truck, label: "Discreet Shipping" },
 ];

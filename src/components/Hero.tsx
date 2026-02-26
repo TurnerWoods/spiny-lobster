@@ -9,7 +9,7 @@ import { easing, prefersReducedMotion } from "@/lib/motion";
 // Trust badge data for hero
 const heroTrustBadges = [
   { icon: Award, label: "US-Licensed Physicians" },
-  { icon: CheckCircle2, label: "FDA-Approved Medications" },
+  { icon: CheckCircle2, label: "FDA-Registered Pharmacy Partners" },
   { icon: Shield, label: "HIPAA Compliant" },
   { icon: Truck, label: "Discreet Shipping" },
 ];

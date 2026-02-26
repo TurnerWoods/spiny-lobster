@@ -7,7 +7,7 @@ import { easing, duration, viewportSettings } from "@/lib/motion";
 // Trust badges for CTA
 const ctaTrustBadges = [
   { icon: Award, label: "US-Licensed Physicians" },
-  { icon: CheckCircle2, label: "FDA-Approved" },
+  { icon: CheckCircle2, label: "FDA-Registered" },
   { icon: Shield, label: "HIPAA Compliant" },
   { icon: Truck, label: "Discreet Shipping" },
 ];
