@@ -76,6 +76,7 @@ const About = () => {
               >
                 Healthcare Built{" "}
                 <span className="text-warm-stone">for You</span>
+                {" "}— How You Live
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
