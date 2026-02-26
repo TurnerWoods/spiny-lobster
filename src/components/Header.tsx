@@ -116,9 +116,9 @@ const Header = () => {
     title: "Peptides",
     href: "/treatments/strength",
     treatments: [
-      { name: "Sermorelin", href: "/treatments/strength#sermorelin", rx: true, price: "$199/mo" },
-      { name: "BPC-157", href: "/treatments/strength#bpc157", rx: true, price: "$149/mo" },
       { name: "NAD+", href: "/treatments/anti-aging#nad", rx: true, price: "$199/mo" },
+      { name: "BPC-157", href: "/treatments/strength#bpc157", rx: true, price: "$149/mo" },
+      { name: "Sermorelin", href: "/treatments/strength#sermorelin", rx: true, price: "$199/mo" },
     ],
     tools: [
       { name: "Protein Calculator", href: "/tools/calculators/protein" },
