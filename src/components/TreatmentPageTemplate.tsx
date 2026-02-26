@@ -98,7 +98,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                     <Check className="h-3.5 w-3.5 text-accent-gold" /> FSA/HSA
                   </span>
                   <span className="flex items-center gap-1">
-                    <Truck className="h-3.5 w-3.5 text-accent-gold" /> Free Ship
+                    <Truck className="h-3.5 w-3.5 text-accent-gold" /> Discreet
                   </span>
                   <span className="flex items-center gap-1">
                     <Shield className="h-3.5 w-3.5 text-accent-gold" /> HIPAA
@@ -410,7 +410,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                 <span className="flex items-center gap-1.5"><Award className="h-4 w-4 text-warm-stone" /> US-Licensed</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-warm-stone" /> FDA-Approved</span>
                 <span className="flex items-center gap-1.5"><Shield className="h-4 w-4 text-warm-stone" /> HIPAA</span>
-                <span className="flex items-center gap-1.5"><Truck className="h-4 w-4 text-warm-stone" /> Free Shipping</span>
+                <span className="flex items-center gap-1.5"><Truck className="h-4 w-4 text-warm-stone" /> Discreet Shipping</span>
               </div>
 
               <Link to="/intake">
