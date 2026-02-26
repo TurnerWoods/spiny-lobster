@@ -159,7 +159,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
               <div className={`mb-8 ${sectionFadeClass}`}>
                 <div className="flex items-center gap-2 text-xs font-medium text-warm-stone mb-2">
                   <BadgeCheck className="h-4 w-4" />
-                  FDA-Approved Medications
+                  FDA-Registered Pharmacy Partners
                 </div>
                 <h2 className="font-display text-2xl font-bold text-rich-black sm:text-3xl">
                   Available Treatments
