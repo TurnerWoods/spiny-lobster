@@ -249,8 +249,8 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                         )}
                       </div>
                       {med.inStock !== false && (
-                        <span className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-accent-gold px-2 py-0.5 text-[10px] font-semibold text-white">
-                          <span className="h-1.5 w-1.5 rounded-full bg-white" /> In Stock
+                        <span className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-accent-gold px-2 py-0.5 text-[10px] font-semibold text-rich-black">
+                          <span className="h-1.5 w-1.5 rounded-full bg-rich-black" /> In Stock
                         </span>
                       )}
                     </div>
