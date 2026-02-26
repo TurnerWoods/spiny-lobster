@@ -205,7 +205,7 @@ const About = () => {
                         <h3 className="mb-1 font-display text-2xl font-semibold tracking-normal text-rich-black">Paul Eckdale</h3>
                         <p className="text-eyebrow mb-4 text-warm-stone">Co-Founder</p>
                         <p className="text-body-sm text-warm-gray">
-                          16+ years medical field experience. Focus on pharmacy operations and provider-pharmacy coordination. Oversees pharmacy relationships.
+                          Nearly 2 decades in the Healthcare space.
                         </p>
                       </CardContent>
                     </Card>
