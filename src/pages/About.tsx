@@ -74,9 +74,8 @@ const About = () => {
                 transition={{ delay: 0.1 }}
                 className="mb-6 font-display text-5xl font-bold leading-tight tracking-tight text-rich-black lg:text-6xl"
               >
-                Healthcare Built for{" "}
-                <span className="text-warm-stone">Men & Women</span>
-                {" "}— How You Live
+                Healthcare Built{" "}
+                <span className="text-warm-stone">for You</span>
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -84,7 +83,7 @@ const About = () => {
                 transition={{ delay: 0.2 }}
                 className="lead text-warm-gray"
               >
-                Elevare Health was founded on a simple observation: successful men don't have time for traditional healthcare, but they need it more than ever. The demands of building careers, leading teams, and raising families take a physical toll. Yet the healthcare system isn't built for people with packed calendars and high standards.
+                Elevare Health was founded on a simple observation: busy men and women don't have time for traditional healthcare, but they need it more than ever. The demands of building careers, leading teams, and raising families take a physical toll. Yet the healthcare system isn't built for people with packed calendars and high standards.
               </motion.p>
             </div>
           </div>
