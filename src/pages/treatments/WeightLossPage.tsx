@@ -16,15 +16,6 @@ const treatment: TreatmentData = {
   ],
   medications: [
     {
-      name: "Semaglutide",
-      description: "GLP-1 agonist that reduces appetite and improves blood sugar control. #1 search term in men's health.",
-      price: "$149/mo",
-      image: "/images/products/semaglutide-vial.png",
-      rating: 4.9,
-      reviewCount: 2847,
-      bestSeller: true
-    },
-    {
       name: "Tirzepatide",
       description: "Dual GIP/GLP-1 agonist — fastest-growing segment with superior efficacy data. 15-25% body weight loss in clinical trials.",
       price: "$199/mo",
@@ -32,6 +23,15 @@ const treatment: TreatmentData = {
       rating: 4.8,
       reviewCount: 1523,
       mostPopular: true
+    },
+    {
+      name: "Semaglutide",
+      description: "GLP-1 agonist that reduces appetite and improves blood sugar control. #1 search term in men's health.",
+      price: "$149/mo",
+      image: "/images/products/semaglutide-vial.png",
+      rating: 4.9,
+      reviewCount: 2847,
+      bestSeller: true
     },
     {
       name: "AOD-9604",
