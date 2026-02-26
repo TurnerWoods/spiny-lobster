@@ -202,7 +202,7 @@ const About = () => {
                         <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-warm-stone/10 to-warm-stone/20 text-warm-stone shadow-inner">
                           <span className="font-display text-3xl font-bold">PE</span>
                         </div>
-                        <h3 className="mb-1 font-display text-2xl font-semibold tracking-normal text-rich-black">Paul Eckdale</h3>
+                        <h3 className="mb-1 font-display text-2xl font-semibold tracking-normal text-rich-black">P. Eckdale</h3>
                         <p className="text-eyebrow mb-4 text-warm-stone">Co-Founder</p>
                         <p className="text-body-sm text-warm-gray">
                           Nearly 2 decades in the Healthcare space.
