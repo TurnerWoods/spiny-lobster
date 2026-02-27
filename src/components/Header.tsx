@@ -112,17 +112,30 @@ const Header = () => {
     ],
   };
 
-  const peptidesDropdown = {
-    title: "Peptides",
+  const strengthDropdown = {
+    title: "Strength",
     href: "/treatments/strength",
     treatments: [
-      { name: "NAD+", href: "/treatments/anti-aging#nad", rx: true, price: "$199/mo" },
       { name: "BPC-157", href: "/treatments/strength#bpc157", rx: true, price: "$149/mo" },
       { name: "Sermorelin", href: "/treatments/strength#sermorelin", rx: true, price: "$199/mo" },
+      { name: "TB-500", href: "/treatments/strength#tb500", rx: true, price: "$149/mo" },
     ],
     tools: [
       { name: "Protein Calculator", href: "/tools/calculators/protein" },
       { name: "AI Workout Generator", href: "/tools/workout-generator" },
+    ],
+  };
+
+  const antiAgingDropdown = {
+    title: "Anti-Aging",
+    href: "/treatments/anti-aging",
+    treatments: [
+      { name: "NAD+", href: "/treatments/anti-aging#nad", rx: true, price: "$199/mo" },
+      { name: "Epitalon", href: "/treatments/anti-aging#epitalon", rx: true, price: "$179/mo" },
+      { name: "GHK-Cu", href: "/treatments/anti-aging#ghkcu", rx: true, price: "$149/mo" },
+    ],
+    tools: [
+      { name: "Lab Interpreter", href: "/tools/lab-interpreter" },
     ],
   };
 
@@ -139,13 +152,13 @@ const Header = () => {
     ],
   };
 
-  const sexualHealthDropdown = {
-    title: "Sexual Health",
-    href: "/treatments/sexual-health",
+  const moodDropdown = {
+    title: "Mood",
+    href: "/treatments/mood",
     treatments: [
-      { name: "PT-141 (Bremelanotide)", href: "/treatments/sexual-health#pt141", rx: true, price: "$149/mo" },
-      { name: "Tadalafil", href: "/treatments/sexual-health#tadalafil", rx: true, price: "$49/mo" },
-      { name: "Oxytocin Nasal Spray", href: "/treatments/sexual-health#oxytocin", rx: true, price: "$79/mo" },
+      { name: "Semax", href: "/treatments/mood#semax", rx: true, price: "$129/mo" },
+      { name: "Selank", href: "/treatments/mood#selank", rx: true, price: "$119/mo" },
+      { name: "Methylene Blue", href: "/treatments/mood#methylene-blue", rx: true, price: "$79/mo" },
     ],
     tools: [
       { name: "Hormone Quiz", href: "/tools/hormone-assessment" },
@@ -155,8 +168,8 @@ const Header = () => {
   const moreDropdown = {
     title: "More",
     items: [
-      { name: "Anti-Aging", href: "/treatments/anti-aging" },
-      { name: "Mood & Focus", href: "/treatments/mood" },
+      { name: "Testosterone", href: "/treatments/hormones" },
+      { name: "Sexual Health", href: "/treatments/sexual-health" },
       { name: "Skin Care", href: "/treatments/skin" },
       { name: "All Tools", href: "/tools" },
       { name: "Pricing", href: "/pricing" },
@@ -310,10 +323,10 @@ const Header = () => {
           <NavigationMenu className="hidden lg:flex">
             <NavigationMenuList className="gap-1">
               <TreatmentDropdown dropdown={weightLossDropdown} />
-              <TreatmentDropdown dropdown={testosteroneDropdown} />
-              <TreatmentDropdown dropdown={peptidesDropdown} />
+              <TreatmentDropdown dropdown={strengthDropdown} />
+              <TreatmentDropdown dropdown={antiAgingDropdown} />
               <TreatmentDropdown dropdown={hairDropdown} />
-              <TreatmentDropdown dropdown={sexualHealthDropdown} />
+              <TreatmentDropdown dropdown={moodDropdown} />
 
               {/* More Dropdown - Refined */}
               <NavigationMenuItem>
