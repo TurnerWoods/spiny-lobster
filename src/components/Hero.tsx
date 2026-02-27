@@ -118,20 +118,6 @@ const Hero = () => {
         {/* Gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-deep-charcoal via-deep-charcoal/90 to-deep-charcoal/40" />
 
-        {/* Brand name overlay - covers watermark */}
-        <div className="absolute inset-0 flex flex-col items-center justify-start pt-[12%] pointer-events-none select-none z-[1]">
-          <img
-            src="/elevar-logo.svg"
-            alt=""
-            className="h-10 sm:h-14 md:h-16 w-auto mb-2 sm:mb-3 opacity-30 brightness-200"
-          />
-          <span className="font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[8rem] font-black tracking-tight text-pure-white/20 uppercase leading-none">
-            Elevar Health
-          </span>
-          <span className="mt-1 sm:mt-2 text-sm sm:text-lg md:text-xl font-light tracking-[0.3em] text-pure-white/15 uppercase">
-            Telehealth. Simplified.
-          </span>
-        </div>
       </div>
 
       <div className="container relative z-10 flex min-h-[100dvh] items-center px-4 sm:px-6">
