@@ -310,16 +310,13 @@ const Header = () => {
       >
         <div className="container flex h-14 sm:h-16 md:h-[68px] items-center justify-between px-4 md:px-6 lg:px-8">
           {/* Logo - Mobile-optimized sizing with proper touch target */}
-          <Link to="/" className="flex items-center gap-2 group min-h-[44px] min-w-[44px]">
+          <Link to="/" className="flex items-center group min-h-[44px] min-w-[44px]">
             <img
               src="/elevar-logo.svg"
               alt="Elevar Health"
               loading="eager"
               className="h-7 sm:h-8 md:h-9 w-auto max-w-full transition-transform duration-300 group-hover:scale-[1.02]"
             />
-            <span className="font-display text-base sm:text-lg font-semibold tracking-tight text-rich-black">
-              Elevar Health
-            </span>
           </Link>
 
           {/* Desktop Navigation - Clean & Minimal */}
