@@ -34,8 +34,8 @@ const trustCredentials = [
   },
   {
     icon: BadgeCheck,
-    title: "FDA-Approved Medications",
-    description: "Only proven, FDA-approved treatments",
+    title: "FDA-Regulated Pharmacy Partners",
+    description: "Partnered with FDA-regulated licensed pharmacies",
   },
   {
     icon: Stethoscope,
