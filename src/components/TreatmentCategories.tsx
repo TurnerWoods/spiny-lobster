@@ -57,6 +57,12 @@ const compactTreatments = [
     image: "/images/products/ghk-cu-vial.png",
     slug: "skin",
   },
+  {
+    title: "Mood & Focus",
+    subtitle: "for mental\nclarity",
+    image: "/images/products/semax-vial.png",
+    slug: "mood",
+  },
 ];
 
 const cardVariants = {
