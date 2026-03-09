@@ -15,7 +15,16 @@ export interface TreatmentStack {
   savings: string;
   popular?: boolean;
   image?: string;
+  slug?: string;
 }
+
+// Helper function to generate a URL-friendly slug from a name
+const generateSlug = (name: string): string => {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
 
 export interface TreatmentData {
   category: string;
@@ -38,6 +47,7 @@ export interface TreatmentData {
     mostPopular?: boolean;
     rating?: number;
     reviewCount?: number;
+    slug?: string;
   }[];
   symptoms: string[];
   benefits: string[];
@@ -198,17 +208,20 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           </div>
                         )}
                         {stack.image && (
-                          <div className="aspect-[16/10] overflow-hidden bg-soft-linen">
+                          <Link
+                            to={`/intake?treatment=${stack.slug || generateSlug(stack.name)}`}
+                            className="block aspect-[16/10] overflow-hidden bg-soft-linen cursor-pointer"
+                          >
                             <img
                               src={stack.image}
                               alt={`${stack.name} treatment bundle - includes ${stack.products.join(', ')}`}
                               loading="lazy"
                               decoding="async"
                               fetchPriority="low"
-                              className="h-full w-full object-cover"
+                              className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                               onError={handleImageError}
                             />
-                          </div>
+                          </Link>
                         )}
                         <div className="p-5">
                           <div className="flex items-start justify-between mb-3">
@@ -245,7 +258,10 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                     key={i}
                     className="group flex flex-col overflow-hidden rounded-xl border border-neutral-gray/20 bg-pure-white hover:shadow-lg hover:border-warm-stone/30 transition-all duration-300"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-soft-linen to-warm-stone/5">
+                    <Link
+                      to={`/intake?treatment=${med.slug || generateSlug(med.name)}`}
+                      className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-soft-linen to-warm-stone/5 block cursor-pointer"
+                    >
                       {med.image ? (
                         <img
                           src={med.image}
@@ -276,7 +292,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           <span className="h-1.5 w-1.5 rounded-full bg-white" /> In Stock
                         </span>
                       )}
-                    </div>
+                    </Link>
                     <div className="flex flex-1 flex-col p-4">
                       <h3 className="font-display text-sm font-bold text-rich-black mb-1 group-hover:text-deep-charcoal transition-colors">
                         {med.name}

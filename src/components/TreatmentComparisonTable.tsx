@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Info, Search, X, Filter, Star, Flame } from "lucide-react";
 import {
@@ -208,6 +209,42 @@ const categoryColors: Record<string, string> = {
   "Mood": "bg-indigo-100 text-indigo-800 border-indigo-300 dark:bg-indigo-900 dark:text-indigo-100 dark:border-indigo-700",
 };
 
+// Category name to URL slug mapping
+const categorySlugMap: Record<string, string> = {
+  "Weight Loss": "weight-loss",
+  "Hormones": "hormones",
+  "Anti-Aging": "anti-aging",
+  "Strength": "strength",
+  "Hair": "hair",
+  "Skin": "skin",
+  "Mood": "mood",
+};
+
+// Treatment name to URL slug mapping
+const treatmentSlugMap: Record<string, string> = {
+  "Semaglutide": "semaglutide",
+  "Tirzepatide": "tirzepatide",
+  "Testosterone Cypionate": "testosterone-cypionate",
+  "Testosterone Enanthate": "testosterone-enanthate",
+  "Sermorelin": "sermorelin",
+  "Tesamorelin": "tesamorelin",
+  "NAD+": "nad-plus",
+  "BPC-157": "bpc-157",
+  "Finasteride": "finasteride",
+  "Minoxidil": "minoxidil",
+  "Tretinoin": "tretinoin",
+};
+
+// Helper function to get treatment URL
+const getTreatmentUrl = (treatmentName: string, category: string): string => {
+  // First try to link to the category page since individual treatment pages may not exist
+  const categorySlug = categorySlugMap[category];
+  if (categorySlug) {
+    return `/treatments/${categorySlug}`;
+  }
+  return "/treatments/weight-loss"; // fallback
+};
+
 const TreatmentComparisonTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -402,31 +439,40 @@ const TreatmentComparisonTable = () => {
                             }`}
                           >
                             <td className="px-6 py-4">
-                              <div className="flex flex-col gap-1">
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium text-foreground">
-                                    {treatment.name}
-                                  </span>
-                                  {treatment.bestseller && (
-                                    <TableProductBadge type="bestseller" />
-                                  )}
-                                  {treatment.popular && !treatment.bestseller && (
-                                    <TableProductBadge type="popular" />
+                              <Link
+                                to={getTreatmentUrl(treatment.name, treatment.category)}
+                                className="block"
+                              >
+                                <div className="flex flex-col gap-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-medium text-foreground hover:text-primary transition-colors">
+                                      {treatment.name}
+                                    </span>
+                                    {treatment.bestseller && (
+                                      <TableProductBadge type="bestseller" />
+                                    )}
+                                    {treatment.popular && !treatment.bestseller && (
+                                      <TableProductBadge type="popular" />
+                                    )}
+                                  </div>
+                                  {treatment.rating && (
+                                    <TableStarRating rating={treatment.rating} />
                                   )}
                                 </div>
-                                {treatment.rating && (
-                                  <TableStarRating rating={treatment.rating} />
-                                )}
-                              </div>
+                              </Link>
                             </td>
                             <td className="px-6 py-4">
-                              <span
-                                className={`inline-block rounded-full border px-3 py-1 text-xs font-medium ${
-                                  categoryColors[treatment.category] || "bg-muted text-muted-foreground"
-                                }`}
+                              <Link
+                                to={`/treatments/${categorySlugMap[treatment.category] || 'weight-loss'}`}
                               >
-                                {treatment.category}
-                              </span>
+                                <span
+                                  className={`inline-block rounded-full border px-3 py-1 text-xs font-medium hover:opacity-80 transition-opacity ${
+                                    categoryColors[treatment.category] || "bg-muted text-muted-foreground"
+                                  }`}
+                                >
+                                  {treatment.category}
+                                </span>
+                              </Link>
                             </td>
                             <td className="px-6 py-4">
                               <span className="font-bold text-lg text-stone-900 dark:text-stone-50">{treatment.price}</span>
@@ -464,60 +510,65 @@ const TreatmentComparisonTable = () => {
                 {/* Mobile Cards */}
                 <div className="grid gap-4 md:hidden" role="list">
                   {filteredTreatments.map((treatment, index) => (
-                    <motion.div
+                    <Link
                       key={treatment.name}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      className={`relative rounded-xl border bg-card p-5 ${
-                        treatment.popular || treatment.bestseller ? "ring-2 ring-primary/20" : ""
-                      }`}
-                      role="listitem"
+                      to={getTreatmentUrl(treatment.name, treatment.category)}
+                      className="block"
                     >
-                      {/* Badge positioned at top */}
-                      {(treatment.bestseller || treatment.popular) && (
-                        <div className="absolute -top-2.5 left-4">
-                          <TableProductBadge type={treatment.bestseller ? "bestseller" : "popular"} />
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className={`relative rounded-xl border bg-card p-5 transition-shadow hover:shadow-lg cursor-pointer ${
+                          treatment.popular || treatment.bestseller ? "ring-2 ring-primary/20" : ""
+                        }`}
+                        role="listitem"
+                      >
+                        {/* Badge positioned at top */}
+                        {(treatment.bestseller || treatment.popular) && (
+                          <div className="absolute -top-2.5 left-4">
+                            <TableProductBadge type={treatment.bestseller ? "bestseller" : "popular"} />
+                          </div>
+                        )}
+                        <div className={`mb-3 flex items-start justify-between ${(treatment.bestseller || treatment.popular) ? "mt-2" : ""}`}>
+                          <div>
+                            <h3 className="font-display text-lg font-bold text-foreground hover:text-primary transition-colors">
+                              {treatment.name}
+                            </h3>
+                            <span
+                              className={`mt-1.5 inline-block rounded-full border px-3 py-1 text-xs font-medium ${
+                                categoryColors[treatment.category] || "bg-muted text-foreground"
+                              }`}
+                            >
+                              {treatment.category}
+                            </span>
+                            {treatment.rating && (
+                              <div className="mt-2">
+                                <TableStarRating rating={treatment.rating} />
+                              </div>
+                            )}
+                          </div>
+                          <span className="text-xl font-bold text-stone-900 dark:text-stone-50">{treatment.price}</span>
                         </div>
-                      )}
-                      <div className={`mb-3 flex items-start justify-between ${(treatment.bestseller || treatment.popular) ? "mt-2" : ""}`}>
-                        <div>
-                          <h3 className="font-display text-lg font-bold text-foreground">
-                            {treatment.name}
-                          </h3>
-                          <span
-                            className={`mt-1.5 inline-block rounded-full border px-3 py-1 text-xs font-medium ${
-                              categoryColors[treatment.category] || "bg-muted text-foreground"
-                            }`}
-                          >
-                            {treatment.category}
-                          </span>
-                          {treatment.rating && (
-                            <div className="mt-2">
-                              <TableStarRating rating={treatment.rating} />
-                            </div>
-                          )}
+
+                        <div className="mb-3">
+                          <p className="mb-2 text-sm font-bold text-stone-900 dark:text-stone-50">Key Benefits:</p>
+                          <ul className="space-y-2">
+                            {treatment.benefits.map((benefit, i) => (
+                              <li key={i} className="flex items-center gap-2 text-sm text-stone-700 dark:text-stone-200 min-h-[44px]">
+                                <Check className="h-4 w-4 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
+                                {benefit}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                        <span className="text-xl font-bold text-stone-900 dark:text-stone-50">{treatment.price}</span>
-                      </div>
-                      
-                      <div className="mb-3">
-                        <p className="mb-2 text-sm font-bold text-stone-900 dark:text-stone-50">Key Benefits:</p>
-                        <ul className="space-y-2">
-                          {treatment.benefits.map((benefit, i) => (
-                            <li key={i} className="flex items-center gap-2 text-sm text-stone-700 dark:text-stone-200 min-h-[44px]">
-                              <Check className="h-4 w-4 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
-                              {benefit}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className="rounded-lg bg-stone-100 dark:bg-stone-800 px-3 py-3 min-h-[44px] flex items-center">
-                        <span className="text-sm text-stone-600 dark:text-stone-300">Best for: </span>
-                        <span className="text-sm font-semibold text-stone-900 dark:text-stone-50 ml-1">{treatment.bestFor}</span>
-                      </div>
-                    </motion.div>
+
+                        <div className="rounded-lg bg-stone-100 dark:bg-stone-800 px-3 py-3 min-h-[44px] flex items-center">
+                          <span className="text-sm text-stone-600 dark:text-stone-300">Best for: </span>
+                          <span className="text-sm font-semibold text-stone-900 dark:text-stone-50 ml-1">{treatment.bestFor}</span>
+                        </div>
+                      </motion.div>
+                    </Link>
                   ))}
                 </div>
               </motion.div>

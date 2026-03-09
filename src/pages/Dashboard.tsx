@@ -362,11 +362,11 @@ const Dashboard = () => {
                           {(() => {
                             const img = getTreatmentImage(treatment.treatment_type);
                             return img ? (
-                              <div className="h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 overflow-hidden rounded-full bg-slate-50">
-                                <img src={img} alt={treatment.treatment_type} className="h-full w-full object-cover" />
+                              <div className="h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 overflow-hidden rounded-full bg-slate-50 ring-2 ring-transparent transition-all duration-300 group-hover:ring-slate-300 group-hover:shadow-md">
+                                <img src={img} alt={treatment.treatment_type} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" />
                               </div>
                             ) : (
-                              <div className="flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-slate-100">
+                              <div className="flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 ring-2 ring-transparent transition-all duration-300 group-hover:ring-slate-300 group-hover:shadow-md">
                                 <Pill className="h-5 w-5 sm:h-6 sm:w-6 text-slate-600" />
                               </div>
                             );

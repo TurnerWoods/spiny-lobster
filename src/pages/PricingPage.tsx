@@ -43,12 +43,12 @@ const consultationOptions = [
 ];
 
 const treatments = [
-  { name: "Testosterone Cypionate", price: "$149/month", description: "The gold standard for TRT", badge: "popular" as const, rating: 4.8 },
-  { name: "Semaglutide", price: "$149/month", description: "GLP-1 weight loss therapy", badge: "bestseller" as const, rating: 4.9 },
-  { name: "Sermorelin", price: "$199/month", description: "Growth hormone support", badge: null, rating: 4.7 },
-  { name: "Tesamorelin", price: "$199/month", description: "Metabolic optimization", badge: null, rating: 4.7 },
-  { name: "NAD+", price: "$199/month", description: "Cellular energy & anti-aging", badge: null, rating: 4.8 },
-  { name: "BPC-157", price: "$149/month", description: "Recovery & healing peptide", badge: "popular" as const, rating: 4.7 },
+  { name: "Testosterone Cypionate", price: "$149/month", description: "The gold standard for TRT", badge: "popular" as const, rating: 4.8, link: "/treatments/hormones" },
+  { name: "Semaglutide", price: "$149/month", description: "GLP-1 weight loss therapy", badge: "bestseller" as const, rating: 4.9, link: "/treatments/weight-loss" },
+  { name: "Sermorelin", price: "$199/month", description: "Growth hormone support", badge: null, rating: 4.7, link: "/treatments/anti-aging" },
+  { name: "Tesamorelin", price: "$199/month", description: "Metabolic optimization", badge: null, rating: 4.7, link: "/treatments/weight-loss" },
+  { name: "NAD+", price: "$199/month", description: "Cellular energy & anti-aging", badge: null, rating: 4.8, link: "/treatments/anti-aging" },
+  { name: "BPC-157", price: "$149/month", description: "Recovery & healing peptide", badge: "popular" as const, rating: 4.7, link: "/treatments/strength" },
 ];
 
 // Star Rating Component for Pricing Page
@@ -251,31 +251,33 @@ const PricingPage = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card
-                      variant="glass"
-                      className={`relative h-full p-6 ${
-                        treatment.badge ? "ring-1 ring-warm-stone/20" : ""
-                      }`}
-                    >
-                      {/* Badge */}
-                      {treatment.badge && (
-                        <div className="absolute -top-2.5 left-4">
-                          <TreatmentBadge type={treatment.badge} />
+                    <Link to={treatment.link} className="block h-full">
+                      <Card
+                        variant="glass"
+                        className={`relative h-full p-6 transition-all duration-200 hover:shadow-lg hover:ring-2 hover:ring-warm-stone/30 ${
+                          treatment.badge ? "ring-1 ring-warm-stone/20" : ""
+                        }`}
+                      >
+                        {/* Badge */}
+                        {treatment.badge && (
+                          <div className="absolute -top-2.5 left-4">
+                            <TreatmentBadge type={treatment.badge} />
+                          </div>
+                        )}
+                        <div className="flex flex-col gap-3">
+                          <div className="flex items-start justify-between gap-3">
+                            <h3 className="font-display text-xl font-semibold tracking-normal text-rich-black">
+                              {treatment.name}
+                            </h3>
+                            <p className="text-stat whitespace-nowrap text-xl font-bold text-rich-black">
+                              {treatment.price}
+                            </p>
+                          </div>
+                          <p className="text-body-sm text-rich-black/70">{treatment.description}</p>
+                          <TreatmentStarRating rating={treatment.rating} />
                         </div>
-                      )}
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-start justify-between gap-3">
-                          <h3 className="font-display text-xl font-semibold tracking-normal text-rich-black">
-                            {treatment.name}
-                          </h3>
-                          <p className="text-stat whitespace-nowrap text-xl font-bold text-rich-black">
-                            {treatment.price}
-                          </p>
-                        </div>
-                        <p className="text-body-sm text-rich-black/70">{treatment.description}</p>
-                        <TreatmentStarRating rating={treatment.rating} />
-                      </div>
-                    </Card>
+                      </Card>
+                    </Link>
                   </motion.div>
                 ))}
               </div>
