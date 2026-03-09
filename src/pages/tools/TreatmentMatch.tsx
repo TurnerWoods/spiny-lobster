@@ -338,7 +338,7 @@ export default function TreatmentMatch() {
                     <Button
                       onClick={handleNext}
                       disabled={!canProceed}
-                      className="bg-warm-stone hover:bg-warm-stone/90 text-pure-white"
+                      className="bg-warm-stone hover:bg-warm-stone/90 text-pure-white disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {step < totalSteps - 1 ? (
                         <>

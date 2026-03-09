@@ -19,7 +19,7 @@ const premiumEase = [0.16, 1, 0.3, 1] as const;
 
 // Check for reduced motion preference
 const useReducedMotion = () => {
-  const [shouldReduceMotion, setShouldReduceMotion] = useState(prefersReducedMotion);
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(() => prefersReducedMotion());
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -100,24 +100,33 @@ const Hero = () => {
   }), [shouldReduceMotion]);
 
   return (
-    <section className="relative min-h-[100dvh] overflow-hidden">
+    <section
+      className="relative min-h-[100dvh] overflow-hidden"
+      aria-label="Hero section - Reclaim Your Edge"
+    >
       {/* Background with Image */}
       <div className="absolute inset-0 z-0">
         {/* Base gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-deep-charcoal to-[#2a2520]" />
 
-        {/* Image Background */}
+        {/* Image Background - eagerly loaded as it's above the fold */}
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="Elevare Health branded medication vials"
+            alt=""
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             className="h-full w-full object-cover opacity-60"
+            aria-hidden="true"
           />
         </div>
 
-        {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-deep-charcoal via-deep-charcoal/90 to-deep-charcoal/40" />
-
+        {/* Glassmorphic gradient overlay for text readability */}
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-deep-charcoal via-deep-charcoal/90 to-deep-charcoal/40 backdrop-blur-[2px]"
+          aria-hidden="true"
+        />
       </div>
 
       <div className="container relative z-10 flex min-h-[100dvh] items-center px-4 sm:px-6">
@@ -157,20 +166,26 @@ const Hero = () => {
           <motion.div
             variants={contentItem}
             className="flex flex-col gap-4 sm:flex-row sm:items-center"
+            role="group"
+            aria-label="Call to action"
           >
             <Link to="/intake" className="w-full sm:w-auto">
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
                 transition={{ duration: 0.2, ease: easing.smooth }}
               >
                 <Button
                   size="xl"
                   variant="premium"
-                  className="group w-full min-h-[52px] px-6 xs:px-8 sm:w-auto sm:px-10 uppercase tracking-[0.1em] xs:tracking-[0.15em] text-sm xs:text-base"
+                  className="group w-full min-h-[52px] px-6 xs:px-8 sm:w-auto sm:px-10 uppercase tracking-[0.1em] xs:tracking-[0.15em] text-sm xs:text-base motion-safe:transition-transform motion-reduce:transform-none"
+                  aria-label="Begin your health assessment"
                 >
                   Begin Assessment
-                  <ArrowRight className="ml-2 xs:ml-3 h-4 w-4 xs:h-5 xs:w-5 transition-transform duration-300 ease-out group-hover:translate-x-1" />
+                  <ArrowRight
+                    className="ml-2 xs:ml-3 h-4 w-4 xs:h-5 xs:w-5 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out motion-safe:group-hover:translate-x-1 motion-reduce:transform-none"
+                    aria-hidden="true"
+                  />
                 </Button>
               </motion.div>
             </Link>
@@ -182,19 +197,22 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             className="mt-8 xs:mt-10 sm:mt-16 grid grid-cols-2 gap-2 xs:gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-6"
+            role="list"
+            aria-label="Trust badges and certifications"
           >
             {heroTrustBadges.map((badge, index) => (
               <motion.div
                 key={badge.label}
                 variants={trustItem}
                 className="flex items-center gap-1.5 xs:gap-2 text-soft-linen/50"
+                role="listitem"
               >
-                <badge.icon className="h-3.5 w-3.5 xs:h-4 xs:w-4 flex-shrink-0" strokeWidth={1.5} />
+                <badge.icon className="h-3.5 w-3.5 xs:h-4 xs:w-4 flex-shrink-0" strokeWidth={1.5} aria-hidden="true" />
                 <span className="text-[9px] xs:text-[10px] sm:text-xs font-light uppercase tracking-[0.08em] xs:tracking-[0.1em] sm:tracking-[0.15em] leading-tight">
                   {badge.label}
                 </span>
                 {index < heroTrustBadges.length - 1 && (
-                  <span className="ml-2 hidden h-px w-6 bg-soft-linen/20 sm:ml-4 sm:block sm:w-8" />
+                  <span className="ml-2 hidden h-px w-6 bg-soft-linen/20 sm:ml-4 sm:block sm:w-8" aria-hidden="true" />
                 )}
               </motion.div>
             ))}
@@ -209,7 +227,8 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2, ease: easing.smooth }}
-          className="absolute bottom-6 xs:bottom-8 sm:bottom-12 left-1/2 z-10 -translate-x-1/2 hidden xs:block"
+          className="absolute bottom-6 xs:bottom-8 sm:bottom-12 left-1/2 z-10 -translate-x-1/2 hidden xs:block motion-reduce:hidden"
+          aria-hidden="true"
         >
           <motion.div
             animate={{ y: [0, 6, 0] }}

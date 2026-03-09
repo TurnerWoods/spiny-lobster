@@ -96,6 +96,8 @@ const Signup = () => {
   // Validation states
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [termsError, setTermsError] = useState<string | null>(null);
 
   // Load saved progress on mount
   useEffect(() => {
@@ -193,16 +195,20 @@ const Signup = () => {
     if (!validateField("password", password)) return;
 
     if (!agreeTerms) {
-      toast.error("Please agree to the terms to continue");
+      setTermsError("You must agree to the Terms of Service and Privacy Policy to continue");
       return;
     }
+    setTermsError(null);
 
+    setAuthError(null);
     setIsLoading(true);
     const { error } = await signUp(email, password, firstName, "");
     setIsLoading(false);
 
     if (error) {
-      toast.error(error.message || "Failed to create account");
+      const errorMessage = error.message || "Failed to create account. Please try again.";
+      setAuthError(errorMessage);
+      toast.error(errorMessage);
     } else {
       // Clear saved progress on success
       localStorage.removeItem("signup_progress");
@@ -255,7 +261,24 @@ const Signup = () => {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                {/* General Auth Error Banner */}
+                <AnimatePresence>
+                  {authError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="rounded-lg border border-red-200 bg-red-50 p-3 flex items-start gap-2"
+                      role="alert"
+                      aria-live="polite"
+                    >
+                      <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-red-700">{authError}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <AnimatePresence mode="wait">
                   {step === 1 && (
                     <motion.div
@@ -286,11 +309,15 @@ const Signup = () => {
                             error={touched.firstName && !!errors.firstName}
                             success={touched.firstName && !errors.firstName && !!firstName}
                             autoComplete="given-name"
+                            aria-invalid={touched.firstName && !!errors.firstName}
+                            aria-describedby={errors.firstName ? "firstName-error" : undefined}
                           />
                         </div>
                         <AnimatePresence>
                           {touched.firstName && errors.firstName && (
-                            <ValidationMessage message={errors.firstName} type="error" />
+                            <div id="firstName-error">
+                              <ValidationMessage message={errors.firstName} type="error" />
+                            </div>
                           )}
                           {touched.firstName && !errors.firstName && firstName && (
                             <ValidationMessage message="Looks good!" type="success" />
@@ -321,11 +348,15 @@ const Signup = () => {
                             error={touched.email && !!errors.email}
                             success={touched.email && !errors.email && !!email}
                             autoComplete="email"
+                            aria-invalid={touched.email && !!errors.email}
+                            aria-describedby={errors.email ? "email-error" : undefined}
                           />
                         </div>
                         <AnimatePresence>
                           {touched.email && errors.email && (
-                            <ValidationMessage message={errors.email} type="error" />
+                            <div id="email-error">
+                              <ValidationMessage message={errors.email} type="error" />
+                            </div>
                           )}
                           {touched.email && !errors.email && email && (
                             <ValidationMessage message="Valid email address" type="success" />
@@ -388,11 +419,14 @@ const Signup = () => {
                             disabled={isLoading}
                             error={touched.password && !!errors.password}
                             autoComplete="new-password"
+                            aria-invalid={touched.password && !!errors.password}
+                            aria-describedby={errors.password ? "password-error" : undefined}
                           />
                           <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-stone/60 transition-colors hover:text-warm-stone"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-stone/60 transition-colors hover:text-warm-stone focus:outline-none focus-visible:text-warm-stone"
+                            aria-label={showPassword ? "Hide password" : "Show password"}
                           >
                             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                           </button>
@@ -400,25 +434,48 @@ const Signup = () => {
                         <PasswordStrength password={password} />
                         <AnimatePresence>
                           {touched.password && errors.password && (
-                            <ValidationMessage message={errors.password} type="error" />
+                            <div id="password-error">
+                              <ValidationMessage message={errors.password} type="error" />
+                            </div>
                           )}
                         </AnimatePresence>
                       </div>
 
                       {/* Terms Agreement */}
-                      <div className="flex items-start gap-3 rounded-lg border border-warm-stone/10 bg-soft-linen/50 p-3">
-                        <Checkbox
-                          id="terms"
-                          checked={agreeTerms}
-                          onCheckedChange={(checked) => setAgreeTerms(checked as boolean)}
-                          disabled={isLoading}
-                        />
-                        <label htmlFor="terms" className="text-sm text-warm-gray cursor-pointer">
-                          I agree to the{" "}
-                          <Link to="/terms" className="text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">Terms of Service</Link>
-                          {" "}and{" "}
-                          <Link to="/privacy" className="text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">Privacy Policy</Link>
-                        </label>
+                      <div className="space-y-1.5">
+                        <div className={`flex items-start gap-3 rounded-lg border p-3 ${termsError ? "border-red-300 bg-red-50/50" : "border-warm-stone/10 bg-soft-linen/50"}`}>
+                          <Checkbox
+                            id="terms"
+                            checked={agreeTerms}
+                            onCheckedChange={(checked) => {
+                              setAgreeTerms(checked as boolean);
+                              if (checked) setTermsError(null);
+                            }}
+                            disabled={isLoading}
+                            aria-describedby={termsError ? "terms-error" : undefined}
+                          />
+                          <label htmlFor="terms" className="text-sm text-warm-gray cursor-pointer">
+                            I agree to the{" "}
+                            <Link to="/terms" className="text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">Terms of Service</Link>
+                            {" "}and{" "}
+                            <Link to="/privacy" className="text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">Privacy Policy</Link>
+                          </label>
+                        </div>
+                        <AnimatePresence>
+                          {termsError && (
+                            <motion.div
+                              id="terms-error"
+                              initial={{ opacity: 0, y: -5 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -5 }}
+                              className="flex items-center gap-1.5 text-xs text-red-600"
+                              role="alert"
+                            >
+                              <AlertCircle className="h-3 w-3 flex-shrink-0" />
+                              {termsError}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
 
                       <div className="flex gap-3 mt-6">

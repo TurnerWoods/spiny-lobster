@@ -59,7 +59,10 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
 
       {/* Weight & Height - Simplified layout for mobile */}
       <div className="space-y-4">
-        <Label className="text-base font-semibold text-rich-black">Basic Measurements</Label>
+        <Label className="text-base font-semibold text-rich-black">
+          Basic Measurements
+          <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
+        </Label>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="currentWeight" className="text-sm text-rich-black">Current Weight</Label>
@@ -93,12 +96,12 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
           </div>
         </div>
 
-        <div>
-          <Label className="text-sm text-rich-black">Height</Label>
+        <fieldset>
+          <legend className="text-sm text-rich-black">Height</legend>
           <div className="mt-2 flex gap-3">
             <div className="flex-1">
               <Select value={data.heightFeet} onValueChange={(value) => onChange({ heightFeet: value })}>
-                <SelectTrigger className="h-12 sm:h-11">
+                <SelectTrigger id="heightFeet" aria-label="Height in feet" className="h-12 sm:h-11">
                   <SelectValue placeholder="Feet" />
                 </SelectTrigger>
                 <SelectContent>
@@ -112,7 +115,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
             </div>
             <div className="flex-1">
               <Select value={data.heightInches} onValueChange={(value) => onChange({ heightInches: value })}>
-                <SelectTrigger className="h-12 sm:h-11">
+                <SelectTrigger id="heightInches" aria-label="Height in inches" className="h-12 sm:h-11">
                   <SelectValue placeholder="Inches" />
                 </SelectTrigger>
                 <SelectContent>
@@ -125,34 +128,53 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
               </Select>
             </div>
           </div>
-        </div>
+        </fieldset>
       </div>
 
       {/* Medical Conditions - Better touch targets */}
       <div>
-        <Label className="text-base font-semibold text-rich-black">Do you have any of the following conditions?</Label>
+        <Label className="text-base font-semibold text-rich-black">
+          Do you have any of the following conditions?
+          <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
+        </Label>
         <p className="mt-1 mb-3 text-sm text-muted-foreground">Select all that apply</p>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {medicalConditionOptions.map((condition) => (
-            <div
-              key={condition}
-              className={`flex items-center space-x-3 rounded-lg border p-3 cursor-pointer transition-colors ${
-                data.medicalConditions.includes(condition)
-                  ? "border-warm-stone bg-warm-stone/5"
-                  : "border-warm-stone/20 hover:border-warm-stone/40"
-              }`}
-              onClick={() => handleConditionChange(condition, !data.medicalConditions.includes(condition))}
-            >
-              <Checkbox
-                id={condition}
-                checked={data.medicalConditions.includes(condition)}
-                onCheckedChange={(checked) => handleConditionChange(condition, checked as boolean)}
-              />
-              <Label htmlFor={condition} className="text-sm font-normal cursor-pointer text-rich-black flex-1">
-                {condition}
-              </Label>
-            </div>
-          ))}
+        <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Medical conditions">
+          {medicalConditionOptions.map((condition) => {
+            const isSelected = data.medicalConditions.includes(condition);
+            const conditionId = `condition-${condition.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`;
+            return (
+              <div
+                key={condition}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
+                aria-label={`${condition}${isSelected ? ", selected" : ""}`}
+                className={`flex items-center space-x-3 rounded-lg border p-3 cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 ${
+                  isSelected
+                    ? "border-warm-stone bg-warm-stone/5"
+                    : "border-warm-stone/20 hover:border-warm-stone/40"
+                }`}
+                onClick={() => handleConditionChange(condition, !isSelected)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleConditionChange(condition, !isSelected);
+                  }
+                }}
+              >
+                <Checkbox
+                  id={conditionId}
+                  checked={isSelected}
+                  onCheckedChange={(checked) => handleConditionChange(condition, checked as boolean)}
+                  tabIndex={-1}
+                  aria-hidden="true"
+                />
+                <span className="text-sm font-normal text-rich-black flex-1">
+                  {condition}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -160,6 +182,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       <div className="space-y-2">
         <Label htmlFor="currentMedications" className="text-base font-semibold text-rich-black">
           Current Medications
+          <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
         </Label>
         <p className="text-sm text-muted-foreground mb-2">Include prescription medications, supplements, and over-the-counter drugs</p>
         <Textarea
@@ -176,6 +199,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       <div className="space-y-2">
         <Label htmlFor="allergies" className="text-base font-semibold text-rich-black">
           Known Allergies
+          <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
         </Label>
         <Textarea
           id="allergies"

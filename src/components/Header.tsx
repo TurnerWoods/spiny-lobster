@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, User, X, ArrowRight } from "lucide-react";
@@ -29,6 +29,56 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLAnchorElement>(null);
+  const lastFocusableRef = useRef<HTMLButtonElement>(null);
+
+  // Focus trap for mobile menu - ensures keyboard users can't tab outside the menu
+  const handleFocusTrap = useCallback((e: KeyboardEvent) => {
+    if (!mobileMenuOpen) return;
+
+    if (e.key === 'Tab') {
+      const focusableElements = mobileMenuRef.current?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+
+      if (!focusableElements || focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    }
+
+    // Close menu on Escape key
+    if (e.key === 'Escape') {
+      setMobileMenuOpen(false);
+    }
+  }, [mobileMenuOpen]);
+
+  // Set up focus trap event listener
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.addEventListener('keydown', handleFocusTrap);
+      // Focus first element when menu opens
+      setTimeout(() => {
+        const firstFocusable = mobileMenuRef.current?.querySelector(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        ) as HTMLElement;
+        firstFocusable?.focus();
+      }, 100);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleFocusTrap);
+    };
+  }, [mobileMenuOpen, handleFocusTrap]);
 
   const dropdownVariants = prefersReducedMotion
     ? { hidden: {}, visible: {}, exit: {} }
@@ -189,12 +239,24 @@ const Header = () => {
     { name: "Mood & Focus", href: "/treatments/mood", price: "from $99/mo" },
   ];
 
-  // Reusable dropdown component with premium styling
-  const TreatmentDropdown = ({ dropdown }: { dropdown: typeof weightLossDropdown }) => (
+  // Reusable dropdown component with premium styling and active state indicators
+  const TreatmentDropdown = ({ dropdown }: { dropdown: typeof weightLossDropdown }) => {
+    const isActive = isActivePath(dropdown.href);
+
+    return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className="group relative text-[13px] font-medium tracking-wide text-rich-black/90 bg-transparent px-4 py-2 hover:bg-transparent hover:text-rich-black data-[state=open]:bg-transparent data-[state=open]:text-rich-black transition-colors duration-200">
+      <NavigationMenuTrigger
+        className={cn(
+          "group relative text-[13px] font-medium tracking-wide bg-transparent px-4 py-2 hover:bg-transparent hover:text-rich-black data-[state=open]:bg-transparent data-[state=open]:text-rich-black transition-colors duration-200",
+          isActive ? "text-warm-stone font-semibold" : "text-rich-black/90"
+        )}
+        aria-current={isActive ? "page" : undefined}
+      >
         {dropdown.title}
-        <span className="absolute bottom-0 left-4 right-4 h-[1.5px] bg-warm-stone scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 transition-transform duration-300 origin-left" />
+        <span className={cn(
+          "absolute bottom-0 left-4 right-4 h-[1.5px] bg-warm-stone transition-transform duration-300 origin-left",
+          isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100"
+        )} />
       </NavigationMenuTrigger>
       <NavigationMenuContent>
         <motion.div
@@ -271,6 +333,7 @@ const Header = () => {
       </NavigationMenuContent>
     </NavigationMenuItem>
   );
+  };
 
   return (
     <>
@@ -328,21 +391,31 @@ const Header = () => {
               <TreatmentDropdown dropdown={hairDropdown} />
               <TreatmentDropdown dropdown={moodDropdown} />
 
-              {/* More Dropdown - Refined */}
+              {/* More Dropdown - Refined with active state indicators */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="group relative text-[13px] font-medium tracking-wide text-rich-black/90 bg-transparent px-4 py-2 hover:bg-transparent hover:text-rich-black data-[state=open]:bg-transparent data-[state=open]:text-rich-black transition-colors duration-200">
+                <NavigationMenuTrigger
+                  className={cn(
+                    "group relative text-[13px] font-medium tracking-wide bg-transparent px-4 py-2 hover:bg-transparent hover:text-rich-black data-[state=open]:bg-transparent data-[state=open]:text-rich-black transition-colors duration-200",
+                    moreDropdown.items.some(item => isActivePath(item.href)) ? "text-warm-stone font-semibold" : "text-rich-black/90"
+                  )}
+                >
                   More
-                  <span className="absolute bottom-0 left-4 right-4 h-[1.5px] bg-warm-stone scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 transition-transform duration-300 origin-left" />
+                  <span className={cn(
+                    "absolute bottom-0 left-4 right-4 h-[1.5px] bg-warm-stone transition-transform duration-300 origin-left",
+                    moreDropdown.items.some(item => isActivePath(item.href)) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100"
+                  )} />
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <motion.ul
-                    className="w-[200px] p-3"
+                    className="w-[200px] p-3 z-[100]"
                     variants={dropdownVariants}
                     initial="hidden"
                     animate="visible"
                     exit="exit"
                   >
-                    {moreDropdown.items.map((item, i) => (
+                    {moreDropdown.items.map((item, i) => {
+                      const isItemActive = isActivePath(item.href);
+                      return (
                       <motion.li
                         key={item.name}
                         variants={itemVariants}
@@ -353,13 +426,20 @@ const Header = () => {
                         <NavigationMenuLink asChild>
                           <Link
                             to={item.href}
-                            className="block rounded-lg px-3 py-2 text-[13px] text-rich-black/80 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black"
+                            className={cn(
+                              "block rounded-lg px-3 py-2 text-[13px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black",
+                              isItemActive
+                                ? "text-warm-stone font-semibold bg-warm-stone/10 border-l-2 border-warm-stone"
+                                : "text-rich-black/80"
+                            )}
+                            aria-current={isItemActive ? "page" : undefined}
                           >
                             {item.name}
                           </Link>
                         </NavigationMenuLink>
                       </motion.li>
-                    ))}
+                    );
+                    })}
                   </motion.ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -421,6 +501,7 @@ const Header = () => {
             </SheetTrigger>
             <SheetContent side="right" className="w-full sm:w-[380px] sm:max-w-[380px] p-0 border-l-0" id="mobile-menu">
               {/* Mobile Header - Compact with proper spacing for close button */}
+              <div ref={mobileMenuRef} className="h-full">
               <SheetHeader className="border-b border-neutral-gray/15 bg-pure-white px-5 sm:px-6 py-4 pr-16">
                 <SheetTitle className="flex items-center min-h-[44px]">
                   <img
@@ -477,21 +558,33 @@ const Header = () => {
                     <Link
                       to="/tools/hormone-assessment"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                      className={cn(
+                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/tools/hormone-assessment") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                      )}
+                      aria-current={isActivePath("/tools/hormone-assessment") ? "page" : undefined}
                     >
                       Hormone Quiz
                     </Link>
                     <Link
                       to="/tools/treatment-match-quiz"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                      className={cn(
+                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/tools/treatment-match-quiz") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                      )}
+                      aria-current={isActivePath("/tools/treatment-match-quiz") ? "page" : undefined}
                     >
                       Treatment Match
                     </Link>
                     <Link
                       to="/tools"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                      className={cn(
+                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        location.pathname === "/tools" ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                      )}
+                      aria-current={location.pathname === "/tools" ? "page" : undefined}
                     >
                       All Calculators
                     </Link>
@@ -505,21 +598,33 @@ const Header = () => {
                     <Link
                       to="/pricing"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                      className={cn(
+                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/pricing") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                      )}
+                      aria-current={isActivePath("/pricing") ? "page" : undefined}
                     >
                       Pricing
                     </Link>
                     <Link
                       to="/about"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                      className={cn(
+                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/about") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                      )}
+                      aria-current={isActivePath("/about") ? "page" : undefined}
                     >
                       About Us
                     </Link>
                     <Link
                       to="/faq"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] text-rich-black/70 transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80"
+                      className={cn(
+                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/faq") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                      )}
+                      aria-current={isActivePath("/faq") ? "page" : undefined}
                     >
                       FAQ
                     </Link>
@@ -575,6 +680,7 @@ const Header = () => {
                   </div>
                 </div>
               </ScrollArea>
+              </div>
             </SheetContent>
           </Sheet>
         </div>

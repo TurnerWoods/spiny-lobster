@@ -33,7 +33,7 @@ const SafetyInformation = () => {
             <Phone className="h-6 w-6 flex-shrink-0 text-destructive" />
             <div>
               <h3 className="mb-2 font-display text-lg font-bold text-rich-black">Emergency Warning</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">
+              <p className="text-base text-warm-gray leading-relaxed">
                 If you experience severe or life-threatening symptoms such as <strong className="text-rich-black">chest pain, severe allergic reactions, difficulty breathing, severe abdominal pain, or loss of consciousness</strong>, seek emergency care immediately. <strong className="text-rich-black">Call 911</strong> or go to your nearest emergency room.
               </p>
             </div>
@@ -48,7 +48,7 @@ const SafetyInformation = () => {
             <AlertTriangle className="h-6 w-6 flex-shrink-0 text-amber-500" />
             <div>
               <h3 className="mb-2 font-display text-lg font-bold text-rich-black">Educational Notice</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">
+              <p className="text-base text-warm-gray leading-relaxed">
                 Information on this page summarizes potential risks, side effects, warnings, interactions, and usage considerations for therapies discussed or prescribed through Elevare Health. This is <strong className="text-rich-black">educational only</strong> and is <strong className="text-rich-black">not a substitute</strong> for individualized medical advice, diagnosis, or treatment. Always consult your licensed clinician and patient information provided by your dispensing pharmacy before starting any medication.
               </p>
             </div>
@@ -153,7 +153,7 @@ const SafetyInformation = () => {
             <li>Testicular shrinkage and reduced sperm production</li>
             <li>Prostate changes</li>
           </ul>
-          <p className="mt-4 text-sm text-warm-gray leading-relaxed">
+          <p className="mt-4 text-base text-warm-gray leading-relaxed">
             Regular blood work is required to monitor hormone levels, red blood cell count, and other markers. Report any unusual symptoms immediately.
           </p>
         </CardContent>
@@ -251,7 +251,7 @@ const SafetyInformation = () => {
           <ul className="ml-6 list-disc space-y-2 text-warm-gray">
             <li>Report non-emergency side effects to your clinician through the patient portal or secure messaging</li>
             <li>Contact your dispensing pharmacy with medication-specific questions</li>
-            <li>Report suspected adverse reactions to FDA MedWatch at <strong className="text-rich-black">1-800-FDA-1088</strong> or <a href="https://www.fda.gov/medwatch" target="_blank" rel="noopener noreferrer" className="text-warm-stone hover:underline">www.fda.gov/medwatch</a></li>
+            <li>Report suspected adverse reactions to FDA MedWatch at <strong className="text-rich-black">1-800-FDA-1088</strong> or <a href="https://www.fda.gov/medwatch" target="_blank" rel="noopener noreferrer" className="text-warm-stone underline hover:text-rich-black transition-colors">www.fda.gov/medwatch</a></li>
           </ul>
         </CardContent>
       </Card>
@@ -261,9 +261,17 @@ const SafetyInformation = () => {
           <h2 className="mb-4 font-display text-xl font-bold text-rich-black">Questions?</h2>
           <p className="text-warm-gray leading-relaxed">
             If you have questions about medication safety or this information, contact us at{" "}
-            <a href="mailto:support@elevarehealth.com" className="text-warm-stone hover:underline">
+            <a href="mailto:support@elevarehealth.com" className="text-warm-stone underline hover:text-rich-black transition-colors">
               support@elevarehealth.com
-            </a>
+            </a>. You may also review our{" "}
+            <a href="/terms" className="text-warm-stone underline hover:text-rich-black transition-colors">
+              Terms of Use
+            </a>{" "}
+            and{" "}
+            <a href="/hipaa" className="text-warm-stone underline hover:text-rich-black transition-colors">
+              HIPAA Notice
+            </a>{" "}
+            for more information about your rights and our practices.
           </p>
         </CardContent>
       </Card>

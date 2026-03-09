@@ -4,17 +4,15 @@ import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   QuickActionsGridSkeleton,
   DashboardTreatmentListSkeleton,
 } from "@/components/ui/treatment-card-skeleton";
 import {
-  User,
   Pill,
   MessageCircle,
-  Calendar,
   LogOut,
   Plus,
   Clock,
@@ -178,7 +176,7 @@ const Dashboard = () => {
 
           {/* Quick actions skeleton */}
           <div className="mb-10">
-            <QuickActionsGridSkeleton count={4} />
+            <QuickActionsGridSkeleton count={2} />
           </div>
 
           {/* Treatments section skeleton */}
@@ -272,7 +270,7 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="mb-10 grid gap-4 sm:grid-cols-2"
         >
           <Link to="/intake" className="group">
             <Card variant="glass" className="flex h-full items-center gap-4 p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
@@ -309,24 +307,7 @@ const Dashboard = () => {
               </div>
             </Card>
           </button>
-          <Card variant="glass" className="flex items-center gap-4 p-5 opacity-75">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
-              <Calendar className="h-6 w-6 text-warm-stone/60" />
-            </div>
-            <div>
-              <p className="font-semibold text-rich-black/80">Appointments</p>
-              <p className="text-sm text-warm-gray">None scheduled</p>
-            </div>
-          </Card>
-          <Card variant="glass" className="flex items-center gap-4 p-5 opacity-75">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
-              <User className="h-6 w-6 text-warm-stone/60" />
-            </div>
-            <div>
-              <p className="font-semibold text-rich-black/80">Profile</p>
-              <p className="text-sm text-warm-gray">Coming soon</p>
-            </div>
-          </Card>
+{/* Appointments and Profile cards hidden until features are ready */}
         </motion.div>
 
         {/* Treatments Section */}

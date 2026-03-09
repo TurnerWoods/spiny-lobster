@@ -85,32 +85,37 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, isLoading = false, loadingText, children, disabled, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, isLoading = false, loadingText, children, disabled, "aria-label": ariaLabel, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
+    const isDisabled = disabled || isLoading;
 
-    // Handle loading state
-    if (isLoading) {
-      return (
-        <button
-          className={cn(buttonVariants({ variant, size, className }))}
-          ref={ref}
-          disabled
-          {...props}
-        >
-          <Loader2 className="animate-spin" />
-          {loadingText || children}
-        </button>
-      );
-    }
+    // Determine if this is an icon-only button (no text children)
+    const isIconOnly = size === "icon" || size === "icon-sm" || size === "icon-lg";
+
+    // Loading state content
+    const content = isLoading ? (
+      <>
+        <Loader2 className="animate-spin" aria-hidden="true" />
+        <span className={loadingText ? undefined : "sr-only"}>
+          {loadingText || "Loading..."}
+        </span>
+        {!loadingText && children}
+      </>
+    ) : (
+      children
+    );
 
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        disabled={disabled}
+        disabled={isDisabled}
+        aria-disabled={isDisabled || undefined}
+        aria-busy={isLoading || undefined}
+        aria-label={ariaLabel || (isIconOnly && typeof children === "string" ? children : undefined)}
         {...props}
       >
-        {children}
+        {content}
       </Comp>
     );
   },

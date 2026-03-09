@@ -70,9 +70,9 @@ const Footer = () => {
         </div>
 
         {/* Main Footer Grid - Single column on mobile for better readability */}
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-10 lg:grid-cols-6 lg:gap-8">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-10 lg:grid-cols-5 lg:gap-8">
           {/* Brand Column - Full width on mobile */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-2 lg:pr-8">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-1 lg:pr-8">
             <Link
               to="/"
               className="mb-5 inline-flex min-h-[44px] items-center py-1 transition-opacity hover:opacity-80 active:opacity-70"
@@ -143,7 +143,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone hover:underline active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
                   >
                     {item.name}
                   </Link>
@@ -162,7 +162,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone hover:underline active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
                   >
                     {item.name}
                   </Link>
@@ -181,7 +181,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone hover:underline active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
                   >
                     {item.name}
                   </Link>
@@ -200,7 +200,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone hover:underline active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
                   >
                     {item.name}
                   </Link>
@@ -234,7 +234,7 @@ const Footer = () => {
 
         {/* Disclaimer - Better mobile padding and text sizing */}
         <div className="mt-6 rounded-2xl border border-warm-gray/25 bg-gradient-to-br from-pure-white/80 to-soft-linen/40 p-4 backdrop-blur-sm sm:mt-8 sm:p-6">
-          <p className="text-center text-[13px] leading-relaxed text-muted-foreground sm:text-sm sm:leading-relaxed">
+          <p className="text-center text-xs leading-relaxed text-muted-foreground sm:text-sm sm:leading-relaxed">
             <span className="font-medium text-rich-black/70">Important Notice:</span>{" "}
             Elevare Health MSO LLC does not practice medicine or dispense medications. All medical care is provided by
             independently licensed physicians. Compounded medications are prepared by licensed pharmacies and are not

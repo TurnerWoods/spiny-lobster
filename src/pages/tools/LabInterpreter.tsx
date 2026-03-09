@@ -243,7 +243,7 @@ const LabInterpreter = () => {
                     <Button
                       onClick={handleAnalyze}
                       disabled={filledCount === 0 || !email || isAnalyzing}
-                      className="w-full h-12 sm:w-auto sm:h-11 bg-warm-stone hover:bg-warm-stone/90 text-pure-white sm:min-w-[160px]"
+                      className="w-full h-12 sm:w-auto sm:h-11 bg-warm-stone hover:bg-warm-stone/90 text-pure-white sm:min-w-[160px] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isAnalyzing ? (
                         <>

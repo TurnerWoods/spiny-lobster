@@ -278,8 +278,8 @@ ${isTRT ? "**TRT Tip:** Include zinc-rich foods (beef, oysters) and healthy fats
                       </Button>
                       <Button
                         onClick={handleGenerate}
-                        disabled={!formData.email || isGenerating}
-                        className="flex-1 h-12 sm:h-11 bg-warm-stone hover:bg-warm-stone/90"
+                        disabled={!formData.email || !formData.dietType || isGenerating}
+                        className="flex-1 h-12 sm:h-11 bg-warm-stone hover:bg-warm-stone/90 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isGenerating ? (
                           <>

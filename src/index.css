@@ -12,6 +12,127 @@
 @tailwind utilities;
 
 /* ============================================
+   GLOBAL ACCESSIBILITY STYLES
+   WCAG 2.1 AA Compliance
+   ============================================ */
+
+/* Skip to main content link - hidden until focused */
+.skip-to-main {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 1rem 2rem;
+  background-color: hsl(var(--foreground));
+  color: hsl(var(--background));
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-to-main:focus {
+  top: 0;
+  outline: 3px solid hsl(var(--accent-gold));
+  outline-offset: 2px;
+}
+
+/* Global focus-visible styles for keyboard navigation */
+:focus-visible {
+  outline: 2px solid hsl(var(--accent-gold));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Remove default focus outline - only show for keyboard navigation */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Enhanced focus styles for interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="link"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid hsl(var(--accent-gold));
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px hsl(var(--accent-gold) / 0.2);
+}
+
+/* High contrast focus for dark backgrounds */
+.dark :focus-visible {
+  outline-color: hsl(var(--accent-gold));
+  box-shadow: 0 0 0 4px hsl(var(--accent-gold) / 0.3);
+}
+
+/* Minimum font size enforcement for readability */
+@layer base {
+  /* Ensure body text never goes below 16px */
+  body {
+    font-size: max(1rem, 16px);
+  }
+
+  /* Ensure small text is at least 12px */
+  small,
+  .text-xs,
+  [class*="text-xs"] {
+    font-size: max(0.75rem, 12px);
+  }
+
+  /* Ensure form inputs have readable text */
+  input,
+  select,
+  textarea {
+    font-size: max(1rem, 16px); /* Prevents iOS zoom on focus */
+  }
+}
+
+/* Screen reader only utility - visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Make sr-only content visible on focus (for skip links) */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ARIA live region styles */
+[aria-live="polite"],
+[aria-live="assertive"] {
+  position: relative;
+}
+
+/* Ensure sufficient color contrast for text */
+.high-contrast-text {
+  color: hsl(var(--foreground));
+  text-shadow: none;
+}
+
+/* ============================================
    ELEVARE HEALTH DESIGN SYSTEM
    Premium Typography & Luxury Aesthetics
    ============================================ */
@@ -875,6 +996,70 @@
       margin-top: 0.5rem;
     }
   }
+
+  /* ----------------------------------------
+     KEYBOARD NAVIGATION UTILITIES
+     Enhanced focus states for accessibility
+     ---------------------------------------- */
+
+  /* Focus ring variants for different contexts */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply focus-visible:ring-[hsl(var(--accent-gold))] focus-visible:ring-offset-background;
+  }
+
+  .focus-ring-inset {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset;
+    @apply focus-visible:ring-[hsl(var(--accent-gold))];
+  }
+
+  .focus-ring-primary {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply focus-visible:ring-primary focus-visible:ring-offset-background;
+  }
+
+  /* Focus trap indicator for modals/dialogs */
+  .focus-trap-active {
+    outline: none;
+  }
+
+  /* Visible focus indicator for links in text */
+  .focus-link:focus-visible {
+    outline: 2px solid hsl(var(--accent-gold));
+    outline-offset: 2px;
+    border-radius: 2px;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  /* Focus state for card-like interactive elements */
+  .focus-card:focus-visible {
+    outline: 2px solid hsl(var(--accent-gold));
+    outline-offset: 4px;
+    border-radius: var(--radius);
+  }
+
+  /* Interactive element minimum size for touch/click */
+  .interactive-min-size {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Ensure disabled elements are clearly indicated */
+  [disabled],
+  .disabled,
+  [aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* High visibility mode for debugging focus order */
+  .debug-focus *:focus {
+    outline: 3px solid red !important;
+    outline-offset: 2px !important;
+  }
 }
 
 /* Fix for horizontal overflow on all pages */
@@ -904,8 +1089,12 @@ header, nav {
    MOBILE PERFORMANCE OPTIMIZATIONS
    ============================================ */
 
-/* Reduced motion support for accessibility and performance */
+/* ============================================
+   REDUCED MOTION - Accessibility & Performance
+   Respects user's motion preferences
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
+  /* Disable all animations and transitions */
   *,
   *::before,
   *::after {
@@ -927,6 +1116,73 @@ header, nav {
   .animate-marquee {
     animation: none !important;
     transform: none !important;
+  }
+
+  /* Disable background video autoplay indication */
+  video[autoplay] {
+    animation: none !important;
+  }
+
+  /* Disable hover transforms */
+  .hover\:-translate-y-1:hover,
+  .hover\:scale-105:hover,
+  .hover\:scale-110:hover,
+  [class*="hover:translate"],
+  [class*="hover:scale"],
+  [class*="hover:rotate"] {
+    transform: none !important;
+  }
+
+  /* Disable pulse and bounce animations */
+  .animate-pulse,
+  .animate-bounce,
+  .animate-spin {
+    animation: none !important;
+  }
+
+  /* Disable skeleton loading animation */
+  .skeleton-pulse {
+    animation: none !important;
+    background: hsl(var(--muted)) !important;
+  }
+
+  /* Make focus transitions instant */
+  :focus-visible {
+    transition: none !important;
+  }
+
+  /* Disable smooth scrolling */
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  /* Static backdrop blur (reduce GPU usage) */
+  .backdrop-blur,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: hsl(var(--background) / 0.95) !important;
+  }
+}
+
+/* Provide alternative for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  /* Show static alternatives to animated content */
+  .motion-safe\:animate-pulse {
+    animation: none !important;
+  }
+
+  /* Ensure important state changes are still visible without animation */
+  .transition-colors {
+    transition: none !important;
+  }
+
+  /* Keep opacity changes for visibility but make them instant */
+  .transition-opacity {
+    transition: none !important;
   }
 }
 

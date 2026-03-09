@@ -25,7 +25,7 @@ const HIPAANotice = () => {
       <Card className="border-2 border-warm-stone/30 bg-warm-stone/5 backdrop-blur-xl">
         <CardContent className="p-6">
           <h2 className="mb-3 font-display text-lg font-bold text-rich-black">Your Information. Your Rights. Our Responsibilities.</h2>
-          <p className="text-sm text-warm-gray leading-relaxed">
+          <p className="text-base text-warm-gray leading-relaxed">
             This notice describes how medical information about you may be used and disclosed and how you can get access to this information. <strong className="text-rich-black">Please review it carefully.</strong>
           </p>
         </CardContent>
@@ -42,42 +42,42 @@ const HIPAANotice = () => {
           <div className="space-y-4">
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Get a copy of your health and claims records</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">You can ask to see or get an electronic or paper copy of your medical record and other health information we have about you. We will provide a copy or summary of your health information, usually within 30 days of your request. We may charge a reasonable, cost-based fee.</p>
+              <p className="text-base text-warm-gray leading-relaxed">You can ask to see or get an electronic or paper copy of your medical record and other health information we have about you. We will provide a copy or summary of your health information, usually within 30 days of your request. We may charge a reasonable, cost-based fee.</p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Ask us to correct your health records</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">You can ask us to correct health information about you that you think is incorrect or incomplete. We may say "no" to your request, but we'll tell you why in writing within 60 days.</p>
+              <p className="text-base text-warm-gray leading-relaxed">You can ask us to correct health information about you that you think is incorrect or incomplete. We may say "no" to your request, but we'll tell you why in writing within 60 days.</p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Request confidential communications</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">You can ask us to contact you in a specific way (for example, home or office phone) or to send mail to a different address. We will consider all reasonable requests and must say "yes" if you tell us you would be in danger if we do not.</p>
+              <p className="text-base text-warm-gray leading-relaxed">You can ask us to contact you in a specific way (for example, home or office phone) or to send mail to a different address. We will consider all reasonable requests and must say "yes" if you tell us you would be in danger if we do not.</p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Ask us to limit what we use or share</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">You can ask us not to use or share certain health information for treatment, payment, or our operations. We are not required to agree to your request, and we may say "no" if it would affect your care.</p>
+              <p className="text-base text-warm-gray leading-relaxed">You can ask us not to use or share certain health information for treatment, payment, or our operations. We are not required to agree to your request, and we may say "no" if it would affect your care.</p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Get a list of those with whom we've shared information</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">You can ask for a list (accounting) of the times we've shared your health information for six years prior to the date you ask, who we shared it with, and why. We will include all disclosures except for those about treatment, payment, and health care operations, and certain other disclosures.</p>
+              <p className="text-base text-warm-gray leading-relaxed">You can ask for a list (accounting) of the times we've shared your health information for six years prior to the date you ask, who we shared it with, and why. We will include all disclosures except for those about treatment, payment, and health care operations, and certain other disclosures.</p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Get a copy of this privacy notice</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">You can ask for a paper copy of this notice at any time, even if you have agreed to receive the notice electronically. We will provide you with a paper copy promptly.</p>
+              <p className="text-base text-warm-gray leading-relaxed">You can ask for a paper copy of this notice at any time, even if you have agreed to receive the notice electronically. We will provide you with a paper copy promptly.</p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Choose someone to act for you</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">If you have given someone medical power of attorney or if someone is your legal guardian, that person can exercise your rights and make choices about your health information. We will make sure the person has this authority and can act for you before we take any action.</p>
+              <p className="text-base text-warm-gray leading-relaxed">If you have given someone medical power of attorney or if someone is your legal guardian, that person can exercise your rights and make choices about your health information. We will make sure the person has this authority and can act for you before we take any action.</p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">File a complaint if you feel your rights are violated</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">You can complain if you feel we have violated your rights by contacting us using the information at the end of this notice. You can also file a complaint with the U.S. Department of Health and Human Services Office for Civil Rights. We will not retaliate against you for filing a complaint.</p>
+              <p className="text-base text-warm-gray leading-relaxed">You can complain if you feel we have violated your rights by contacting us using the information at the end of this notice. You can also file a complaint with the U.S. Department of Health and Human Services Office for Civil Rights. We will not retaliate against you for filing a complaint.</p>
             </div>
           </div>
         </CardContent>
@@ -94,17 +94,17 @@ const HIPAANotice = () => {
           <div className="space-y-4">
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Treat You</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">We can use your health information and share it with other professionals who are treating you. <em>Example: A physician treating you for a condition asks another physician about your overall health condition.</em></p>
+              <p className="text-base text-warm-gray leading-relaxed">We can use your health information and share it with other professionals who are treating you. <em>Example: A physician treating you for a condition asks another physician about your overall health condition.</em></p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Run Our Organization</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">We can use and share your health information to run our practice, improve your care, and contact you when necessary. <em>Example: We use health information about you to manage your treatment and services.</em></p>
+              <p className="text-base text-warm-gray leading-relaxed">We can use and share your health information to run our practice, improve your care, and contact you when necessary. <em>Example: We use health information about you to manage your treatment and services.</em></p>
             </div>
             
             <div className="rounded-lg bg-soft-linen/50 p-4">
               <h3 className="mb-1 font-semibold text-rich-black">Bill for Your Services</h3>
-              <p className="text-sm text-warm-gray leading-relaxed">We can use and share your health information to bill and get payment from health plans or other entities. <em>Example: We give information about you to your health insurance plan so it will pay for your services.</em></p>
+              <p className="text-base text-warm-gray leading-relaxed">We can use and share your health information to bill and get payment from health plans or other entities. <em>Example: We give information about you to your health insurance plan so it will pay for your services.</em></p>
             </div>
           </div>
         </CardContent>
@@ -169,7 +169,15 @@ const HIPAANotice = () => {
             <h2 className="font-display text-xl font-bold text-rich-black">Changes to the Terms of This Notice</h2>
           </div>
           <p className="text-warm-gray leading-relaxed">
-            We can change the terms of this notice, and the changes will apply to all information we have about you. The new notice will be available upon request, on our website, and we will mail a copy to you upon request.
+            We can change the terms of this notice, and the changes will apply to all information we have about you. The new notice will be available upon request, on our website, and we will mail a copy to you upon request. You may also review our{" "}
+            <a href="/privacy" className="text-warm-stone underline hover:text-rich-black transition-colors">
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a href="/terms" className="text-warm-stone underline hover:text-rich-black transition-colors">
+              Terms of Use
+            </a>{" "}
+            for additional information about how we handle your data.
           </p>
         </CardContent>
       </Card>
@@ -186,7 +194,7 @@ const HIPAANotice = () => {
             <p className="text-warm-gray">Austin, TX 78701</p>
             <p className="mt-2 text-warm-gray">
               Email:{" "}
-              <a href="mailto:privacy@elevarehealth.com" className="text-warm-stone hover:underline">
+              <a href="mailto:privacy@elevarehealth.com" className="text-warm-stone underline hover:text-rich-black transition-colors">
                 privacy@elevarehealth.com
               </a>
             </p>
@@ -196,7 +204,7 @@ const HIPAANotice = () => {
             <strong className="text-rich-black">To file a complaint with the federal government:</strong><br />
             U.S. Department of Health and Human Services<br />
             Office for Civil Rights<br />
-            <a href="https://www.hhs.gov/ocr/privacy/hipaa/complaints/" target="_blank" rel="noopener noreferrer" className="text-warm-stone hover:underline">
+            <a href="https://www.hhs.gov/ocr/privacy/hipaa/complaints/" target="_blank" rel="noopener noreferrer" className="text-warm-stone underline hover:text-rich-black transition-colors">
               www.hhs.gov/ocr/privacy/hipaa/complaints/
             </a>
           </p>

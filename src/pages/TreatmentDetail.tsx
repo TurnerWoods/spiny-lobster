@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { format, formatDistanceToNow, addDays, isBefore, isAfter } from "date-fns";
@@ -20,13 +20,40 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
+  AlertTriangle,
   Package,
   RefreshCw,
   FileText,
   Syringe,
   Info,
   TrendingUp,
+  Loader2,
 } from "lucide-react";
+
+// Fallback image for when product images fail to load
+const FALLBACK_IMAGE = "/images/products/medication-package.png";
+const LOGO_FALLBACK = "/placeholder.svg";
+
+// Safe date formatting utility
+const safeFormatDate = (dateString: string, formatStr: string, fallback = "Date unavailable"): string => {
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return fallback;
+    return format(date, formatStr);
+  } catch {
+    return fallback;
+  }
+};
+
+const safeFormatDistanceToNow = (dateString: string, fallback = ""): string => {
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return fallback;
+    return formatDistanceToNow(date, { addSuffix: true });
+  } catch {
+    return fallback;
+  }
+};
 
 interface Treatment {
   id: string;
@@ -273,8 +300,49 @@ const TreatmentDetail = () => {
   const { toast } = useToast();
   const [treatment, setTreatment] = useState<Treatment | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedRefillDate, setSelectedRefillDate] = useState<Date | undefined>();
   const [isUpdatingRefill, setIsUpdatingRefill] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [imageLoadErrors, setImageLoadErrors] = useState<Record<string, boolean>>({});
+
+  // Handle image load errors with fallback
+  const handleImageError = useCallback((imageKey: string) => {
+    setImageLoadErrors(prev => ({ ...prev, [imageKey]: true }));
+  }, []);
+
+  const fetchTreatment = useCallback(async () => {
+    if (!user || !id) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { data, error: fetchError } = await supabase
+        .from("treatments")
+        .select("*")
+        .eq("id", id)
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (fetchError) throw fetchError;
+
+      if (!data) {
+        setError("Treatment not found or you don't have access to view it.");
+        return;
+      }
+
+      setTreatment(data as Treatment);
+      if (data.next_refill_date) {
+        setSelectedRefillDate(new Date(data.next_refill_date));
+      }
+    } catch (err) {
+      console.error("Error fetching treatment:", err);
+      setError("Failed to load treatment details. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user, id]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -285,78 +353,113 @@ const TreatmentDetail = () => {
     if (user && id) {
       fetchTreatment();
     }
-  }, [user, authLoading, id, navigate]);
+  }, [user, authLoading, id, navigate, fetchTreatment]);
 
-  const fetchTreatment = async () => {
-    if (!user || !id) return;
-
-    try {
-      const { data, error } = await supabase
-        .from("treatments")
-        .select("*")
-        .eq("id", id)
-        .eq("user_id", user.id)
-        .maybeSingle();
-
-      if (error) throw error;
-      
-      if (!data) {
-        navigate("/dashboard");
-        return;
-      }
-
-      setTreatment(data as Treatment);
-      if (data.next_refill_date) {
-        setSelectedRefillDate(new Date(data.next_refill_date));
-      }
-    } catch (error) {
-      console.error("Error fetching treatment:", error);
-      navigate("/dashboard");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleRefillSchedule = async (date: Date | undefined) => {
+  const handleRefillSchedule = useCallback(async (date: Date | undefined) => {
     if (!date || !treatment) return;
+
+    // Validate date is in valid range
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const maxDate = addDays(today, 90);
+
+    if (isBefore(date, today)) {
+      toast({
+        title: "Invalid Date",
+        description: "Please select a future date for your refill.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (isAfter(date, maxDate)) {
+      toast({
+        title: "Invalid Date",
+        description: "Please select a date within the next 90 days.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsUpdatingRefill(true);
     try {
-      const { error } = await supabase
+      const formattedDate = format(date, "yyyy-MM-dd");
+      const { error: updateError } = await supabase
         .from("treatments")
-        .update({ next_refill_date: format(date, "yyyy-MM-dd") })
-        .eq("id", treatment.id);
+        .update({ next_refill_date: formattedDate })
+        .eq("id", treatment.id)
+        .eq("user_id", user?.id);
 
-      if (error) throw error;
+      if (updateError) throw updateError;
 
       setSelectedRefillDate(date);
-      setTreatment({ ...treatment, next_refill_date: format(date, "yyyy-MM-dd") });
+      setTreatment(prev => prev ? { ...prev, next_refill_date: formattedDate } : null);
       toast({
         title: "Refill Scheduled",
         description: `Your next refill is scheduled for ${format(date, "MMMM d, yyyy")}`,
       });
-    } catch (error) {
-      console.error("Error updating refill date:", error);
+    } catch (err) {
+      console.error("Error updating refill date:", err);
       toast({
         title: "Error",
         description: "Failed to schedule refill. Please try again.",
         variant: "destructive",
       });
+      // Revert the selected date on error
+      if (treatment.next_refill_date) {
+        setSelectedRefillDate(new Date(treatment.next_refill_date));
+      } else {
+        setSelectedRefillDate(undefined);
+      }
     } finally {
       setIsUpdatingRefill(false);
     }
-  };
+  }, [treatment, user?.id, toast]);
 
   if (authLoading || isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-muted/30">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <p className="text-muted-foreground">Loading treatment details...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-muted/30 px-4">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10">
+          <AlertTriangle className="h-8 w-8 text-destructive" />
+        </div>
+        <h2 className="text-xl font-semibold text-foreground">Error Loading Treatment</h2>
+        <p className="text-center text-muted-foreground">{error}</p>
+        <div className="flex gap-3">
+          <Button variant="outline" onClick={() => navigate("/dashboard")}>
+            Back to Dashboard
+          </Button>
+          <Button onClick={() => fetchTreatment()}>
+            Try Again
+          </Button>
+        </div>
       </div>
     );
   }
 
   if (!treatment) {
-    return null;
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-muted/30 px-4">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+          <Package className="h-8 w-8 text-muted-foreground" />
+        </div>
+        <h2 className="text-xl font-semibold text-foreground">Treatment Not Found</h2>
+        <p className="text-center text-muted-foreground">
+          The treatment you're looking for doesn't exist or has been removed.
+        </p>
+        <Button onClick={() => navigate("/dashboard")}>
+          Back to Dashboard
+        </Button>
+      </div>
+    );
   }
 
   const status = statusConfig[treatment.status] || statusConfig.pending;
@@ -376,10 +479,11 @@ const TreatmentDetail = () => {
         <div className="container flex h-16 items-center justify-between px-4">
           <Link to="/" className="flex items-center">
             <img
-              src="/elevar-logo.svg"
+              src={imageLoadErrors["logo"] ? LOGO_FALLBACK : "/elevar-logo.svg"}
               alt="Elevar Health logo"
               loading="eager"
               className="h-8 w-auto max-w-full"
+              onError={() => handleImageError("logo")}
             />
           </Link>
           <Link to="/dashboard">
@@ -411,9 +515,11 @@ const TreatmentDetail = () => {
             <div className="hidden sm:block flex-shrink-0">
               <div className="h-20 w-20 overflow-hidden rounded-2xl border border-neutral-gray/20 bg-gradient-to-br from-soft-linen to-warm-stone/5 p-2 shadow-sm">
                 <img
-                  src={productImage}
+                  src={imageLoadErrors["product"] ? FALLBACK_IMAGE : productImage}
                   alt={treatment.medication || treatment.treatment_type}
                   className="h-full w-full object-contain"
+                  onError={() => handleImageError("product")}
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -565,8 +671,8 @@ const TreatmentDetail = () => {
                         <p className="mt-1 text-sm text-muted-foreground">{event.description}</p>
                         <p className="mt-1 text-xs text-muted-foreground">
                           {isUpcoming
-                            ? format(new Date(event.date), "MMMM d, yyyy")
-                            : `${format(new Date(event.date), "MMM d, yyyy")} • ${formatDistanceToNow(new Date(event.date), { addSuffix: true })}`}
+                            ? safeFormatDate(event.date, "MMMM d, yyyy")
+                            : `${safeFormatDate(event.date, "MMM d, yyyy")} • ${safeFormatDistanceToNow(event.date)}`}
                         </p>
                       </div>
                     </div>
@@ -598,7 +704,7 @@ const TreatmentDetail = () => {
                 <div className="mb-4 rounded-xl bg-muted/50 p-4">
                   <p className="text-sm text-muted-foreground">Next Refill</p>
                   <p className="mt-1 font-semibold text-foreground">
-                    {format(new Date(treatment.next_refill_date), "MMMM d, yyyy")}
+                    {safeFormatDate(treatment.next_refill_date, "MMMM d, yyyy")}
                   </p>
                   {refillDaysRemaining !== null && (
                     <p className={cn(
@@ -619,26 +725,35 @@ const TreatmentDetail = () => {
                 </p>
               )}
 
-              <Popover>
+              <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full justify-start text-left font-normal"
-                    disabled={!["approved", "active"].includes(treatment.status)}
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !selectedRefillDate && "text-muted-foreground"
+                    )}
+                    disabled={!["approved", "active"].includes(treatment.status) || isUpdatingRefill}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {isUpdatingRefill ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                    )}
                     {selectedRefillDate
                       ? format(selectedRefillDate, "PPP")
                       : "Schedule Refill"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent className="w-auto p-0" align="start" sideOffset={4}>
                   <Calendar
                     mode="single"
                     selected={selectedRefillDate}
                     onSelect={(date) => {
-                      setSelectedRefillDate(date);
-                      handleRefillSchedule(date);
+                      if (date) {
+                        handleRefillSchedule(date);
+                        setCalendarOpen(false);
+                      }
                     }}
                     disabled={(date) =>
                       isBefore(date, new Date()) || isAfter(date, addDays(new Date(), 90))
@@ -648,6 +763,11 @@ const TreatmentDetail = () => {
                   />
                 </PopoverContent>
               </Popover>
+              {!["approved", "active"].includes(treatment.status) && (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Refill scheduling is available once your treatment is approved.
+                </p>
+              )}
             </motion.div>
 
             {/* Treatment Info */}
@@ -671,20 +791,20 @@ const TreatmentDetail = () => {
                   <span className="text-muted-foreground">Start Date</span>
                   <span className="font-medium text-foreground">
                     {treatment.start_date
-                      ? format(new Date(treatment.start_date), "MMM d, yyyy")
+                      ? safeFormatDate(treatment.start_date, "MMM d, yyyy")
                       : "Not started"}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Created</span>
                   <span className="font-medium text-foreground">
-                    {format(new Date(treatment.created_at), "MMM d, yyyy")}
+                    {safeFormatDate(treatment.created_at, "MMM d, yyyy")}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Last Updated</span>
                   <span className="font-medium text-foreground">
-                    {formatDistanceToNow(new Date(treatment.updated_at), { addSuffix: true })}
+                    {safeFormatDistanceToNow(treatment.updated_at, "Recently")}
                   </span>
                 </div>
               </div>

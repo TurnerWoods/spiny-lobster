@@ -293,8 +293,8 @@ const ProgressPredictor = () => {
 
                   <Button
                     onClick={handleGenerate}
-                    disabled={!formData.treatment || !formData.email || isGenerating}
-                    className="w-full h-12 sm:h-11 bg-warm-stone hover:bg-warm-stone/90"
+                    disabled={!formData.treatment || !formData.primaryConcern || !formData.email || isGenerating}
+                    className="w-full h-12 sm:h-11 bg-warm-stone hover:bg-warm-stone/90 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isGenerating ? (
                       <>

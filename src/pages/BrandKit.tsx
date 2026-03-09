@@ -32,11 +32,11 @@ const typography = [
 ];
 
 const logos = [
-  { name: "Primary Logo (SVG)", file: "/elevar-logo.svg", filename: "elevar-logo.svg", bg: "bg-soft-linen" },
-  { name: "Primary Logo", file: logoElevare, filename: "elevare-logo-primary.png", bg: "bg-soft-linen" },
-  { name: "Logo Icon", file: logoIcon, filename: "elevare-logo-icon.png", bg: "bg-soft-linen" },
-  { name: "Logo Icon (New)", file: logoIconNew, filename: "elevare-logo-icon-new.png", bg: "bg-soft-linen" },
-  { name: "White Logo", file: logoWhite, filename: "elevare-logo-white.png", bg: "bg-deep-charcoal" },
+  { name: "Primary Logo (SVG)", file: "/elevar-logo.svg", filename: "elevar-logo.svg", bg: "bg-soft-linen", format: "SVG" },
+  { name: "Primary Logo", file: logoElevare, filename: "elevare-logo-primary.png", bg: "bg-soft-linen", format: "PNG" },
+  { name: "Logo Icon", file: logoIcon, filename: "elevare-logo-icon.png", bg: "bg-soft-linen", format: "PNG" },
+  { name: "Logo Icon (New)", file: logoIconNew, filename: "elevare-logo-icon-new.png", bg: "bg-soft-linen", format: "PNG" },
+  { name: "White Logo", file: logoWhite, filename: "elevare-logo-white.png", bg: "bg-deep-charcoal", format: "PNG" },
 ];
 
 // Social media asset specs
@@ -260,7 +260,7 @@ const BrandKit = () => {
     <div className="min-h-screen bg-gradient-to-b from-soft-linen to-light-cloud">
       <Header />
       
-      <main className="pt-24 pb-16">
+      <main className="pt-24 pb-16" id="main-content" aria-label="Brand Kit resources">
         <div className="container max-w-6xl mx-auto px-4">
           {/* Hero */}
           <motion.div
@@ -274,12 +274,13 @@ const BrandKit = () => {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
               Download our official brand assets, color palette, and typography guidelines for consistent brand representation.
             </p>
-            <Button 
+            <Button
               onClick={generatePDF}
               size="lg"
               className="bg-primary hover:bg-primary-dark text-primary-foreground"
+              aria-label="Download the complete Elevare Health brand kit as a PDF document"
             >
-              <Download className="w-5 h-5 mr-2" />
+              <Download className="w-5 h-5 mr-2" aria-hidden="true" />
               Download Full Brand Kit (PDF)
             </Button>
           </motion.div>
@@ -290,21 +291,26 @@ const BrandKit = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="mb-12"
+            aria-labelledby="logos-section-heading"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-lg bg-primary/10">
+              <div className="p-2 rounded-lg bg-primary/10" aria-hidden="true">
                 <FileImage className="w-5 h-5 text-primary" />
               </div>
-              <h2 className="font-display text-2xl font-bold text-rich-black">Logos</h2>
+              <h2 id="logos-section-heading" className="font-display text-2xl font-bold text-rich-black">Logos</h2>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {logos.map((logo) => (
                 <Card key={logo.name} className="glass-card overflow-hidden">
-                  <div className={`${logo.bg} p-8 flex items-center justify-center min-h-[140px]`}>
+                  <div
+                    className={`${logo.bg} p-8 flex items-center justify-center min-h-[140px]`}
+                    role="img"
+                    aria-label={`Preview of ${logo.name}`}
+                  >
                     <img
                       src={logo.file}
-                      alt={`${logo.name} logo`}
+                      alt={`Elevare Health ${logo.name}`}
                       loading="lazy"
                       className="max-h-16 w-auto max-w-full object-contain"
                     />
@@ -316,9 +322,10 @@ const BrandKit = () => {
                       size="sm"
                       onClick={() => downloadLogo(logo.file, logo.filename)}
                       className="w-full"
+                      aria-label={`Download ${logo.name} as ${logo.format} file`}
                     >
-                      <Download className="w-4 h-4 mr-2" />
-                      Download PNG
+                      <Download className="w-4 h-4 mr-2" aria-hidden="true" />
+                      Download {logo.format}
                     </Button>
                   </CardContent>
                 </Card>
@@ -332,45 +339,58 @@ const BrandKit = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="mb-12"
+            aria-labelledby="colors-section-heading"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-lg bg-primary/10">
+              <div className="p-2 rounded-lg bg-primary/10" aria-hidden="true">
                 <Palette className="w-5 h-5 text-primary" />
               </div>
-              <h2 className="font-display text-2xl font-bold text-rich-black">Color Palette</h2>
+              <h2 id="colors-section-heading" className="font-display text-2xl font-bold text-rich-black">Color Palette</h2>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {brandColors.map((color) => (
                 <Card key={color.name} className="glass-card overflow-hidden">
-                  <div 
-                    className="h-24 w-full" 
+                  <div
+                    className="h-24 w-full"
                     style={{ backgroundColor: color.hex }}
+                    role="img"
+                    aria-label={`Color swatch for ${color.name} (${color.hex})`}
                   />
                   <CardContent className="p-4">
-                    <p className="font-medium text-foreground mb-1">{color.name}</p>
-                    <div className="space-y-1">
+                    <p className="font-medium text-foreground mb-1" id={`color-${color.name.replace(/\s+/g, '-').toLowerCase()}`}>
+                      {color.name}
+                    </p>
+                    <div className="space-y-1" role="group" aria-labelledby={`color-${color.name.replace(/\s+/g, '-').toLowerCase()}`}>
                       <button
                         onClick={() => copyToClipboard(color.hex, `${color.name}-hex`)}
-                        className="flex items-center justify-between w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="flex items-center justify-between w-full text-sm text-muted-foreground hover:text-foreground transition-colors p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold"
+                        aria-label={`Copy HEX value ${color.hex} for ${color.name}`}
                       >
                         <span>{color.hex}</span>
                         {copiedColor === `${color.name}-hex` ? (
-                          <Check className="w-4 h-4 text-accent-gold" />
+                          <Check className="w-4 h-4 text-accent-gold" aria-hidden="true" />
                         ) : (
-                          <Copy className="w-4 h-4" />
+                          <Copy className="w-4 h-4" aria-hidden="true" />
                         )}
+                        <span className="sr-only">
+                          {copiedColor === `${color.name}-hex` ? "Copied" : "Click to copy"}
+                        </span>
                       </button>
                       <button
                         onClick={() => copyToClipboard(color.hsl, `${color.name}-hsl`)}
-                        className="flex items-center justify-between w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="flex items-center justify-between w-full text-sm text-muted-foreground hover:text-foreground transition-colors p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold"
+                        aria-label={`Copy HSL value ${color.hsl} for ${color.name}`}
                       >
                         <span>HSL({color.hsl})</span>
                         {copiedColor === `${color.name}-hsl` ? (
-                          <Check className="w-4 h-4 text-accent-gold" />
+                          <Check className="w-4 h-4 text-accent-gold" aria-hidden="true" />
                         ) : (
-                          <Copy className="w-4 h-4" />
+                          <Copy className="w-4 h-4" aria-hidden="true" />
                         )}
+                        <span className="sr-only">
+                          {copiedColor === `${color.name}-hsl` ? "Copied" : "Click to copy"}
+                        </span>
                       </button>
                     </div>
                     <p className="text-xs text-muted-foreground mt-2">{color.usage}</p>
@@ -386,12 +406,13 @@ const BrandKit = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="mb-12"
+            aria-labelledby="typography-section-heading"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-lg bg-primary/10">
+              <div className="p-2 rounded-lg bg-primary/10" aria-hidden="true">
                 <Type className="w-5 h-5 text-primary" />
               </div>
-              <h2 className="font-display text-2xl font-bold text-rich-black">Typography</h2>
+              <h2 id="typography-section-heading" className="font-display text-2xl font-bold text-rich-black">Typography</h2>
             </div>
             
             <div className="space-y-4">
@@ -430,12 +451,13 @@ const BrandKit = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
             className="mb-12"
+            aria-labelledby="social-section-heading"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-lg bg-primary/10">
+              <div className="p-2 rounded-lg bg-primary/10" aria-hidden="true">
                 <Share2 className="w-5 h-5 text-primary" />
               </div>
-              <h2 className="font-display text-2xl font-bold text-rich-black">Social Media Assets</h2>
+              <h2 id="social-section-heading" className="font-display text-2xl font-bold text-rich-black">Social Media Assets</h2>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
               Download platform-ready branded assets with the Elevare logo centered on the brand palette. Each file is sized to spec — no design tool needed.
@@ -448,7 +470,7 @@ const BrandKit = () => {
                   <Card key={platform.platform} className="glass-card overflow-hidden">
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-lg">
-                        <Icon className="h-5 w-5 text-warm-stone" />
+                        <Icon className="h-5 w-5 text-warm-stone" aria-hidden="true" />
                         {platform.platform}
                       </CardTitle>
                     </CardHeader>
@@ -466,8 +488,9 @@ const BrandKit = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => generateSocialAsset(asset.canvasW, asset.canvasH, `${platform.platform}-${asset.name}`)}
+                            aria-label={`Download ${platform.platform} ${asset.name} as PNG (${asset.size})`}
                           >
-                            <Download className="h-4 w-4 mr-1.5" />
+                            <Download className="h-4 w-4 mr-1.5" aria-hidden="true" />
                             PNG
                           </Button>
                         </div>
@@ -484,56 +507,57 @@ const BrandKit = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
+            aria-labelledby="guidelines-section-heading"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-lg bg-primary/10">
+              <div className="p-2 rounded-lg bg-primary/10" aria-hidden="true">
                 <BookOpen className="w-5 h-5 text-primary" />
               </div>
-              <h2 className="font-display text-2xl font-bold text-rich-black">Usage Guidelines</h2>
+              <h2 id="guidelines-section-heading" className="font-display text-2xl font-bold text-rich-black">Usage Guidelines</h2>
             </div>
             
             <Card className="glass-card">
               <CardContent className="p-6">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="font-semibold text-foreground mb-3">Do's</h3>
-                    <ul className="space-y-2 text-muted-foreground">
+                    <h3 className="font-semibold text-foreground mb-3" id="dos-heading">Do's</h3>
+                    <ul className="space-y-2 text-muted-foreground" aria-labelledby="dos-heading">
                       <li className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" />
-                        Use adequate spacing around the logo
+                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" aria-hidden="true" />
+                        <span>Use adequate spacing around the logo</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" />
-                        Maintain color consistency across all materials
+                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" aria-hidden="true" />
+                        <span>Maintain color consistency across all materials</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" />
-                        Use the white logo on dark backgrounds
+                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" aria-hidden="true" />
+                        <span>Use the white logo on dark backgrounds</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" />
-                        Keep the glassmorphic aesthetic in UI designs
+                        <Check className="w-4 h-4 text-accent-gold mt-1 shrink-0" aria-hidden="true" />
+                        <span>Keep the glassmorphic aesthetic in UI designs</span>
                       </li>
                     </ul>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-3">Don'ts</h3>
-                    <ul className="space-y-2 text-muted-foreground">
+                    <h3 className="font-semibold text-foreground mb-3" id="donts-heading">Don'ts</h3>
+                    <ul className="space-y-2 text-muted-foreground" aria-labelledby="donts-heading">
                       <li className="flex items-start gap-2">
-                        <span className="w-4 h-4 text-red-500 mt-1 shrink-0">✕</span>
-                        Stretch or distort the logo
+                        <span className="w-4 h-4 text-red-500 mt-1 shrink-0 flex items-center justify-center" aria-hidden="true">✕</span>
+                        <span>Stretch or distort the logo</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="w-4 h-4 text-red-500 mt-1 shrink-0">✕</span>
-                        Change brand colors without approval
+                        <span className="w-4 h-4 text-red-500 mt-1 shrink-0 flex items-center justify-center" aria-hidden="true">✕</span>
+                        <span>Change brand colors without approval</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="w-4 h-4 text-red-500 mt-1 shrink-0">✕</span>
-                        Place logo on busy or low-contrast backgrounds
+                        <span className="w-4 h-4 text-red-500 mt-1 shrink-0 flex items-center justify-center" aria-hidden="true">✕</span>
+                        <span>Place logo on busy or low-contrast backgrounds</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="w-4 h-4 text-red-500 mt-1 shrink-0">✕</span>
-                        Use non-approved fonts for marketing
+                        <span className="w-4 h-4 text-red-500 mt-1 shrink-0 flex items-center justify-center" aria-hidden="true">✕</span>
+                        <span>Use non-approved fonts for marketing</span>
                       </li>
                     </ul>
                   </div>

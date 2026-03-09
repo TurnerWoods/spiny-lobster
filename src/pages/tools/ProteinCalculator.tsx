@@ -36,10 +36,48 @@ export default function ProteinCalculator() {
   const [activity, setActivity] = useState("");
   const [goal, setGoal] = useState("");
   const [result, setResult] = useState<ProteinResult | null>(null);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
+
+  const validateField = (field: string, value: string) => {
+    const newErrors = { ...errors };
+
+    switch (field) {
+      case 'weight':
+        if (!value || parseFloat(value) <= 0) newErrors.weight = 'Please enter a valid weight';
+        else delete newErrors.weight;
+        break;
+      case 'activity':
+        if (!value) newErrors.activity = 'Please select an activity level';
+        else delete newErrors.activity;
+        break;
+      case 'goal':
+        if (!value) newErrors.goal = 'Please select a fitness goal';
+        else delete newErrors.goal;
+        break;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+    validateField(field, field === 'weight' ? weight : field === 'activity' ? activity : goal);
+  };
+
+  const isFormValid = weight && parseFloat(weight) > 0 && activity && goal;
 
   const calculate = () => {
+    setTouched({ weight: true, activity: true, goal: true });
+
     const weightNum = parseFloat(weight);
-    if (isNaN(weightNum) || !activity || !goal) return;
+    if (isNaN(weightNum) || !activity || !goal) {
+      validateField('weight', weight);
+      validateField('activity', activity);
+      validateField('goal', goal);
+      return;
+    }
 
     const weightLbs = weightUnit === "kg" ? weightNum * 2.20462 : weightNum;
     const goalMult = goalMultipliers[goal];
@@ -101,7 +139,12 @@ export default function ProteinCalculator() {
                     type="number"
                     placeholder={weightUnit === "lbs" ? "150" : "68"}
                     value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
+                    onChange={(e) => {
+                      setWeight(e.target.value);
+                      if (touched.weight) validateField('weight', e.target.value);
+                    }}
+                    onBlur={() => handleBlur('weight')}
+                    className={touched.weight && errors.weight ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                   />
                   <Button
                     variant="outline"
@@ -112,12 +155,25 @@ export default function ProteinCalculator() {
                     {weightUnit}
                   </Button>
                 </div>
+                {touched.weight && errors.weight && (
+                  <p className="text-xs text-red-500 mt-1">{errors.weight}</p>
+                )}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="activity">Activity Level</Label>
-                <Select value={activity} onValueChange={setActivity}>
-                  <SelectTrigger id="activity">
+                <Select
+                  value={activity}
+                  onValueChange={(value) => {
+                    setActivity(value);
+                    setTouched(prev => ({ ...prev, activity: true }));
+                    validateField('activity', value);
+                  }}
+                >
+                  <SelectTrigger
+                    id="activity"
+                    className={touched.activity && errors.activity ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
+                  >
                     <SelectValue placeholder="Select activity level" />
                   </SelectTrigger>
                   <SelectContent>
@@ -128,11 +184,25 @@ export default function ProteinCalculator() {
                     ))}
                   </SelectContent>
                 </Select>
+                {touched.activity && errors.activity && (
+                  <p className="text-xs text-red-500 mt-1">{errors.activity}</p>
+                )}
               </div>
 
               <div className="space-y-2">
                 <Label>Fitness Goal</Label>
-                <RadioGroup value={goal} onValueChange={setGoal} className="space-y-3">
+                {touched.goal && errors.goal && (
+                  <p className="text-xs text-red-500 mb-2">{errors.goal}</p>
+                )}
+                <RadioGroup
+                  value={goal}
+                  onValueChange={(value) => {
+                    setGoal(value);
+                    setTouched(prev => ({ ...prev, goal: true }));
+                    validateField('goal', value);
+                  }}
+                  className="space-y-3"
+                >
                   {[
                     { value: "lose", label: "Lose Fat" },
                     { value: "maintain", label: "Maintain Weight" },
@@ -155,8 +225,9 @@ export default function ProteinCalculator() {
               </div>
 
               <Button
-                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white"
+                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={calculate}
+                disabled={!isFormValid}
               >
                 Calculate Protein
               </Button>

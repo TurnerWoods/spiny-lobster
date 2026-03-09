@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Plus, Minus, HelpCircle, CreditCard, Pill, Shield, Truck, Users, Clock, FileText, Sparkles, ArrowRight } from "lucide-react";
 import { LucideIcon } from "lucide-react";
@@ -240,15 +240,21 @@ const FAQItemComponent = ({ faq, isOpen, onClick }: { faq: FAQItem; isOpen: bool
           {isOpen ? <Minus className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
         </span>
       </button>
-      {isOpen && (
-        <motion.p
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          className="pb-4 text-sm text-warm-gray"
-        >
-          {faq.answer}
-        </motion.p>
-      )}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <p className="pb-4 text-sm text-warm-gray leading-relaxed">
+              {faq.answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

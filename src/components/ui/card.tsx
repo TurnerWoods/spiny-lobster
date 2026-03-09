@@ -4,14 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "rounded-xl text-card-foreground transition-all duration-300",
+  "rounded-xl text-card-foreground transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
   {
     variants: {
       variant: {
-        default: "border bg-card shadow-sm",
-        glass: "border border-pure-white/30 bg-pure-white/80 shadow-lg backdrop-blur-xl",
-        glassDark: "border border-warm-gray/20 bg-deep-charcoal/85 shadow-lg backdrop-blur-xl text-pure-white",
-        elevated: "border bg-card shadow-md hover:shadow-lg",
+        default: "border bg-card shadow-sm hover:shadow-md",
+        glass: "border border-pure-white/30 bg-pure-white/80 shadow-lg backdrop-blur-xl hover:bg-pure-white/90 hover:shadow-xl hover:border-pure-white/40",
+        glassDark: "border border-warm-gray/20 bg-deep-charcoal/85 shadow-lg backdrop-blur-xl text-pure-white hover:bg-deep-charcoal/90 hover:shadow-xl hover:border-warm-gray/30",
+        elevated: "border bg-card shadow-md hover:shadow-lg hover:scale-[1.01]",
+        outline: "border-2 border-warm-stone/20 bg-transparent hover:border-warm-stone/40 hover:bg-card/50",
       },
     },
     defaultVariants: {
@@ -22,11 +23,23 @@ const cardVariants = cva(
 
 export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {}
+    VariantProps<typeof cardVariants> {
+  /** When true, makes the card focusable and adds appropriate ARIA attributes for interactive cards */
+  interactive?: boolean;
+}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, ...props }, ref) => (
-    <div ref={ref} className={cn(cardVariants({ variant, className }))} {...props} />
+  ({ className, variant, interactive = false, role, tabIndex, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        cardVariants({ variant, className }),
+        interactive && "cursor-pointer active:scale-[0.99]"
+      )}
+      role={role || (interactive ? "button" : undefined)}
+      tabIndex={tabIndex ?? (interactive ? 0 : undefined)}
+      {...props}
+    />
   )
 );
 Card.displayName = "Card";

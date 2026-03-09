@@ -161,11 +161,15 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
                 </div>
               </>
             ) : null}
-            {medicalHistory.heightFeet && medicalHistory.heightInches && (
+            {(medicalHistory.heightFeet || medicalHistory.heightInches) && (
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Height:</span>
                 <span className="text-rich-black">
-                  {`${medicalHistory.heightFeet}'${medicalHistory.heightInches}"`}
+                  {medicalHistory.heightFeet && medicalHistory.heightInches
+                    ? `${medicalHistory.heightFeet}'${medicalHistory.heightInches}"`
+                    : medicalHistory.heightFeet
+                    ? `${medicalHistory.heightFeet}' 0"`
+                    : `0'${medicalHistory.heightInches}"`}
                 </span>
               </div>
             )}
@@ -212,7 +216,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
                 {lifestyle.exerciseFrequency && (
                   <div>
                     <span className="text-muted-foreground block mb-0.5">Exercise</span>
-                    <span className="text-rich-black">{exerciseLabels[lifestyle.exerciseFrequency]}</span>
+                    <span className="text-rich-black">{exerciseLabels[lifestyle.exerciseFrequency] || lifestyle.exerciseFrequency}</span>
                   </div>
                 )}
                 {lifestyle.stressLevel && (
@@ -252,8 +256,17 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
                 </p>
               </div>
               <div
+                role="button"
+                tabIndex={0}
+                aria-pressed={agreedToTerms}
                 onClick={() => onAgreeChange(!agreedToTerms)}
-                className={`flex items-start gap-3 rounded-lg border p-4 cursor-pointer transition-all ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onAgreeChange(!agreedToTerms);
+                  }
+                }}
+                className={`flex items-start gap-3 rounded-lg border p-4 cursor-pointer transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 ${
                   agreedToTerms
                     ? "border-accent-gold/40 bg-accent-gold/10"
                     : "border-warm-stone/10 bg-soft-linen/50 hover:border-warm-stone/30"
@@ -264,12 +277,14 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
                   checked={agreedToTerms}
                   onCheckedChange={(checked) => onAgreeChange(checked as boolean)}
                   className="mt-0.5"
+                  tabIndex={-1}
+                  aria-hidden="true"
                 />
-                <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer text-rich-black">
+                <span id="terms-label" className="text-sm leading-relaxed text-rich-black">
                   I confirm that the information provided is accurate to the best of my knowledge. I understand that a
                   licensed provider will review my intake and may request additional information before prescribing
                   treatment.
-                </Label>
+                </span>
               </div>
               {!agreedToTerms && (
                 <p className="text-xs text-warm-stone flex items-center gap-1">

@@ -154,10 +154,10 @@ const Intake = () => {
 
         let exerciseFrequency = "";
         if (answers.recovery !== undefined) {
-          if (answers.recovery === 0) exerciseFrequency = "5-plus";
-          else if (answers.recovery === 1) exerciseFrequency = "3-4";
-          else if (answers.recovery === 2) exerciseFrequency = "1-2";
-          else exerciseFrequency = "rarely";
+          if (answers.recovery === 0) exerciseFrequency = "active";
+          else if (answers.recovery === 1) exerciseFrequency = "moderate";
+          else if (answers.recovery === 2) exerciseFrequency = "light";
+          else exerciseFrequency = "sedentary";
         }
 
         setHealthGoals(prev => ({
@@ -456,6 +456,7 @@ const Intake = () => {
                 <HealthGoalsStep
                   data={healthGoals}
                   onChange={(data) => setHealthGoals((prev) => ({ ...prev, ...data }))}
+                  hasError={validationError !== null && currentStep === 1}
                 />
               )}
               {currentStep === 2 && (
@@ -496,18 +497,17 @@ const Intake = () => {
 
           {/* Navigation - Mobile optimized */}
           <div className="mt-8 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-warm-stone/10 pt-6">
-            {currentStep > 1 ? (
-              <Button
-                variant="ghost"
-                onClick={handleBack}
-                className="text-muted-foreground hover:text-warm-stone w-full sm:w-auto"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back
-              </Button>
-            ) : (
-              <div className="hidden sm:block" /> // Spacer for alignment
-            )}
+            <Button
+              variant="ghost"
+              onClick={handleBack}
+              className={`text-muted-foreground hover:text-warm-stone w-full sm:w-auto ${
+                currentStep === 1 ? "hidden" : ""
+              }`}
+              disabled={currentStep === 1}
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back
+            </Button>
 
             {currentStep < 4 ? (
               <Button

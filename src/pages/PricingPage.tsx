@@ -334,7 +334,7 @@ const PricingPage = () => {
             >
               <Card variant="glassDark" className="mx-auto max-w-2xl p-8 text-center md:p-12">
                 <h2 className="mb-4 font-display text-4xl font-semibold tracking-tight text-pure-white">Ready to Get Started?</h2>
-                <p className="text-body-lg mb-6 text-warm-gray">
+                <p className="text-body-lg mb-6 text-pure-white/70">
                   Take the first step toward feeling like yourself again. Your card is only charged if you're approved.
                 </p>
 

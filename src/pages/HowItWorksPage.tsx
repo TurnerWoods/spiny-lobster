@@ -237,9 +237,11 @@ const HowItWorksPage = () => {
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
-                  <Button size="lg" variant="outline" className="border-pure-white/30 text-pure-white hover:bg-pure-white/10">
-                    Book Video Consultation - $99
-                  </Button>
+                  <Link to="/intake?consultation=video">
+                    <Button size="lg" variant="outline" className="border-pure-white/30 text-pure-white hover:bg-pure-white/10">
+                      Book Video Consultation - $99
+                    </Button>
+                  </Link>
                 </div>
               </Card>
             </motion.div>

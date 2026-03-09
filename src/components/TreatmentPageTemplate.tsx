@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BeforeAfterGallery, { BeforeAfterResult } from "@/components/BeforeAfterGallery";
-import { motion } from "framer-motion";
 import { ArrowRight, Check, Shield, Truck, Star, Pill, BadgeCheck, Zap, Award, CheckCircle2, Package, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -56,9 +55,19 @@ interface TreatmentPageTemplateProps {
 // No animation classes - sections render immediately visible
 const sectionFadeClass = "";
 
+// Fallback placeholder for broken images
+const FALLBACK_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f4' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23a8a29e' font-family='system-ui' font-size='14'%3EImage unavailable%3C/text%3E%3C/svg%3E";
+
+const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const target = e.currentTarget;
+  target.onerror = null; // Prevent infinite loop
+  target.src = FALLBACK_IMAGE;
+  target.alt = "Image unavailable - placeholder shown";
+};
+
 const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <Header />
       <main>
         {/* ── SECTION 1: HERO ── */}
@@ -113,7 +122,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                     size="lg"
                     className="h-12 w-full sm:w-auto sm:px-8 bg-rich-black text-pure-white hover:bg-rich-black/90 shadow-lg"
                   >
-                    Start Free Assessment
+                    Start Your Journey
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
@@ -190,7 +199,15 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                         )}
                         {stack.image && (
                           <div className="aspect-[16/10] overflow-hidden bg-soft-linen">
-                            <img src={stack.image} alt={stack.name} loading="lazy" decoding="async" fetchPriority="low" className="h-full w-full object-cover" />
+                            <img
+                              src={stack.image}
+                              alt={`${stack.name} treatment bundle - includes ${stack.products.join(', ')}`}
+                              loading="lazy"
+                              decoding="async"
+                              fetchPriority="low"
+                              className="h-full w-full object-cover"
+                              onError={handleImageError}
+                            />
                           </div>
                         )}
                         <div className="p-5">
@@ -210,11 +227,9 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           </div>
                           <div className="flex items-end justify-between pt-4 border-t border-neutral-gray/15">
                             <p className="text-xl font-bold text-rich-black">{stack.price}</p>
-                            <Link to="/intake">
-                              <Button size="sm" className={stack.popular ? "bg-warm-stone hover:bg-warm-stone/90" : "bg-rich-black hover:bg-rich-black/90"}>
-                                Get Started <ArrowRight className="ml-1 h-3.5 w-3.5" />
-                              </Button>
-                            </Link>
+                            <span className="text-xs text-warm-stone font-medium">
+                              {stack.products.length} products included
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -232,9 +247,17 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                   >
                     <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-soft-linen to-warm-stone/5">
                       {med.image ? (
-                        <img src={med.image} alt={med.name} loading="lazy" decoding="async" fetchPriority="low" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img
+                          src={med.image}
+                          alt={`${med.name} medication - ${med.description.split('.')[0]}`}
+                          loading="lazy"
+                          decoding="async"
+                          fetchPriority="low"
+                          className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={handleImageError}
+                        />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center">
+                        <div className="flex h-full w-full items-center justify-center" role="img" aria-label={`${med.name} - no image available`}>
                           <Pill className="h-10 w-10 text-warm-stone/30" />
                         </div>
                       )}
@@ -272,11 +295,11 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           <p className="text-[10px] text-muted-foreground">From</p>
                           <p className="text-lg font-bold text-rich-black">{med.price}</p>
                         </div>
-                        <Link to="/intake">
-                          <Button variant="outline" size="sm" className="text-xs border-warm-stone/30 text-warm-stone hover:bg-warm-stone hover:text-pure-white">
-                            View Details <ArrowRight className="ml-1 h-3 w-3" />
-                          </Button>
-                        </Link>
+                        {med.mostPopular && (
+                          <span className="text-xs text-warm-stone font-medium flex items-center gap-1">
+                            <Star className="h-3 w-3 fill-warm-stone" /> Popular
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -415,7 +438,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
 
               <Link to="/intake">
                 <Button size="lg" className="h-14 px-10 text-base font-semibold bg-warm-stone hover:bg-warm-stone/90 text-pure-white shadow-xl">
-                  Start Free Assessment
+                  Begin Treatment
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -427,6 +450,20 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
         </section>
       </main>
       <Footer />
+
+      {/* Sticky Mobile CTA - only visible on small screens */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-pure-white/95 backdrop-blur-sm border-t border-neutral-gray/20 p-3 safe-area-inset-bottom">
+        <Link to="/intake" className="block">
+          <Button
+            size="lg"
+            className="w-full h-12 bg-rich-black text-pure-white hover:bg-rich-black/90 shadow-lg"
+            aria-label={`Start ${treatment.title} treatment - ${treatment.price} per month`}
+          >
+            Get Started - {treatment.price}/mo
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };

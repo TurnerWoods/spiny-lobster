@@ -15,10 +15,10 @@ interface LifestyleStepProps {
 }
 
 const exerciseOptions = [
-  { value: "sedentary", label: "Sedentary", description: "Little to no exercise", icon: "rest" },
-  { value: "light", label: "Light", description: "1-2 days/week", icon: "light" },
-  { value: "moderate", label: "Moderate", description: "3-4 days/week", icon: "moderate" },
-  { value: "active", label: "Very Active", description: "5+ days/week", icon: "active" },
+  { value: "sedentary", label: "Sedentary", description: "Little to no exercise" },
+  { value: "light", label: "Light", description: "1-2 days/week" },
+  { value: "moderate", label: "Moderate", description: "3-4 days/week" },
+  { value: "active", label: "Very Active", description: "5+ days/week" },
 ];
 
 const stressOptions = [
@@ -54,7 +54,10 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
       <div>
         <div className="flex items-center gap-2 mb-3">
           <Dumbbell className="h-5 w-5 text-warm-stone" />
-          <Label className="text-base font-semibold text-rich-black">How often do you exercise?</Label>
+          <Label className="text-base font-semibold text-rich-black">
+            How often do you exercise?
+            <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
+          </Label>
         </div>
         <RadioGroup
           value={data.exerciseFrequency}
@@ -80,7 +83,10 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
       <div>
         <div className="flex items-center gap-2 mb-3">
           <Brain className="h-5 w-5 text-warm-stone" />
-          <Label className="text-base font-semibold text-rich-black">What's your typical stress level?</Label>
+          <Label className="text-base font-semibold text-rich-black">
+            What's your typical stress level?
+            <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
+          </Label>
         </div>
         <RadioGroup
           value={data.stressLevel}
@@ -108,10 +114,11 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
           <Moon className="h-5 w-5 text-warm-stone" />
           <Label htmlFor="sleepHours" className="text-base font-semibold text-rich-black">
             Average hours of sleep per night
+            <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
           </Label>
         </div>
         <Select value={data.sleepHours} onValueChange={(value) => onChange({ sleepHours: value })}>
-          <SelectTrigger className="w-full h-12 sm:h-11">
+          <SelectTrigger id="sleepHours" aria-label="Average hours of sleep per night" className="w-full h-12 sm:h-11">
             <SelectValue placeholder="Select your typical sleep duration" />
           </SelectTrigger>
           <SelectContent>

@@ -1,15 +1,24 @@
 import { ReactNode, useState } from "react";
 import { motion } from "framer-motion";
-import { LucideIcon, List, ChevronDown } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { LucideIcon, List, ChevronDown, ArrowLeft, Home, Shield, FileText, AlertTriangle, Lock } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TableOfContents, { TOCItem } from "./TableOfContents";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
+
+const legalPages = [
+  { title: "Privacy Policy", href: "/privacy", icon: Shield, description: "How we collect and use your data" },
+  { title: "Terms of Use", href: "/terms", icon: FileText, description: "Our service agreement" },
+  { title: "HIPAA Notice", href: "/hipaa", icon: Lock, description: "Your health information rights" },
+  { title: "Safety Information", href: "/safety", icon: AlertTriangle, description: "Important medication safety" },
+];
 
 interface LegalPageLayoutProps {
   title: string;
@@ -72,6 +81,44 @@ const MobileTableOfContents = ({ items }: { items: TOCItem[] }) => {
   );
 };
 
+const RelatedLegalPages = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const otherPages = legalPages.filter(page => page.href !== currentPath);
+
+  return (
+    <Card variant="glass" className="mt-8">
+      <CardContent className="p-6">
+        <h2 className="mb-4 font-display text-lg font-bold text-rich-black">
+          Related Legal Documents
+        </h2>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {otherPages.map((page) => {
+            const PageIcon = page.icon;
+            return (
+              <Link
+                key={page.href}
+                to={page.href}
+                className="group flex items-start gap-3 rounded-lg border border-warm-stone/10 bg-pure-white/50 p-4 transition-all hover:bg-warm-stone/5 hover:border-warm-stone/20"
+              >
+                <PageIcon className="h-5 w-5 text-warm-stone mt-0.5 flex-shrink-0" aria-hidden="true" />
+                <div>
+                  <span className="block font-medium text-rich-black group-hover:text-warm-stone transition-colors">
+                    {page.title}
+                  </span>
+                  <span className="text-sm text-warm-gray">
+                    {page.description}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 const LegalPageLayout = ({
   title,
   subtitle,
@@ -90,16 +137,28 @@ const LegalPageLayout = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
+              {/* Back Navigation */}
+              <nav aria-label="Breadcrumb" className="mb-6">
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-2 text-sm text-warm-gray hover:text-warm-stone transition-colors min-h-[44px] py-2 group"
+                >
+                  <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                  <Home className="h-4 w-4" />
+                  <span>Back to Home</span>
+                </Link>
+              </nav>
+
               {/* Header Section */}
               <div className="mb-10 flex items-center gap-4">
                 <div className="flex h-14 w-14 items-center justify-center rounded-full bg-warm-stone/10 ring-2 ring-warm-stone/20">
-                  <Icon className="h-7 w-7 text-warm-stone" />
+                  <Icon className="h-7 w-7 text-warm-stone" aria-hidden="true" />
                 </div>
                 <div>
                   <h1 className="font-display text-3xl font-bold text-rich-black sm:text-4xl">
                     {title}
                   </h1>
-                  <p className="text-warm-gray">{subtitle}</p>
+                  <p className="text-warm-gray text-base">{subtitle}</p>
                 </div>
               </div>
 
@@ -114,7 +173,12 @@ const LegalPageLayout = ({
                 </aside>
 
                 {/* Main Content */}
-                <div className="min-w-0 flex-1 space-y-6">{children}</div>
+                <div className="min-w-0 flex-1 space-y-6">
+                  {children}
+
+                  {/* Related Legal Documents */}
+                  <RelatedLegalPages />
+                </div>
               </div>
             </motion.div>
           </div>

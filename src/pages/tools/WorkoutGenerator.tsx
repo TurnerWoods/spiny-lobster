@@ -336,8 +336,8 @@ ${formData.treatment === "peptides" ? "**For Peptide users:** Time your training
                       </Button>
                       <Button
                         onClick={handleGenerate}
-                        disabled={!formData.goal || !formData.daysPerWeek || !formData.email || isGenerating}
-                        className="flex-1 h-12 sm:h-11 bg-warm-stone hover:bg-warm-stone/90"
+                        disabled={!formData.goal || !formData.daysPerWeek || !formData.equipment || !formData.email || isGenerating}
+                        className="flex-1 h-12 sm:h-11 bg-warm-stone hover:bg-warm-stone/90 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isGenerating ? (
                           <>

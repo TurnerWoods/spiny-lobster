@@ -33,14 +33,16 @@ export interface InputProps
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, variant, inputSize, error, success, ...props }, ref) => {
+  ({ className, type, variant, inputSize, error, success, "aria-invalid": ariaInvalid, ...props }, ref) => {
     const computedVariant = error ? "error" : success ? "success" : variant;
+    const isInvalid = error || ariaInvalid === true || ariaInvalid === "true";
 
     return (
       <input
         type={type}
         className={cn(inputVariants({ variant: computedVariant, inputSize, className }))}
         ref={ref}
+        aria-invalid={isInvalid || undefined}
         {...props}
       />
     );

@@ -33,7 +33,10 @@ const PrivacyPolicy = () => {
             This Privacy Policy describes how Elevare Health MSO LLC ("Elevare Health", "we", "our", or "us") collects, uses, discloses, and protects information. It applies to our websites, mobile applications, telehealth platform, patient portal, and related services (collectively, the "Services").
           </p>
           <p className="mt-3 text-warm-gray leading-relaxed">
-            This Policy is incorporated into and made part of our Terms of Use. Capitalized terms not defined in this Policy have the meanings given in the Terms of Use.
+            This Policy is incorporated into and made part of our{" "}
+            <a href="/terms" className="text-warm-stone underline hover:text-rich-black transition-colors">
+              Terms of Use
+            </a>. Capitalized terms not defined in this Policy have the meanings given in the Terms of Use.
           </p>
         </CardContent>
       </Card>
@@ -57,7 +60,11 @@ const PrivacyPolicy = () => {
             If you are a patient receiving telehealth services, certain health information collected and processed on behalf of independent clinicians may be considered Protected Health Information ("PHI") subject to the Health Insurance Portability and Accountability Act of 1996 ("HIPAA").
           </p>
           <p className="mt-3 text-warm-gray leading-relaxed">
-            When HIPAA applies, PHI will be used and disclosed only as permitted under HIPAA and our agreements with clinicians, pharmacies, and business associates. If there is any inconsistency between this Policy and HIPAA with respect to PHI, HIPAA will control.
+            When HIPAA applies, PHI will be used and disclosed only as permitted under HIPAA and our agreements with clinicians, pharmacies, and business associates. If there is any inconsistency between this Policy and HIPAA with respect to PHI, HIPAA will control. See our{" "}
+            <a href="/hipaa" className="text-warm-stone underline hover:text-rich-black transition-colors">
+              HIPAA Notice of Privacy Practices
+            </a>{" "}
+            for more information.
           </p>
         </CardContent>
       </Card>
@@ -154,7 +161,7 @@ const PrivacyPolicy = () => {
           </ul>
           <p className="mt-4 text-warm-gray leading-relaxed">
             To exercise these rights, contact us at{" "}
-            <a href="mailto:privacy@elevarehealth.com" className="text-warm-stone hover:underline">
+            <a href="mailto:privacy@elevarehealth.com" className="text-warm-stone underline hover:text-rich-black transition-colors">
               privacy@elevarehealth.com
             </a>
           </p>
@@ -198,7 +205,7 @@ const PrivacyPolicy = () => {
             <p>Austin, TX 78701</p>
             <p>
               Email:{" "}
-              <a href="mailto:privacy@elevarehealth.com" className="text-warm-stone hover:underline">
+              <a href="mailto:privacy@elevarehealth.com" className="text-warm-stone underline hover:text-rich-black transition-colors">
                 privacy@elevarehealth.com
               </a>
             </p>

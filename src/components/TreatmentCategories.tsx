@@ -80,10 +80,22 @@ const cardVariants = {
 
 const TreatmentCategories = () => {
   return (
-    <section id="treatments" className="bg-soft-linen py-16 sm:py-24 md:py-32 lg:py-40">
+    <section
+      id="treatments"
+      className="bg-soft-linen py-16 sm:py-24 md:py-32 lg:py-40"
+      aria-labelledby="treatments-heading"
+    >
       <div className="container px-4 sm:px-6">
+        {/* Visually hidden heading for screen readers */}
+        <h2 id="treatments-heading" className="sr-only">
+          Treatment Categories
+        </h2>
         {/* Featured Cards - 3 large cards */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          role="list"
+          aria-label="Featured treatments"
+        >
           {featuredTreatments.map((treatment, index) => (
             <motion.div
               key={treatment.slug}
@@ -92,18 +104,20 @@ const TreatmentCategories = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
+              role="listitem"
             >
               <Link
                 to={`/treatments/${treatment.slug}`}
-                className="group relative block overflow-hidden rounded-2xl aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/3]"
+                className="group relative block overflow-hidden rounded-2xl aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                aria-label={`Learn more about ${treatment.title.replace('\n', ' ')} ${treatment.subtitle}`}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${treatment.gradient}`} />
-                
+                <div className={`absolute inset-0 bg-gradient-to-br ${treatment.gradient}`} aria-hidden="true" />
+
                 {/* Product Image */}
-                <div className="absolute inset-0 flex items-end justify-end">
+                <div className="absolute inset-0 flex items-end justify-end" aria-hidden="true">
                   <OptimizedImage
                     src={treatment.image}
-                    alt={treatment.title}
+                    alt=""
                     className="h-[70%] w-auto object-contain transition-transform duration-700 ease-out group-hover:scale-105 opacity-90"
                     objectFit="contain"
                   />
@@ -120,7 +134,7 @@ const TreatmentCategories = () => {
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm font-medium text-white">
+                  <div className="flex items-center gap-2 text-sm font-medium text-white" aria-hidden="true">
                     <span>LEARN MORE</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 transition-colors duration-300 group-hover:bg-white/20">
                       <ArrowRight className="h-4 w-4" />
@@ -132,8 +146,12 @@ const TreatmentCategories = () => {
           ))}
         </div>
 
-        {/* Compact Cards - 4 smaller cards */}
-        <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {/* Compact Cards - 5 smaller cards */}
+        <div
+          className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4"
+          role="list"
+          aria-label="Additional treatments"
+        >
           {compactTreatments.map((treatment, index) => (
             <motion.div
               key={treatment.slug}
@@ -142,10 +160,12 @@ const TreatmentCategories = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
+              role="listitem"
             >
               <Link
                 to={`/treatments/${treatment.slug}`}
-                className="group flex items-center justify-between gap-3 rounded-2xl bg-white p-4 sm:p-5 shadow-sm transition-shadow duration-300 hover:shadow-md"
+                className="group flex items-center justify-between gap-3 rounded-2xl bg-white p-4 sm:p-5 shadow-sm transition-shadow duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                aria-label={`Learn more about ${treatment.title} ${treatment.subtitle.replace('\n', ' ')}`}
               >
                 <div className="min-w-0 flex-1">
                   <h3 className="font-display text-sm font-semibold text-rich-black sm:text-base">
@@ -156,15 +176,18 @@ const TreatmentCategories = () => {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="h-14 w-14 flex-shrink-0 sm:h-16 sm:w-16">
+                  <div className="h-14 w-14 flex-shrink-0 sm:h-16 sm:w-16" aria-hidden="true">
                     <OptimizedImage
                       src={treatment.image}
-                      alt={treatment.title}
+                      alt=""
                       className="h-full w-full object-contain"
                       objectFit="contain"
                     />
                   </div>
-                  <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-neutral-gray/30 transition-colors duration-300 group-hover:bg-rich-black group-hover:border-rich-black">
+                  <span
+                    className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-neutral-gray/30 transition-colors duration-300 group-hover:bg-rich-black group-hover:border-rich-black"
+                    aria-hidden="true"
+                  >
                     <ArrowRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-white transition-colors" />
                   </span>
                 </div>

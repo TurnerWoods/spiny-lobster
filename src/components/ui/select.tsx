@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
@@ -10,30 +11,66 @@ const SelectGroup = SelectPrimitive.Group;
 
 const SelectValue = SelectPrimitive.Value;
 
+const selectTriggerVariants = cva(
+  "flex h-11 w-full items-center justify-between rounded-xl border bg-pure-white/60 px-4 py-2.5 text-sm text-foreground ring-offset-background backdrop-blur-sm transition-all duration-200 ease-out placeholder:text-warm-gray/60 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 data-[placeholder]:text-warm-gray/60",
+  {
+    variants: {
+      variant: {
+        default: [
+          "border-warm-stone/20",
+          "hover:border-warm-stone/40",
+          "focus:outline-none focus:border-warm-stone focus:ring-2 focus:ring-warm-stone/20 focus:shadow-[0_0_0_4px_rgba(114,102,88,0.08)]",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30",
+        ],
+        error: [
+          "border-red-400 bg-red-50/30",
+          "hover:border-red-500",
+          "focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200 focus:shadow-[0_0_0_4px_rgba(239,68,68,0.08)]",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200",
+        ],
+        success: [
+          "border-accent-gold/50 bg-accent-gold/5",
+          "hover:border-accent-gold/70",
+          "focus:outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/20",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold/20",
+        ],
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+);
+
+export interface SelectTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
+    VariantProps<typeof selectTriggerVariants> {
+  error?: boolean;
+  success?: boolean;
+}
+
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-11 w-full items-center justify-between rounded-xl border border-warm-stone/20 bg-pure-white/60 px-4 py-2.5 text-sm text-foreground ring-offset-background backdrop-blur-sm transition-all duration-200 ease-out",
-      "placeholder:text-warm-gray/60",
-      "hover:border-warm-stone/40",
-      "focus:outline-none focus:border-warm-stone focus:ring-2 focus:ring-warm-stone/20 focus:shadow-[0_0_0_4px_rgba(114,102,88,0.08)]",
-      "disabled:cursor-not-allowed disabled:opacity-50",
-      "[&>span]:line-clamp-1",
-      "data-[placeholder]:text-warm-gray/60",
-      className,
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 text-warm-stone/60 transition-transform duration-200 data-[state=open]:rotate-180" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-));
+  SelectTriggerProps
+>(({ className, children, variant, error, success, "aria-invalid": ariaInvalid, ...props }, ref) => {
+  const computedVariant = error ? "error" : success ? "success" : variant;
+  const isInvalid = error || ariaInvalid === true || ariaInvalid === "true";
+
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      aria-haspopup="listbox"
+      aria-invalid={isInvalid || undefined}
+      className={cn(selectTriggerVariants({ variant: computedVariant }), className)}
+      {...props}
+    >
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <ChevronDown className="h-4 w-4 text-warm-stone/60 transition-transform duration-200 data-[state=open]:rotate-180" aria-hidden="true" />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  );
+});
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const SelectScrollUpButton = React.forwardRef<
@@ -71,14 +108,17 @@ const SelectContent = React.forwardRef<
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
+      role="listbox"
       className={cn(
-        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-xl border border-warm-stone/10 bg-pure-white/95 text-foreground shadow-2xl backdrop-blur-xl",
+        "relative z-[9999] max-h-96 min-w-[8rem] overflow-hidden rounded-xl border border-warm-stone/10 bg-pure-white/95 text-foreground shadow-2xl backdrop-blur-xl",
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         position === "popper" &&
           "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
         className,
       )}
       position={position}
+      avoidCollisions={true}
+      collisionPadding={8}
       {...props}
     >
       <SelectScrollUpButton />
@@ -111,10 +151,12 @@ const SelectItem = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
+    role="option"
     className={cn(
       "relative flex w-full cursor-pointer select-none items-center rounded-lg py-2.5 pl-9 pr-3 text-sm outline-none transition-all duration-150",
       "hover:bg-warm-stone/8 focus:bg-warm-stone/10 focus:text-warm-stone",
       "data-[state=checked]:bg-warm-stone/10 data-[state=checked]:text-warm-stone data-[state=checked]:font-medium",
+      "data-[highlighted]:bg-warm-stone/8 data-[highlighted]:outline-none",
       "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className,
     )}
@@ -122,7 +164,7 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute left-2.5 flex h-4 w-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4 text-warm-stone stroke-[2.5]" />
+        <Check className="h-4 w-4 text-warm-stone stroke-[2.5]" aria-hidden="true" />
       </SelectPrimitive.ItemIndicator>
     </span>
 
@@ -150,4 +192,5 @@ export {
   SelectSeparator,
   SelectScrollUpButton,
   SelectScrollDownButton,
+  selectTriggerVariants,
 };

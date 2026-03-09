@@ -41,7 +41,14 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
 
       {/* Progress bar for mobile */}
       <div className="sm:hidden mb-4">
-        <div className="h-2 bg-warm-stone/10 rounded-full overflow-hidden">
+        <div
+          className="h-2 bg-warm-stone/10 rounded-full overflow-hidden"
+          role="progressbar"
+          aria-valuenow={progressPercentage}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`Form progress: ${Math.round(progressPercentage)}% complete`}
+        >
           <motion.div
             className="h-full bg-warm-stone rounded-full"
             initial={{ width: 0 }}
@@ -52,15 +59,20 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
       </div>
 
       {/* Step indicators for larger screens */}
-      <ol className="hidden sm:flex items-center justify-between">
+      <ol className="hidden sm:flex items-center justify-between" aria-label="Form steps">
         {steps.map((step, index) => (
-          <li key={step.id} className="relative flex-1">
+          <li
+            key={step.id}
+            className="relative flex-1"
+            aria-current={currentStep === step.id ? "step" : undefined}
+          >
             <div className="flex items-center">
               <motion.div
                 initial={{ scale: 0.8 }}
                 animate={{
                   scale: currentStep === step.id ? 1.1 : 1,
                 }}
+                aria-label={`Step ${step.id}: ${step.name}${currentStep > step.id ? " (completed)" : currentStep === step.id ? " (current)" : ""}`}
                 className={cn(
                   "relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300",
                   currentStep > step.id
@@ -71,9 +83,9 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
                 )}
               >
                 {currentStep > step.id ? (
-                  <Check className="h-5 w-5" />
+                  <Check className="h-5 w-5" aria-hidden="true" />
                 ) : (
-                  <span className="text-sm font-medium">{step.id}</span>
+                  <span className="text-sm font-medium" aria-hidden="true">{step.id}</span>
                 )}
               </motion.div>
               {index < steps.length - 1 && (

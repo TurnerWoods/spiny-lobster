@@ -12,6 +12,7 @@ interface HealthGoalsStepProps {
     targetTimeline: string;
   };
   onChange: (data: Partial<HealthGoalsStepProps["data"]>) => void;
+  hasError?: boolean;
 }
 
 const primaryGoals = [
@@ -43,7 +44,7 @@ const secondaryGoalOptions = [
   "Better athletic performance",
 ];
 
-const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
+const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepProps) => {
   const handleSecondaryGoalChange = (goal: string, checked: boolean) => {
     const updated = checked
       ? [...data.secondaryGoals, goal]
@@ -52,6 +53,7 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
   };
 
   const showValidation = data.primaryGoal === "";
+  const showErrorState = hasError && data.primaryGoal === "";
 
   return (
     <div className="space-y-8">
@@ -64,7 +66,7 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
         <RadioGroup
         value={data.primaryGoal}
         onValueChange={(value) => onChange({ primaryGoal: value })}
-        className="grid gap-4 sm:grid-cols-2"
+        className={`grid gap-4 sm:grid-cols-2 ${showErrorState ? "rounded-xl ring-2 ring-destructive/50 ring-offset-2" : ""}`}
       >
         {primaryGoals.map((goal) => {
           const Icon = goal.icon;
@@ -77,7 +79,9 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
               />
               <Label
                 htmlFor={goal.value}
-                className="flex cursor-pointer items-start gap-4 rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-4 backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md"
+                className={`flex cursor-pointer items-start gap-4 rounded-xl border-2 bg-pure-white/60 p-4 backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md ${
+                  showErrorState ? "border-destructive/40" : "border-warm-stone/20"
+                }`}
               >
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors peer-data-[state=checked]:bg-warm-stone/20">
                   <Icon className="h-5 w-5 text-warm-stone" />
@@ -94,15 +98,17 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
 
         {/* Inline validation hint */}
         <AnimatePresence>
-          {showValidation && (
+          {(showValidation || showErrorState) && (
             <motion.p
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
-              className="mt-3 flex items-center gap-1.5 text-sm text-warm-stone"
+              className={`mt-3 flex items-center gap-1.5 text-sm ${showErrorState ? "text-destructive font-medium" : "text-warm-stone"}`}
+              role={showErrorState ? "alert" : undefined}
+              aria-live={showErrorState ? "polite" : undefined}
             >
               <AlertCircle className="h-4 w-4" />
-              Please select a primary goal to continue
+              {showErrorState ? "Please select a primary goal to continue" : "Select a primary goal to continue"}
             </motion.p>
           )}
         </AnimatePresence>
@@ -121,23 +127,34 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
             return (
               <div
                 key={goal}
+                role="button"
+                tabIndex={0}
                 onClick={() => handleSecondaryGoalChange(goal, !isSelected)}
-                className={`flex items-center gap-3 rounded-xl border-2 p-3 cursor-pointer transition-all duration-200 ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSecondaryGoalChange(goal, !isSelected);
+                  }
+                }}
+                aria-pressed={isSelected}
+                aria-label={`${goal}${isSelected ? ", selected" : ""}`}
+                className={`flex items-center gap-3 rounded-xl border-2 p-3 cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 ${
                   isSelected
                     ? "border-warm-stone bg-warm-stone/10 shadow-sm"
                     : "border-warm-stone/20 hover:border-warm-stone/40 hover:bg-pure-white/80"
                 }`}
               >
                 <Checkbox
-                  id={goal}
+                  id={`secondary-goal-${goal.replace(/\s+/g, "-").toLowerCase()}`}
                   checked={isSelected}
                   onCheckedChange={(checked) => handleSecondaryGoalChange(goal, checked as boolean)}
-                  className="pointer-events-none"
+                  tabIndex={-1}
+                  aria-hidden="true"
                 />
-                <Icon className={`h-4 w-4 flex-shrink-0 ${isSelected ? "text-warm-stone" : "text-warm-stone/60"}`} />
-                <Label htmlFor={goal} className="text-sm font-normal cursor-pointer text-rich-black flex-1">
+                <Icon className={`h-4 w-4 flex-shrink-0 ${isSelected ? "text-warm-stone" : "text-warm-stone/60"}`} aria-hidden="true" />
+                <span className="text-sm font-normal text-rich-black flex-1">
                   {goal}
-                </Label>
+                </span>
               </div>
             );
           })}
@@ -159,7 +176,7 @@ const HealthGoalsStep = ({ data, onChange }: HealthGoalsStepProps) => {
         </div>
         <p className="text-sm text-muted-foreground">When do you want to see results?</p>
         <Select value={data.targetTimeline} onValueChange={(value) => onChange({ targetTimeline: value })}>
-          <SelectTrigger className="w-full h-12 sm:h-11 sm:w-72">
+          <SelectTrigger id="timeline" aria-label="Target timeline" className="w-full h-12 sm:h-11 sm:w-72">
             <SelectValue placeholder="Choose your timeline" />
           </SelectTrigger>
           <SelectContent>

@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback, useRef, DragEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { 
-  Upload, 
-  FolderPlus, 
-  Trash2, 
-  Image, 
-  Video, 
-  File, 
-  Home, 
+import {
+  Upload,
+  FolderPlus,
+  Trash2,
+  Image,
+  Video,
+  File,
+  Home,
   LogOut,
   Grid,
   List,
@@ -21,7 +21,9 @@ import {
   ZoomIn,
   ZoomOut,
   RotateCw,
-  Download
+  Download,
+  AlertCircle,
+  ImageOff
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -34,6 +36,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
 import {
@@ -95,6 +98,15 @@ const MediaManager = () => {
   const [previewImage, setPreviewImage] = useState<{ url: string; name: string } | null>(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const [previewError, setPreviewError] = useState(false);
+
+  // Error states
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+
+  // File input ref
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSignOut = async () => {
     await signOut();
@@ -106,13 +118,14 @@ const MediaManager = () => {
       setIsLoading(true);
       setFiles([]);
       setHasMore(true);
+      setFetchError(null);
     } else {
       setIsLoadingMore(true);
     }
-    
+
     try {
       const offset = reset ? 0 : files.filter(f => !("isFolder" in f)).length;
-      
+
       const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
         .list(currentPath, {
@@ -141,6 +154,8 @@ const MediaManager = () => {
 
       if (reset) {
         setFiles([...folders, ...fileItems]);
+        // Clear failed images when resetting
+        setFailedImages(new Set());
       } else {
         // Append only new files (folders are always fetched on reset)
         setFiles(prev => {
@@ -151,9 +166,11 @@ const MediaManager = () => {
       }
     } catch (error) {
       console.error("Error fetching files:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to load files. Please try again.";
+      setFetchError(errorMessage);
       toast({
         title: "Error",
-        description: "Failed to load files. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -272,6 +289,14 @@ const MediaManager = () => {
     e.target.value = "";
   };
 
+  const triggerFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageError = (fileName: string) => {
+    setFailedImages(prev => new Set(prev).add(fileName));
+  };
+
   // Drag and drop handlers
   const handleDragEnter = useCallback((e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -352,27 +377,57 @@ const MediaManager = () => {
     }
   };
 
+  // Recursively collect all files in a folder
+  const collectFolderFiles = async (folderPath: string): Promise<string[]> => {
+    const allFiles: string[] = [];
+
+    const { data: contents, error } = await supabase.storage
+      .from(BUCKET_NAME)
+      .list(folderPath);
+
+    if (error) throw error;
+
+    if (contents && contents.length > 0) {
+      for (const item of contents) {
+        const itemPath = `${folderPath}/${item.name}`;
+        if (item.id === null) {
+          // It's a subfolder, recurse
+          const subFiles = await collectFolderFiles(itemPath);
+          allFiles.push(...subFiles);
+        } else {
+          // It's a file
+          allFiles.push(itemPath);
+        }
+      }
+    }
+
+    return allFiles;
+  };
+
   const handleDelete = async () => {
     if (!itemToDelete) return;
 
     try {
       if ("isFolder" in itemToDelete) {
-        // Delete folder and its contents
-        const folderPath = currentPath 
+        // Delete folder and its contents recursively
+        const folderPath = currentPath
           ? `${currentPath}/${itemToDelete.name}`
           : itemToDelete.name;
 
-        const { data: folderContents } = await supabase.storage
-          .from(BUCKET_NAME)
-          .list(folderPath);
+        const filesToDelete = await collectFolderFiles(folderPath);
 
-        if (folderContents && folderContents.length > 0) {
-          const filesToDelete = folderContents.map(f => `${folderPath}/${f.name}`);
-          await supabase.storage.from(BUCKET_NAME).remove(filesToDelete);
+        if (filesToDelete.length > 0) {
+          // Delete in batches of 100 (Supabase limit)
+          const batchSize = 100;
+          for (let i = 0; i < filesToDelete.length; i += batchSize) {
+            const batch = filesToDelete.slice(i, i + batchSize);
+            const { error } = await supabase.storage.from(BUCKET_NAME).remove(batch);
+            if (error) throw error;
+          }
         }
       } else {
         // Delete single file
-        const filePath = currentPath 
+        const filePath = currentPath
           ? `${currentPath}/${itemToDelete.name}`
           : itemToDelete.name;
 
@@ -393,9 +448,10 @@ const MediaManager = () => {
       fetchFiles();
     } catch (error) {
       console.error("Error deleting:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to delete item.";
       toast({
         title: "Error",
-        description: "Failed to delete item.",
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -457,12 +513,25 @@ const MediaManager = () => {
     setPreviewImage({ url, name: fileName });
     setZoomLevel(1);
     setRotation(0);
+    setPreviewLoading(true);
+    setPreviewError(false);
   };
 
   const closeImagePreview = () => {
     setPreviewImage(null);
     setZoomLevel(1);
     setRotation(0);
+    setPreviewLoading(false);
+    setPreviewError(false);
+  };
+
+  const handlePreviewLoad = () => {
+    setPreviewLoading(false);
+  };
+
+  const handlePreviewError = () => {
+    setPreviewLoading(false);
+    setPreviewError(true);
   };
 
   const handleZoomIn = () => {
@@ -620,37 +689,34 @@ const MediaManager = () => {
               New Folder
             </Button>
 
-            <label>
-              <Button
-                size="sm"
-                className="bg-warm-stone hover:bg-warm-stone/90 cursor-pointer"
-                disabled={isUploading}
-                asChild
-              >
-                <span>
-                  {isUploading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {uploadProgress}%
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="mr-2 h-4 w-4" />
-                      Upload
-                    </>
-                  )}
-                </span>
-              </Button>
-              <input
-                id="file-upload-input"
-                type="file"
-                multiple
-                accept="image/*,video/*"
-                onChange={handleFileUpload}
-                className="hidden"
-                disabled={isUploading}
-              />
-            </label>
+            <Button
+              size="sm"
+              className="bg-warm-stone hover:bg-warm-stone/90"
+              disabled={isUploading}
+              onClick={triggerFileUpload}
+            >
+              {isUploading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {uploadProgress}%
+                </>
+              ) : (
+                <>
+                  <Upload className="mr-2 h-4 w-4" />
+                  Upload
+                </>
+              )}
+            </Button>
+            <input
+              ref={fileInputRef}
+              id="file-upload-input"
+              type="file"
+              multiple
+              accept="image/*,video/*"
+              onChange={handleFileUpload}
+              className="hidden"
+              disabled={isUploading}
+            />
           </div>
         </motion.div>
 
@@ -702,11 +768,32 @@ const MediaManager = () => {
           <div className="flex items-center justify-center py-20">
             <Loader2 className="h-8 w-8 animate-spin text-warm-stone" />
           </div>
+        ) : fetchError ? (
+          <Card
+            variant="glass"
+            className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-destructive/30"
+          >
+            <AlertCircle className="h-16 w-16 text-destructive/50 mb-4" />
+            <p className="text-destructive text-center font-medium">
+              Failed to load files
+            </p>
+            <p className="text-sm text-warm-gray/70 mt-1 text-center max-w-md">
+              {fetchError}
+            </p>
+            <Button
+              variant="outline"
+              className="mt-4"
+              onClick={() => fetchFiles(true)}
+            >
+              Try Again
+            </Button>
+          </Card>
         ) : filteredFiles.length === 0 ? (
-          <Card 
-            variant="glass" 
-            className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-warm-stone/30 hover:border-warm-stone/50 transition-colors cursor-pointer"
-            onClick={() => document.getElementById('file-upload-input')?.click()}
+          <Card
+            variant="glass"
+            interactive
+            className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-warm-stone/30 hover:border-warm-stone/50 transition-colors"
+            onClick={triggerFileUpload}
           >
             <Upload className="h-16 w-16 text-warm-gray/50 mb-4" />
             <p className="text-warm-gray text-center font-medium">
@@ -742,13 +829,21 @@ const MediaManager = () => {
                 ) : (
                   <div className="relative aspect-square">
                     {item.metadata?.mimetype?.startsWith("image/") ? (
-                      <img
-                        src={getFileUrl(item.name)}
-                        alt={`Media file: ${item.name}`}
-                        className="h-full w-full max-w-full object-cover cursor-pointer"
-                        loading="lazy"
-                        onClick={() => openImagePreview(item.name)}
-                      />
+                      failedImages.has(item.name) ? (
+                        <div className="flex h-full w-full items-center justify-center bg-warm-gray/10 flex-col gap-2">
+                          <ImageOff className="h-8 w-8 text-warm-gray/50" />
+                          <span className="text-xs text-warm-gray/60">Failed to load</span>
+                        </div>
+                      ) : (
+                        <img
+                          src={getFileUrl(item.name)}
+                          alt={`Media file: ${item.name}`}
+                          className="h-full w-full max-w-full object-cover cursor-pointer"
+                          loading="lazy"
+                          onClick={() => openImagePreview(item.name)}
+                          onError={() => handleImageError(item.name)}
+                        />
+                      )
                     ) : item.metadata?.mimetype?.startsWith("video/") ? (
                       <video
                         src={getFileUrl(item.name)}
@@ -814,7 +909,8 @@ const MediaManager = () => {
             {currentPath && (
               <Card
                 variant="glass"
-                className="flex items-center gap-4 p-4 cursor-pointer hover:bg-warm-stone/5"
+                interactive
+                className="flex items-center gap-4 p-4 hover:bg-warm-stone/5"
                 onClick={navigateUp}
               >
                 <span className="text-warm-gray">..</span>
@@ -923,18 +1019,26 @@ const MediaManager = () => {
         <DialogContent className="bg-pure-white">
           <DialogHeader>
             <DialogTitle>Create New Folder</DialogTitle>
+            <DialogDescription>
+              Enter a name for the new folder. Folders help organize your media files.
+            </DialogDescription>
           </DialogHeader>
           <Input
             placeholder="Folder name"
             value={newFolderName}
             onChange={(e) => setNewFolderName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleCreateFolder()}
+            aria-label="Folder name"
           />
           <DialogFooter>
             <Button variant="outline" onClick={() => setNewFolderDialogOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleCreateFolder} className="bg-warm-stone hover:bg-warm-stone/90">
+            <Button
+              onClick={handleCreateFolder}
+              className="bg-warm-stone hover:bg-warm-stone/90"
+              disabled={!newFolderName.trim()}
+            >
               Create
             </Button>
           </DialogFooter>
@@ -1035,18 +1139,43 @@ const MediaManager = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="max-w-[90vw] max-h-[85vh] overflow-hidden"
+              className="max-w-[90vw] max-h-[85vh] overflow-hidden flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
-                src={previewImage.url}
-                alt={previewImage.name}
-                className="max-w-full max-h-[85vh] object-contain transition-transform duration-200"
-                style={{
-                  transform: `scale(${zoomLevel}) rotate(${rotation}deg)`,
-                }}
-                draggable={false}
-              />
+              {previewLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader2 className="h-12 w-12 animate-spin text-pure-white" />
+                </div>
+              )}
+              {previewError ? (
+                <div className="flex flex-col items-center justify-center gap-4 text-pure-white">
+                  <ImageOff className="h-16 w-16 text-pure-white/50" />
+                  <p className="text-lg">Failed to load image</p>
+                  <Button
+                    variant="outline-light"
+                    onClick={() => {
+                      setPreviewError(false);
+                      setPreviewLoading(true);
+                    }}
+                  >
+                    Try Again
+                  </Button>
+                </div>
+              ) : (
+                <img
+                  src={previewImage.url}
+                  alt={previewImage.name}
+                  className={`max-w-full max-h-[85vh] object-contain transition-transform duration-200 ${
+                    previewLoading ? "opacity-0" : "opacity-100"
+                  }`}
+                  style={{
+                    transform: `scale(${zoomLevel}) rotate(${rotation}deg)`,
+                  }}
+                  draggable={false}
+                  onLoad={handlePreviewLoad}
+                  onError={handlePreviewError}
+                />
+              )}
             </motion.div>
 
             {/* File Name */}

@@ -40,7 +40,11 @@ const TermsOfUse = () => {
             Important: Elevare Health does NOT practice medicine and does NOT dispense medications.
           </p>
           <p className="mt-3 text-warm-gray leading-relaxed">
-            All medical decisions, diagnoses, treatment plans, and prescriptions are made exclusively by independent, licensed physicians through Elevare Health Medical PLLC. Medications are dispensed solely by licensed U.S. pharmacies.
+            All medical decisions, diagnoses, treatment plans, and prescriptions are made exclusively by independent, licensed physicians through Elevare Health Medical PLLC. Medications are dispensed solely by licensed U.S. pharmacies. Please review our{" "}
+            <a href="/safety" className="text-warm-stone underline hover:text-rich-black transition-colors">
+              Safety Information
+            </a>{" "}
+            for important details about treatments.
           </p>
         </CardContent>
       </Card>
@@ -189,7 +193,7 @@ const TermsOfUse = () => {
       <Card variant="glass" id="disclaimers">
         <CardContent className="p-6">
           <h2 className="mb-4 font-display text-xl font-bold text-rich-black">11. Disclaimers</h2>
-          <p className="uppercase text-warm-gray text-sm leading-relaxed">
+          <p className="uppercase text-warm-gray text-base leading-relaxed">
             THE SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. WE DISCLAIM ALL WARRANTIES INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
           </p>
           <p className="mt-4 text-warm-gray leading-relaxed">
@@ -201,7 +205,7 @@ const TermsOfUse = () => {
       <Card variant="glass" id="liability">
         <CardContent className="p-6">
           <h2 className="mb-4 font-display text-xl font-bold text-rich-black">12. Limitation of Liability</h2>
-          <p className="uppercase text-warm-gray text-sm leading-relaxed">
+          <p className="uppercase text-warm-gray text-base leading-relaxed">
             TO THE MAXIMUM EXTENT PERMITTED BY LAW, ELEVARE HEALTH AND ITS AFFILIATES, OFFICERS, DIRECTORS, EMPLOYEES, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOSS OF PROFITS, DATA, OR GOODWILL, ARISING OUT OF OR RELATED TO YOUR USE OF THE SERVICES.
           </p>
           <p className="mt-4 text-warm-gray leading-relaxed">
@@ -250,7 +254,7 @@ const TermsOfUse = () => {
             <p>Austin, TX 78701</p>
             <p>
               Email:{" "}
-              <a href="mailto:legal@elevarehealth.com" className="text-warm-stone hover:underline">
+              <a href="mailto:legal@elevarehealth.com" className="text-warm-stone underline hover:text-rich-black transition-colors">
                 legal@elevarehealth.com
               </a>
             </p>

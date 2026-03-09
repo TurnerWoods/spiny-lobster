@@ -33,13 +33,66 @@ export default function TDEECalculator() {
   const [heightUnit, setHeightUnit] = useState("in");
   const [activityLevel, setActivityLevel] = useState("");
   const [results, setResults] = useState<Results | null>(null);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
+
+  const validateField = (field: string, value: string) => {
+    const newErrors = { ...errors };
+
+    switch (field) {
+      case 'age':
+        if (!value) newErrors.age = 'Age is required';
+        else if (parseFloat(value) < 1 || parseFloat(value) > 120) newErrors.age = 'Enter a valid age';
+        else delete newErrors.age;
+        break;
+      case 'weight':
+        if (!value) newErrors.weight = 'Weight is required';
+        else if (parseFloat(value) <= 0) newErrors.weight = 'Enter a valid weight';
+        else delete newErrors.weight;
+        break;
+      case 'height':
+        if (!value) newErrors.height = 'Height is required';
+        else if (parseFloat(value) <= 0) newErrors.height = 'Enter a valid height';
+        else delete newErrors.height;
+        break;
+      case 'gender':
+        if (!value) newErrors.gender = 'Please select a gender';
+        else delete newErrors.gender;
+        break;
+      case 'activityLevel':
+        if (!value) newErrors.activityLevel = 'Please select an activity level';
+        else delete newErrors.activityLevel;
+        break;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+    validateField(field, field === 'age' ? age : field === 'weight' ? weight : field === 'height' ? height : field === 'gender' ? gender : activityLevel);
+  };
+
+  const isFormValid = age && weight && height && gender && activityLevel &&
+    parseFloat(age) > 0 && parseFloat(weight) > 0 && parseFloat(height) > 0;
 
   const calculate = () => {
+    // Validate all fields
+    setTouched({ age: true, weight: true, height: true, gender: true, activityLevel: true });
+
     const ageNum = parseFloat(age);
     const weightNum = parseFloat(weight);
     const heightNum = parseFloat(height);
 
-    if (isNaN(ageNum) || isNaN(weightNum) || isNaN(heightNum) || !gender || !activityLevel) return;
+    if (isNaN(ageNum) || isNaN(weightNum) || isNaN(heightNum) || !gender || !activityLevel) {
+      validateField('age', age);
+      validateField('weight', weight);
+      validateField('height', height);
+      validateField('gender', gender);
+      validateField('activityLevel', activityLevel);
+      return;
+    }
 
     const weightKg = weightUnit === "lbs" ? weightNum * 0.453592 : weightNum;
     const heightCm = heightUnit === "in" ? heightNum * 2.54 : heightNum;
@@ -109,13 +162,31 @@ export default function TDEECalculator() {
                     type="number"
                     placeholder="25"
                     value={age}
-                    onChange={(e) => setAge(e.target.value)}
+                    onChange={(e) => {
+                      setAge(e.target.value);
+                      if (touched.age) validateField('age', e.target.value);
+                    }}
+                    onBlur={() => handleBlur('age')}
+                    className={touched.age && errors.age ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                   />
+                  {touched.age && errors.age && (
+                    <p className="text-xs text-red-500 mt-1">{errors.age}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="gender">Gender</Label>
-                  <Select value={gender} onValueChange={setGender}>
-                    <SelectTrigger id="gender">
+                  <Select
+                    value={gender}
+                    onValueChange={(value) => {
+                      setGender(value);
+                      setTouched(prev => ({ ...prev, gender: true }));
+                      validateField('gender', value);
+                    }}
+                  >
+                    <SelectTrigger
+                      id="gender"
+                      className={touched.gender && errors.gender ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
+                    >
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent>
@@ -123,6 +194,9 @@ export default function TDEECalculator() {
                       <SelectItem value="female">Female</SelectItem>
                     </SelectContent>
                   </Select>
+                  {touched.gender && errors.gender && (
+                    <p className="text-xs text-red-500 mt-1">{errors.gender}</p>
+                  )}
                 </div>
               </div>
 
@@ -135,7 +209,12 @@ export default function TDEECalculator() {
                       type="number"
                       placeholder={weightUnit === "lbs" ? "150" : "68"}
                       value={weight}
-                      onChange={(e) => setWeight(e.target.value)}
+                      onChange={(e) => {
+                        setWeight(e.target.value);
+                        if (touched.weight) validateField('weight', e.target.value);
+                      }}
+                      onBlur={() => handleBlur('weight')}
+                      className={touched.weight && errors.weight ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                     />
                     <Button
                       variant="outline"
@@ -146,6 +225,9 @@ export default function TDEECalculator() {
                       {weightUnit}
                     </Button>
                   </div>
+                  {touched.weight && errors.weight && (
+                    <p className="text-xs text-red-500 mt-1">{errors.weight}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="height">Height</Label>
@@ -155,7 +237,12 @@ export default function TDEECalculator() {
                       type="number"
                       placeholder={heightUnit === "in" ? "68" : "173"}
                       value={height}
-                      onChange={(e) => setHeight(e.target.value)}
+                      onChange={(e) => {
+                        setHeight(e.target.value);
+                        if (touched.height) validateField('height', e.target.value);
+                      }}
+                      onBlur={() => handleBlur('height')}
+                      className={touched.height && errors.height ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                     />
                     <Button
                       variant="outline"
@@ -166,13 +253,26 @@ export default function TDEECalculator() {
                       {heightUnit}
                     </Button>
                   </div>
+                  {touched.height && errors.height && (
+                    <p className="text-xs text-red-500 mt-1">{errors.height}</p>
+                  )}
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="activity">Activity Level</Label>
-                <Select value={activityLevel} onValueChange={setActivityLevel}>
-                  <SelectTrigger id="activity">
+                <Select
+                  value={activityLevel}
+                  onValueChange={(value) => {
+                    setActivityLevel(value);
+                    setTouched(prev => ({ ...prev, activityLevel: true }));
+                    validateField('activityLevel', value);
+                  }}
+                >
+                  <SelectTrigger
+                    id="activity"
+                    className={touched.activityLevel && errors.activityLevel ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
+                  >
                     <SelectValue placeholder="Select activity level" />
                   </SelectTrigger>
                   <SelectContent>
@@ -183,11 +283,15 @@ export default function TDEECalculator() {
                     ))}
                   </SelectContent>
                 </Select>
+                {touched.activityLevel && errors.activityLevel && (
+                  <p className="text-xs text-red-500 mt-1">{errors.activityLevel}</p>
+                )}
               </div>
 
               <Button
-                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white"
+                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={calculate}
+                disabled={!isFormValid}
               >
                 Calculate TDEE
               </Button>

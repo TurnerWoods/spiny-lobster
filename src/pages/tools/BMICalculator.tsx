@@ -57,8 +57,48 @@ export default function BMICalculator() {
   const [heightCm, setHeightCm] = useState("");
   const [heightUnit, setHeightUnit] = useState("imperial");
   const [result, setResult] = useState<BMIResult | null>(null);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
+
+  const validateFields = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!weight || parseFloat(weight) <= 0) {
+      newErrors.weight = 'Please enter a valid weight';
+    }
+
+    if (heightUnit === 'imperial') {
+      if (!heightFt && !heightIn) {
+        newErrors.height = 'Please enter your height';
+      } else if ((heightFt && parseFloat(heightFt) < 0) || (heightIn && (parseFloat(heightIn) < 0 || parseFloat(heightIn) >= 12))) {
+        newErrors.height = 'Please enter a valid height';
+      }
+    } else {
+      if (!heightCm || parseFloat(heightCm) <= 0) {
+        newErrors.height = 'Please enter a valid height';
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+  };
+
+  const isFormValid = () => {
+    const hasWeight = weight && parseFloat(weight) > 0;
+    const hasHeight = heightUnit === 'imperial'
+      ? (heightFt || heightIn) && (parseFloat(heightFt) > 0 || parseFloat(heightIn) > 0)
+      : heightCm && parseFloat(heightCm) > 0;
+    return hasWeight && hasHeight;
+  };
 
   const calculate = () => {
+    setTouched({ weight: true, height: true });
+    if (!validateFields()) return;
+
     const weightNum = parseFloat(weight);
     if (isNaN(weightNum)) return;
 
@@ -131,6 +171,8 @@ export default function BMICalculator() {
                     placeholder={weightUnit === "lbs" ? "150" : "68"}
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
+                    onBlur={() => handleBlur('weight')}
+                    className={touched.weight && errors.weight ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                   />
                   <Button
                     variant="outline"
@@ -141,6 +183,9 @@ export default function BMICalculator() {
                     {weightUnit}
                   </Button>
                 </div>
+                {touched.weight && errors.weight && (
+                  <p className="text-xs text-red-500 mt-1">{errors.weight}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -163,6 +208,8 @@ export default function BMICalculator() {
                         placeholder="5"
                         value={heightFt}
                         onChange={(e) => setHeightFt(e.target.value)}
+                        onBlur={() => handleBlur('height')}
+                        className={touched.height && errors.height ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                       />
                       <span className="text-xs text-muted-foreground mt-1 block">feet</span>
                     </div>
@@ -172,6 +219,8 @@ export default function BMICalculator() {
                         placeholder="8"
                         value={heightIn}
                         onChange={(e) => setHeightIn(e.target.value)}
+                        onBlur={() => handleBlur('height')}
+                        className={touched.height && errors.height ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                       />
                       <span className="text-xs text-muted-foreground mt-1 block">inches</span>
                     </div>
@@ -182,13 +231,19 @@ export default function BMICalculator() {
                     placeholder="173"
                     value={heightCm}
                     onChange={(e) => setHeightCm(e.target.value)}
+                    onBlur={() => handleBlur('height')}
+                    className={touched.height && errors.height ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                   />
+                )}
+                {touched.height && errors.height && (
+                  <p className="text-xs text-red-500 mt-1">{errors.height}</p>
                 )}
               </div>
 
               <Button
-                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white"
+                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={calculate}
+                disabled={!isFormValid()}
               >
                 Calculate BMI
               </Button>
