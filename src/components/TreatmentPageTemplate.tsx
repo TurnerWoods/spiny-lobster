@@ -263,16 +263,16 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                       )}
                       <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5">
                         {med.bestSeller && (
-                          <Badge className="bg-warm-stone text-pure-white border-0 text-[10px]">
+                          <Badge className="bg-warm-stone text-pure-white border-0 text-xs">
                             <Star className="mr-1 h-2.5 w-2.5 fill-current" /> Best Seller
                           </Badge>
                         )}
                         {med.rx !== false && (
-                          <Badge className="bg-warm-stone/80 text-pure-white border-0 text-[10px]">Rx</Badge>
+                          <Badge className="bg-warm-stone/80 text-pure-white border-0 text-xs">Rx</Badge>
                         )}
                       </div>
                       {med.inStock !== false && (
-                        <span className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-accent-gold px-2 py-0.5 text-[10px] font-semibold text-rich-black">
+                        <span className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-accent-gold px-2 py-0.5 text-xs font-semibold text-rich-black">
                           <span className="h-1.5 w-1.5 rounded-full bg-rich-black" /> In Stock
                         </span>
                       )}
@@ -286,13 +286,13 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           {[...Array(5)].map((_, j) => (
                             <Star key={j} className={`h-2.5 w-2.5 ${j < Math.floor(med.rating!) ? "fill-amber-400 text-amber-400" : "fill-gray-200 text-gray-200"}`} />
                           ))}
-                          <span className="ml-1 text-[10px] text-muted-foreground">{med.rating}{med.reviewCount && ` (${med.reviewCount.toLocaleString()})`}</span>
+                          <span className="ml-1 text-xs text-muted-foreground">{med.rating}{med.reviewCount && ` (${med.reviewCount.toLocaleString()})`}</span>
                         </div>
                       )}
                       <p className="text-xs text-muted-foreground line-clamp-2 mb-3 flex-1">{med.description.split('.')[0]}.</p>
                       <div className="flex items-end justify-between pt-3 border-t border-neutral-gray/10">
                         <div>
-                          <p className="text-[10px] text-muted-foreground">From</p>
+                          <p className="text-xs text-muted-foreground">From</p>
                           <p className="text-lg font-bold text-rich-black">{med.price}</p>
                         </div>
                         {med.mostPopular && (
@@ -436,8 +436,8 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                 <span className="flex items-center gap-1.5"><Truck className="h-4 w-4 text-warm-stone" /> Discreet Shipping</span>
               </div>
 
-              <Link to="/intake">
-                <Button size="lg" className="h-14 px-10 text-base font-semibold bg-warm-stone hover:bg-warm-stone/90 text-pure-white shadow-xl">
+              <Link to="/intake" className="w-full sm:w-auto">
+                <Button size="lg" className="h-14 w-full sm:w-auto sm:px-10 text-base font-semibold bg-warm-stone hover:bg-warm-stone/90 text-pure-white shadow-xl">
                   Begin Treatment
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -452,7 +452,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
       <Footer />
 
       {/* Sticky Mobile CTA - only visible on small screens */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-pure-white/95 backdrop-blur-sm border-t border-neutral-gray/20 p-3 safe-area-inset-bottom">
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-pure-white/95 backdrop-blur-sm border-t border-neutral-gray/20 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]">
         <Link to="/intake" className="block">
           <Button
             size="lg"

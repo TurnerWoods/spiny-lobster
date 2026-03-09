@@ -125,16 +125,16 @@ const FAQItem = ({
       {/* Touch-friendly button with minimum 48px height for mobile accessibility */}
       <motion.button
         onClick={onClick}
-        className="flex w-full items-start justify-between gap-4 py-4 text-left sm:py-8 min-h-[56px]"
+        className="flex w-full items-start justify-between gap-3 py-4 text-left sm:gap-4 sm:py-6 md:py-8 min-h-[56px]"
         whileHover={{ x: 2 }}
         transition={{ duration: duration.fast, ease: easing.smooth }}
       >
-        <span className="font-display text-base sm:text-lg font-medium tracking-normal text-rich-black leading-relaxed">
+        <span className="font-display text-[15px] font-medium tracking-normal text-rich-black leading-relaxed xs:text-base sm:text-lg">
           {faq.question}
         </span>
         {/* Touch target: 44px minimum with visual icon inside */}
         <motion.span
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center -mr-2 -mt-1"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center -mr-2 -mt-0.5"
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: duration.normal, ease: easing.smooth }}
         >
@@ -154,7 +154,7 @@ const FAQItem = ({
             exit="exit"
             className="overflow-hidden"
           >
-            <p className="text-body pb-6 text-muted-foreground sm:pb-8">
+            <p className="text-[15px] leading-relaxed pb-5 text-muted-foreground sm:text-base sm:pb-6 md:pb-8">
               {faq.answer}
             </p>
           </motion.div>
@@ -168,8 +168,8 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-pure-white py-24 sm:py-32 md:py-40">
-      <div className="container px-4 md:px-6">
+    <section id="faq" className="bg-pure-white py-16 xs:py-20 sm:py-28 md:py-40">
+      <div className="container px-5 sm:px-6 md:px-6">
         <div className="mx-auto max-w-2xl">
           {/* Section Header */}
           <motion.div
@@ -177,17 +177,17 @@ const FAQ = () => {
             initial="hidden"
             whileInView="visible"
             viewport={viewportSettings}
-            className="mb-12 sm:mb-16"
+            className="mb-10 sm:mb-12 md:mb-16"
           >
             <motion.span
               variants={headerItem}
-              className="text-overline mb-6 block text-warm-stone/60"
+              className="text-[13px] uppercase tracking-[0.15em] mb-4 block text-warm-stone/60 sm:text-xs sm:tracking-[0.2em] sm:mb-6"
             >
               Questions
             </motion.span>
             <motion.h2
               variants={headerItem}
-              className="font-display text-4xl font-light leading-tight tracking-tight text-rich-black"
+              className="font-display text-[1.75rem] font-light leading-tight tracking-tight text-rich-black xs:text-3xl sm:text-4xl"
             >
               Frequently asked
             </motion.h2>

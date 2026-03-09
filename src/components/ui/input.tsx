@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const inputVariants = cva(
-  "flex w-full rounded-xl border bg-pure-white/60 text-foreground ring-offset-background backdrop-blur-sm file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-warm-gray/60 transition-all duration-200 ease-out focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full rounded-xl border bg-pure-white/60 text-foreground ring-offset-background backdrop-blur-sm file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-warm-gray/80 transition-all duration-200 ease-out focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -13,9 +13,9 @@ const inputVariants = cva(
         success: "border-accent-gold/50 bg-accent-gold/5 hover:border-accent-gold/70 focus-visible:border-accent-gold focus-visible:ring-2 focus-visible:ring-accent-gold/20",
       },
       inputSize: {
-        default: "h-12 px-4 py-3 text-base md:h-11 md:py-2.5 md:text-sm",
-        sm: "h-10 px-3 py-2.5 text-base md:h-9 md:py-2 md:text-sm",
-        lg: "h-14 px-5 py-3.5 text-base md:h-12 md:py-3",
+        default: "min-h-[44px] px-4 py-3 text-base md:min-h-[44px] md:h-11 md:py-2.5 md:text-sm",
+        sm: "min-h-[44px] px-3 py-2.5 text-base md:min-h-[36px] md:h-9 md:py-2 md:text-sm",
+        lg: "min-h-[44px] h-14 px-5 py-3.5 text-base md:h-12 md:py-3",
       },
     },
     defaultVariants: {

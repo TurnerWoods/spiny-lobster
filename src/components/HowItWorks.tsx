@@ -76,7 +76,7 @@ const HowItWorks = () => {
         >
           <motion.span
             variants={headerItem}
-            className="text-overline mb-4 xs:mb-5 sm:mb-6 block text-soft-linen/40 text-[10px] xs:text-xs"
+            className="text-overline mb-4 xs:mb-5 sm:mb-6 block text-soft-linen/75 text-xs"
           >
             The Process
           </motion.span>
@@ -104,7 +104,7 @@ const HowItWorks = () => {
             >
               {/* Step number */}
               <motion.span
-                className="text-stat mb-4 xs:mb-5 sm:mb-6 md:mb-8 block text-5xl xs:text-6xl text-warm-stone/30 sm:text-7xl"
+                className="text-stat mb-4 xs:mb-5 sm:mb-6 md:mb-8 block text-5xl xs:text-6xl text-warm-stone/60 sm:text-7xl"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -121,7 +121,7 @@ const HowItWorks = () => {
               <h3 className="mb-3 xs:mb-4 font-display text-xl xs:text-2xl font-normal tracking-normal text-soft-linen">
                 {step.title}
               </h3>
-              <p className="text-sm xs:text-base leading-relaxed text-soft-linen/60">
+              <p className="text-sm xs:text-base leading-relaxed text-soft-linen/80">
                 {step.description}
               </p>
 
@@ -172,7 +172,7 @@ const HowItWorks = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: duration.normal, delay: 0.5, ease: easing.smooth }}
-            className="text-caption mt-6 text-soft-linen/40"
+            className="text-caption mt-6 text-soft-linen/75"
           >
             No charge unless approved
           </motion.p>

@@ -149,7 +149,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
                 tabIndex={0}
                 aria-pressed={isSelected}
                 aria-label={`${condition}${isSelected ? ", selected" : ""}`}
-                className={`flex items-center space-x-3 rounded-lg border p-3 cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 ${
+                className={`flex items-center space-x-3 rounded-lg border p-3 min-h-[48px] cursor-pointer transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 active:scale-[0.98] ${
                   isSelected
                     ? "border-warm-stone bg-warm-stone/5"
                     : "border-warm-stone/20 hover:border-warm-stone/40"

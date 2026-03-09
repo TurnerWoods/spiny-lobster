@@ -69,7 +69,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
               <RadioGroupItem value={option.value} id={`exercise-${option.value}`} className="peer sr-only" />
               <Label
                 htmlFor={`exercise-${option.value}`}
-                className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-4 text-center backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md"
+                className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-4 min-h-[72px] text-center backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md active:scale-[0.98]"
               >
                 <span className="font-semibold text-rich-black">{option.label}</span>
                 <span className="text-xs text-muted-foreground mt-1">{option.description}</span>
@@ -98,7 +98,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
               <RadioGroupItem value={option.value} id={`stress-${option.value}`} className="peer sr-only" />
               <Label
                 htmlFor={`stress-${option.value}`}
-                className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-4 text-center backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md"
+                className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-4 min-h-[72px] text-center backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md active:scale-[0.98]"
               >
                 <span className="font-semibold text-rich-black">{option.label}</span>
                 <span className="text-xs text-muted-foreground mt-1">{option.description}</span>

@@ -266,7 +266,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
                     onAgreeChange(!agreedToTerms);
                   }
                 }}
-                className={`flex items-start gap-3 rounded-lg border p-4 cursor-pointer transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 ${
+                className={`flex items-start gap-3 rounded-lg border p-4 min-h-[56px] cursor-pointer transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 active:scale-[0.99] ${
                   agreedToTerms
                     ? "border-accent-gold/40 bg-accent-gold/10"
                     : "border-warm-stone/10 bg-soft-linen/50 hover:border-warm-stone/30"

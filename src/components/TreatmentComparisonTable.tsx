@@ -60,9 +60,9 @@ const TableProductBadge = ({ type }: { type: "popular" | "bestseller" }) => {
 
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${className}`}
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${className}`}
     >
-      <Icon className="h-2.5 w-2.5" />
+      <Icon className="h-3 w-3" />
       {label}
     </span>
   );
@@ -297,10 +297,10 @@ const TreatmentComparisonTable = () => {
                 <button
                   key={term}
                   onClick={() => handleQuickSearch(term)}
-                  className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary ${
+                  className={`rounded-full border px-3 py-2.5 min-h-[44px] text-xs font-medium transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary ${
                     searchQuery === term
                       ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-muted/50 text-muted-foreground"
+                      : "bg-muted/50 text-foreground"
                   }`}
                 >
                   {term}
@@ -315,10 +315,10 @@ const TreatmentComparisonTable = () => {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                  className={`rounded-full border px-4 py-2.5 min-h-[44px] text-sm font-medium transition-colors ${
                     selectedCategory === category
                       ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
+                      : "bg-card text-foreground hover:bg-muted"
                   }`}
                 >
                   {category}
@@ -462,16 +462,17 @@ const TreatmentComparisonTable = () => {
                 </div>
 
                 {/* Mobile Cards */}
-                <div className="grid gap-4 md:hidden">
+                <div className="grid gap-4 md:hidden" role="list">
                   {filteredTreatments.map((treatment, index) => (
                     <motion.div
                       key={treatment.name}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className={`relative rounded-xl border bg-card p-4 ${
+                      className={`relative rounded-xl border bg-card p-5 ${
                         treatment.popular || treatment.bestseller ? "ring-2 ring-primary/20" : ""
                       }`}
+                      role="listitem"
                     >
                       {/* Badge positioned at top */}
                       {(treatment.bestseller || treatment.popular) && (
@@ -479,42 +480,42 @@ const TreatmentComparisonTable = () => {
                           <TableProductBadge type={treatment.bestseller ? "bestseller" : "popular"} />
                         </div>
                       )}
-                      <div className={`mb-3 flex items-start justify-between ${(treatment.bestseller || treatment.popular) ? "mt-1" : ""}`}>
+                      <div className={`mb-3 flex items-start justify-between ${(treatment.bestseller || treatment.popular) ? "mt-2" : ""}`}>
                         <div>
-                          <h3 className="font-display font-bold text-foreground">
+                          <h3 className="font-display text-lg font-bold text-foreground">
                             {treatment.name}
                           </h3>
                           <span
-                            className={`mt-1 inline-block rounded-full border px-2 py-0.5 text-xs font-medium ${
-                              categoryColors[treatment.category] || "bg-muted text-muted-foreground"
+                            className={`mt-1.5 inline-block rounded-full border px-3 py-1 text-xs font-medium ${
+                              categoryColors[treatment.category] || "bg-muted text-foreground"
                             }`}
                           >
                             {treatment.category}
                           </span>
                           {treatment.rating && (
-                            <div className="mt-1.5">
+                            <div className="mt-2">
                               <TableStarRating rating={treatment.rating} />
                             </div>
                           )}
                         </div>
-                        <span className="text-lg font-bold text-primary">{treatment.price}</span>
+                        <span className="text-xl font-bold text-primary">{treatment.price}</span>
                       </div>
                       
                       <div className="mb-3">
-                        <p className="mb-1 text-xs font-medium text-muted-foreground">Key Benefits:</p>
-                        <ul className="space-y-1">
+                        <p className="mb-2 text-sm font-medium text-foreground">Key Benefits:</p>
+                        <ul className="space-y-2">
                           {treatment.benefits.map((benefit, i) => (
-                            <li key={i} className="flex items-center gap-2 text-sm text-foreground">
-                              <Check className="h-3 w-3 flex-shrink-0 text-primary" />
+                            <li key={i} className="flex items-center gap-2 text-sm text-foreground min-h-[44px]">
+                              <Check className="h-4 w-4 flex-shrink-0 text-primary" />
                               {benefit}
                             </li>
                           ))}
                         </ul>
                       </div>
                       
-                      <div className="rounded-lg bg-muted/50 px-3 py-2">
-                        <span className="text-xs text-muted-foreground">Best for: </span>
-                        <span className="text-xs font-medium text-foreground">{treatment.bestFor}</span>
+                      <div className="rounded-lg bg-muted/50 px-3 py-3 min-h-[44px] flex items-center">
+                        <span className="text-sm text-foreground/70">Best for: </span>
+                        <span className="text-sm font-medium text-foreground ml-1">{treatment.bestFor}</span>
                       </div>
                     </motion.div>
                   ))}

@@ -17,7 +17,7 @@ const providers: Provider[] = [
     name: "Paul Myers, DO",
     title: "Medical Director",
     credentials: "Board Certified",
-    specialty: "Hormone Optimization & Men's Health",
+    specialty: "Hormone Optimization & Wellness",
   },
 ];
 
@@ -47,23 +47,23 @@ const trustCredentials = [
 const ProviderSection = () => {
   const [showBooking, setShowBooking] = useState(false);
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-pure-white to-soft-linen/50">
-      <div className="container px-4 sm:px-6">
+    <section className="py-14 xs:py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-pure-white to-soft-linen/50">
+      <div className="container px-5 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-10 sm:mb-12"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white px-4 py-2 text-sm font-medium text-warm-stone mb-4">
+          <span className="inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white px-4 py-2.5 text-[14px] font-medium text-warm-stone mb-4 sm:text-sm sm:py-2">
             <Shield className="h-4 w-4" />
             Your Care Team
           </span>
-          <h2 className="font-display text-3xl font-bold text-rich-black sm:text-4xl">
+          <h2 className="font-display text-[1.625rem] font-bold text-rich-black xs:text-3xl sm:text-4xl leading-tight">
             Expert-Led Medical Care
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-warm-gray">
-            Our board-certified physicians specialize in men's health optimization and hormone therapy
+          <p className="mt-4 max-w-2xl mx-auto text-[15px] text-warm-gray leading-relaxed sm:text-base">
+            Our board-certified physicians specialize in hormone optimization and peptide therapy for men and women
           </p>
         </motion.div>
 
@@ -98,7 +98,7 @@ const ProviderSection = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="mt-3 border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10"
+                    className="mt-4 min-h-[48px] px-6 border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10 active:bg-warm-stone/20 sm:min-h-[40px] sm:px-4 text-[15px] sm:text-sm font-medium"
                     onClick={() => setShowBooking(!showBooking)}
                   >
                     {showBooking ? "Close Booking" : "Book with Dr. Myers"}
@@ -134,7 +134,7 @@ const ProviderSection = () => {
         </div>
 
         {/* Trust Credentials Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
           {trustCredentials.map((credential, index) => (
             <motion.div
               key={credential.title}
@@ -143,14 +143,14 @@ const ProviderSection = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card variant="glass" className="p-5 sm:p-6 h-full text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10">
-                  <credential.icon className="h-6 w-6 text-warm-stone" />
+              <Card variant="glass" className="p-4 sm:p-5 md:p-6 h-full text-center">
+                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10 sm:mb-4 sm:h-12 sm:w-12">
+                  <credential.icon className="h-5 w-5 text-warm-stone sm:h-6 sm:w-6" />
                 </div>
-                <h3 className="font-display font-semibold text-rich-black mb-2">
+                <h3 className="font-display text-[14px] font-semibold text-rich-black mb-1.5 leading-tight sm:text-base sm:mb-2">
                   {credential.title}
                 </h3>
-                <p className="text-sm text-warm-gray">
+                <p className="text-[13px] text-warm-gray leading-relaxed sm:text-sm">
                   {credential.description}
                 </p>
               </Card>

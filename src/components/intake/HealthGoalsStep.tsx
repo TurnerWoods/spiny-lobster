@@ -79,7 +79,7 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
               />
               <Label
                 htmlFor={goal.value}
-                className={`flex cursor-pointer items-start gap-4 rounded-xl border-2 bg-pure-white/60 p-4 backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md ${
+                className={`flex cursor-pointer items-start gap-4 rounded-xl border-2 bg-pure-white/60 p-4 min-h-[72px] backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md active:scale-[0.98] ${
                   showErrorState ? "border-destructive/40" : "border-warm-stone/20"
                 }`}
               >
@@ -103,7 +103,7 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
-              className={`mt-3 flex items-center gap-1.5 text-sm ${showErrorState ? "text-destructive font-medium" : "text-warm-stone"}`}
+              className={`mt-3 flex items-center gap-2 text-sm sm:text-sm ${showErrorState ? "text-destructive font-semibold" : "text-warm-stone"}`}
               role={showErrorState ? "alert" : undefined}
               aria-live={showErrorState ? "polite" : undefined}
             >
@@ -138,7 +138,7 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
                 }}
                 aria-pressed={isSelected}
                 aria-label={`${goal}${isSelected ? ", selected" : ""}`}
-                className={`flex items-center gap-3 rounded-xl border-2 p-3 cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 ${
+                className={`flex items-center gap-3 rounded-xl border-2 p-3 min-h-[48px] cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-warm-stone/30 focus-visible:ring-offset-2 active:scale-[0.98] ${
                   isSelected
                     ? "border-warm-stone bg-warm-stone/10 shadow-sm"
                     : "border-warm-stone/20 hover:border-warm-stone/40 hover:bg-pure-white/80"

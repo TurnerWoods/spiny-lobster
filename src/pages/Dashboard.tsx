@@ -148,42 +148,41 @@ const Dashboard = () => {
     navigate("/");
   };
 
-  // Show skeleton loading state
+  // Show skeleton loading state - Mobile optimized
   if (authLoading || isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
         {/* Header skeleton */}
         <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/80 backdrop-blur-xl">
-          <div className="container flex h-16 items-center justify-between px-4">
+          <div className="container flex h-14 sm:h-16 items-center justify-between px-4">
             <div className="flex items-center gap-2">
-              <Skeleton className="h-8 w-8 rounded-full" />
-              <Skeleton className="h-5 w-32" />
+              <Skeleton className="h-7 sm:h-8 w-24 sm:w-32 rounded" />
             </div>
-            <div className="flex items-center gap-2">
-              <Skeleton className="h-9 w-20" />
-              <Skeleton className="h-9 w-24" />
+            <div className="flex items-center gap-1 sm:gap-2">
+              <Skeleton className="h-11 w-11 sm:h-9 sm:w-20 rounded" />
+              <Skeleton className="h-11 w-11 sm:h-9 sm:w-24 rounded" />
             </div>
           </div>
         </header>
 
-        <main className="container px-4 py-8 md:py-12">
+        <main className="container px-4 py-6 sm:py-8 md:py-12">
           {/* Welcome section skeleton */}
-          <div className="mb-8">
-            <Skeleton className="mb-4 h-10 w-48 rounded-full" />
-            <Skeleton className="h-10 w-72" />
-            <Skeleton className="mt-2 h-5 w-64" />
+          <div className="mb-6 sm:mb-8">
+            <Skeleton className="mb-3 sm:mb-4 h-8 sm:h-10 w-36 sm:w-48 rounded-full" />
+            <Skeleton className="h-8 sm:h-10 w-56 sm:w-72" />
+            <Skeleton className="mt-2 h-4 sm:h-5 w-48 sm:w-64" />
           </div>
 
           {/* Quick actions skeleton */}
-          <div className="mb-10">
+          <div className="mb-8 sm:mb-10">
             <QuickActionsGridSkeleton count={2} />
           </div>
 
           {/* Treatments section skeleton */}
           <div>
-            <div className="mb-5 flex items-center justify-between">
-              <Skeleton className="h-7 w-40" />
-              <Skeleton className="h-9 w-32" />
+            <div className="mb-4 sm:mb-5 flex items-center justify-between">
+              <Skeleton className="h-6 sm:h-7 w-32 sm:w-40" />
+              <Skeleton className="h-11 w-24 sm:h-9 sm:w-32" />
             </div>
             <DashboardTreatmentListSkeleton count={3} />
           </div>
@@ -196,33 +195,33 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-soft-linen via-pure-white to-light-cloud">
-      {/* Header */}
+      {/* Header - Mobile optimized with 44px minimum touch targets */}
       <header className="sticky top-0 z-50 border-b border-warm-stone/10 bg-pure-white/80 backdrop-blur-xl">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center transition-opacity hover:opacity-80">
+        <div className="container flex h-14 sm:h-16 items-center justify-between px-4">
+          <Link to="/" className="flex items-center transition-opacity hover:opacity-80 min-h-[44px] min-w-[44px]">
             <img
               src="/elevar-logo.svg"
               alt="Elevar Health logo"
               loading="eager"
-              className="h-8 w-auto max-w-full"
+              className="h-7 sm:h-8 w-auto max-w-full"
             />
           </Link>
-          <div className="flex items-center gap-2">
+          <nav className="flex items-center gap-1 sm:gap-2" role="navigation" aria-label="Main navigation">
             <Link to="/">
-              <Button variant="ghost" size="sm" className="text-warm-gray hover:text-warm-stone hover:bg-warm-stone/10">
-                <Home className="mr-2 h-4 w-4" />
-                <span className="hidden sm:inline">Home</span>
+              <Button variant="ghost" size="sm" className="min-h-[44px] min-w-[44px] px-3 text-warm-gray hover:text-rich-black hover:bg-warm-stone/10">
+                <Home className="h-5 w-5 sm:mr-2 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline text-sm">Home</span>
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" onClick={handleSignOut} className="text-warm-gray hover:text-warm-stone hover:bg-warm-stone/10">
-              <LogOut className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Sign Out</span>
+            <Button variant="ghost" size="sm" onClick={handleSignOut} className="min-h-[44px] min-w-[44px] px-3 text-warm-gray hover:text-rich-black hover:bg-warm-stone/10">
+              <LogOut className="h-5 w-5 sm:mr-2 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline text-sm">Sign Out</span>
             </Button>
-          </div>
+          </nav>
         </div>
       </header>
 
-      <main className="container px-4 py-8 md:py-12">
+      <main className="container px-4 py-6 sm:py-8 md:py-12">
         {/* Error State */}
         {error && (
           <motion.div
@@ -247,39 +246,39 @@ const Dashboard = () => {
           </motion.div>
         )}
 
-        {/* Welcome Section */}
+        {/* Welcome Section - Mobile optimized typography */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white/80 px-4 py-2 shadow-sm backdrop-blur-sm">
+          <div className="mb-3 sm:mb-4 inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white/80 px-3 sm:px-4 py-1.5 sm:py-2 shadow-sm backdrop-blur-sm">
             <Activity className="h-4 w-4 text-warm-stone" />
-            <span className="text-sm font-medium text-warm-stone">Patient Dashboard</span>
+            <span className="text-xs sm:text-sm font-medium text-warm-stone">Patient Dashboard</span>
           </div>
-          <h1 className="font-display text-3xl font-bold text-rich-black md:text-4xl">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-rich-black leading-tight">
             Welcome back, {firstName}!
           </h1>
-          <p className="mt-2 text-warm-gray">
+          <p className="mt-2 text-sm sm:text-base text-warm-gray leading-relaxed">
             Track your treatments and manage your health journey
           </p>
         </motion.div>
 
-        {/* Quick Actions */}
+        {/* Quick Actions - Mobile optimized with stacked cards and 44px touch targets */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-10 grid gap-4 sm:grid-cols-2"
+          className="mb-8 sm:mb-10 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2"
         >
-          <Link to="/intake" className="group">
-            <Card variant="glass" className="flex h-full items-center gap-4 p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
-                <Plus className="h-6 w-6 text-warm-stone" />
+          <Link to="/intake" className="group block min-h-[72px]">
+            <Card variant="glass" className="flex h-full items-center gap-3 sm:gap-4 p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 active:scale-[0.98]">
+              <div className="flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
+                <Plus className="h-5 w-5 sm:h-6 sm:w-6 text-warm-stone" />
               </div>
-              <div>
-                <p className="font-semibold text-rich-black">Start Treatment</p>
-                <p className="text-sm text-warm-gray">Complete intake</p>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-rich-black text-sm sm:text-base">Start Treatment</p>
+                <p className="text-xs sm:text-sm text-warm-gray">Complete intake</p>
               </div>
             </Card>
           </Link>
@@ -288,20 +287,20 @@ const Dashboard = () => {
               setIsMessagingOpen(true);
               setUnreadCount(0);
             }}
-            className="text-left group"
+            className="text-left group w-full min-h-[72px]"
           >
-            <Card variant="glass" className="flex h-full items-center gap-4 p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
-              <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
-                <MessageCircle className="h-6 w-6 text-warm-stone" />
+            <Card variant="glass" className="flex h-full items-center gap-3 sm:gap-4 p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 active:scale-[0.98]">
+              <div className="relative flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
+                <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 text-warm-stone" />
                 {unreadCount > 0 && (
                   <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-bold text-pure-white animate-pulse">
                     {unreadCount}
                   </span>
                 )}
               </div>
-              <div>
-                <p className="font-semibold text-rich-black">Messages</p>
-                <p className="text-sm text-warm-gray">
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-rich-black text-sm sm:text-base">Messages</p>
+                <p className="text-xs sm:text-sm text-warm-gray truncate">
                   {unreadCount > 0 ? `${unreadCount} unread` : "Chat with care team"}
                 </p>
               </div>
@@ -310,42 +309,42 @@ const Dashboard = () => {
 {/* Appointments and Profile cards hidden until features are ready */}
         </motion.div>
 
-        {/* Treatments Section */}
+        {/* Treatments Section - Mobile optimized */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="mb-5 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-5 w-5 text-warm-stone" />
-              <h2 className="font-display text-xl font-bold text-rich-black md:text-2xl">My Treatments</h2>
+          <div className="mb-4 sm:mb-5 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-warm-stone flex-shrink-0" />
+              <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-rich-black truncate">My Treatments</h2>
             </div>
-            <Link to="/#treatments">
-              <Button variant="outline" size="sm" className="border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10 hover:border-warm-stone/50">
-                <Plus className="mr-2 h-4 w-4" />
-                New Treatment
+            <Link to="/#treatments" className="flex-shrink-0">
+              <Button variant="outline" size="sm" className="min-h-[44px] px-3 sm:px-4 border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10 hover:border-warm-stone/50 text-xs sm:text-sm">
+                <Plus className="mr-1.5 sm:mr-2 h-4 w-4" />
+                <span className="hidden xs:inline">New </span>Treatment
               </Button>
             </Link>
           </div>
 
           {treatments.length === 0 ? (
-            <Card variant="glass" className="p-10 text-center">
-              <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-warm-stone/10 to-warm-stone/20">
-                <Pill className="h-10 w-10 text-warm-stone" />
+            <Card variant="glass" className="p-6 sm:p-10 text-center">
+              <div className="mx-auto mb-4 sm:mb-5 flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-gradient-to-br from-warm-stone/10 to-warm-stone/20">
+                <Pill className="h-8 w-8 sm:h-10 sm:w-10 text-warm-stone" />
               </div>
-              <h3 className="mb-3 font-display text-xl font-semibold text-rich-black">No treatments yet</h3>
-              <p className="mb-6 max-w-sm mx-auto text-warm-gray">
+              <h3 className="mb-2 sm:mb-3 font-display text-lg sm:text-xl font-semibold text-rich-black">No treatments yet</h3>
+              <p className="mb-5 sm:mb-6 max-w-sm mx-auto text-sm sm:text-base text-warm-gray leading-relaxed">
                 Start your personalized health journey by completing a free consultation with our providers
               </p>
               <Link to="/#treatments">
-                <Button className="bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90 transition-all duration-300 hover:shadow-xl">
+                <Button className="min-h-[44px] px-6 bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90 transition-all duration-300 hover:shadow-xl active:scale-[0.98]">
                   Browse Treatments
                 </Button>
               </Link>
             </Card>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {treatments.map((treatment, index) => {
                 const status = statusConfig[treatment.status] || statusConfig.pending;
                 const StatusIcon = status.icon;
@@ -357,34 +356,34 @@ const Dashboard = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 * index }}
                   >
-                    <Link to={`/treatment/${treatment.id}`} className="group block">
-                      <Card variant="glass" className="flex items-center justify-between p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
-                        <div className="flex items-center gap-4">
+                    <Link to={`/treatment/${treatment.id}`} className="group block min-h-[72px]">
+                      <Card variant="glass" className="flex items-center justify-between p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 active:scale-[0.99]">
+                        <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
                           {(() => {
                             const img = getTreatmentImage(treatment.treatment_type);
                             return img ? (
-                              <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-full bg-warm-stone/5">
+                              <div className="h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 overflow-hidden rounded-full bg-warm-stone/5">
                                 <img src={img} alt={treatment.treatment_type} className="h-full w-full object-cover" />
                               </div>
                             ) : (
-                              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
-                                <Pill className="h-6 w-6 text-warm-stone" />
+                              <div className="flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                                <Pill className="h-5 w-5 sm:h-6 sm:w-6 text-warm-stone" />
                               </div>
                             );
                           })()}
-                          <div>
-                            <p className="font-semibold text-rich-black">{treatment.treatment_type}</p>
-                            <p className="text-sm text-warm-gray">
+                          <div className="min-w-0 flex-1">
+                            <p className="font-semibold text-rich-black text-sm sm:text-base truncate">{treatment.treatment_type}</p>
+                            <p className="text-xs sm:text-sm text-warm-gray truncate">
                               {treatment.medication || "Medication pending"}
                             </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 sm:gap-3">
-                          <div className={`flex items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium ${status.color}`}>
-                            <StatusIcon className="h-3 w-3 sm:h-4 sm:w-4" />
-                            <span className="hidden xs:inline sm:inline">{status.label}</span>
+                        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-2">
+                          <div className={`flex items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-3 py-1.5 text-xs font-medium whitespace-nowrap ${status.color}`}>
+                            <StatusIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                            <span className="hidden sm:inline">{status.label}</span>
                           </div>
-                          <ChevronRight className="h-5 w-5 text-warm-stone/60 transition-transform group-hover:translate-x-1" />
+                          <ChevronRight className="h-5 w-5 text-warm-stone/60 transition-transform group-hover:translate-x-1 flex-shrink-0" />
                         </div>
                       </Card>
                     </Link>
@@ -395,23 +394,23 @@ const Dashboard = () => {
           )}
         </motion.div>
 
-        {/* Recent Activity */}
+        {/* Recent Activity - Mobile optimized */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-10"
+          className="mt-8 sm:mt-10"
         >
-          <div className="flex items-center gap-3 mb-5">
-            <Package className="h-5 w-5 text-warm-stone" />
-            <h2 className="font-display text-xl font-bold text-rich-black md:text-2xl">Recent Activity</h2>
+          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
+            <Package className="h-4 w-4 sm:h-5 sm:w-5 text-warm-stone flex-shrink-0" />
+            <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-rich-black">Recent Activity</h2>
           </div>
-          <Card variant="glass" className="p-8">
-            <div className="flex flex-col items-center gap-4 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-warm-stone/10">
-                <Clock className="h-7 w-7 text-warm-stone/60" />
+          <Card variant="glass" className="p-6 sm:p-8">
+            <div className="flex flex-col items-center gap-3 sm:gap-4 text-center">
+              <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-warm-stone/10">
+                <Clock className="h-6 w-6 sm:h-7 sm:w-7 text-warm-stone/60" />
               </div>
-              <p className="text-warm-gray max-w-sm">
+              <p className="text-sm sm:text-base text-warm-gray max-w-sm leading-relaxed">
                 No recent activity. Start a treatment to see updates and track your progress here.
               </p>
             </div>

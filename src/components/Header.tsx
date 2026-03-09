@@ -499,7 +499,11 @@ const Header = () => {
                 <Menu className="h-6 w-6 text-rich-black/80" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full sm:w-[380px] sm:max-w-[380px] p-0 border-l-0" id="mobile-menu">
+            <SheetContent
+              side="right"
+              className="w-full sm:w-[380px] sm:max-w-[380px] p-0 border-l-0 [&>button]:min-h-[44px] [&>button]:min-w-[44px] [&>button]:h-11 [&>button]:w-11 [&>button]:top-4 [&>button]:right-4 [&>button]:rounded-full [&>button]:hover:bg-neutral-gray/10 [&>button]:active:bg-neutral-gray/20 [&>button]:transition-colors"
+              id="mobile-menu"
+            >
               {/* Mobile Header - Compact with proper spacing for close button */}
               <div ref={mobileMenuRef} className="h-full">
               <SheetHeader className="border-b border-neutral-gray/15 bg-pure-white px-5 sm:px-6 py-4 pr-16">
@@ -516,17 +520,17 @@ const Header = () => {
               <ScrollArea className="h-[calc(100vh-76px)] sm:h-[calc(100vh-80px)]">
                 <div className="flex flex-col px-4 sm:px-5 py-5 sm:py-6">
                   {/* Treatments Section */}
-                  <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-warm-stone/60">
+                  <p className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.12em] text-rich-black/50">
                     Treatments
                   </p>
-                  <nav className="flex flex-col gap-1 mb-6" role="navigation" aria-label="Treatment categories">
+                  <nav className="flex flex-col gap-1.5 mb-6" role="navigation" aria-label="Treatment categories">
                     {allTreatments.map((item, index) => (
                       <Link
                         key={item.name}
                         to={item.href}
                         onClick={() => setMobileMenuOpen(false)}
                         className={cn(
-                          "group flex items-center justify-between rounded-xl px-4 min-h-[48px] py-3 transition-all duration-200 hover:bg-soft-linen active:bg-soft-linen/80 active:scale-[0.99]",
+                          "group flex items-center justify-between rounded-xl px-4 min-h-[48px] py-3.5 transition-all duration-200 hover:bg-soft-linen active:bg-soft-linen/80 active:scale-[0.99]",
                           isActivePath(item.href) && "bg-warm-stone/10 border-l-2 border-warm-stone"
                         )}
                         aria-current={isActivePath(item.href) ? "page" : undefined}
@@ -535,12 +539,12 @@ const Header = () => {
                         }}
                       >
                         <span className={cn(
-                          "text-[15px] font-medium transition-colors",
-                          isActivePath(item.href) ? "text-warm-stone" : "text-rich-black/90 group-hover:text-rich-black"
+                          "text-[15px] font-semibold transition-colors",
+                          isActivePath(item.href) ? "text-warm-stone" : "text-rich-black group-hover:text-rich-black"
                         )}>
                           {item.name}
                         </span>
-                        <span className="text-[11px] font-medium text-warm-stone/60 tracking-wide">
+                        <span className="text-[12px] font-medium text-rich-black/60 tracking-wide">
                           {item.price}
                         </span>
                       </Link>
@@ -551,16 +555,16 @@ const Header = () => {
                   <div className="h-px bg-neutral-gray/20 mb-6" />
 
                   {/* Tools Section */}
-                  <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-warm-stone/60">
+                  <p className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.12em] text-rich-black/50">
                     Tools
                   </p>
-                  <nav className="flex flex-col gap-1 mb-6" role="navigation" aria-label="Tools and calculators">
+                  <nav className="flex flex-col gap-1.5 mb-6" role="navigation" aria-label="Tools and calculators">
                     <Link
                       to="/tools/hormone-assessment"
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
-                        isActivePath("/tools/hormone-assessment") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                        "rounded-xl px-4 min-h-[48px] py-3.5 flex items-center text-[15px] font-medium transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/tools/hormone-assessment") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone font-semibold" : "text-rich-black/80"
                       )}
                       aria-current={isActivePath("/tools/hormone-assessment") ? "page" : undefined}
                     >
@@ -570,8 +574,8 @@ const Header = () => {
                       to="/tools/treatment-match-quiz"
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
-                        isActivePath("/tools/treatment-match-quiz") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                        "rounded-xl px-4 min-h-[48px] py-3.5 flex items-center text-[15px] font-medium transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/tools/treatment-match-quiz") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone font-semibold" : "text-rich-black/80"
                       )}
                       aria-current={isActivePath("/tools/treatment-match-quiz") ? "page" : undefined}
                     >
@@ -581,8 +585,8 @@ const Header = () => {
                       to="/tools"
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
-                        location.pathname === "/tools" ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                        "rounded-xl px-4 min-h-[48px] py-3.5 flex items-center text-[15px] font-medium transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        location.pathname === "/tools" ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone font-semibold" : "text-rich-black/80"
                       )}
                       aria-current={location.pathname === "/tools" ? "page" : undefined}
                     >
@@ -594,13 +598,13 @@ const Header = () => {
                   <div className="h-px bg-neutral-gray/20 mb-6" />
 
                   {/* Other Links */}
-                  <nav className="flex flex-col gap-1 mb-6" role="navigation" aria-label="Additional pages">
+                  <nav className="flex flex-col gap-1.5 mb-6" role="navigation" aria-label="Additional pages">
                     <Link
                       to="/pricing"
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
-                        isActivePath("/pricing") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                        "rounded-xl px-4 min-h-[48px] py-3.5 flex items-center text-[15px] font-medium transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/pricing") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone font-semibold" : "text-rich-black/80"
                       )}
                       aria-current={isActivePath("/pricing") ? "page" : undefined}
                     >
@@ -610,8 +614,8 @@ const Header = () => {
                       to="/about"
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
-                        isActivePath("/about") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                        "rounded-xl px-4 min-h-[48px] py-3.5 flex items-center text-[15px] font-medium transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/about") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone font-semibold" : "text-rich-black/80"
                       )}
                       aria-current={isActivePath("/about") ? "page" : undefined}
                     >
@@ -621,8 +625,8 @@ const Header = () => {
                       to="/faq"
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "rounded-xl px-4 min-h-[44px] py-3 flex items-center text-[14px] transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
-                        isActivePath("/faq") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone" : "text-rich-black/70"
+                        "rounded-xl px-4 min-h-[48px] py-3.5 flex items-center text-[15px] font-medium transition-all duration-200 hover:bg-soft-linen hover:text-rich-black active:bg-soft-linen/80",
+                        isActivePath("/faq") ? "bg-warm-stone/10 border-l-2 border-warm-stone text-warm-stone font-semibold" : "text-rich-black/80"
                       )}
                       aria-current={isActivePath("/faq") ? "page" : undefined}
                     >
@@ -661,19 +665,19 @@ const Header = () => {
                     </div>
                   )}
 
-                  {/* Trust Banner - Minimal */}
-                  <div className="mt-8 rounded-2xl bg-soft-linen/60 border border-neutral-gray/10 p-5">
-                    <div className="space-y-2.5">
-                      <div className="flex items-center gap-2.5 text-[12px] text-rich-black/50">
-                        <div className="h-1 w-1 rounded-full bg-warm-stone/40" />
+                  {/* Trust Banner - Minimal with improved contrast */}
+                  <div className="mt-8 rounded-2xl bg-soft-linen/80 border border-neutral-gray/15 p-5">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3 text-[13px] text-rich-black/70 font-medium">
+                        <div className="h-1.5 w-1.5 rounded-full bg-warm-stone/60" />
                         <span>FSA/HSA Eligible</span>
                       </div>
-                      <div className="flex items-center gap-2.5 text-[12px] text-rich-black/50">
-                        <div className="h-1 w-1 rounded-full bg-warm-stone/40" />
+                      <div className="flex items-center gap-3 text-[13px] text-rich-black/70 font-medium">
+                        <div className="h-1.5 w-1.5 rounded-full bg-warm-stone/60" />
                         <span>Free Discreet Shipping</span>
                       </div>
-                      <div className="flex items-center gap-2.5 text-[12px] text-rich-black/50">
-                        <div className="h-1 w-1 rounded-full bg-warm-stone/40" />
+                      <div className="flex items-center gap-3 text-[13px] text-rich-black/70 font-medium">
+                        <div className="h-1.5 w-1.5 rounded-full bg-warm-stone/60" />
                         <span>100% Online Care</span>
                       </div>
                     </div>

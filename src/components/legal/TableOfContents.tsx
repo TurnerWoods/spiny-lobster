@@ -57,7 +57,7 @@ const TableOfContents = ({ items, className }: TableOfContentsProps) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.2 }}
       className={cn(
-        "sticky top-24 h-fit rounded-xl border border-warm-stone/10 bg-pure-white/80 p-5 shadow-sm backdrop-blur-xl",
+        "sticky top-20 md:top-24 h-fit rounded-xl border border-warm-stone/10 bg-pure-white/95 md:bg-pure-white/80 p-4 md:p-5 shadow-sm backdrop-blur-xl max-h-[calc(100vh-6rem)] overflow-y-auto",
         className
       )}
     >
@@ -71,17 +71,17 @@ const TableOfContents = ({ items, className }: TableOfContentsProps) => {
             <button
               onClick={() => handleClick(item.id)}
               className={cn(
-                "group flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-all duration-200",
+                "group flex w-full items-center gap-2 rounded-md px-3 py-2.5 md:py-2 min-h-[44px] text-left text-sm transition-all duration-200",
                 item.level === 2 && "pl-6",
                 activeId === item.id
                   ? "bg-warm-stone/10 text-warm-stone font-medium"
-                  : "text-warm-gray hover:bg-warm-stone/5 hover:text-rich-black"
+                  : "text-warm-gray/80 hover:bg-warm-stone/5 hover:text-rich-black"
               )}
             >
               <ChevronRight
                 className={cn(
-                  "h-3 w-3 transition-transform duration-200",
-                  activeId === item.id ? "text-warm-stone" : "text-warm-gray/50",
+                  "h-3 w-3 flex-shrink-0 transition-transform duration-200",
+                  activeId === item.id ? "text-warm-stone" : "text-warm-gray/80",
                   activeId === item.id && "translate-x-0.5"
                 )}
               />

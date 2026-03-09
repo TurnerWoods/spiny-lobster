@@ -92,7 +92,7 @@ const TreatmentCategories = () => {
         </h2>
         {/* Featured Cards - 3 large cards */}
         <div
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3"
           role="list"
           aria-label="Featured treatments"
         >
@@ -108,7 +108,7 @@ const TreatmentCategories = () => {
             >
               <Link
                 to={`/treatments/${treatment.slug}`}
-                className="group relative block overflow-hidden rounded-2xl aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="group relative block overflow-hidden rounded-2xl aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-[0.98] transition-transform duration-200"
                 aria-label={`Learn more about ${treatment.title.replace('\n', ' ')} ${treatment.subtitle}`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${treatment.gradient}`} aria-hidden="true" />
@@ -124,20 +124,20 @@ const TreatmentCategories = () => {
                 </div>
 
                 {/* Text Content */}
-                <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
+                <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6 md:p-8">
                   <div>
-                    <h3 className="font-display text-xl font-semibold leading-tight text-white sm:text-2xl lg:text-[1.65rem] whitespace-pre-line">
+                    <h3 className="font-display text-[1.375rem] font-semibold leading-tight text-white sm:text-2xl lg:text-[1.65rem] whitespace-pre-line">
                       {treatment.title}
                     </h3>
-                    <p className="mt-1 text-sm font-light text-white/80 whitespace-pre-line">
+                    <p className="mt-1.5 text-[15px] font-light text-white/85 whitespace-pre-line sm:text-sm">
                       {treatment.subtitle}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm font-medium text-white" aria-hidden="true">
-                    <span>LEARN MORE</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 transition-colors duration-300 group-hover:bg-white/20">
-                      <ArrowRight className="h-4 w-4" />
+                  <div className="flex items-center gap-2 text-[13px] font-medium text-white sm:text-sm" aria-hidden="true">
+                    <span className="tracking-wide">LEARN MORE</span>
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 transition-colors duration-300 group-hover:bg-white/20 sm:h-8 sm:w-8">
+                      <ArrowRight className="h-5 w-5 sm:h-4 sm:w-4" />
                     </span>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ const TreatmentCategories = () => {
 
         {/* Compact Cards - 5 smaller cards */}
         <div
-          className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4"
+          className="mt-4 grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4"
           role="list"
           aria-label="Additional treatments"
         >
@@ -164,14 +164,14 @@ const TreatmentCategories = () => {
             >
               <Link
                 to={`/treatments/${treatment.slug}`}
-                className="group flex items-center justify-between gap-3 rounded-2xl bg-white p-4 sm:p-5 shadow-sm transition-shadow duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="group flex items-center justify-between gap-3 rounded-2xl bg-white p-4 sm:p-5 shadow-sm transition-shadow duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 min-h-[72px] active:scale-[0.98] active:shadow-none"
                 aria-label={`Learn more about ${treatment.title} ${treatment.subtitle.replace('\n', ' ')}`}
               >
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-display text-sm font-semibold text-rich-black sm:text-base">
+                  <h3 className="font-display text-[15px] font-semibold text-rich-black sm:text-base leading-tight">
                     {treatment.title}
                   </h3>
-                  <p className="mt-0.5 text-xs font-light text-muted-foreground whitespace-pre-line leading-relaxed">
+                  <p className="mt-1 text-[13px] font-light text-muted-foreground whitespace-pre-line leading-relaxed sm:text-xs">
                     {treatment.subtitle}
                   </p>
                 </div>
@@ -185,10 +185,10 @@ const TreatmentCategories = () => {
                     />
                   </div>
                   <span
-                    className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-neutral-gray/30 transition-colors duration-300 group-hover:bg-rich-black group-hover:border-rich-black"
+                    className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-neutral-gray/30 transition-colors duration-300 group-hover:bg-rich-black group-hover:border-rich-black sm:h-7 sm:w-7"
                     aria-hidden="true"
                   >
-                    <ArrowRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-white transition-colors" />
+                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-white transition-colors sm:h-3.5 sm:w-3.5" />
                   </span>
                 </div>
               </Link>

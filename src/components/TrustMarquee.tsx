@@ -17,7 +17,7 @@ const BadgeItem = memo(({ icon: Icon, text }: { icon: typeof Shield; text: strin
   <div className="flex items-center gap-1.5 whitespace-nowrap px-3 text-xs font-medium text-pure-white sm:gap-2 sm:px-6 sm:text-sm">
     <Icon className="h-3.5 w-3.5 flex-shrink-0 text-warm-stone sm:h-4 sm:w-4" />
     <span>{text}</span>
-    <span className="ml-3 text-pure-white/40 sm:ml-6" aria-hidden="true">-</span>
+    <span className="ml-3 text-pure-white/60 sm:ml-6" aria-hidden="true">-</span>
   </div>
 ));
 

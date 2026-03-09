@@ -108,7 +108,7 @@ const PricingComparison = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="px-2 text-base text-muted-foreground sm:px-0 sm:text-lg"
+            className="px-2 text-base text-warm-gray sm:px-0 sm:text-lg"
           >
             Premium care at a fraction of the cost. No hidden fees, no surprises.
           </motion.p>
@@ -125,8 +125,8 @@ const PricingComparison = () => {
           <div className="grid grid-cols-2 gap-2 border-b bg-muted/50 p-3 text-center text-xs font-semibold sm:grid-cols-4 sm:gap-4 sm:p-4 sm:text-sm">
             <div className="text-left text-foreground">Feature</div>
             <div className="rounded-lg bg-primary/10 py-1 text-primary">Elevare</div>
-            <div className="hidden text-muted-foreground sm:block">Traditional</div>
-            <div className="hidden text-muted-foreground sm:block">Competitors</div>
+            <div className="hidden text-warm-gray sm:block">Traditional</div>
+            <div className="hidden text-warm-gray sm:block">Competitors</div>
           </div>
 
           {/* Table Body */}
@@ -138,7 +138,7 @@ const PricingComparison = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.03 }}
-                className="grid grid-cols-2 gap-2 p-3 text-center transition-colors hover:bg-muted/30 sm:grid-cols-4 sm:gap-4 sm:p-4"
+                className="grid grid-cols-2 gap-2 p-3 text-center transition-colors hover:bg-muted/30 sm:grid-cols-4 sm:gap-4 sm:p-4 min-h-[44px] items-center"
               >
                 <div className="text-left text-xs font-medium text-foreground sm:text-sm">
                   {row.feature}
@@ -146,10 +146,10 @@ const PricingComparison = () => {
                 <div className="font-semibold text-primary">
                   {renderValue(row.elevare)}
                 </div>
-                <div className="hidden text-muted-foreground sm:block">
+                <div className="hidden text-warm-gray sm:block">
                   {renderValue(row.traditional)}
                 </div>
-                <div className="hidden text-muted-foreground sm:block">
+                <div className="hidden text-warm-gray sm:block">
                   {renderValue(row.competitors)}
                 </div>
               </motion.div>
@@ -170,9 +170,9 @@ const PricingComparison = () => {
           <div className="rounded-xl border bg-card p-4 shadow-sm sm:rounded-2xl sm:p-6">
             <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
               {included.map((item, index) => (
-                <div key={index} className="flex items-center gap-2 sm:gap-3">
-                  <Check className="h-4 w-4 flex-shrink-0 text-primary sm:h-5 sm:w-5" />
-                  <span className="text-sm text-muted-foreground">{item}</span>
+                <div key={index} className="flex items-center gap-2 sm:gap-3 min-h-[44px] py-1">
+                  <Check className="h-5 w-5 flex-shrink-0 text-primary" />
+                  <span className="text-sm text-warm-gray leading-relaxed">{item}</span>
                 </div>
               ))}
             </div>
@@ -190,10 +190,10 @@ const PricingComparison = () => {
             {trustBadges.map((badge) => (
               <div
                 key={badge.label}
-                className="flex items-center gap-2 text-muted-foreground"
+                className="flex items-center gap-2 text-warm-gray min-h-[44px] px-2 py-1"
               >
-                <badge.icon className="h-4 w-4 text-warm-stone" strokeWidth={1.5} />
-                <span className="text-xs sm:text-sm font-medium">{badge.label}</span>
+                <badge.icon className="h-5 w-5 text-warm-stone" strokeWidth={1.5} />
+                <span className="text-sm font-medium">{badge.label}</span>
               </div>
             ))}
           </div>
@@ -207,9 +207,9 @@ const PricingComparison = () => {
           className="text-center"
         >
           <Link to="/intake" className="inline-block w-full sm:w-auto">
-            <Button size="lg" className="w-full bg-primary hover:bg-primary-dark sm:w-auto">
+            <Button size="lg" className="w-full bg-primary hover:bg-primary-dark sm:w-auto min-h-[48px] text-base">
               Start Your Free Assessment
-              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
         </motion.div>

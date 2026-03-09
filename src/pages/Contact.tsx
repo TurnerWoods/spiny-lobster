@@ -61,13 +61,14 @@ const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolea
     <div className="border-b border-warm-stone/10 last:border-0">
       <button
         onClick={onClick}
-        className="flex w-full items-center justify-between gap-3 py-4 text-left transition-colors hover:text-warm-stone"
+        className="flex w-full items-center justify-between gap-3 py-4 min-h-[48px] text-left transition-colors hover:text-warm-stone touch-manipulation"
+        aria-expanded={isOpen}
       >
-        <span className="font-medium text-rich-black">{faq.question}</span>
-        <span className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border transition-all ${
+        <span className="font-medium text-rich-black text-base sm:text-sm">{faq.question}</span>
+        <span className={`flex h-7 w-7 sm:h-6 sm:w-6 flex-shrink-0 items-center justify-center rounded-full border transition-all ${
           isOpen ? "rotate-180 border-warm-stone bg-warm-stone text-pure-white" : "border-warm-stone/30 text-warm-gray"
         }`}>
-          {isOpen ? <Minus className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
+          {isOpen ? <Minus className="h-3.5 w-3.5 sm:h-3 sm:w-3" /> : <Plus className="h-3.5 w-3.5 sm:h-3 sm:w-3" />}
         </span>
       </button>
       <AnimatePresence initial={false}>
@@ -79,7 +80,7 @@ const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolea
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className="pb-4 text-sm text-warm-gray leading-relaxed">
+            <p className="pb-4 text-base sm:text-sm text-warm-gray leading-relaxed">
               {faq.answer}
             </p>
           </motion.div>
@@ -199,82 +200,95 @@ const Contact = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="mb-6 font-display text-2xl font-bold text-rich-black">Contact Information</h2>
+                <h2 className="mb-5 sm:mb-6 font-display text-xl sm:text-2xl font-bold text-rich-black">Contact Information</h2>
                 
-                <div className="mb-8 space-y-4">
-                  <a href="tel:512-270-8701">
-                    <Card variant="glass" className="flex items-start gap-4 p-4 transition-all hover:shadow-lg">
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                <div className="mb-8 space-y-3 sm:space-y-4">
+                  <a
+                    href="tel:512-270-8701"
+                    className="block min-h-[56px] touch-manipulation"
+                    aria-label="Call us at (512) 270-8701"
+                  >
+                    <Card variant="glass" className="flex items-center gap-4 p-4 sm:p-5 transition-all hover:shadow-lg active:scale-[0.98]">
+                      <div className="flex h-11 w-11 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
                         <Phone className="h-5 w-5 text-warm-stone" />
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-rich-black">Phone</h3>
-                        <p className="text-warm-gray">(512) 270-8701</p>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-rich-black text-base">Phone</h3>
+                        <p className="text-warm-gray text-base sm:text-sm truncate">(512) 270-8701</p>
                       </div>
                     </Card>
                   </a>
-                  
-                  <a href="mailto:info@elevarehealth.com">
-                    <Card variant="glass" className="flex items-start gap-4 p-4 transition-all hover:shadow-lg">
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+
+                  <a
+                    href="mailto:info@elevarehealth.com"
+                    className="block min-h-[56px] touch-manipulation"
+                    aria-label="Email us at info@elevarehealth.com"
+                  >
+                    <Card variant="glass" className="flex items-center gap-4 p-4 sm:p-5 transition-all hover:shadow-lg active:scale-[0.98]">
+                      <div className="flex h-11 w-11 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
                         <Mail className="h-5 w-5 text-warm-stone" />
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-rich-black">Email</h3>
-                        <p className="text-warm-gray">info@elevarehealth.com</p>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-rich-black text-base">Email</h3>
+                        <p className="text-warm-gray text-base sm:text-sm truncate">info@elevarehealth.com</p>
                       </div>
                     </Card>
                   </a>
-                  
-                  <a 
+
+                  <a
                     href="https://maps.google.com/?q=1401+Lavaca+St,+Austin,+TX+78701"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="block min-h-[56px] touch-manipulation"
+                    aria-label="View our address on Google Maps"
                   >
-                    <Card variant="glass" className="flex items-start gap-4 p-4 transition-all hover:shadow-lg">
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+                    <Card variant="glass" className="flex items-center gap-4 p-4 sm:p-5 transition-all hover:shadow-lg active:scale-[0.98]">
+                      <div className="flex h-11 w-11 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
                         <MapPin className="h-5 w-5 text-warm-stone" />
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-rich-black">Address</h3>
-                        <p className="text-warm-gray">1401 Lavaca St, Suite 388</p>
-                        <p className="text-warm-gray">Austin, TX 78701</p>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-rich-black text-base">Address</h3>
+                        <p className="text-warm-gray text-base sm:text-sm">1401 Lavaca St, Suite 388</p>
+                        <p className="text-warm-gray text-base sm:text-sm">Austin, TX 78701</p>
                       </div>
                     </Card>
                   </a>
-                  
-                  <Card variant="glass" className="flex items-start gap-4 p-4">
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
+
+                  <Card variant="glass" className="flex items-center gap-4 p-4 sm:p-5">
+                    <div className="flex h-11 w-11 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
                       <Clock className="h-5 w-5 text-warm-stone" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-rich-black">Hours</h3>
-                      <p className="text-warm-gray">Monday - Friday, 8am - 6pm CT</p>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-semibold text-rich-black text-base">Hours</h3>
+                      <p className="text-warm-gray text-base sm:text-sm">Monday - Friday, 8am - 6pm CT</p>
                     </div>
                   </Card>
                 </div>
 
                 {/* Existing Patients */}
-                <Card variant="glass" className="mb-6 p-5">
+                <Card variant="glass" className="mb-4 sm:mb-6 p-4 sm:p-5">
                   <div className="mb-3 flex items-center gap-3">
-                    <MessageSquare className="h-5 w-5 text-warm-stone" />
-                    <h3 className="font-display text-lg font-bold text-rich-black">Existing Patients</h3>
+                    <MessageSquare className="h-5 w-5 text-warm-stone flex-shrink-0" />
+                    <h3 className="font-display text-base sm:text-lg font-bold text-rich-black">Existing Patients</h3>
                   </div>
-                  <p className="text-sm text-warm-gray">
+                  <p className="text-sm sm:text-sm text-warm-gray leading-relaxed">
                     Current patients can reach their care team directly through secure messaging in the patient portal. This ensures HIPAA compliance and faster response times for health-related questions.
                   </p>
                 </Card>
 
                 {/* Provider Partnerships */}
-                <Card variant="glass" className="p-5">
+                <Card variant="glass" className="p-4 sm:p-5">
                   <div className="mb-3 flex items-center gap-3">
-                    <Users className="h-5 w-5 text-warm-stone" />
-                    <h3 className="font-display text-lg font-bold text-rich-black">Provider Partnerships</h3>
+                    <Users className="h-5 w-5 text-warm-stone flex-shrink-0" />
+                    <h3 className="font-display text-base sm:text-lg font-bold text-rich-black">Provider Partnerships</h3>
                   </div>
-                  <p className="mb-3 text-sm text-warm-gray">
-                    Are you a licensed physician interested in partnering with Elevare? We're building a network of Texas-licensed providers who share our commitment to accessible, high-quality men's health care.
+                  <p className="mb-3 text-sm text-warm-gray leading-relaxed">
+                    Are you a licensed physician interested in partnering with Elevare? We're building a network of Texas-licensed providers who share our commitment to accessible, high-quality health care for men and women.
                   </p>
-                  <a href="mailto:providers@elevarehealth.com" className="text-sm font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline">
+                  <a
+                    href="mailto:providers@elevarehealth.com"
+                    className="inline-block min-h-[44px] py-2 text-sm font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline touch-manipulation"
+                  >
                     Contact us at providers@elevarehealth.com
                   </a>
                 </Card>
@@ -286,8 +300,8 @@ const Contact = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <Card variant="glass" className="p-6 shadow-xl sm:p-8">
-                  <h2 className="mb-6 font-display text-2xl font-bold text-rich-black">Send Us a Message</h2>
+                <Card variant="glass" className="p-5 shadow-xl sm:p-8">
+                  <h2 className="mb-5 sm:mb-6 font-display text-xl sm:text-2xl font-bold text-rich-black">Send Us a Message</h2>
 
                   {/* Success Message Banner */}
                   {submitStatus === "success" && (
@@ -441,7 +455,7 @@ const Contact = () => {
                       </AnimatePresence>
                     </div>
 
-                    <p className="text-xs text-warm-gray/80">
+                    <p className="text-sm sm:text-xs text-warm-gray/80 leading-relaxed">
                       Please do not include personal health information in this form.
                     </p>
 
@@ -449,7 +463,7 @@ const Contact = () => {
                       type="submit"
                       variant="secondary"
                       size="lg"
-                      className="w-full"
+                      className="w-full min-h-[48px] sm:min-h-[44px] text-base"
                       isLoading={isSubmitting}
                       loadingText="Sending..."
                     >
@@ -459,9 +473,9 @@ const Contact = () => {
                   </form>
 
                   {/* Trust Badge */}
-                  <div className="mt-6 flex items-center justify-center gap-2 text-xs text-warm-gray">
-                    <Shield className="h-4 w-4 text-warm-stone" />
-                    <span>HIPAA Compliant • Secure Form</span>
+                  <div className="mt-5 sm:mt-6 flex items-center justify-center gap-2 text-sm sm:text-xs text-warm-gray">
+                    <Shield className="h-4 w-4 text-warm-stone flex-shrink-0" />
+                    <span>HIPAA Compliant - Secure Form</span>
                   </div>
                 </Card>
               </motion.div>
@@ -480,10 +494,10 @@ const Contact = () => {
                 viewport={{ once: true }}
                 className="mb-8 text-center"
               >
-                <h2 className="mb-3 font-display text-2xl font-bold text-rich-black sm:text-3xl">
+                <h2 className="mb-3 font-display text-xl font-bold text-rich-black sm:text-3xl">
                   Frequently Asked Questions
                 </h2>
-                <p className="text-warm-gray">
+                <p className="text-base sm:text-base text-warm-gray">
                   Quick answers to common questions
                 </p>
               </motion.div>

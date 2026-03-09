@@ -38,7 +38,7 @@ const faqCategories: FAQCategory[] = [
       },
       {
         question: "Who reviews my intake form?",
-        answer: "Your intake is reviewed by a licensed, board-certified physician in your state. All of our physicians specialize in men's health and hormone optimization."
+        answer: "Your intake is reviewed by a licensed, board-certified physician in your state. All of our physicians specialize in hormone optimization and personalized wellness therapy."
       },
       {
         question: "What if I'm not approved for treatment?",
@@ -164,7 +164,7 @@ const faqCategories: FAQCategory[] = [
     faqs: [
       {
         question: "Who are the physicians?",
-        answer: "All Elevare physicians are licensed, board-certified doctors in your state who specialize in men's health, hormone optimization, and/or weight management. They practice through Elevare Health Medical PLLC, an independent medical practice."
+        answer: "All Elevare physicians are licensed, board-certified doctors in your state who specialize in hormone optimization, peptide therapy, and/or weight management for men and women. They practice through Elevare Health Medical PLLC, an independent medical practice."
       },
       {
         question: "Can I message my doctor?",

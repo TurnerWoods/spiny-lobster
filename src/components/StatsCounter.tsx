@@ -165,7 +165,7 @@ const StatsCounter = () => {
       initial={containerAnimation.initial}
       animate={containerAnimation.animate}
       transition={containerAnimation.transition}
-      className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-pure-white/20 bg-pure-white/10 p-4 shadow-xl backdrop-blur-lg sm:mt-16 sm:gap-6 sm:p-6 md:grid-cols-4 md:gap-8 md:p-8 contain-paint"
+      className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-pure-white/20 bg-pure-white/20 p-4 shadow-xl backdrop-blur-lg sm:mt-16 sm:gap-6 sm:p-6 md:grid-cols-4 md:gap-8 md:p-8 contain-paint"
     >
       {stats.map((stat, index) => (
         <motion.div
@@ -184,7 +184,7 @@ const StatsCounter = () => {
             delay={reduceMotion ? 0 : index * 100}
             reduceMotion={reduceMotion}
           />
-          <p className="mt-1 text-xs font-medium text-pure-white/75 sm:mt-2 sm:text-sm">{stat.label}</p>
+          <p className="mt-1 text-xs font-medium text-pure-white/90 sm:mt-2 sm:text-sm">{stat.label}</p>
         </motion.div>
       ))}
     </motion.div>

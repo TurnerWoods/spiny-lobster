@@ -42,7 +42,7 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
       {/* Progress bar for mobile */}
       <div className="sm:hidden mb-4">
         <div
-          className="h-2 bg-warm-stone/10 rounded-full overflow-hidden"
+          className="h-2.5 bg-warm-stone/10 rounded-full overflow-hidden"
           role="progressbar"
           aria-valuenow={progressPercentage}
           aria-valuemin={0}
@@ -118,12 +118,12 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
       </ol>
 
       {/* Mobile step pills */}
-      <div className="flex sm:hidden justify-center gap-2">
+      <div className="flex sm:hidden justify-center gap-2 flex-wrap">
         {steps.map((step) => (
           <div
             key={step.id}
             className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all",
+              "flex items-center gap-1.5 px-3 py-2 min-h-[36px] rounded-full text-xs font-medium transition-all",
               currentStep === step.id
                 ? "bg-warm-stone text-pure-white shadow-md"
                 : currentStep > step.id
@@ -131,7 +131,7 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
                 : "bg-muted-foreground/10 text-muted-foreground"
             )}
           >
-            {currentStep > step.id && <Check className="h-3 w-3" />}
+            {currentStep > step.id && <Check className="h-3.5 w-3.5" />}
             <span>{step.name}</span>
           </div>
         ))}

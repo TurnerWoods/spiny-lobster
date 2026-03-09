@@ -12,7 +12,7 @@ const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
 const selectTriggerVariants = cva(
-  "flex h-11 w-full items-center justify-between rounded-xl border bg-pure-white/60 px-4 py-2.5 text-sm text-foreground ring-offset-background backdrop-blur-sm transition-all duration-200 ease-out placeholder:text-warm-gray/60 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 data-[placeholder]:text-warm-gray/60",
+  "flex min-h-[44px] h-11 w-full items-center justify-between rounded-xl border bg-pure-white/60 px-4 py-2.5 text-base md:text-sm text-foreground ring-offset-background backdrop-blur-sm transition-all duration-200 ease-out placeholder:text-warm-gray/80 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 data-[placeholder]:text-warm-gray/80",
   {
     variants: {
       variant: {
@@ -154,7 +154,7 @@ const SelectItem = React.forwardRef<
     ref={ref}
     role="option"
     className={cn(
-      "relative flex w-full cursor-pointer select-none items-center rounded-lg py-2.5 pl-9 pr-3 text-sm outline-none transition-all duration-150",
+      "relative flex w-full cursor-pointer select-none items-center rounded-lg min-h-[44px] py-3 pl-9 pr-3 text-base md:text-sm md:min-h-0 md:py-2.5 outline-none transition-all duration-150",
       "hover:bg-warm-stone/8 focus:bg-warm-stone/10 focus:text-warm-stone",
       "data-[state=checked]:bg-warm-stone/10 data-[state=checked]:text-warm-stone data-[state=checked]:font-medium",
       "data-[highlighted]:bg-warm-stone/8 data-[highlighted]:outline-none",

@@ -138,14 +138,14 @@ export const TrustBadges = ({
   // Compact variant - icons only with tooltips
   if (variant === "compact") {
     return (
-      <div className={cn("flex items-center gap-3", className)}>
+      <div className={cn("flex flex-wrap items-center gap-2 sm:gap-3", className)}>
         {displayBadges.map((badge) => (
           <div
             key={badge.id}
-            className="group relative flex h-8 w-8 items-center justify-center rounded-full border border-warm-stone/20 bg-warm-stone/5 transition-colors hover:bg-warm-stone/10"
+            className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-warm-stone/20 bg-warm-stone/5 transition-colors hover:bg-warm-stone/10"
             title={badge.label}
           >
-            <badge.icon className="h-4 w-4 text-warm-stone" strokeWidth={1.5} />
+            <badge.icon className="h-5 w-5 text-warm-stone" strokeWidth={1.5} />
           </div>
         ))}
       </div>
@@ -155,14 +155,14 @@ export const TrustBadges = ({
   // Default inline variant
   return (
     <div
-      className={cn("flex flex-wrap items-center gap-4 sm:gap-6", className)}
+      className={cn("flex flex-wrap items-center gap-3 sm:gap-6", className)}
     >
       {displayBadges.map((badge) => (
         <div
           key={badge.id}
-          className="flex items-center gap-2 text-muted-foreground"
+          className="flex min-h-[44px] items-center gap-2 py-2 text-warm-gray"
         >
-          <badge.icon className="h-4 w-4 text-warm-stone" strokeWidth={1.5} />
+          <badge.icon className="h-4 w-4 flex-shrink-0 text-warm-stone" strokeWidth={1.5} />
           <span className="text-sm font-medium">{badge.shortLabel}</span>
         </div>
       ))}
@@ -216,7 +216,7 @@ export const StarRating = ({
         />
       ))}
       {showCount && reviewCount !== undefined && (
-        <span className={cn("ml-1 text-muted-foreground", textSizeClasses[size])}>
+        <span className={cn("ml-1 text-warm-gray", textSizeClasses[size])}>
           ({reviewCount.toLocaleString()})
         </span>
       )}

@@ -350,14 +350,14 @@ const Intake = () => {
               hours and reach out with your personalized treatment plan.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Link to="/dashboard">
-                <Button variant="secondary" className="w-full sm:w-auto">
+              <Link to="/dashboard" className="w-full sm:w-auto">
+                <Button variant="secondary" size="lg" className="w-full min-h-[48px]">
                   View My Dashboard
                   <ArrowRight className="ml-2" />
                 </Button>
               </Link>
-              <Link to="/">
-                <Button variant="outline" className="w-full sm:w-auto">
+              <Link to="/" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full min-h-[48px]">
                   Back to Home
                 </Button>
               </Link>
@@ -500,7 +500,7 @@ const Intake = () => {
             <Button
               variant="ghost"
               onClick={handleBack}
-              className={`text-muted-foreground hover:text-warm-stone w-full sm:w-auto ${
+              className={`text-muted-foreground hover:text-warm-stone w-full sm:w-auto min-h-[48px] ${
                 currentStep === 1 ? "hidden" : ""
               }`}
               disabled={currentStep === 1}
@@ -513,7 +513,7 @@ const Intake = () => {
               <Button
                 onClick={handleNext}
                 variant="secondary"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto min-h-[48px]"
                 size="lg"
               >
                 {getCtaText(currentStep)}
@@ -524,7 +524,7 @@ const Intake = () => {
                 onClick={handleSubmit}
                 disabled={isSubmitting || !agreedToTerms}
                 variant="secondary"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto min-h-[48px]"
                 size="lg"
                 isLoading={isSubmitting}
                 loadingText="Submitting..."

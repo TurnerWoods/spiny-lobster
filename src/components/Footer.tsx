@@ -79,13 +79,13 @@ const Footer = () => {
             >
               <img
                 src="/elevar-logo.svg"
-                alt="Elevar Health - Premium Men's Health & Wellness"
+                alt="Elevare Health - Hormone & Peptide Therapy for Men & Women"
                 loading="lazy"
                 className="h-8 w-auto max-w-full sm:h-10 md:h-12"
               />
             </Link>
             <p className="mb-6 max-w-sm text-[15px] leading-relaxed text-muted-foreground sm:text-base">
-              Premium testosterone therapy and men's health optimization. Physician-led care, delivered to your door.
+              Premium hormone and peptide therapy for men and women. Physician-led care, delivered to your door.
             </p>
 
             {/* Contact Info - Improved touch targets (min 48px height) */}
@@ -217,7 +217,7 @@ const Footer = () => {
               <p className="text-[15px] text-muted-foreground sm:text-sm">
                 {currentYear} Elevare Health. All rights reserved.
               </p>
-              <p className="text-sm text-muted-foreground/70 sm:text-xs">
+              <p className="text-sm text-muted-foreground sm:text-xs">
                 Serving patients in 30+ states across the United States.
               </p>
             </div>
@@ -225,7 +225,7 @@ const Footer = () => {
               <p className="text-[15px] font-medium text-rich-black/80 sm:text-sm">
                 Medical Director: Paul Myers, DO
               </p>
-              <p className="text-sm text-muted-foreground/70 sm:text-xs">
+              <p className="text-sm text-muted-foreground sm:text-xs">
                 Board Certified Physician
               </p>
             </div>

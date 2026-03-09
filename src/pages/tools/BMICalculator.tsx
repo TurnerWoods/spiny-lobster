@@ -161,13 +161,14 @@ export default function BMICalculator() {
             className="rounded-2xl border bg-card p-6 shadow-sm md:p-8"
           >
             <h2 className="text-xl font-display font-semibold text-foreground mb-6">Your Details</h2>
-            <div className="space-y-4">
+            <div className="space-y-4 md:space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="weight">Weight</Label>
+                <Label htmlFor="weight" className="text-sm md:text-base font-medium">Weight</Label>
                 <div className="flex gap-2">
                   <Input
                     id="weight"
                     type="number"
+                    inputMode="decimal"
                     placeholder={weightUnit === "lbs" ? "150" : "68"}
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
@@ -176,72 +177,78 @@ export default function BMICalculator() {
                   />
                   <Button
                     variant="outline"
-                    size="sm"
-                    className="shrink-0"
+                    size="default"
+                    className="shrink-0 min-h-[44px] min-w-[52px]"
                     onClick={() => setWeightUnit(weightUnit === "lbs" ? "kg" : "lbs")}
                   >
                     {weightUnit}
                   </Button>
                 </div>
                 {touched.weight && errors.weight && (
-                  <p className="text-xs text-red-500 mt-1">{errors.weight}</p>
+                  <p className="text-sm text-red-600 mt-1 font-medium">{errors.weight}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label>Height</Label>
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <Label className="text-sm md:text-base font-medium">Height</Label>
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size="default"
                     onClick={() => setHeightUnit(heightUnit === "imperial" ? "metric" : "imperial")}
-                    className="text-warm-stone hover:text-warm-stone/80"
+                    className="text-warm-stone hover:text-warm-stone/80 min-h-[44px] -my-1"
                   >
                     Switch to {heightUnit === "imperial" ? "cm" : "ft/in"}
                   </Button>
                 </div>
                 {heightUnit === "imperial" ? (
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <div className="flex-1">
                       <Input
                         type="number"
+                        inputMode="numeric"
                         placeholder="5"
                         value={heightFt}
                         onChange={(e) => setHeightFt(e.target.value)}
                         onBlur={() => handleBlur('height')}
                         className={touched.height && errors.height ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
+                        aria-label="Height in feet"
                       />
-                      <span className="text-xs text-muted-foreground mt-1 block">feet</span>
+                      <span className="text-sm text-muted-foreground mt-1.5 block">feet</span>
                     </div>
                     <div className="flex-1">
                       <Input
                         type="number"
+                        inputMode="numeric"
                         placeholder="8"
                         value={heightIn}
                         onChange={(e) => setHeightIn(e.target.value)}
                         onBlur={() => handleBlur('height')}
                         className={touched.height && errors.height ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
+                        aria-label="Height in inches"
                       />
-                      <span className="text-xs text-muted-foreground mt-1 block">inches</span>
+                      <span className="text-sm text-muted-foreground mt-1.5 block">inches</span>
                     </div>
                   </div>
                 ) : (
                   <Input
                     type="number"
+                    inputMode="decimal"
                     placeholder="173"
                     value={heightCm}
                     onChange={(e) => setHeightCm(e.target.value)}
                     onBlur={() => handleBlur('height')}
                     className={touched.height && errors.height ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
+                    aria-label="Height in centimeters"
                   />
                 )}
                 {touched.height && errors.height && (
-                  <p className="text-xs text-red-500 mt-1">{errors.height}</p>
+                  <p className="text-sm text-red-600 mt-1 font-medium">{errors.height}</p>
                 )}
               </div>
 
               <Button
-                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full mt-6 min-h-[48px] text-base bg-warm-stone hover:bg-warm-stone/90 text-pure-white disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={calculate}
                 disabled={!isFormValid()}
               >
@@ -259,30 +266,32 @@ export default function BMICalculator() {
               <h2 className="text-xl font-display font-semibold text-foreground mb-6">Your Results</h2>
               <div className="space-y-6">
                 <div className="text-center">
-                  <p className="text-4xl font-display font-bold text-rich-black">{result.bmi}</p>
-                  <p className={`text-lg font-semibold mt-1 ${result.color}`}>
+                  <p className="text-4xl sm:text-5xl font-display font-bold text-rich-black">{result.bmi}</p>
+                  <p className={`text-lg sm:text-xl font-semibold mt-2 ${result.color}`}>
                     {result.category}
                   </p>
                 </div>
 
+                {/* BMI scale - responsive text sizing */}
                 <div className="space-y-2">
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Underweight</span>
-                    <span>Normal</span>
-                    <span>Overweight</span>
-                    <span>Obese</span>
+                  {/* Mobile: simplified labels, Desktop: full labels */}
+                  <div className="flex justify-between text-xs sm:text-sm text-muted-foreground px-1">
+                    <span className="text-center flex-1">Under</span>
+                    <span className="text-center flex-1">Normal</span>
+                    <span className="text-center flex-1">Over</span>
+                    <span className="text-center flex-1">Obese</span>
                   </div>
-                  <Progress value={bmiProgressValue} className="h-3" />
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>{"<18.5"}</span>
-                    <span>18.5–24.9</span>
-                    <span>25–29.9</span>
-                    <span>30+</span>
+                  <Progress value={bmiProgressValue} className="h-3 sm:h-4" />
+                  <div className="flex justify-between text-xs sm:text-sm text-muted-foreground px-1">
+                    <span className="text-center flex-1">{"<18.5"}</span>
+                    <span className="text-center flex-1">18.5-24.9</span>
+                    <span className="text-center flex-1">25-29.9</span>
+                    <span className="text-center flex-1">30+</span>
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-warm-stone/5 border border-warm-stone/10 p-4">
-                  <p className="text-sm text-muted-foreground">{result.context}</p>
+                <div className="rounded-xl bg-warm-stone/5 border border-warm-stone/10 p-4 sm:p-5">
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{result.context}</p>
                 </div>
               </div>
             </motion.div>

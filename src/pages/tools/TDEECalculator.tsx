@@ -153,13 +153,15 @@ export default function TDEECalculator() {
             className="rounded-2xl border bg-card p-6 shadow-sm md:p-8"
           >
             <h2 className="text-xl font-display font-semibold text-foreground mb-6">Your Details</h2>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            {/* Mobile: stack vertically, Desktop: 2 columns */}
+            <div className="space-y-4 md:space-y-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="age">Age</Label>
+                  <Label htmlFor="age" className="text-sm md:text-base font-medium">Age</Label>
                   <Input
                     id="age"
                     type="number"
+                    inputMode="numeric"
                     placeholder="25"
                     value={age}
                     onChange={(e) => {
@@ -170,11 +172,11 @@ export default function TDEECalculator() {
                     className={touched.age && errors.age ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
                   />
                   {touched.age && errors.age && (
-                    <p className="text-xs text-red-500 mt-1">{errors.age}</p>
+                    <p className="text-sm text-red-600 mt-1 font-medium">{errors.age}</p>
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="gender">Gender</Label>
+                  <Label htmlFor="gender" className="text-sm md:text-base font-medium">Gender</Label>
                   <Select
                     value={gender}
                     onValueChange={(value) => {
@@ -185,7 +187,7 @@ export default function TDEECalculator() {
                   >
                     <SelectTrigger
                       id="gender"
-                      className={touched.gender && errors.gender ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
+                      className={`min-h-[44px] ${touched.gender && errors.gender ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
                     >
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
@@ -195,18 +197,19 @@ export default function TDEECalculator() {
                     </SelectContent>
                   </Select>
                   {touched.gender && errors.gender && (
-                    <p className="text-xs text-red-500 mt-1">{errors.gender}</p>
+                    <p className="text-sm text-red-600 mt-1 font-medium">{errors.gender}</p>
                   )}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="weight">Weight</Label>
+                  <Label htmlFor="weight" className="text-sm md:text-base font-medium">Weight</Label>
                   <div className="flex gap-2">
                     <Input
                       id="weight"
                       type="number"
+                      inputMode="decimal"
                       placeholder={weightUnit === "lbs" ? "150" : "68"}
                       value={weight}
                       onChange={(e) => {
@@ -218,23 +221,24 @@ export default function TDEECalculator() {
                     />
                     <Button
                       variant="outline"
-                      size="sm"
-                      className="shrink-0"
+                      size="default"
+                      className="shrink-0 min-h-[44px] min-w-[52px]"
                       onClick={() => setWeightUnit(weightUnit === "lbs" ? "kg" : "lbs")}
                     >
                       {weightUnit}
                     </Button>
                   </div>
                   {touched.weight && errors.weight && (
-                    <p className="text-xs text-red-500 mt-1">{errors.weight}</p>
+                    <p className="text-sm text-red-600 mt-1 font-medium">{errors.weight}</p>
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="height">Height</Label>
+                  <Label htmlFor="height" className="text-sm md:text-base font-medium">Height</Label>
                   <div className="flex gap-2">
                     <Input
                       id="height"
                       type="number"
+                      inputMode="decimal"
                       placeholder={heightUnit === "in" ? "68" : "173"}
                       value={height}
                       onChange={(e) => {
@@ -246,21 +250,21 @@ export default function TDEECalculator() {
                     />
                     <Button
                       variant="outline"
-                      size="sm"
-                      className="shrink-0"
+                      size="default"
+                      className="shrink-0 min-h-[44px] min-w-[52px]"
                       onClick={() => setHeightUnit(heightUnit === "in" ? "cm" : "in")}
                     >
                       {heightUnit}
                     </Button>
                   </div>
                   {touched.height && errors.height && (
-                    <p className="text-xs text-red-500 mt-1">{errors.height}</p>
+                    <p className="text-sm text-red-600 mt-1 font-medium">{errors.height}</p>
                   )}
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="activity">Activity Level</Label>
+                <Label htmlFor="activity" className="text-sm md:text-base font-medium">Activity Level</Label>
                 <Select
                   value={activityLevel}
                   onValueChange={(value) => {
@@ -271,7 +275,7 @@ export default function TDEECalculator() {
                 >
                   <SelectTrigger
                     id="activity"
-                    className={touched.activityLevel && errors.activityLevel ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
+                    className={`min-h-[44px] ${touched.activityLevel && errors.activityLevel ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
                   >
                     <SelectValue placeholder="Select activity level" />
                   </SelectTrigger>
@@ -284,12 +288,12 @@ export default function TDEECalculator() {
                   </SelectContent>
                 </Select>
                 {touched.activityLevel && errors.activityLevel && (
-                  <p className="text-xs text-red-500 mt-1">{errors.activityLevel}</p>
+                  <p className="text-sm text-red-600 mt-1 font-medium">{errors.activityLevel}</p>
                 )}
               </div>
 
               <Button
-                className="w-full mt-4 bg-warm-stone hover:bg-warm-stone/90 text-pure-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full mt-6 min-h-[48px] text-base bg-warm-stone hover:bg-warm-stone/90 text-pure-white disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={calculate}
                 disabled={!isFormValid}
               >
@@ -305,26 +309,27 @@ export default function TDEECalculator() {
               className="rounded-2xl border bg-card p-6 shadow-sm md:p-8 mt-6"
             >
               <h2 className="text-xl font-display font-semibold text-foreground mb-6">Your Results</h2>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 rounded-xl bg-soft-linen">
-                  <p className="text-sm text-muted-foreground mb-1">BMR</p>
-                  <p className="text-2xl font-display font-bold text-rich-black">{results.bmr}</p>
-                  <p className="text-xs text-muted-foreground">cal/day</p>
+              {/* Mobile: stack in single column, Desktop: 2 columns */}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                <div className="text-center p-4 sm:p-5 rounded-xl bg-soft-linen">
+                  <p className="text-sm md:text-base text-muted-foreground mb-1">BMR</p>
+                  <p className="text-2xl sm:text-3xl font-display font-bold text-rich-black">{results.bmr}</p>
+                  <p className="text-sm text-muted-foreground">cal/day</p>
                 </div>
-                <div className="text-center p-4 rounded-xl bg-warm-stone/10 border border-warm-stone/20">
-                  <p className="text-sm text-muted-foreground mb-1">TDEE</p>
-                  <p className="text-2xl font-display font-bold text-warm-stone">{results.tdee}</p>
-                  <p className="text-xs text-muted-foreground">cal/day</p>
+                <div className="text-center p-4 sm:p-5 rounded-xl bg-warm-stone/10 border border-warm-stone/20">
+                  <p className="text-sm md:text-base text-muted-foreground mb-1">TDEE</p>
+                  <p className="text-2xl sm:text-3xl font-display font-bold text-warm-stone">{results.tdee}</p>
+                  <p className="text-sm text-muted-foreground">cal/day</p>
                 </div>
-                <div className="text-center p-4 rounded-xl bg-soft-linen">
-                  <p className="text-sm text-muted-foreground mb-1">Fat Loss (−500)</p>
-                  <p className="text-2xl font-display font-bold text-rich-black">{results.deficit}</p>
-                  <p className="text-xs text-muted-foreground">cal/day</p>
+                <div className="text-center p-4 sm:p-5 rounded-xl bg-soft-linen">
+                  <p className="text-sm md:text-base text-muted-foreground mb-1">Fat Loss (-500)</p>
+                  <p className="text-2xl sm:text-3xl font-display font-bold text-rich-black">{results.deficit}</p>
+                  <p className="text-sm text-muted-foreground">cal/day</p>
                 </div>
-                <div className="text-center p-4 rounded-xl bg-soft-linen">
-                  <p className="text-sm text-muted-foreground mb-1">Muscle Gain (+500)</p>
-                  <p className="text-2xl font-display font-bold text-rich-black">{results.surplus}</p>
-                  <p className="text-xs text-muted-foreground">cal/day</p>
+                <div className="text-center p-4 sm:p-5 rounded-xl bg-soft-linen">
+                  <p className="text-sm md:text-base text-muted-foreground mb-1">Muscle Gain (+500)</p>
+                  <p className="text-2xl sm:text-3xl font-display font-bold text-rich-black">{results.surplus}</p>
+                  <p className="text-sm text-muted-foreground">cal/day</p>
                 </div>
               </div>
             </motion.div>

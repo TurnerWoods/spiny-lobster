@@ -473,21 +473,21 @@ const TreatmentDetail = () => {
     : null;
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-muted/30 pb-24 md:pb-8">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center">
+        <div className="container flex h-14 min-h-[56px] items-center justify-between px-4 sm:h-16">
+          <Link to="/" className="flex items-center min-h-[44px] min-w-[44px]">
             <img
               src={imageLoadErrors["logo"] ? LOGO_FALLBACK : "/elevar-logo.svg"}
               alt="Elevar Health logo"
               loading="eager"
-              className="h-8 w-auto max-w-full"
+              className="h-7 w-auto max-w-full sm:h-8"
               onError={() => handleImageError("logo")}
             />
           </Link>
-          <Link to="/dashboard">
-            <Button variant="ghost" size="sm">
+          <Link to="/dashboard" className="min-h-[44px] min-w-[44px] flex items-center">
+            <Button variant="ghost" size="sm" className="min-h-[44px] px-3 text-sm">
               <ArrowLeft className="mr-2 h-4 w-4" />
               <span className="hidden sm:inline">Back to Dashboard</span>
               <span className="sm:hidden">Back</span>
@@ -496,24 +496,38 @@ const TreatmentDetail = () => {
         </div>
       </header>
 
-      <main className="container px-4 py-8">
+      <main className="container px-4 py-6 sm:py-8">
         {/* Back Link & Title with Product Image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
           <Link
             to="/dashboard"
-            className="mb-4 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
+            className="mb-4 inline-flex items-center min-h-[44px] text-sm text-muted-foreground hover:text-foreground active:text-foreground"
           >
             <ArrowLeft className="mr-1 h-4 w-4" />
             My Treatments
           </Link>
+
+          {/* Mobile Product Image - Responsive hero */}
+          <div className="sm:hidden mb-4">
+            <div className="relative w-full aspect-square max-w-[200px] mx-auto overflow-hidden rounded-2xl border border-neutral-gray/20 bg-gradient-to-br from-soft-linen to-warm-stone/5 p-4 shadow-sm">
+              <img
+                src={imageLoadErrors["product-mobile"] ? FALLBACK_IMAGE : productImage}
+                alt={treatment.medication || treatment.treatment_type}
+                className="h-full w-full object-contain"
+                onError={() => handleImageError("product-mobile")}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
           <div className="flex items-start gap-5">
-            {/* Product Image */}
+            {/* Desktop Product Image */}
             <div className="hidden sm:block flex-shrink-0">
-              <div className="h-20 w-20 overflow-hidden rounded-2xl border border-neutral-gray/20 bg-gradient-to-br from-soft-linen to-warm-stone/5 p-2 shadow-sm">
+              <div className="h-20 w-20 md:h-24 md:w-24 overflow-hidden rounded-2xl border border-neutral-gray/20 bg-gradient-to-br from-soft-linen to-warm-stone/5 p-2 shadow-sm">
                 <img
                   src={imageLoadErrors["product"] ? FALLBACK_IMAGE : productImage}
                   alt={treatment.medication || treatment.treatment_type}
@@ -523,42 +537,42 @@ const TreatmentDetail = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-1 flex-wrap items-start justify-between gap-4">
-              <div>
-                <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+            <div className="flex flex-1 flex-col sm:flex-row sm:flex-wrap items-start justify-between gap-3 sm:gap-4">
+              <div className="w-full sm:w-auto">
+                <h1 className="font-display text-xl font-bold text-foreground sm:text-2xl md:text-3xl leading-tight">
                   {treatment.treatment_type}
                 </h1>
-                <p className="mt-1 text-lg text-muted-foreground">
+                <p className="mt-1 text-base sm:text-lg text-muted-foreground leading-snug">
                   {treatment.medication || "Medication pending assignment"}
                 </p>
               </div>
-              <div className={cn("flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium", status.color)}>
-                <StatusIcon className="h-4 w-4" />
-                {status.label}
+              <div className={cn("flex items-center gap-2 rounded-full border px-3 py-1.5 sm:px-4 sm:py-2 text-sm font-medium min-h-[44px]", status.color)}>
+                <StatusIcon className="h-4 w-4 flex-shrink-0" />
+                <span className="whitespace-nowrap">{status.label}</span>
               </div>
             </div>
           </div>
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
           {/* Main Content */}
-          <div className="space-y-6 lg:col-span-2">
+          <div className="space-y-4 sm:space-y-6 lg:col-span-2">
             {/* Status Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="rounded-2xl border bg-card p-6 shadow-sm"
+              className="rounded-2xl border bg-card p-4 sm:p-6 shadow-sm"
             >
-              <div className="flex items-start gap-4">
-                <div className={cn("flex h-12 w-12 items-center justify-center rounded-full", status.color.split(" ")[0])}>
-                  <StatusIcon className="h-6 w-6" />
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className={cn("flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full flex-shrink-0", status.color.split(" ")[0])}>
+                  <StatusIcon className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-display text-lg font-semibold text-foreground">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
                     Treatment Status
                   </h3>
-                  <p className="mt-1 text-muted-foreground">{status.description}</p>
+                  <p className="mt-1 text-sm sm:text-base text-muted-foreground leading-relaxed">{status.description}</p>
                 </div>
               </div>
             </motion.div>
@@ -568,55 +582,55 @@ const TreatmentDetail = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="rounded-2xl border bg-card p-6 shadow-sm"
+              className="rounded-2xl border bg-card p-4 sm:p-6 shadow-sm"
             >
-              <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-light">
+              <div className="mb-4 sm:mb-6 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-light flex-shrink-0">
                   <Pill className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-foreground">
+                <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
                   Medication & Dosage
                 </h3>
               </div>
 
-              <div className="mb-6 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-xl bg-muted/50 p-4">
-                  <p className="text-sm text-muted-foreground">Medication</p>
-                  <p className="mt-1 font-semibold text-foreground">
+              <div className="mb-4 sm:mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                <div className="rounded-xl bg-muted/50 p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Medication</p>
+                  <p className="mt-1 text-sm sm:text-base font-semibold text-foreground leading-snug">
                     {treatment.medication || "Pending assignment"}
                   </p>
                 </div>
-                <div className="rounded-xl bg-muted/50 p-4">
-                  <p className="text-sm text-muted-foreground">Dosage</p>
-                  <p className="mt-1 font-semibold text-foreground">
+                <div className="rounded-xl bg-muted/50 p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Dosage</p>
+                  <p className="mt-1 text-sm sm:text-base font-semibold text-foreground leading-snug">
                     {treatment.dosage || "To be determined"}
                   </p>
                 </div>
-                <div className="rounded-xl bg-muted/50 p-4">
-                  <p className="text-sm text-muted-foreground">Frequency</p>
-                  <p className="mt-1 font-semibold text-foreground">
+                <div className="rounded-xl bg-muted/50 p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Frequency</p>
+                  <p className="mt-1 text-sm sm:text-base font-semibold text-foreground leading-snug">
                     {dosageInfo.frequency}
                   </p>
                 </div>
-                <div className="rounded-xl bg-muted/50 p-4">
-                  <p className="text-sm text-muted-foreground">Timing</p>
-                  <p className="mt-1 font-semibold text-foreground">
+                <div className="rounded-xl bg-muted/50 p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Timing</p>
+                  <p className="mt-1 text-sm sm:text-base font-semibold text-foreground leading-snug">
                     {dosageInfo.timing}
                   </p>
                 </div>
               </div>
 
               {/* Dosage Instructions */}
-              <div className="rounded-xl border border-primary/20 bg-primary-light/50 p-4">
-                <div className="mb-3 flex items-center gap-2">
-                  <Info className="h-5 w-5 text-primary" />
-                  <span className="font-semibold text-primary">Important Instructions</span>
+              <div className="rounded-xl border border-primary/20 bg-primary-light/50 p-3 sm:p-4">
+                <div className="mb-2 sm:mb-3 flex items-center gap-2">
+                  <Info className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+                  <span className="text-sm sm:text-base font-semibold text-primary">Important Instructions</span>
                 </div>
-                <ul className="space-y-2">
+                <ul className="space-y-2 sm:space-y-3">
                   {dosageInfo.notes.map((note, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm text-foreground">
+                    <li key={index} className="flex items-start gap-2 text-sm text-foreground leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                      {note}
+                      <span>{note}</span>
                     </li>
                   ))}
                 </ul>
@@ -628,48 +642,48 @@ const TreatmentDetail = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="rounded-2xl border bg-card p-6 shadow-sm"
+              className="rounded-2xl border bg-card p-4 sm:p-6 shadow-sm"
             >
-              <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-gold/15">
+              <div className="mb-4 sm:mb-6 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-gold/15 flex-shrink-0">
                   <TrendingUp className="h-5 w-5 text-accent-gold" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-foreground">
+                <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
                   Treatment Timeline
                 </h3>
               </div>
 
-              <div className="relative space-y-6">
+              <div className="relative space-y-4 sm:space-y-6">
                 {timelineEvents.map((event, index) => {
                   const EventIcon = event.icon;
                   const isLast = index === timelineEvents.length - 1;
                   const isUpcoming = "upcoming" in event && event.upcoming;
 
                   return (
-                    <div key={index} className="relative flex gap-4">
+                    <div key={index} className="relative flex gap-3 sm:gap-4">
                       {/* Line */}
                       {!isLast && (
-                        <div className="absolute left-5 top-10 h-full w-0.5 bg-muted" />
+                        <div className="absolute left-4 sm:left-5 top-8 sm:top-10 h-full w-0.5 bg-muted" />
                       )}
                       {/* Icon */}
                       <div className={cn(
-                        "relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-white",
+                        "relative z-10 flex h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-full text-white",
                         isUpcoming ? "border-2 border-dashed border-warm-stone bg-background" : event.color
                       )}>
-                        <EventIcon className={cn("h-5 w-5", isUpcoming && "text-warm-stone")} />
+                        <EventIcon className={cn("h-4 w-4 sm:h-5 sm:w-5", isUpcoming && "text-warm-stone")} />
                       </div>
                       {/* Content */}
-                      <div className={cn("flex-1 pb-2", isUpcoming && "opacity-75")}>
+                      <div className={cn("flex-1 pb-2 min-w-0", isUpcoming && "opacity-75")}>
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="font-semibold text-foreground">{event.title}</span>
+                          <span className="text-sm sm:text-base font-semibold text-foreground">{event.title}</span>
                           {isUpcoming && (
-                            <span className="rounded-full bg-warm-stone/10 px-2 py-0.5 text-xs font-medium text-warm-stone">
+                            <span className="rounded-full bg-warm-stone/10 px-2 py-0.5 text-xs font-medium text-warm-stone whitespace-nowrap">
                               Upcoming
                             </span>
                           )}
                         </div>
-                        <p className="mt-1 text-sm text-muted-foreground">{event.description}</p>
-                        <p className="mt-1 text-xs text-muted-foreground">
+                        <p className="mt-1 text-sm text-muted-foreground leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>{event.description}</p>
+                        <p className="mt-1 text-xs text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>
                           {isUpcoming
                             ? safeFormatDate(event.date, "MMMM d, yyyy")
                             : `${safeFormatDate(event.date, "MMM d, yyyy")} • ${safeFormatDistanceToNow(event.date)}`}
@@ -683,34 +697,34 @@ const TreatmentDetail = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Refill Scheduling */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="rounded-2xl border bg-card p-6 shadow-sm"
+              className="rounded-2xl border bg-card p-4 sm:p-6 shadow-sm"
             >
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-gold/15">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-gold/15 flex-shrink-0">
                   <RefreshCw className="h-5 w-5 text-accent-gold" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-foreground">
+                <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
                   Refill Schedule
                 </h3>
               </div>
 
               {treatment.next_refill_date ? (
-                <div className="mb-4 rounded-xl bg-muted/50 p-4">
-                  <p className="text-sm text-muted-foreground">Next Refill</p>
-                  <p className="mt-1 font-semibold text-foreground">
+                <div className="mb-4 rounded-xl bg-muted/50 p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Next Refill</p>
+                  <p className="mt-1 text-base sm:text-lg font-semibold text-foreground">
                     {safeFormatDate(treatment.next_refill_date, "MMMM d, yyyy")}
                   </p>
                   {refillDaysRemaining !== null && (
                     <p className={cn(
                       "mt-1 text-sm",
-                      refillDaysRemaining <= 7 ? "text-amber-600" : "text-muted-foreground"
-                    )}>
+                      refillDaysRemaining <= 7 ? "text-amber-600 font-medium" : "text-muted-foreground"
+                    )} style={{ fontSize: 'max(12px, 0.875rem)' }}>
                       {refillDaysRemaining > 0
                         ? `${refillDaysRemaining} days remaining`
                         : refillDaysRemaining === 0
@@ -720,7 +734,7 @@ const TreatmentDetail = () => {
                   )}
                 </div>
               ) : (
-                <p className="mb-4 text-sm text-muted-foreground">
+                <p className="mb-4 text-sm text-muted-foreground leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>
                   No refill date scheduled. Schedule your next refill below.
                 </p>
               )}
@@ -730,7 +744,7 @@ const TreatmentDetail = () => {
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
+                      "w-full justify-start text-left font-normal min-h-[44px] text-sm",
                       !selectedRefillDate && "text-muted-foreground"
                     )}
                     disabled={!["approved", "active"].includes(treatment.status) || isUpdatingRefill}
@@ -764,7 +778,7 @@ const TreatmentDetail = () => {
                 </PopoverContent>
               </Popover>
               {!["approved", "active"].includes(treatment.status) && (
-                <p className="mt-2 text-xs text-muted-foreground">
+                <p className="mt-2 text-xs text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>
                   Refill scheduling is available once your treatment is approved.
                 </p>
               )}
@@ -775,67 +789,67 @@ const TreatmentDetail = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="rounded-2xl border bg-card p-6 shadow-sm"
+              className="rounded-2xl border bg-card p-4 sm:p-6 shadow-sm"
             >
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10 flex-shrink-0">
                   <FileText className="h-5 w-5 text-warm-stone" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-foreground">
+                <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
                   Treatment Details
                 </h3>
               </div>
 
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
+              <div className="space-y-3 text-sm" style={{ fontSize: 'max(12px, 0.875rem)' }}>
+                <div className="flex justify-between items-center gap-2">
                   <span className="text-muted-foreground">Start Date</span>
-                  <span className="font-medium text-foreground">
+                  <span className="font-medium text-foreground text-right">
                     {treatment.start_date
                       ? safeFormatDate(treatment.start_date, "MMM d, yyyy")
                       : "Not started"}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center gap-2">
                   <span className="text-muted-foreground">Created</span>
-                  <span className="font-medium text-foreground">
+                  <span className="font-medium text-foreground text-right">
                     {safeFormatDate(treatment.created_at, "MMM d, yyyy")}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center gap-2">
                   <span className="text-muted-foreground">Last Updated</span>
-                  <span className="font-medium text-foreground">
+                  <span className="font-medium text-foreground text-right">
                     {safeFormatDistanceToNow(treatment.updated_at, "Recently")}
                   </span>
                 </div>
               </div>
 
               {treatment.notes && (
-                <div className="mt-4 rounded-xl bg-muted/50 p-4">
+                <div className="mt-4 rounded-xl bg-muted/50 p-3 sm:p-4">
                   <p className="mb-1 text-sm font-medium text-foreground">Provider Notes</p>
-                  <p className="text-sm text-muted-foreground">{treatment.notes}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>{treatment.notes}</p>
                 </div>
               )}
             </motion.div>
 
-            {/* Quick Actions */}
+            {/* Quick Actions - Hidden on mobile since we have sticky CTA */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="rounded-2xl border bg-card p-6 shadow-sm"
+              className="hidden md:block rounded-2xl border bg-card p-4 sm:p-6 shadow-sm"
             >
-              <h3 className="mb-4 font-display text-lg font-semibold text-foreground">
+              <h3 className="mb-4 font-display text-base sm:text-lg font-semibold text-foreground">
                 Quick Actions
               </h3>
               <div className="space-y-2">
                 <Link to="/dashboard" className="block">
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button variant="outline" className="w-full justify-start min-h-[44px] text-sm">
                     <Package className="mr-2 h-4 w-4" />
                     View All Treatments
                   </Button>
                 </Link>
                 <Link to="/intake" className="block">
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button variant="outline" className="w-full justify-start min-h-[44px] text-sm">
                     <Pill className="mr-2 h-4 w-4" />
                     Request New Treatment
                   </Button>
@@ -845,6 +859,26 @@ const TreatmentDetail = () => {
           </div>
         </div>
       </main>
+
+      {/* Mobile Sticky CTA Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t bg-background/95 backdrop-blur-sm shadow-[0_-4px_12px_rgba(0,0,0,0.1)]">
+        <div className="container px-4 py-3">
+          <div className="flex items-center gap-3">
+            <Link to="/dashboard" className="flex-1">
+              <Button variant="outline" className="w-full min-h-[48px] text-sm font-medium">
+                <Package className="mr-2 h-4 w-4" />
+                All Treatments
+              </Button>
+            </Link>
+            <Link to="/intake" className="flex-1">
+              <Button className="w-full min-h-[48px] text-sm font-medium bg-primary hover:bg-primary/90">
+                <Pill className="mr-2 h-4 w-4" />
+                New Treatment
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

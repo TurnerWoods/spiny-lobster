@@ -225,7 +225,7 @@ const Signup = () => {
           <Link to="/" className="flex items-center">
             <img
               src="/elevar-logo.svg"
-              alt="Elevar Health - Premium Men's Health & Wellness"
+              alt="Elevare Health - Hormone & Peptide Therapy"
               loading="eager"
               className="h-8 w-auto max-w-full"
             />

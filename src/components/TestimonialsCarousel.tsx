@@ -64,8 +64,8 @@ const TestimonialsCarousel = () => {
   }, []);
 
   return (
-    <section id="reviews" className="bg-soft-linen py-24 sm:py-32 md:py-40">
-      <div className="container px-4 md:px-6">
+    <section id="reviews" className="bg-soft-linen py-16 xs:py-20 sm:py-28 md:py-40">
+      <div className="container px-5 sm:px-6 md:px-6">
         <div className="mx-auto max-w-3xl text-center">
           {/* Section label */}
           <motion.span
@@ -73,13 +73,13 @@ const TestimonialsCarousel = () => {
             whileInView={{ opacity: 1 }}
             viewport={viewportSettings}
             transition={{ duration: duration.slow, ease: premiumEase }}
-            className="mb-12 block text-xs font-light uppercase tracking-[0.3em] text-warm-stone/60 sm:mb-16"
+            className="mb-8 block text-[13px] font-light uppercase tracking-[0.2em] text-warm-stone/60 sm:mb-12 sm:text-xs sm:tracking-[0.3em] md:mb-16"
           >
             Testimonials
           </motion.span>
 
           {/* Quote */}
-          <div className="relative min-h-[200px] sm:min-h-[180px]">
+          <div className="relative min-h-[240px] xs:min-h-[220px] sm:min-h-[180px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -89,12 +89,12 @@ const TestimonialsCarousel = () => {
                 exit="exit"
                 className="absolute inset-0"
               >
-                <blockquote className="mb-8 font-display text-2xl font-light leading-relaxed text-rich-black sm:text-3xl md:text-4xl">
+                <blockquote className="mb-6 font-display text-[1.375rem] font-light leading-[1.5] text-rich-black xs:text-2xl sm:mb-8 sm:text-3xl sm:leading-relaxed md:text-4xl">
                   "{testimonials[currentIndex].quote}"
                 </blockquote>
-                <div className="text-sm font-light text-muted-foreground">
-                  <span className="text-rich-black">{testimonials[currentIndex].name}</span>
-                  <span className="mx-2">--</span>
+                <div className="text-[15px] font-light text-muted-foreground sm:text-sm">
+                  <span className="text-rich-black font-medium">{testimonials[currentIndex].name}</span>
+                  <span className="mx-2 text-muted-foreground/50">--</span>
                   <span>{testimonials[currentIndex].location}</span>
                 </div>
               </motion.div>

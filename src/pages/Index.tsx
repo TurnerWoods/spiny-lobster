@@ -27,7 +27,7 @@ const SectionLoader = () => (
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Skip to main content link for accessibility */}
       <a
         href="#main-content"
@@ -36,7 +36,7 @@ const Index = () => {
         Skip to main content
       </a>
       <Header />
-      <main id="main-content" role="main" aria-label="Main content">
+      <main id="main-content" role="main" aria-label="Main content" className="flex flex-col">
         {/* Hero - critical, loads immediately */}
         <Hero />
 
