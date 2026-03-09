@@ -68,24 +68,24 @@ const ResultCard = ({ result, index }: { result: BeforeAfterResult; index: numbe
         <span className="rounded-full bg-warm-stone/10 px-3 py-1 text-xs font-medium text-warm-stone">
           {result.metric}
         </span>
-        <span className="text-xs text-neutral-600">{result.timeframe}</span>
+        <span className="text-xs font-medium text-deep-charcoal/70">{result.timeframe}</span>
       </div>
 
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex-1 text-center">
-          <p className="mb-1 text-xs font-medium uppercase tracking-wide text-neutral-600">Before</p>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-deep-charcoal">Before</p>
           <p className="font-display text-xl font-bold text-rich-black">
             <AnimatedValue value={result.before} inView={isInView} />
           </p>
         </div>
 
-        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
-          <ArrowRight className="h-4 w-4 text-warm-stone" />
+        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-deep-charcoal/15">
+          <ArrowRight className="h-4 w-4 text-deep-charcoal" />
         </div>
 
         <div className="flex-1 text-center">
-          <p className="mb-1 text-xs font-medium uppercase tracking-wide text-neutral-600">After</p>
-          <p className="font-display text-xl font-bold text-warm-stone">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-deep-charcoal">After</p>
+          <p className="font-display text-xl font-bold text-green-700">
             <AnimatedValue value={result.after} inView={isInView} isAfter />
           </p>
         </div>
@@ -112,7 +112,7 @@ const BeforeAfterGallery = ({
         className="mb-6 text-center animate-in fade-in duration-500"
       >
         <h3 className="mb-1 font-display text-lg font-bold text-rich-black">{title}</h3>
-        <p className="text-sm text-neutral-600">{subtitle}</p>
+        <p className="text-sm text-deep-charcoal/80">{subtitle}</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -121,7 +121,7 @@ const BeforeAfterGallery = ({
         ))}
       </div>
 
-      <p className="mt-6 text-center text-xs leading-relaxed text-neutral-600 px-4">
+      <p className="mt-6 text-center text-xs font-medium leading-relaxed text-deep-charcoal/75 px-4">
         * Individual results may vary. All patients followed prescribed protocols under physician supervision.
       </p>
     </div>

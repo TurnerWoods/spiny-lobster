@@ -82,7 +82,7 @@ const About = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="lead text-warm-gray"
+                className="lead text-deep-charcoal/80"
               >
                 Elevare Health was founded on a simple observation: busy men and women don't have time for traditional healthcare, but they need it more than ever. The demands of building careers, leading teams, and raising families take a physical toll. Yet the healthcare system isn't built for people with packed calendars and high standards.
               </motion.p>
@@ -106,7 +106,7 @@ const About = () => {
                       <Sparkles className="h-5 w-5 text-warm-stone" />
                       <h2 className="font-display text-3xl font-semibold tracking-tight text-rich-black">Our Mission</h2>
                     </div>
-                    <p className="text-body text-warm-gray">
+                    <p className="text-body text-deep-charcoal/80">
                       We created Elevare to bridge that gap. Our platform combines the expertise of board-certified physicians with the convenience of modern technology. No waiting rooms. No insurance paperwork. No judgment. Just personalized care delivered on your terms.
                     </p>
                   </CardContent>
@@ -140,8 +140,8 @@ const About = () => {
                     >
                       <Card variant="glass" className="h-full transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30">
                         <CardContent className="p-6">
-                          <h3 className="mb-2 font-display text-xl font-semibold tracking-normal text-warm-stone">{item.title}</h3>
-                          <p className="text-body-sm text-warm-gray">{item.desc}</p>
+                          <h3 className="mb-2 font-display text-xl font-semibold tracking-normal text-deep-charcoal">{item.title}</h3>
+                          <p className="text-body-sm text-deep-charcoal/75">{item.desc}</p>
                         </CardContent>
                       </Card>
                     </motion.div>
@@ -177,8 +177,8 @@ const About = () => {
                           <span className="font-display text-3xl font-bold">PM</span>
                         </div>
                         <h3 className="mb-1 font-display text-2xl font-semibold tracking-normal text-rich-black">Dr. Paul Myers, DO</h3>
-                        <p className="text-eyebrow mb-4 text-warm-stone">Co-Founder & Medical Director</p>
-                        <p className="text-body-sm text-warm-gray mb-4">
+                        <p className="text-eyebrow mb-4 text-deep-charcoal/70">Co-Founder & Medical Director</p>
+                        <p className="text-body-sm text-deep-charcoal/80 mb-4">
                           Graduated from Lake Erie College of Osteopathic Medicine (2010). Board-certified emergency medicine physician with 15+ years clinical experience. Oversees all clinical care and personally treats patients.
                         </p>
                         <Button
@@ -203,8 +203,8 @@ const About = () => {
                           <span className="font-display text-3xl font-bold">PE</span>
                         </div>
                         <h3 className="mb-1 font-display text-2xl font-semibold tracking-normal text-rich-black">P. Eckdale</h3>
-                        <p className="text-eyebrow mb-4 text-warm-stone">Co-Founder</p>
-                        <p className="text-body-sm text-warm-gray">
+                        <p className="text-eyebrow mb-4 text-deep-charcoal/70">Co-Founder</p>
+                        <p className="text-body-sm text-deep-charcoal/80">
                           Nearly 2 decades in the Healthcare space.
                         </p>
                       </CardContent>
@@ -236,8 +236,8 @@ const About = () => {
                     >
                       <Card variant="glass" className="h-full transition-all duration-300 hover:shadow-lg">
                         <CardContent className="p-5 text-center">
-                          <p className="text-stat mb-1 text-2xl text-warm-stone">{stat.value}</p>
-                          <p className="text-caption">{stat.label}</p>
+                          <p className="text-stat mb-1 text-2xl text-deep-charcoal">{stat.value}</p>
+                          <p className="text-sm text-deep-charcoal/70">{stat.label}</p>
                         </CardContent>
                       </Card>
                     </motion.div>
@@ -277,7 +277,7 @@ const About = () => {
                           </div>
                           <div>
                             <h3 className="mb-2 font-display text-xl font-semibold tracking-normal text-rich-black">{value.title}</h3>
-                            <p className="text-body-sm text-warm-gray">{value.description}</p>
+                            <p className="text-body-sm text-deep-charcoal/80">{value.description}</p>
                           </div>
                         </CardContent>
                       </Card>
@@ -307,21 +307,21 @@ const About = () => {
                           <MapPin className="h-5 w-5 text-warm-stone" />
                         </div>
                         <div>
-                          <p className="text-sm text-warm-gray">1401 Lavaca St</p>
-                          <p className="text-sm text-warm-gray">Austin, TX 78701</p>
+                          <p className="text-sm text-deep-charcoal/80">1401 Lavaca St</p>
+                          <p className="text-sm text-deep-charcoal/80">Austin, TX 78701</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 justify-center">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10">
                           <Phone className="h-5 w-5 text-warm-stone" />
                         </div>
-                        <p className="text-sm text-warm-gray">512-270-8701</p>
+                        <p className="text-sm text-deep-charcoal/80">512-270-8701</p>
                       </div>
                       <div className="flex items-center gap-3 justify-center md:justify-end">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10">
                           <Mail className="h-5 w-5 text-warm-stone" />
                         </div>
-                        <p className="text-sm text-warm-gray">info@elevarehealth.com</p>
+                        <p className="text-sm text-deep-charcoal/80">info@elevarehealth.com</p>
                       </div>
                     </div>
                   </CardContent>
@@ -344,7 +344,7 @@ const About = () => {
                 <CardContent className="p-8 text-center md:p-12">
                   <Sparkles className="mx-auto mb-4 h-8 w-8 text-warm-stone" />
                   <h2 className="mb-4 font-display text-4xl font-semibold tracking-tight text-pure-white">Ready to Get Started?</h2>
-                  <p className="text-body-lg mb-8 text-pure-white/70 max-w-md mx-auto">
+                  <p className="text-body-lg mb-8 text-pure-white/90 max-w-md mx-auto">
                     Take the first step toward feeling like yourself again. Our free assessment takes just 5 minutes.
                   </p>
                   <Link to="/intake">
@@ -402,9 +402,9 @@ const About = () => {
                     style={{ minHeight: '600px' }}
                     title="Book an appointment with Dr. Paul Myers"
                   />
-                  <p className="py-2 text-center text-xs text-warm-gray">
+                  <p className="py-2 text-center text-xs text-deep-charcoal/70">
                     Booking Provided by{' '}
-                    <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-warm-stone">
+                    <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-deep-charcoal">
                       Healthie
                     </a>
                   </p>

@@ -345,7 +345,7 @@ const Intake = () => {
               <CheckCircle2 className="h-10 w-10 text-success" />
             </div>
             <h1 className="font-display text-2xl font-bold text-rich-black">You're All Set!</h1>
-            <p className="mt-3 text-muted-foreground">
+            <p className="mt-3 text-foreground/70">
               Thank you for completing your intake form. Our medical team will review your information within 24-48
               hours and reach out with your personalized treatment plan.
             </p>
@@ -383,7 +383,7 @@ const Intake = () => {
           </Link>
           <div className="flex items-center gap-2">
             {lastSaved && (
-              <span className="text-xs text-muted-foreground hidden sm:inline">
+              <span className="text-xs text-foreground/60 hidden sm:inline">
                 Auto-saved {lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             )}
@@ -391,7 +391,7 @@ const Intake = () => {
               variant="ghost"
               size="sm"
               onClick={handleSaveAndExit}
-              className="text-muted-foreground hover:text-warm-stone"
+              className="text-foreground/70 hover:text-rich-black"
             >
               <Save className="h-4 w-4 mr-1.5 sm:mr-2" />
               <span className="hidden sm:inline">Save & Exit</span>
@@ -407,7 +407,7 @@ const Intake = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4 flex items-center gap-2 rounded-xl border border-warm-stone/20 bg-warm-stone/10 px-4 py-3 text-sm text-warm-stone"
+            className="mb-4 flex items-center gap-2 rounded-xl border border-warm-stone/20 bg-warm-stone/10 px-4 py-3 text-sm text-rich-black"
           >
             <Sparkles className="h-4 w-4 flex-shrink-0" />
             <span>Some fields have been pre-filled based on your symptom quiz</span>
@@ -419,7 +419,7 @@ const Intake = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4 flex items-center justify-between gap-2 rounded-xl border border-accent-gold/25 bg-accent-gold/10 px-4 py-3 text-sm text-[#9A8444]"
+            className="mb-4 flex items-center justify-between gap-2 rounded-xl border border-accent-gold/25 bg-accent-gold/10 px-4 py-3 text-sm text-[#725F22]"
           >
             <div className="flex items-center gap-2">
               <Save className="h-4 w-4 flex-shrink-0" />
@@ -427,7 +427,7 @@ const Intake = () => {
             </div>
             <button
               onClick={clearSavedProgress}
-              className="text-[#9A8444] hover:text-accent-gold p-1"
+              className="text-[#725F22] hover:text-[#5A4B1B] p-1"
               aria-label="Clear saved progress"
             >
               <X className="h-4 w-4" />
@@ -486,7 +486,7 @@ const Intake = () => {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-4 flex items-center gap-2 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+              className="mt-4 flex items-center gap-2 rounded-xl border border-red-600/30 bg-red-50 px-4 py-3 text-sm text-red-700 font-medium"
               role="alert"
               aria-live="polite"
             >
@@ -500,7 +500,7 @@ const Intake = () => {
             <Button
               variant="ghost"
               onClick={handleBack}
-              className={`text-muted-foreground hover:text-warm-stone w-full sm:w-auto min-h-[48px] ${
+              className={`text-foreground/70 hover:text-rich-black w-full sm:w-auto min-h-[48px] ${
                 currentStep === 1 ? "hidden" : ""
               }`}
               disabled={currentStep === 1}
@@ -537,15 +537,15 @@ const Intake = () => {
 
           {/* Skip optional steps hint */}
           {(currentStep === 2 || currentStep === 3) && (
-            <p className="mt-4 text-center text-xs text-muted-foreground">
+            <p className="mt-4 text-center text-xs text-foreground/60">
               These fields are optional. You can skip ahead or fill them in later.
             </p>
           )}
         </motion.div>
 
         {/* Trust Badge */}
-        <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-          <Shield className="h-4 w-4 text-warm-stone" />
+        <div className="mt-6 flex items-center justify-center gap-2 text-xs text-foreground/60">
+          <Shield className="h-4 w-4 text-foreground/70" />
           <span>HIPAA Compliant • 256-bit Encryption</span>
         </div>
       </div>

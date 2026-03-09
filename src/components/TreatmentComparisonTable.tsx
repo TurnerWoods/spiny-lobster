@@ -32,12 +32,12 @@ const TableStarRating = ({ rating }: { rating: number }) => (
         key={index}
         className={`h-3 w-3 ${
           index < Math.floor(rating)
-            ? "fill-amber-400 text-amber-400"
-            : "fill-gray-200 text-gray-200"
+            ? "fill-amber-500 text-amber-500"
+            : "fill-gray-300 text-gray-300"
         }`}
       />
     ))}
-    <span className="ml-1 text-xs text-muted-foreground">{rating}</span>
+    <span className="ml-1 text-xs font-semibold text-stone-700 dark:text-stone-200">{rating}</span>
   </div>
 );
 
@@ -47,12 +47,12 @@ const TableProductBadge = ({ type }: { type: "popular" | "bestseller" }) => {
     popular: {
       label: "Most Popular",
       icon: Flame,
-      className: "bg-gradient-to-r from-amber-500 to-orange-500 text-white",
+      className: "bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-sm",
     },
     bestseller: {
       label: "Best Seller",
       icon: Star,
-      className: "bg-gradient-to-r from-warm-stone to-warm-stone/80 text-white",
+      className: "bg-gradient-to-r from-stone-700 to-stone-600 text-white shadow-sm",
     },
   };
 
@@ -60,7 +60,7 @@ const TableProductBadge = ({ type }: { type: "popular" | "bestseller" }) => {
 
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${className}`}
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${className}`}
     >
       <Icon className="h-3 w-3" />
       {label}
@@ -199,13 +199,13 @@ const popularSearches = [
 ];
 
 const categoryColors: Record<string, string> = {
-  "Weight Loss": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
-  "Hormones": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
-  "Anti-Aging": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
-  "Strength": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
-  "Hair": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
-  "Skin": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
-  "Mood": "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
+  "Weight Loss": "bg-stone-100 text-stone-800 border-stone-300 dark:bg-stone-800 dark:text-stone-100 dark:border-stone-600",
+  "Hormones": "bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-900 dark:text-blue-100 dark:border-blue-700",
+  "Anti-Aging": "bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-900 dark:text-purple-100 dark:border-purple-700",
+  "Strength": "bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-900 dark:text-emerald-100 dark:border-emerald-700",
+  "Hair": "bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-900 dark:text-amber-100 dark:border-amber-700",
+  "Skin": "bg-rose-100 text-rose-800 border-rose-300 dark:bg-rose-900 dark:text-rose-100 dark:border-rose-700",
+  "Mood": "bg-indigo-100 text-indigo-800 border-indigo-300 dark:bg-indigo-900 dark:text-indigo-100 dark:border-indigo-700",
 };
 
 const TreatmentComparisonTable = () => {
@@ -373,20 +373,20 @@ const TreatmentComparisonTable = () => {
                   <div className="overflow-x-auto">
                     <table className="w-full">
                       <thead>
-                        <tr className="border-b bg-muted/50">
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                        <tr className="border-b bg-stone-100 dark:bg-stone-800">
+                          <th className="px-6 py-4 text-left text-sm font-bold text-stone-900 dark:text-stone-50 uppercase tracking-wide">
                             Treatment
                           </th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                          <th className="px-6 py-4 text-left text-sm font-bold text-stone-900 dark:text-stone-50 uppercase tracking-wide">
                             Category
                           </th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                          <th className="px-6 py-4 text-left text-sm font-bold text-stone-900 dark:text-stone-50 uppercase tracking-wide">
                             Price
                           </th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                          <th className="px-6 py-4 text-left text-sm font-bold text-stone-900 dark:text-stone-50 uppercase tracking-wide">
                             Key Benefits
                           </th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                          <th className="px-6 py-4 text-left text-sm font-bold text-stone-900 dark:text-stone-50 uppercase tracking-wide">
                             Best For
                           </th>
                         </tr>
@@ -429,13 +429,13 @@ const TreatmentComparisonTable = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4">
-                              <span className="font-bold text-primary">{treatment.price}</span>
+                              <span className="font-bold text-lg text-stone-900 dark:text-stone-50">{treatment.price}</span>
                             </td>
                             <td className="px-6 py-4">
                               <ul className="space-y-1">
                                 {treatment.benefits.map((benefit, i) => (
-                                  <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                                    <Check className="h-3 w-3 flex-shrink-0 text-primary" />
+                                  <li key={i} className="flex items-center gap-2 text-sm text-stone-700 dark:text-stone-200">
+                                    <Check className="h-3 w-3 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
                                     {benefit}
                                   </li>
                                 ))}
@@ -444,9 +444,9 @@ const TreatmentComparisonTable = () => {
                             <td className="px-6 py-4">
                               <TooltipProvider>
                                 <Tooltip>
-                                  <TooltipTrigger className="flex items-center gap-1 text-sm text-muted-foreground">
+                                  <TooltipTrigger className="flex items-center gap-1 text-sm text-stone-700 dark:text-stone-200 font-medium">
                                     {treatment.bestFor}
-                                    <Info className="h-3 w-3" />
+                                    <Info className="h-3 w-3 text-stone-500 dark:text-stone-400" />
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     <p>Recommended for patients seeking {treatment.bestFor.toLowerCase()}</p>
@@ -498,24 +498,24 @@ const TreatmentComparisonTable = () => {
                             </div>
                           )}
                         </div>
-                        <span className="text-xl font-bold text-primary">{treatment.price}</span>
+                        <span className="text-xl font-bold text-stone-900 dark:text-stone-50">{treatment.price}</span>
                       </div>
                       
                       <div className="mb-3">
-                        <p className="mb-2 text-sm font-medium text-foreground">Key Benefits:</p>
+                        <p className="mb-2 text-sm font-bold text-stone-900 dark:text-stone-50">Key Benefits:</p>
                         <ul className="space-y-2">
                           {treatment.benefits.map((benefit, i) => (
-                            <li key={i} className="flex items-center gap-2 text-sm text-foreground min-h-[44px]">
-                              <Check className="h-4 w-4 flex-shrink-0 text-primary" />
+                            <li key={i} className="flex items-center gap-2 text-sm text-stone-700 dark:text-stone-200 min-h-[44px]">
+                              <Check className="h-4 w-4 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
                               {benefit}
                             </li>
                           ))}
                         </ul>
                       </div>
                       
-                      <div className="rounded-lg bg-muted/50 px-3 py-3 min-h-[44px] flex items-center">
-                        <span className="text-sm text-foreground/70">Best for: </span>
-                        <span className="text-sm font-medium text-foreground ml-1">{treatment.bestFor}</span>
+                      <div className="rounded-lg bg-stone-100 dark:bg-stone-800 px-3 py-3 min-h-[44px] flex items-center">
+                        <span className="text-sm text-stone-600 dark:text-stone-300">Best for: </span>
+                        <span className="text-sm font-semibold text-stone-900 dark:text-stone-50 ml-1">{treatment.bestFor}</span>
                       </div>
                     </motion.div>
                   ))}

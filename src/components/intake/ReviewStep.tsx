@@ -88,7 +88,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
     <div className="space-y-6">
       <div>
         <h2 className="font-display text-xl font-bold text-rich-black">Almost There!</h2>
-        <p className="mt-1 text-muted-foreground">
+        <p className="mt-1 text-foreground/70">
           Review your information below. Our medical team will review it within 24-48 hours.
         </p>
       </div>
@@ -108,14 +108,14 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
           </CardHeader>
           <CardContent className="space-y-3 text-sm">
             <div>
-              <span className="text-muted-foreground block mb-1">Primary Goal</span>
+              <span className="text-foreground/70 block mb-1">Primary Goal</span>
               <Badge variant="default" className="text-sm">
                 {goalLabels[healthGoals.primaryGoal] || healthGoals.primaryGoal}
               </Badge>
             </div>
             {healthGoals.secondaryGoals.length > 0 && (
               <div>
-                <span className="text-muted-foreground block mb-1.5">Additional Goals</span>
+                <span className="text-foreground/70 block mb-1.5">Additional Goals</span>
                 <div className="flex flex-wrap gap-1.5">
                   {healthGoals.secondaryGoals.map((goal) => (
                     <Badge key={goal} variant="outline" className="text-xs">
@@ -127,7 +127,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
             )}
             {healthGoals.targetTimeline && (
               <div>
-                <span className="text-muted-foreground">Timeline: </span>
+                <span className="text-foreground/70">Timeline: </span>
                 <span className="text-rich-black">{timelineLabels[healthGoals.targetTimeline]}</span>
               </div>
             )}
@@ -143,9 +143,9 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
                 Medical Info
               </div>
               {medicalFieldsCount > 0 ? (
-                <span className="text-xs text-muted-foreground">{medicalFieldsCount} fields</span>
+                <span className="text-xs text-foreground/60">{medicalFieldsCount} fields</span>
               ) : (
-                <span className="text-xs text-muted-foreground">Optional</span>
+                <span className="text-xs text-foreground/60">Optional</span>
               )}
             </CardTitle>
           </CardHeader>
@@ -153,7 +153,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
             {medicalHistory.currentWeight || medicalHistory.targetWeight ? (
               <>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Weight:</span>
+                  <span className="text-foreground/70">Weight:</span>
                   <span className="text-rich-black">
                     {medicalHistory.currentWeight ? `${medicalHistory.currentWeight} lbs` : "—"}
                     {medicalHistory.targetWeight && ` → ${medicalHistory.targetWeight} lbs`}
@@ -163,7 +163,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
             ) : null}
             {(medicalHistory.heightFeet || medicalHistory.heightInches) && (
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Height:</span>
+                <span className="text-foreground/70">Height:</span>
                 <span className="text-rich-black">
                   {medicalHistory.heightFeet && medicalHistory.heightInches
                     ? `${medicalHistory.heightFeet}'${medicalHistory.heightInches}"`
@@ -175,7 +175,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
             )}
             {medicalHistory.medicalConditions.length > 0 && (
               <div className="pt-1">
-                <span className="text-muted-foreground block mb-1">Conditions</span>
+                <span className="text-foreground/70 block mb-1">Conditions</span>
                 <span className="text-rich-black text-xs">
                   {medicalHistory.medicalConditions.join(", ")}
                 </span>
@@ -183,14 +183,14 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
             )}
             {medicalHistory.currentMedications && (
               <div className="pt-1">
-                <span className="text-muted-foreground block mb-1">Medications</span>
+                <span className="text-foreground/70 block mb-1">Medications</span>
                 <span className="text-rich-black text-xs line-clamp-2">
                   {medicalHistory.currentMedications}
                 </span>
               </div>
             )}
             {medicalFieldsCount === 0 && (
-              <p className="text-muted-foreground italic">No medical information provided</p>
+              <p className="text-foreground/60 italic">No medical information provided</p>
             )}
           </CardContent>
         </Card>
@@ -204,9 +204,9 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
                 Lifestyle
               </div>
               {lifestyleFieldsCount > 0 ? (
-                <span className="text-xs text-muted-foreground">{lifestyleFieldsCount} fields</span>
+                <span className="text-xs text-foreground/60">{lifestyleFieldsCount} fields</span>
               ) : (
-                <span className="text-xs text-muted-foreground">Optional</span>
+                <span className="text-xs text-foreground/60">Optional</span>
               )}
             </CardTitle>
           </CardHeader>
@@ -215,25 +215,25 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
               <div className="grid gap-3 text-sm sm:grid-cols-3">
                 {lifestyle.exerciseFrequency && (
                   <div>
-                    <span className="text-muted-foreground block mb-0.5">Exercise</span>
+                    <span className="text-foreground/70 block mb-0.5">Exercise</span>
                     <span className="text-rich-black">{exerciseLabels[lifestyle.exerciseFrequency] || lifestyle.exerciseFrequency}</span>
                   </div>
                 )}
                 {lifestyle.stressLevel && (
                   <div>
-                    <span className="text-muted-foreground block mb-0.5">Stress Level</span>
+                    <span className="text-foreground/70 block mb-0.5">Stress Level</span>
                     <span className="text-rich-black">{stressLabels[lifestyle.stressLevel]}</span>
                   </div>
                 )}
                 {lifestyle.sleepHours && (
                   <div>
-                    <span className="text-muted-foreground block mb-0.5">Sleep</span>
+                    <span className="text-foreground/70 block mb-0.5">Sleep</span>
                     <span className="text-rich-black">{sleepLabels[lifestyle.sleepHours]}</span>
                   </div>
                 )}
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground italic">No lifestyle information provided</p>
+              <p className="text-sm text-foreground/60 italic">No lifestyle information provided</p>
             )}
           </CardContent>
         </Card>
@@ -251,7 +251,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
             <div className="space-y-4 flex-1">
               <div>
                 <h3 className="font-semibold text-rich-black">Your information is secure</h3>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-foreground/70 mt-1">
                   All data is encrypted and HIPAA-compliant. Only your assigned provider will review your information.
                 </p>
               </div>
@@ -287,7 +287,7 @@ const ReviewStep = ({ formData, agreedToTerms, onAgreeChange }: ReviewStepProps)
                 </span>
               </div>
               {!agreedToTerms && (
-                <p className="text-xs text-warm-stone flex items-center gap-1">
+                <p className="text-xs text-foreground/70 flex items-center gap-1">
                   <Edit2 className="h-3 w-3" />
                   Please check the box above to continue
                 </p>

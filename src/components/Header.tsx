@@ -337,25 +337,25 @@ const Header = () => {
 
   return (
     <>
-      {/* Promo Banner - Minimal & Elegant */}
+      {/* Promo Banner - Minimal & Elegant with WCAG AA Compliant Contrast */}
       {showPromo && (
-        <div className="relative bg-rich-black text-pure-white text-center py-2.5 px-10 sm:px-6">
+        <div className="relative bg-rich-black text-pure-white text-center py-2.5 px-12 sm:px-6">
           <span className="text-[11px] sm:text-[12px] font-medium tracking-[0.05em]">
             <span className="hidden sm:inline">Limited time: </span>
             <span className="font-semibold">Save $50</span>
-            <span className="mx-1.5 text-pure-white/40">|</span>
+            <span className="mx-1.5 text-pure-white/70">|</span>
             GLP-1 Weight Loss
           </span>
           <Link
             to="/treatments/weight-loss"
-            className="ml-2 sm:ml-3 inline-flex items-center gap-1 text-[11px] sm:text-[12px] font-medium text-pure-white/90 hover:text-pure-white transition-colors duration-200 group"
+            className="ml-2 sm:ml-3 inline-flex items-center gap-1 text-[11px] sm:text-[12px] font-medium text-pure-white hover:text-pure-white/90 underline underline-offset-2 decoration-pure-white/50 hover:decoration-pure-white transition-colors duration-200 group"
           >
             Shop now
             <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
           </Link>
           <button
             onClick={() => setShowPromo(false)}
-            className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 text-pure-white/50 hover:text-pure-white active:text-pure-white transition-colors duration-200 min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 text-pure-white/80 hover:text-pure-white active:text-pure-white transition-colors duration-200 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-pure-white/10"
             aria-label="Close promotional banner"
           >
             <X className="h-4 w-4" />

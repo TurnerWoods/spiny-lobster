@@ -61,12 +61,12 @@ const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolea
     <div className="border-b border-warm-stone/10 last:border-0">
       <button
         onClick={onClick}
-        className="flex w-full items-center justify-between gap-3 py-4 min-h-[48px] text-left transition-colors hover:text-warm-stone touch-manipulation"
+        className="flex w-full items-center justify-between gap-3 py-4 min-h-[48px] text-left transition-colors hover:text-deep-charcoal touch-manipulation"
         aria-expanded={isOpen}
       >
         <span className="font-medium text-rich-black text-base sm:text-sm">{faq.question}</span>
         <span className={`flex h-7 w-7 sm:h-6 sm:w-6 flex-shrink-0 items-center justify-center rounded-full border transition-all ${
-          isOpen ? "rotate-180 border-warm-stone bg-warm-stone text-pure-white" : "border-warm-stone/30 text-warm-gray"
+          isOpen ? "rotate-180 border-deep-charcoal bg-deep-charcoal text-pure-white" : "border-deep-charcoal/40 text-deep-charcoal/70"
         }`}>
           {isOpen ? <Minus className="h-3.5 w-3.5 sm:h-3 sm:w-3" /> : <Plus className="h-3.5 w-3.5 sm:h-3 sm:w-3" />}
         </span>
@@ -80,7 +80,7 @@ const FAQItem = ({ faq, isOpen, onClick }: { faq: typeof faqs[0]; isOpen: boolea
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className="pb-4 text-base sm:text-sm text-warm-gray leading-relaxed">
+            <p className="pb-4 text-base sm:text-sm text-deep-charcoal/90 leading-relaxed">
               {faq.answer}
             </p>
           </motion.div>
@@ -182,7 +182,7 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-base text-warm-gray sm:text-lg"
+                className="text-base text-deep-charcoal/80 sm:text-lg"
               >
                 Questions about getting started? Our team is ready to help. No sales pressure. Just honest answers.
               </motion.p>
@@ -214,7 +214,7 @@ const Contact = () => {
                       </div>
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-rich-black text-base">Phone</h3>
-                        <p className="text-warm-gray text-base sm:text-sm truncate">(512) 270-8701</p>
+                        <p className="text-deep-charcoal text-base sm:text-sm truncate">(512) 270-8701</p>
                       </div>
                     </Card>
                   </a>
@@ -230,7 +230,7 @@ const Contact = () => {
                       </div>
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-rich-black text-base">Email</h3>
-                        <p className="text-warm-gray text-base sm:text-sm truncate">info@elevarehealth.com</p>
+                        <p className="text-deep-charcoal text-base sm:text-sm truncate">info@elevarehealth.com</p>
                       </div>
                     </Card>
                   </a>
@@ -248,8 +248,8 @@ const Contact = () => {
                       </div>
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-rich-black text-base">Address</h3>
-                        <p className="text-warm-gray text-base sm:text-sm">1401 Lavaca St, Suite 388</p>
-                        <p className="text-warm-gray text-base sm:text-sm">Austin, TX 78701</p>
+                        <p className="text-deep-charcoal text-base sm:text-sm">1401 Lavaca St, Suite 388</p>
+                        <p className="text-deep-charcoal text-base sm:text-sm">Austin, TX 78701</p>
                       </div>
                     </Card>
                   </a>
@@ -260,7 +260,7 @@ const Contact = () => {
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className="font-semibold text-rich-black text-base">Hours</h3>
-                      <p className="text-warm-gray text-base sm:text-sm">Monday - Friday, 8am - 6pm CT</p>
+                      <p className="text-deep-charcoal text-base sm:text-sm">Monday - Friday, 8am - 6pm CT</p>
                     </div>
                   </Card>
                 </div>
@@ -271,7 +271,7 @@ const Contact = () => {
                     <MessageSquare className="h-5 w-5 text-warm-stone flex-shrink-0" />
                     <h3 className="font-display text-base sm:text-lg font-bold text-rich-black">Existing Patients</h3>
                   </div>
-                  <p className="text-sm sm:text-sm text-warm-gray leading-relaxed">
+                  <p className="text-sm sm:text-sm text-deep-charcoal/90 leading-relaxed">
                     Current patients can reach their care team directly through secure messaging in the patient portal. This ensures HIPAA compliance and faster response times for health-related questions.
                   </p>
                 </Card>
@@ -282,12 +282,12 @@ const Contact = () => {
                     <Users className="h-5 w-5 text-warm-stone flex-shrink-0" />
                     <h3 className="font-display text-base sm:text-lg font-bold text-rich-black">Provider Partnerships</h3>
                   </div>
-                  <p className="mb-3 text-sm text-warm-gray leading-relaxed">
+                  <p className="mb-3 text-sm text-deep-charcoal/90 leading-relaxed">
                     Are you a licensed physician interested in partnering with Elevare? We're building a network of Texas-licensed providers who share our commitment to accessible, high-quality health care for men and women.
                   </p>
                   <a
                     href="mailto:providers@elevarehealth.com"
-                    className="inline-block min-h-[44px] py-2 text-sm font-medium text-warm-stone transition-colors hover:text-warm-stone/80 hover:underline touch-manipulation"
+                    className="inline-block min-h-[44px] py-2 text-sm font-semibold text-deep-charcoal underline underline-offset-2 transition-colors hover:text-warm-stone touch-manipulation"
                   >
                     Contact us at providers@elevarehealth.com
                   </a>
@@ -455,7 +455,7 @@ const Contact = () => {
                       </AnimatePresence>
                     </div>
 
-                    <p className="text-sm sm:text-xs text-warm-gray/80 leading-relaxed">
+                    <p className="text-sm sm:text-xs text-deep-charcoal/70 leading-relaxed">
                       Please do not include personal health information in this form.
                     </p>
 
@@ -473,8 +473,8 @@ const Contact = () => {
                   </form>
 
                   {/* Trust Badge */}
-                  <div className="mt-5 sm:mt-6 flex items-center justify-center gap-2 text-sm sm:text-xs text-warm-gray">
-                    <Shield className="h-4 w-4 text-warm-stone flex-shrink-0" />
+                  <div className="mt-5 sm:mt-6 flex items-center justify-center gap-2 text-sm sm:text-xs text-deep-charcoal/80">
+                    <Shield className="h-4 w-4 text-deep-charcoal/70 flex-shrink-0" />
                     <span>HIPAA Compliant - Secure Form</span>
                   </div>
                 </Card>
@@ -497,7 +497,7 @@ const Contact = () => {
                 <h2 className="mb-3 font-display text-xl font-bold text-rich-black sm:text-3xl">
                   Frequently Asked Questions
                 </h2>
-                <p className="text-base sm:text-base text-warm-gray">
+                <p className="text-base sm:text-base text-deep-charcoal/80">
                   Quick answers to common questions
                 </p>
               </motion.div>

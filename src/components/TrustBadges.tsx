@@ -72,14 +72,14 @@ export const TrustBadges = ({
         {displayBadges.map((badge, index) => (
           <div
             key={badge.id}
-            className="flex items-center gap-2 text-soft-linen/60"
+            className="flex items-center gap-2 text-soft-linen"
           >
-            <badge.icon className="h-4 w-4" strokeWidth={1.5} />
-            <span className="text-xs font-light uppercase tracking-[0.2em]">
+            <badge.icon className="h-4 w-4 text-soft-linen" strokeWidth={1.5} />
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-soft-linen/90">
               {badge.shortLabel}
             </span>
             {index < displayBadges.length - 1 && (
-              <span className="ml-4 hidden h-px w-8 bg-soft-linen/20 sm:block" />
+              <span className="ml-4 hidden h-px w-8 bg-soft-linen/40 sm:block" />
             )}
           </div>
         ))}
@@ -99,10 +99,10 @@ export const TrustBadges = ({
         {displayBadges.map((badge) => (
           <div
             key={badge.id}
-            className="flex items-center gap-2.5 text-warm-stone"
+            className="flex items-center gap-2.5"
           >
-            <badge.icon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.5} />
-            <span className="text-sm font-medium tracking-wide text-rich-black/80 sm:text-base">
+            <badge.icon className="h-5 w-5 text-deep-charcoal sm:h-6 sm:w-6" strokeWidth={1.5} />
+            <span className="text-sm font-medium tracking-wide text-rich-black sm:text-base">
               {badge.shortLabel}
             </span>
           </div>
@@ -123,10 +123,10 @@ export const TrustBadges = ({
         {displayBadges.map((badge) => (
           <div
             key={badge.id}
-            className="flex items-center gap-2 rounded-lg border border-warm-stone/10 bg-warm-stone/5 px-3 py-2"
+            className="flex items-center gap-2 rounded-lg border border-warm-stone/20 bg-warm-stone/5 px-3 py-2"
           >
-            <badge.icon className="h-4 w-4 text-warm-stone" strokeWidth={1.5} />
-            <span className="text-xs font-medium text-rich-black/70">
+            <badge.icon className="h-4 w-4 text-deep-charcoal" strokeWidth={1.5} />
+            <span className="text-xs font-medium text-rich-black">
               {badge.shortLabel}
             </span>
           </div>
@@ -142,10 +142,10 @@ export const TrustBadges = ({
         {displayBadges.map((badge) => (
           <div
             key={badge.id}
-            className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-warm-stone/20 bg-warm-stone/5 transition-colors hover:bg-warm-stone/10"
+            className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-warm-stone/30 bg-warm-stone/5 transition-colors hover:bg-warm-stone/15"
             title={badge.label}
           >
-            <badge.icon className="h-5 w-5 text-warm-stone" strokeWidth={1.5} />
+            <badge.icon className="h-5 w-5 text-deep-charcoal" strokeWidth={1.5} />
           </div>
         ))}
       </div>
@@ -160,10 +160,10 @@ export const TrustBadges = ({
       {displayBadges.map((badge) => (
         <div
           key={badge.id}
-          className="flex min-h-[44px] items-center gap-2 py-2 text-warm-gray"
+          className="flex min-h-[44px] items-center gap-2 py-2"
         >
-          <badge.icon className="h-4 w-4 flex-shrink-0 text-warm-stone" strokeWidth={1.5} />
-          <span className="text-sm font-medium">{badge.shortLabel}</span>
+          <badge.icon className="h-4 w-4 flex-shrink-0 text-deep-charcoal" strokeWidth={1.5} />
+          <span className="text-sm font-medium text-rich-black">{badge.shortLabel}</span>
         </div>
       ))}
     </div>
@@ -216,7 +216,7 @@ export const StarRating = ({
         />
       ))}
       {showCount && reviewCount !== undefined && (
-        <span className={cn("ml-1 text-warm-gray", textSizeClasses[size])}>
+        <span className={cn("ml-1 text-deep-charcoal", textSizeClasses[size])}>
           ({reviewCount.toLocaleString()})
         </span>
       )}

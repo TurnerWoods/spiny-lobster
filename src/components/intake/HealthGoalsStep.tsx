@@ -59,7 +59,7 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
     <div className="space-y-8">
       <div>
         <h2 className="font-display text-lg font-bold text-rich-black sm:text-xl">What's your primary health goal?</h2>
-        <p className="mt-1 text-sm text-muted-foreground sm:text-base">Select the main reason you're seeking treatment</p>
+        <p className="mt-1 text-sm text-foreground/70 sm:text-base">Select the main reason you're seeking treatment</p>
       </div>
 
       <div>
@@ -88,7 +88,7 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
                 </div>
                 <div className="flex-1">
                   <span className="block font-semibold text-rich-black">{goal.label}</span>
-                  <span className="block text-sm text-muted-foreground mt-0.5">{goal.description}</span>
+                  <span className="block text-sm text-foreground/70 mt-0.5">{goal.description}</span>
                 </div>
               </Label>
             </div>
@@ -103,7 +103,7 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
-              className={`mt-3 flex items-center gap-2 text-sm sm:text-sm ${showErrorState ? "text-destructive font-semibold" : "text-warm-stone"}`}
+              className={`mt-3 flex items-center gap-2 text-sm sm:text-sm ${showErrorState ? "text-red-700 font-semibold" : "text-foreground/70"}`}
               role={showErrorState ? "alert" : undefined}
               aria-live={showErrorState ? "polite" : undefined}
             >
@@ -117,9 +117,9 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
       <div>
         <Label className="text-base font-semibold text-rich-black">
           Additional goals
-          <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
+          <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
         </Label>
-        <p className="mt-1 mb-3 text-sm text-muted-foreground">Select all that apply to you</p>
+        <p className="mt-1 mb-3 text-sm text-foreground/70">Select all that apply to you</p>
         <div className="grid gap-2 sm:grid-cols-2">
           {secondaryGoalOptions.map((goal) => {
             const Icon = secondaryGoalIcons[goal] || Target;
@@ -160,7 +160,7 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
           })}
         </div>
         {data.secondaryGoals.length > 0 && (
-          <p className="mt-2 text-xs text-muted-foreground">
+          <p className="mt-2 text-xs text-foreground/60">
             {data.secondaryGoals.length} goal{data.secondaryGoals.length > 1 ? "s" : ""} selected
           </p>
         )}
@@ -171,10 +171,10 @@ const HealthGoalsStep = ({ data, onChange, hasError = false }: HealthGoalsStepPr
           <Clock className="h-4 w-4 text-warm-stone" />
           <Label htmlFor="timeline" className="text-base font-semibold text-rich-black">
             Target timeline
-            <span className="ml-2 text-xs font-normal text-muted-foreground">(Optional)</span>
+            <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
           </Label>
         </div>
-        <p className="text-sm text-muted-foreground">When do you want to see results?</p>
+        <p className="text-sm text-foreground/70">When do you want to see results?</p>
         <Select value={data.targetTimeline} onValueChange={(value) => onChange({ targetTimeline: value })}>
           <SelectTrigger id="timeline" aria-label="Target timeline" className="w-full h-12 sm:h-11 sm:w-72">
             <SelectValue placeholder="Choose your timeline" />

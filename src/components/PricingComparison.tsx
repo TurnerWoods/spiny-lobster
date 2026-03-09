@@ -72,14 +72,19 @@ const included = [
 ];
 
 const PricingComparison = () => {
-  const renderValue = (value: string | boolean) => {
+  const renderValue = (value: string | boolean, isElevare: boolean = false) => {
     if (value === true) {
       return <Check className="mx-auto h-5 w-5 text-accent-gold" />;
     }
     if (value === false) {
       return <X className="mx-auto h-5 w-5 text-warm-stone/50" />;
     }
-    return <span className="text-sm">{value}</span>;
+    // Price values get high contrast colors
+    return (
+      <span className={`text-sm font-medium ${isElevare ? "text-foreground" : "text-foreground/80"}`}>
+        {value}
+      </span>
+    );
   };
 
   return (
@@ -124,9 +129,9 @@ const PricingComparison = () => {
           {/* Table Header */}
           <div className="grid grid-cols-2 gap-2 border-b bg-muted/50 p-3 text-center text-xs font-semibold sm:grid-cols-4 sm:gap-4 sm:p-4 sm:text-sm">
             <div className="text-left text-foreground">Feature</div>
-            <div className="rounded-lg bg-primary/10 py-1 text-primary">Elevare</div>
-            <div className="hidden text-warm-gray sm:block">Traditional</div>
-            <div className="hidden text-warm-gray sm:block">Competitors</div>
+            <div className="rounded-lg bg-primary/10 py-1 text-primary font-bold">Elevare</div>
+            <div className="hidden text-foreground/70 sm:block">Traditional</div>
+            <div className="hidden text-foreground/70 sm:block">Competitors</div>
           </div>
 
           {/* Table Body */}
@@ -143,13 +148,13 @@ const PricingComparison = () => {
                 <div className="text-left text-xs font-medium text-foreground sm:text-sm">
                   {row.feature}
                 </div>
-                <div className="font-semibold text-primary">
-                  {renderValue(row.elevare)}
+                <div className="font-bold text-primary">
+                  {renderValue(row.elevare, true)}
                 </div>
-                <div className="hidden text-warm-gray sm:block">
+                <div className="hidden sm:block">
                   {renderValue(row.traditional)}
                 </div>
-                <div className="hidden text-warm-gray sm:block">
+                <div className="hidden sm:block">
                   {renderValue(row.competitors)}
                 </div>
               </motion.div>
@@ -172,7 +177,7 @@ const PricingComparison = () => {
               {included.map((item, index) => (
                 <div key={index} className="flex items-center gap-2 sm:gap-3 min-h-[44px] py-1">
                   <Check className="h-5 w-5 flex-shrink-0 text-primary" />
-                  <span className="text-sm text-warm-gray leading-relaxed">{item}</span>
+                  <span className="text-sm text-foreground/90 leading-relaxed">{item}</span>
                 </div>
               ))}
             </div>
@@ -190,10 +195,10 @@ const PricingComparison = () => {
             {trustBadges.map((badge) => (
               <div
                 key={badge.label}
-                className="flex items-center gap-2 text-warm-gray min-h-[44px] px-2 py-1"
+                className="flex items-center gap-2 min-h-[44px] px-2 py-1"
               >
-                <badge.icon className="h-5 w-5 text-warm-stone" strokeWidth={1.5} />
-                <span className="text-sm font-medium">{badge.label}</span>
+                <badge.icon className="h-5 w-5 text-primary" strokeWidth={1.5} />
+                <span className="text-sm font-medium text-foreground/80">{badge.label}</span>
               </div>
             ))}
           </div>
@@ -207,7 +212,7 @@ const PricingComparison = () => {
           className="text-center"
         >
           <Link to="/intake" className="inline-block w-full sm:w-auto">
-            <Button size="lg" className="w-full bg-primary hover:bg-primary-dark sm:w-auto min-h-[48px] text-base">
+            <Button size="lg" className="w-full bg-primary hover:bg-primary-dark sm:w-auto min-h-[48px] text-base text-white font-semibold">
               Start Your Free Assessment
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

@@ -138,7 +138,7 @@ const Hero = () => {
         >
           {/* Minimal eyebrow text */}
           <motion.div variants={contentItem} className="mb-4 xs:mb-6 sm:mb-8">
-            <span className="text-label text-soft-linen/80 text-xs">
+            <span className="text-label text-soft-linen/90 text-xs">
               Physician-Prescribed Therapy
             </span>
           </motion.div>
@@ -156,7 +156,7 @@ const Hero = () => {
           {/* Subtitle - Responsive text size */}
           <motion.p
             variants={contentItem}
-            className="text-base xs:text-lg mb-8 xs:mb-10 sm:mb-12 max-w-md text-soft-linen/70 leading-relaxed"
+            className="text-base xs:text-lg mb-8 xs:mb-10 sm:mb-12 max-w-md text-soft-linen/85 leading-relaxed"
           >
             Premium hormone and peptide therapy for men and women.
             Delivered discreetly to your door.
@@ -204,7 +204,7 @@ const Hero = () => {
               <motion.div
                 key={badge.label}
                 variants={trustItem}
-                className="flex items-center gap-1.5 xs:gap-2 min-h-[44px] text-soft-linen/75"
+                className="flex items-center gap-1.5 xs:gap-2 min-h-[44px] text-soft-linen/85"
                 role="listitem"
               >
                 <badge.icon className="h-4 w-4 xs:h-4 xs:w-4 flex-shrink-0" strokeWidth={1.5} aria-hidden="true" />
@@ -239,10 +239,10 @@ const Hero = () => {
             }}
             className="flex flex-col items-center gap-2 will-change-transform"
           >
-            <span className="text-xs font-light uppercase tracking-[0.2em] xs:tracking-[0.3em] text-soft-linen/70">
+            <span className="text-xs font-light uppercase tracking-[0.2em] xs:tracking-[0.3em] text-soft-linen/80">
               Scroll
             </span>
-            <div className="h-6 xs:h-8 w-px bg-gradient-to-b from-soft-linen/70 to-transparent" />
+            <div className="h-6 xs:h-8 w-px bg-gradient-to-b from-soft-linen/80 to-transparent" />
           </motion.div>
         </motion.div>
       )}

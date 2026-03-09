@@ -382,7 +382,7 @@ const AIChatWidget = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-28 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg sm:bottom-20 sm:right-6 sm:h-14 sm:w-14 md:bottom-6"
+            className="fixed bottom-28 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-deep-charcoal text-white shadow-lg ring-2 ring-white/20 sm:bottom-20 sm:right-6 sm:h-14 sm:w-14 md:bottom-6"
           >
             <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
           </motion.button>
@@ -400,14 +400,14 @@ const AIChatWidget = () => {
             className="fixed inset-x-0 bottom-0 top-auto z-50 flex h-[85vh] max-h-[600px] flex-col overflow-hidden rounded-t-2xl border bg-card shadow-2xl sm:inset-auto sm:bottom-20 sm:right-6 sm:h-[500px] sm:w-[380px] sm:max-w-[calc(100vw-3rem)] sm:rounded-2xl md:bottom-6"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b bg-primary px-4 py-3 text-white">
+            <div className="flex items-center justify-between border-b bg-deep-charcoal px-4 py-3 text-white">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25">
                   <Bot className="h-5 w-5" />
                 </div>
                 <div>
                   <p className="font-semibold">Nova</p>
-                  <p className="text-xs text-white/70">Elevare Health Assistant</p>
+                  <p className="text-xs text-white/90">Elevare Health Assistant</p>
                 </div>
               </div>
               <button
@@ -432,8 +432,8 @@ const AIChatWidget = () => {
                     <div
                       className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ${
                         message.role === "user"
-                          ? "bg-primary text-white"
-                          : "bg-warm-stone/15 text-foreground"
+                          ? "bg-deep-charcoal text-white"
+                          : "bg-warm-stone/30 text-deep-charcoal"
                       }`}
                     >
                       {message.role === "user" ? (
@@ -445,8 +445,8 @@ const AIChatWidget = () => {
                     <div
                       className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                         message.role === "user"
-                          ? "bg-primary text-white"
-                          : "bg-muted text-foreground"
+                          ? "bg-deep-charcoal text-white"
+                          : "bg-soft-linen border border-warm-stone/20 text-rich-black"
                       }`}
                     >
                       <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -457,13 +457,13 @@ const AIChatWidget = () => {
                 {/* Suggested Prompts - Touch-friendly with 44px minimum height */}
                 {showSuggestedPrompts && (
                   <div className="mt-2 flex flex-col gap-2">
-                    <p className="text-xs font-medium text-muted-foreground">Quick questions:</p>
+                    <p className="text-xs font-semibold text-warm-stone uppercase tracking-wide">Quick questions:</p>
                     <div className="flex flex-wrap gap-2">
                       {SUGGESTED_PROMPTS.map((prompt, index) => (
                         <button
                           key={index}
                           onClick={() => handleSend(prompt)}
-                          className="rounded-full border border-primary/30 bg-primary/5 px-4 py-2.5 min-h-[44px] text-sm font-medium text-primary transition-colors hover:bg-primary/10 hover:border-primary/50 active:bg-primary/15"
+                          className="rounded-full border border-deep-charcoal/30 bg-deep-charcoal/5 px-4 py-2.5 min-h-[44px] text-sm font-medium text-deep-charcoal transition-colors hover:bg-deep-charcoal/10 hover:border-deep-charcoal/50 active:bg-deep-charcoal/15"
                         >
                           {prompt}
                         </button>
@@ -477,15 +477,15 @@ const AIChatWidget = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-3 rounded-xl border border-primary/20 bg-primary/5 p-4"
+                    className="mt-3 rounded-xl border border-deep-charcoal/20 bg-soft-linen p-4"
                   >
                     <div className="mb-3 flex items-center gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-deep-charcoal text-white">
                         <Mail className="h-4 w-4" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-foreground">Get personalized follow-up</p>
-                        <p className="text-xs text-muted-foreground">We'll send your treatment details</p>
+                        <p className="text-sm font-semibold text-rich-black">Get personalized follow-up</p>
+                        <p className="text-xs text-warm-stone">We'll send your treatment details</p>
                       </div>
                     </div>
                     <form onSubmit={handleContactSubmit} className="space-y-2">
@@ -511,9 +511,9 @@ const AIChatWidget = () => {
                           disabled={isSubmittingContact}
                         />
                       </div>
-                      <Button 
-                        type="submit" 
-                        className="w-full bg-primary hover:bg-primary-dark"
+                      <Button
+                        type="submit"
+                        className="w-full bg-deep-charcoal hover:bg-rich-black text-white"
                         disabled={isSubmittingContact}
                       >
                         {isSubmittingContact ? (
@@ -525,7 +525,7 @@ const AIChatWidget = () => {
                       <button
                         type="button"
                         onClick={() => setShowLeadCapture(false)}
-                        className="w-full min-h-[44px] py-2 text-sm text-muted-foreground hover:text-foreground active:text-foreground/80 transition-colors"
+                        className="w-full min-h-[44px] py-2 text-sm text-warm-stone hover:text-deep-charcoal active:text-rich-black transition-colors"
                       >
                         Maybe later
                       </button>
@@ -538,21 +538,21 @@ const AIChatWidget = () => {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="mt-3 flex items-center gap-2 rounded-lg bg-accent-gold/10 p-3 text-[#9A8444]"
+                    className="mt-3 flex items-center gap-2 rounded-lg bg-accent-gold/15 border border-accent-gold/30 p-3 text-deep-charcoal"
                   >
-                    <CheckCircle className="h-5 w-5" />
-                    <span className="text-sm font-medium">Contact info saved!</span>
+                    <CheckCircle className="h-5 w-5 text-accent-gold" />
+                    <span className="text-sm font-semibold">Contact info saved!</span>
                   </motion.div>
                 )}
 
                 {isLoading && messages[messages.length - 1]?.role === "user" && (
                   <div className="flex gap-2">
-                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/15 text-foreground">
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/30 text-deep-charcoal">
                       <Bot className="h-4 w-4" />
                     </div>
-                    <div className="flex items-center gap-1 rounded-2xl bg-muted px-4 py-2">
-                      <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                      <span className="text-sm text-muted-foreground">Thinking...</span>
+                    <div className="flex items-center gap-1 rounded-2xl bg-soft-linen border border-warm-stone/20 px-4 py-2">
+                      <Loader2 className="h-4 w-4 animate-spin text-deep-charcoal" />
+                      <span className="text-sm text-warm-stone font-medium">Thinking...</span>
                     </div>
                   </div>
                 )}
@@ -561,7 +561,7 @@ const AIChatWidget = () => {
             </div>
 
             {/* Input */}
-            <div className="border-t bg-background p-3">
+            <div className="border-t border-warm-stone/20 bg-white p-3">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -573,14 +573,14 @@ const AIChatWidget = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask about treatments..."
-                  className="flex-1"
+                  className="flex-1 border-warm-stone/30 bg-white text-rich-black placeholder:text-warm-stone focus-visible:ring-deep-charcoal/30"
                   disabled={isLoading}
                 />
                 <Button
                   type="submit"
                   size="icon"
                   disabled={!input.trim() || isLoading}
-                  className="bg-primary hover:bg-primary-dark"
+                  className="bg-deep-charcoal hover:bg-rich-black text-white disabled:bg-warm-stone/50"
                 >
                   <Send className="h-4 w-4" />
                 </Button>

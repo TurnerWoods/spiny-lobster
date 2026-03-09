@@ -68,41 +68,41 @@ interface Treatment {
   updated_at: string;
 }
 
-// Status config using warm luxury palette instead of clinical colors
+// Status config using warm luxury palette with WCAG AA compliant contrast
 const statusConfig: Record<string, { label: string; color: string; icon: any; description: string }> = {
   pending: {
     label: "Pending Review",
-    color: "bg-warm-stone/10 text-warm-stone border-warm-stone/20",
+    color: "bg-warm-stone/15 text-[#4A4239] border-warm-stone/30",
     icon: Clock,
     description: "Your treatment request is awaiting provider review."
   },
   under_review: {
     label: "Under Review",
-    color: "bg-warm-stone/15 text-warm-stone border-warm-stone/25",
+    color: "bg-warm-stone/20 text-[#4A4239] border-warm-stone/35",
     icon: AlertCircle,
     description: "A provider is currently reviewing your treatment plan."
   },
   approved: {
     label: "Approved",
-    color: "bg-accent-gold/10 text-[#9A8444] border-accent-gold/20",
+    color: "bg-accent-gold/15 text-[#6B5A2F] border-accent-gold/30",
     icon: CheckCircle2,
     description: "Your treatment has been approved and will ship soon."
   },
   active: {
     label: "Active",
-    color: "bg-accent-gold/15 text-[#9A8444] border-accent-gold/25",
+    color: "bg-accent-gold/20 text-[#6B5A2F] border-accent-gold/35",
     icon: CheckCircle2,
     description: "Your treatment is active. Follow dosage instructions carefully."
   },
   completed: {
     label: "Completed",
-    color: "bg-warm-gray/30 text-warm-stone border-warm-gray/40",
+    color: "bg-warm-gray/25 text-[#4A4239] border-warm-gray/40",
     icon: CheckCircle2,
     description: "This treatment cycle has been completed."
   },
   cancelled: {
     label: "Cancelled",
-    color: "bg-[#A67563]/10 text-[#8B5A4A] border-[#A67563]/20",
+    color: "bg-[#A67563]/15 text-[#5C3D32] border-[#A67563]/30",
     icon: AlertCircle,
     description: "This treatment has been cancelled."
   },
@@ -237,7 +237,7 @@ interface TimelineEvent {
   upcoming?: boolean;
 }
 
-// Generate mock timeline events - using warm luxury palette
+// Generate mock timeline events - using warm luxury palette with good contrast
 const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
   const events: TimelineEvent[] = [
     {
@@ -245,7 +245,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Treatment Requested",
       description: "You submitted your treatment intake form",
       icon: FileText,
-      color: "bg-warm-stone",
+      color: "bg-[#5C5248]", // Darker warm stone for better contrast with white icon
     },
   ];
 
@@ -255,7 +255,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Provider Review Started",
       description: "A provider began reviewing your case",
       icon: AlertCircle,
-      color: "bg-[#B8956A]", // Warm amber-brown
+      color: "bg-[#8B7355]", // Darker amber-brown for better contrast
     });
   }
 
@@ -265,7 +265,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Treatment Approved",
       description: "Your treatment plan was approved",
       icon: CheckCircle2,
-      color: "bg-accent-gold",
+      color: "bg-[#9A8544]", // Darker gold for better contrast with white icon
     });
   }
 
@@ -275,7 +275,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Treatment Started",
       description: `${treatment.medication || "Medication"} ${treatment.dosage || ""} prescribed`,
       icon: Syringe,
-      color: "bg-primary",
+      color: "bg-[#4A4239]", // Dark warm tone for better contrast with white icon
     });
   }
 
@@ -285,7 +285,7 @@ const generateTimelineEvents = (treatment: Treatment): TimelineEvent[] => {
       title: "Upcoming Refill",
       description: "Next refill scheduled",
       icon: RefreshCw,
-      color: "bg-deep-charcoal",
+      color: "bg-[#3D3A35]", // Dark charcoal for better contrast with white icon
       upcoming: true,
     });
   }
@@ -542,7 +542,7 @@ const TreatmentDetail = () => {
                 <h1 className="font-display text-xl font-bold text-foreground sm:text-2xl md:text-3xl leading-tight">
                   {treatment.treatment_type}
                 </h1>
-                <p className="mt-1 text-base sm:text-lg text-muted-foreground leading-snug">
+                <p className="mt-1 text-base sm:text-lg text-[#4A4239] leading-snug">
                   {treatment.medication || "Medication pending assignment"}
                 </p>
               </div>
@@ -572,7 +572,7 @@ const TreatmentDetail = () => {
                   <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
                     Treatment Status
                   </h3>
-                  <p className="mt-1 text-sm sm:text-base text-muted-foreground leading-relaxed">{status.description}</p>
+                  <p className="mt-1 text-sm sm:text-base text-[#4A4239] leading-relaxed">{status.description}</p>
                 </div>
               </div>
             </motion.div>
@@ -595,25 +595,25 @@ const TreatmentDetail = () => {
 
               <div className="mb-4 sm:mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <div className="rounded-xl bg-muted/50 p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Medication</p>
+                  <p className="text-xs sm:text-sm text-[#5C5248] font-medium" style={{ fontSize: 'max(12px, 0.75rem)' }}>Medication</p>
                   <p className="mt-1 text-sm sm:text-base font-semibold text-foreground leading-snug">
                     {treatment.medication || "Pending assignment"}
                   </p>
                 </div>
                 <div className="rounded-xl bg-muted/50 p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Dosage</p>
+                  <p className="text-xs sm:text-sm text-[#5C5248] font-medium" style={{ fontSize: 'max(12px, 0.75rem)' }}>Dosage</p>
                   <p className="mt-1 text-sm sm:text-base font-semibold text-foreground leading-snug">
                     {treatment.dosage || "To be determined"}
                   </p>
                 </div>
                 <div className="rounded-xl bg-muted/50 p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Frequency</p>
+                  <p className="text-xs sm:text-sm text-[#5C5248] font-medium" style={{ fontSize: 'max(12px, 0.75rem)' }}>Frequency</p>
                   <p className="mt-1 text-sm sm:text-base font-semibold text-foreground leading-snug">
                     {dosageInfo.frequency}
                   </p>
                 </div>
                 <div className="rounded-xl bg-muted/50 p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Timing</p>
+                  <p className="text-xs sm:text-sm text-[#5C5248] font-medium" style={{ fontSize: 'max(12px, 0.75rem)' }}>Timing</p>
                   <p className="mt-1 text-sm sm:text-base font-semibold text-foreground leading-snug">
                     {dosageInfo.timing}
                   </p>
@@ -621,15 +621,15 @@ const TreatmentDetail = () => {
               </div>
 
               {/* Dosage Instructions */}
-              <div className="rounded-xl border border-primary/20 bg-primary-light/50 p-3 sm:p-4">
+              <div className="rounded-xl border border-primary/30 bg-primary-light/40 p-3 sm:p-4">
                 <div className="mb-2 sm:mb-3 flex items-center gap-2">
-                  <Info className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
-                  <span className="text-sm sm:text-base font-semibold text-primary">Important Instructions</span>
+                  <Info className="h-4 w-4 sm:h-5 sm:w-5 text-[#4A4239] flex-shrink-0" />
+                  <span className="text-sm sm:text-base font-semibold text-[#3D3632]">Important Instructions</span>
                 </div>
                 <ul className="space-y-2 sm:space-y-3">
                   {dosageInfo.notes.map((note, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm text-foreground leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                    <li key={index} className="flex items-start gap-2 text-sm text-[#3D3632] leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#4A4239]" />
                       <span>{note}</span>
                     </li>
                   ))}
@@ -668,22 +668,22 @@ const TreatmentDetail = () => {
                       {/* Icon */}
                       <div className={cn(
                         "relative z-10 flex h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-full text-white",
-                        isUpcoming ? "border-2 border-dashed border-warm-stone bg-background" : event.color
+                        isUpcoming ? "border-2 border-dashed border-[#5C5248] bg-background" : event.color
                       )}>
-                        <EventIcon className={cn("h-4 w-4 sm:h-5 sm:w-5", isUpcoming && "text-warm-stone")} />
+                        <EventIcon className={cn("h-4 w-4 sm:h-5 sm:w-5", isUpcoming && "text-[#4A4239]")} />
                       </div>
                       {/* Content */}
-                      <div className={cn("flex-1 pb-2 min-w-0", isUpcoming && "opacity-75")}>
+                      <div className={cn("flex-1 pb-2 min-w-0", isUpcoming && "opacity-90")}>
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="text-sm sm:text-base font-semibold text-foreground">{event.title}</span>
                           {isUpcoming && (
-                            <span className="rounded-full bg-warm-stone/10 px-2 py-0.5 text-xs font-medium text-warm-stone whitespace-nowrap">
+                            <span className="rounded-full bg-[#5C5248]/15 px-2 py-0.5 text-xs font-semibold text-[#4A4239] whitespace-nowrap">
                               Upcoming
                             </span>
                           )}
                         </div>
-                        <p className="mt-1 text-sm text-muted-foreground leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>{event.description}</p>
-                        <p className="mt-1 text-xs text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>
+                        <p className="mt-1 text-sm text-[#4A4239] leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>{event.description}</p>
+                        <p className="mt-1 text-xs text-[#5C5248] font-medium" style={{ fontSize: 'max(12px, 0.75rem)' }}>
                           {isUpcoming
                             ? safeFormatDate(event.date, "MMMM d, yyyy")
                             : `${safeFormatDate(event.date, "MMM d, yyyy")} • ${safeFormatDistanceToNow(event.date)}`}
@@ -716,14 +716,14 @@ const TreatmentDetail = () => {
 
               {treatment.next_refill_date ? (
                 <div className="mb-4 rounded-xl bg-muted/50 p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>Next Refill</p>
+                  <p className="text-xs sm:text-sm text-[#5C5248] font-medium" style={{ fontSize: 'max(12px, 0.75rem)' }}>Next Refill</p>
                   <p className="mt-1 text-base sm:text-lg font-semibold text-foreground">
                     {safeFormatDate(treatment.next_refill_date, "MMMM d, yyyy")}
                   </p>
                   {refillDaysRemaining !== null && (
                     <p className={cn(
                       "mt-1 text-sm",
-                      refillDaysRemaining <= 7 ? "text-amber-600 font-medium" : "text-muted-foreground"
+                      refillDaysRemaining <= 7 ? "text-[#B45309] font-semibold" : "text-[#5C5248]"
                     )} style={{ fontSize: 'max(12px, 0.875rem)' }}>
                       {refillDaysRemaining > 0
                         ? `${refillDaysRemaining} days remaining`
@@ -734,7 +734,7 @@ const TreatmentDetail = () => {
                   )}
                 </div>
               ) : (
-                <p className="mb-4 text-sm text-muted-foreground leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>
+                <p className="mb-4 text-sm text-[#5C5248] leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>
                   No refill date scheduled. Schedule your next refill below.
                 </p>
               )}
@@ -778,7 +778,7 @@ const TreatmentDetail = () => {
                 </PopoverContent>
               </Popover>
               {!["approved", "active"].includes(treatment.status) && (
-                <p className="mt-2 text-xs text-muted-foreground" style={{ fontSize: 'max(12px, 0.75rem)' }}>
+                <p className="mt-2 text-xs text-[#5C5248]" style={{ fontSize: 'max(12px, 0.75rem)' }}>
                   Refill scheduling is available once your treatment is approved.
                 </p>
               )}
@@ -802,22 +802,22 @@ const TreatmentDetail = () => {
 
               <div className="space-y-3 text-sm" style={{ fontSize: 'max(12px, 0.875rem)' }}>
                 <div className="flex justify-between items-center gap-2">
-                  <span className="text-muted-foreground">Start Date</span>
-                  <span className="font-medium text-foreground text-right">
+                  <span className="text-[#5C5248]">Start Date</span>
+                  <span className="font-semibold text-foreground text-right">
                     {treatment.start_date
                       ? safeFormatDate(treatment.start_date, "MMM d, yyyy")
                       : "Not started"}
                   </span>
                 </div>
                 <div className="flex justify-between items-center gap-2">
-                  <span className="text-muted-foreground">Created</span>
-                  <span className="font-medium text-foreground text-right">
+                  <span className="text-[#5C5248]">Created</span>
+                  <span className="font-semibold text-foreground text-right">
                     {safeFormatDate(treatment.created_at, "MMM d, yyyy")}
                   </span>
                 </div>
                 <div className="flex justify-between items-center gap-2">
-                  <span className="text-muted-foreground">Last Updated</span>
-                  <span className="font-medium text-foreground text-right">
+                  <span className="text-[#5C5248]">Last Updated</span>
+                  <span className="font-semibold text-foreground text-right">
                     {safeFormatDistanceToNow(treatment.updated_at, "Recently")}
                   </span>
                 </div>
@@ -825,8 +825,8 @@ const TreatmentDetail = () => {
 
               {treatment.notes && (
                 <div className="mt-4 rounded-xl bg-muted/50 p-3 sm:p-4">
-                  <p className="mb-1 text-sm font-medium text-foreground">Provider Notes</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>{treatment.notes}</p>
+                  <p className="mb-1 text-sm font-semibold text-foreground">Provider Notes</p>
+                  <p className="text-sm text-[#4A4239] leading-relaxed" style={{ fontSize: 'max(12px, 0.875rem)' }}>{treatment.notes}</p>
                 </div>
               )}
             </motion.div>

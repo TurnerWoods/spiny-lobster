@@ -113,6 +113,9 @@ const TreatmentCategories = () => {
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${treatment.gradient}`} aria-hidden="true" />
 
+                {/* Dark overlay for text contrast */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" aria-hidden="true" />
+
                 {/* Product Image */}
                 <div className="absolute inset-0 flex items-end justify-end" aria-hidden="true">
                   <OptimizedImage
@@ -126,17 +129,17 @@ const TreatmentCategories = () => {
                 {/* Text Content */}
                 <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6 md:p-8">
                   <div>
-                    <h3 className="font-display text-[1.375rem] font-semibold leading-tight text-white sm:text-2xl lg:text-[1.65rem] whitespace-pre-line">
+                    <h3 className="font-display text-[1.375rem] font-semibold leading-tight text-white sm:text-2xl lg:text-[1.65rem] whitespace-pre-line drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
                       {treatment.title}
                     </h3>
-                    <p className="mt-1.5 text-[15px] font-light text-white/85 whitespace-pre-line sm:text-sm">
+                    <p className="mt-1.5 text-[15px] font-light text-white whitespace-pre-line sm:text-sm drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
                       {treatment.subtitle}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-2 text-[13px] font-medium text-white sm:text-sm" aria-hidden="true">
+                  <div className="flex items-center gap-2 text-[13px] font-medium text-white sm:text-sm drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]" aria-hidden="true">
                     <span className="tracking-wide">LEARN MORE</span>
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 transition-colors duration-300 group-hover:bg-white/20 sm:h-8 sm:w-8">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/60 bg-white/10 backdrop-blur-sm transition-colors duration-300 group-hover:bg-white/30 group-hover:border-white sm:h-8 sm:w-8">
                       <ArrowRight className="h-5 w-5 sm:h-4 sm:w-4" />
                     </span>
                   </div>

@@ -24,15 +24,15 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
       {/* Mobile-friendly step indicator */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-warm-stone">
+          <span className="text-sm font-semibold text-rich-black">
             Step {currentStep} of {steps.length}
           </span>
-          <span className="text-sm text-muted-foreground hidden sm:inline">
+          <span className="text-sm text-foreground/70 hidden sm:inline">
             - {steps[currentStep - 1]?.name}
           </span>
         </div>
         {remainingSteps > 0 && (
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1.5 text-xs text-foreground/60">
             <Clock className="h-3.5 w-3.5" />
             <span>~{estimatedMinutes} min left</span>
           </div>
@@ -78,8 +78,8 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
                   currentStep > step.id
                     ? "border-warm-stone bg-warm-stone text-pure-white shadow-md"
                     : currentStep === step.id
-                    ? "border-warm-stone bg-warm-stone/10 text-warm-stone ring-4 ring-warm-stone/20"
-                    : "border-muted-foreground/30 bg-background text-muted-foreground"
+                    ? "border-warm-stone bg-warm-stone/10 text-rich-black ring-4 ring-warm-stone/20"
+                    : "border-foreground/30 bg-background text-foreground/60"
                 )}
               >
                 {currentStep > step.id ? (
@@ -105,10 +105,10 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
               className={cn(
                 "absolute -bottom-6 left-0 w-full text-center text-xs font-medium transition-colors",
                 currentStep === step.id
-                  ? "text-warm-stone font-semibold"
+                  ? "text-rich-black font-semibold"
                   : currentStep > step.id
                   ? "text-foreground"
-                  : "text-muted-foreground"
+                  : "text-foreground/60"
               )}
             >
               {step.name}
@@ -127,8 +127,8 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
               currentStep === step.id
                 ? "bg-warm-stone text-pure-white shadow-md"
                 : currentStep > step.id
-                ? "bg-warm-stone/20 text-warm-stone"
-                : "bg-muted-foreground/10 text-muted-foreground"
+                ? "bg-warm-stone/20 text-rich-black"
+                : "bg-foreground/10 text-foreground/70"
             )}
           >
             {currentStep > step.id && <Check className="h-3.5 w-3.5" />}

@@ -55,14 +55,14 @@ const ProviderSection = () => {
           viewport={{ once: true }}
           className="text-center mb-10 sm:mb-12"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white px-4 py-2.5 text-[14px] font-medium text-warm-stone mb-4 sm:text-sm sm:py-2">
+          <span className="inline-flex items-center gap-2 rounded-full border border-deep-charcoal/20 bg-pure-white px-4 py-2.5 text-[14px] font-medium text-deep-charcoal mb-4 sm:text-sm sm:py-2">
             <Shield className="h-4 w-4" />
             Your Care Team
           </span>
           <h2 className="font-display text-[1.625rem] font-bold text-rich-black xs:text-3xl sm:text-4xl leading-tight">
             Expert-Led Medical Care
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-[15px] text-warm-gray leading-relaxed sm:text-base">
+          <p className="mt-4 max-w-2xl mx-auto text-[15px] text-deep-charcoal/80 leading-relaxed sm:text-base">
             Our board-certified physicians specialize in hormone optimization and peptide therapy for men and women
           </p>
         </motion.div>
@@ -78,27 +78,27 @@ const ProviderSection = () => {
               transition={{ delay: index * 0.1 }}
             >
               <Card variant="glass" className="p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-warm-stone/10 flex-shrink-0">
-                  <Stethoscope className="h-10 w-10 text-warm-stone" />
+                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-deep-charcoal/10 flex-shrink-0">
+                  <Stethoscope className="h-10 w-10 text-deep-charcoal" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-display text-xl font-bold text-rich-black">
                     {provider.name}
                   </h3>
-                  <p className="text-warm-stone font-medium">{provider.title}</p>
+                  <p className="text-deep-charcoal font-medium">{provider.title}</p>
                   <div className="mt-2 flex flex-wrap justify-center sm:justify-start gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-success/10 px-3 py-1 text-xs font-medium text-success">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800">
                       <BadgeCheck className="h-3 w-3" />
                       {provider.credentials}
                     </span>
-                    <span className="inline-flex rounded-full bg-warm-stone/10 px-3 py-1 text-xs font-medium text-warm-stone">
+                    <span className="inline-flex rounded-full bg-warm-stone/15 px-3 py-1 text-xs font-semibold text-deep-charcoal">
                       {provider.specialty}
                     </span>
                   </div>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="mt-4 min-h-[48px] px-6 border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10 active:bg-warm-stone/20 sm:min-h-[40px] sm:px-4 text-[15px] sm:text-sm font-medium"
+                    className="mt-4 min-h-[48px] px-6 border-deep-charcoal/30 text-deep-charcoal hover:bg-deep-charcoal/10 active:bg-deep-charcoal/20 sm:min-h-[40px] sm:px-4 text-[15px] sm:text-sm font-medium"
                     onClick={() => setShowBooking(!showBooking)}
                   >
                     {showBooking ? "Close Booking" : "Book with Dr. Myers"}
@@ -121,9 +121,9 @@ const ProviderSection = () => {
                         style={{ minHeight: '600px' }}
                         title="Book an appointment with Dr. Paul Myers"
                       />
-                      <p className="py-2 text-center text-xs text-warm-gray">
+                      <p className="py-2 text-center text-xs text-deep-charcoal/70">
                         Booking Provided by{' '}
-                        <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-warm-stone">Healthie</a>
+                        <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-deep-charcoal">Healthie</a>
                       </p>
                     </div>
                   </motion.div>
@@ -144,13 +144,13 @@ const ProviderSection = () => {
               transition={{ delay: index * 0.1 }}
             >
               <Card variant="glass" className="p-4 sm:p-5 md:p-6 h-full text-center">
-                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-warm-stone/10 sm:mb-4 sm:h-12 sm:w-12">
-                  <credential.icon className="h-5 w-5 text-warm-stone sm:h-6 sm:w-6" />
+                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-deep-charcoal/10 sm:mb-4 sm:h-12 sm:w-12">
+                  <credential.icon className="h-5 w-5 text-deep-charcoal sm:h-6 sm:w-6" />
                 </div>
                 <h3 className="font-display text-[14px] font-semibold text-rich-black mb-1.5 leading-tight sm:text-base sm:mb-2">
                   {credential.title}
                 </h3>
-                <p className="text-[13px] text-warm-gray leading-relaxed sm:text-sm">
+                <p className="text-[13px] text-deep-charcoal/80 leading-relaxed sm:text-sm">
                   {credential.description}
                 </p>
               </Card>

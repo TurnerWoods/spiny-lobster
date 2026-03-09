@@ -118,14 +118,14 @@ const AnimatedNumber = memo(({
   // Special handling for range values like "3-5"
   if (isRange) {
     return (
-      <span className="font-display text-2xl font-bold text-pure-white sm:text-3xl md:text-4xl">
+      <span className="font-display text-2xl font-bold text-white drop-shadow-sm sm:text-3xl md:text-4xl">
         3-5{suffix}
       </span>
     );
   }
 
   return (
-    <span className="font-display text-2xl font-bold text-pure-white sm:text-3xl md:text-4xl">
+    <span className="font-display text-2xl font-bold text-white drop-shadow-sm sm:text-3xl md:text-4xl">
       {formatNumber(displayValue)}{suffix}
     </span>
   );
@@ -165,7 +165,7 @@ const StatsCounter = () => {
       initial={containerAnimation.initial}
       animate={containerAnimation.animate}
       transition={containerAnimation.transition}
-      className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-pure-white/20 bg-pure-white/20 p-4 shadow-xl backdrop-blur-lg sm:mt-16 sm:gap-6 sm:p-6 md:grid-cols-4 md:gap-8 md:p-8 contain-paint"
+      className="mt-12 grid grid-cols-2 gap-4 rounded-2xl border border-white/30 bg-black/40 p-4 shadow-xl backdrop-blur-lg sm:mt-16 sm:gap-6 sm:p-6 md:grid-cols-4 md:gap-8 md:p-8 contain-paint"
     >
       {stats.map((stat, index) => (
         <motion.div
@@ -184,7 +184,7 @@ const StatsCounter = () => {
             delay={reduceMotion ? 0 : index * 100}
             reduceMotion={reduceMotion}
           />
-          <p className="mt-1 text-xs font-medium text-pure-white/90 sm:mt-2 sm:text-sm">{stat.label}</p>
+          <p className="mt-1 text-xs font-semibold text-white drop-shadow-sm sm:mt-2 sm:text-sm">{stat.label}</p>
         </motion.div>
       ))}
     </motion.div>

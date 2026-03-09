@@ -139,9 +139,9 @@ const FAQItem = ({
           transition={{ duration: duration.normal, ease: easing.smooth }}
         >
           {isOpen ? (
-            <Minus className="h-5 w-5 text-warm-stone" />
+            <Minus className="h-5 w-5 text-deep-charcoal" />
           ) : (
-            <Plus className="h-5 w-5 text-warm-stone" />
+            <Plus className="h-5 w-5 text-deep-charcoal" />
           )}
         </motion.span>
       </motion.button>
@@ -154,7 +154,7 @@ const FAQItem = ({
             exit="exit"
             className="overflow-hidden"
           >
-            <p className="text-[15px] leading-relaxed pb-5 text-muted-foreground sm:text-base sm:pb-6 md:pb-8">
+            <p className="text-[15px] leading-relaxed pb-5 text-warm-gray sm:text-base sm:pb-6 md:pb-8">
               {faq.answer}
             </p>
           </motion.div>
@@ -181,7 +181,7 @@ const FAQ = () => {
           >
             <motion.span
               variants={headerItem}
-              className="text-[13px] uppercase tracking-[0.15em] mb-4 block text-warm-stone/60 sm:text-xs sm:tracking-[0.2em] sm:mb-6"
+              className="text-[13px] uppercase tracking-[0.15em] mb-4 block text-warm-gray sm:text-xs sm:tracking-[0.2em] sm:mb-6"
             >
               Questions
             </motion.span>

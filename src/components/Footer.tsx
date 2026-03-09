@@ -84,15 +84,15 @@ const Footer = () => {
                 className="h-8 w-auto max-w-full sm:h-10 md:h-12"
               />
             </Link>
-            <p className="mb-6 max-w-sm text-[15px] leading-relaxed text-muted-foreground sm:text-base">
+            <p className="mb-6 max-w-sm text-[15px] leading-relaxed text-rich-black/70 sm:text-base">
               Premium hormone and peptide therapy for men and women. Physician-led care, delivered to your door.
             </p>
 
             {/* Contact Info - Improved touch targets (min 48px height) */}
-            <div className="mb-6 -mx-2 space-y-1 text-sm text-muted-foreground">
+            <div className="mb-6 -mx-2 space-y-1 text-sm text-rich-black/70">
               <a
                 href="tel:512-270-8701"
-                className="group flex min-h-[48px] items-center gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10"
+                className="group flex min-h-[48px] items-center gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-warm-stone/10 hover:text-deep-charcoal active:bg-warm-stone/15"
               >
                 <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/15">
                   <Phone className="h-4 w-4 text-warm-stone" />
@@ -101,7 +101,7 @@ const Footer = () => {
               </a>
               <a
                 href="mailto:info@elevarehealth.com"
-                className="group flex min-h-[48px] items-center gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-warm-stone/5 hover:text-warm-stone active:bg-warm-stone/10"
+                className="group flex min-h-[48px] items-center gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-warm-stone/10 hover:text-deep-charcoal active:bg-warm-stone/15"
               >
                 <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/15">
                   <Mail className="h-4 w-4 text-warm-stone" />
@@ -124,7 +124,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-warm-gray/30 bg-pure-white text-muted-foreground transition-all hover:border-warm-stone/50 hover:bg-warm-stone/5 hover:text-warm-stone active:scale-95 active:bg-warm-stone/10 sm:h-10 sm:w-10"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-warm-gray/40 bg-pure-white text-deep-charcoal transition-all hover:border-warm-stone hover:bg-warm-stone/10 hover:text-rich-black active:scale-95 active:bg-warm-stone/15 sm:h-10 sm:w-10"
                   aria-label={`Follow us on ${social.name}`}
                 >
                   <social.icon className="h-5 w-5 sm:h-4 sm:w-4" />
@@ -143,7 +143,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone hover:underline active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-deep-charcoal/80 transition-colors hover:bg-warm-stone/10 hover:text-rich-black hover:underline active:bg-warm-stone/15 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
                   >
                     {item.name}
                   </Link>
@@ -162,7 +162,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone hover:underline active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-deep-charcoal/80 transition-colors hover:bg-warm-stone/10 hover:text-rich-black hover:underline active:bg-warm-stone/15 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
                   >
                     {item.name}
                   </Link>
@@ -181,7 +181,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone hover:underline active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-deep-charcoal/80 transition-colors hover:bg-warm-stone/10 hover:text-rich-black hover:underline active:bg-warm-stone/15 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
                   >
                     {item.name}
                   </Link>
@@ -200,7 +200,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-warm-stone/5 hover:text-warm-stone hover:underline active:bg-warm-stone/10 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
+                    className="block min-h-[44px] rounded-lg px-2 py-2.5 text-[15px] text-deep-charcoal/80 transition-colors hover:bg-warm-stone/10 hover:text-rich-black hover:underline active:bg-warm-stone/15 sm:min-h-0 sm:px-0 sm:py-1 sm:text-sm"
                   >
                     {item.name}
                   </Link>
@@ -214,18 +214,18 @@ const Footer = () => {
         <div className="mt-10 border-t border-warm-gray/20 pt-6 sm:mt-12 sm:pt-8 lg:mt-16">
           <div className="flex flex-col items-center gap-5 text-center sm:gap-4 md:flex-row md:justify-between md:text-left">
             <div className="flex flex-col items-center gap-1.5 md:items-start">
-              <p className="text-[15px] text-muted-foreground sm:text-sm">
+              <p className="text-[15px] text-deep-charcoal/80 sm:text-sm">
                 {currentYear} Elevare Health. All rights reserved.
               </p>
-              <p className="text-sm text-muted-foreground sm:text-xs">
+              <p className="text-sm text-deep-charcoal/70 sm:text-xs">
                 Serving patients in 30+ states across the United States.
               </p>
             </div>
             <div className="flex flex-col items-center gap-1.5 md:items-end">
-              <p className="text-[15px] font-medium text-rich-black/80 sm:text-sm">
+              <p className="text-[15px] font-medium text-rich-black sm:text-sm">
                 Medical Director: Paul Myers, DO
               </p>
-              <p className="text-sm text-muted-foreground sm:text-xs">
+              <p className="text-sm text-deep-charcoal/80 sm:text-xs">
                 Board Certified Physician
               </p>
             </div>
@@ -233,9 +233,9 @@ const Footer = () => {
         </div>
 
         {/* Disclaimer - Better mobile padding and text sizing */}
-        <div className="mt-6 rounded-2xl border border-warm-gray/25 bg-gradient-to-br from-pure-white/80 to-soft-linen/40 p-4 backdrop-blur-sm sm:mt-8 sm:p-6">
-          <p className="text-center text-xs leading-relaxed text-muted-foreground sm:text-sm sm:leading-relaxed">
-            <span className="font-medium text-rich-black/70">Important Notice:</span>{" "}
+        <div className="mt-6 rounded-2xl border border-warm-gray/30 bg-gradient-to-br from-pure-white/80 to-soft-linen/40 p-4 backdrop-blur-sm sm:mt-8 sm:p-6">
+          <p className="text-center text-xs leading-relaxed text-deep-charcoal/80 sm:text-sm sm:leading-relaxed">
+            <span className="font-semibold text-rich-black">Important Notice:</span>{" "}
             Elevare Health MSO LLC does not practice medicine or dispense medications. All medical care is provided by
             independently licensed physicians. Compounded medications are prepared by licensed pharmacies and are not
             FDA-approved. Individual results may vary. Telehealth services are available where permitted by state law.

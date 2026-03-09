@@ -8,11 +8,16 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-warm-stone/20 bg-warm-stone/10 text-warm-stone hover:bg-warm-stone/20",
-        secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        // Default: Darker text for better contrast on light background (WCAG AA compliant)
+        default: "border-warm-stone/30 bg-warm-stone/10 text-foreground hover:bg-warm-stone/20",
+        // Secondary: Uses system colors with sufficient contrast
+        secondary: "border-secondary-foreground/20 bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        // Destructive: Dark text on warm background for readability
         destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "border-warm-stone/30 text-warm-stone",
-        glass: "border-pure-white/30 bg-pure-white/15 text-pure-white backdrop-blur-md",
+        // Outline: Darker border and text for clear visibility
+        outline: "border-foreground/40 text-foreground bg-transparent",
+        // Glass: Dark text on frosted background for legibility
+        glass: "border-foreground/20 bg-pure-white/70 text-foreground backdrop-blur-md dark:bg-pure-white/20 dark:text-pure-white dark:border-pure-white/30",
       },
     },
     defaultVariants: {

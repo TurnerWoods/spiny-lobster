@@ -20,7 +20,8 @@ const TooltipContent = React.forwardRef<
       collisionPadding={collisionPadding}
       avoidCollisions={true}
       className={cn(
-        "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md",
+        "z-50 overflow-hidden rounded-md border border-slate-700 bg-slate-900 px-3 py-1.5 text-sm text-white shadow-md",
+        "dark:border-slate-600 dark:bg-slate-800 dark:text-slate-50",
         "select-none",
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",

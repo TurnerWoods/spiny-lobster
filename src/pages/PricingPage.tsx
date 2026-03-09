@@ -64,7 +64,7 @@ const TreatmentStarRating = ({ rating }: { rating: number }) => (
         }`}
       />
     ))}
-    <span className="ml-1 text-xs text-muted-foreground">{rating}</span>
+    <span className="ml-1 text-xs font-medium text-rich-black/70">{rating}</span>
   </div>
 );
 
@@ -206,11 +206,11 @@ const PricingPage = () => {
                       <h3 className="mb-2 font-display text-2xl font-semibold tracking-normal text-rich-black">
                         {option.name}
                       </h3>
-                      <p className="text-stat mb-4 text-4xl text-warm-stone">{option.price}</p>
-                      <p className="text-body-sm mb-6 text-warm-gray">{option.description}</p>
+                      <p className="text-stat mb-4 text-4xl font-bold text-rich-black">{option.price}</p>
+                      <p className="text-body-sm mb-6 text-rich-black/70">{option.description}</p>
                       <ul className="space-y-3">
                         {option.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-3 text-sm text-warm-gray">
+                          <li key={i} className="flex items-center gap-3 text-sm text-rich-black/80">
                             <div className="flex h-5 w-5 items-center justify-center rounded-full bg-warm-stone/10">
                               <Check className="h-3 w-3 text-warm-stone" />
                             </div>
@@ -268,11 +268,11 @@ const PricingPage = () => {
                           <h3 className="font-display text-xl font-semibold tracking-normal text-rich-black">
                             {treatment.name}
                           </h3>
-                          <p className="text-stat whitespace-nowrap text-xl text-warm-stone">
+                          <p className="text-stat whitespace-nowrap text-xl font-bold text-rich-black">
                             {treatment.price}
                           </p>
                         </div>
-                        <p className="text-body-sm text-warm-gray">{treatment.description}</p>
+                        <p className="text-body-sm text-rich-black/70">{treatment.description}</p>
                         <TreatmentStarRating rating={treatment.rating} />
                       </div>
                     </Card>
@@ -313,7 +313,7 @@ const PricingPage = () => {
                         <div className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
                           <Check className="h-3 w-3 text-warm-stone" />
                         </div>
-                        <span className="text-warm-gray">{item}</span>
+                        <span className="text-rich-black/80">{item}</span>
                       </div>
                     ))}
                   </div>

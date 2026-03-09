@@ -20,7 +20,7 @@ const SheetOverlay = React.forwardRef<
   <SheetPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-rich-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className,
     )}
     aria-hidden="true"
@@ -30,7 +30,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "fixed z-[51] gap-4 bg-pure-white backdrop-blur-xl border-pure-white/30 p-6 shadow-2xl transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-400",
+  "fixed z-[51] gap-4 bg-background text-foreground backdrop-blur-xl border-border p-6 shadow-2xl transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-400",
   {
     variants: {
       side: {
@@ -65,10 +65,10 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
       >
         {children}
         <SheetPrimitive.Close
-          className="absolute right-3 top-3 sm:right-4 sm:top-4 flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full bg-neutral-gray/10 hover:bg-neutral-gray/20 active:bg-neutral-gray/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+          className="absolute right-3 top-3 sm:right-4 sm:top-4 flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full bg-muted/50 hover:bg-muted active:bg-muted/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
           aria-label="Close"
         >
-          <X className="h-5 w-5 text-rich-black/70" aria-hidden="true" />
+          <X className="h-5 w-5 text-foreground" aria-hidden="true" />
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>
     </SheetPortal>
@@ -98,7 +98,7 @@ const SheetDescription = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
 >(({ className, ...props }, ref) => (
-  <SheetPrimitive.Description ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
+  <SheetPrimitive.Description ref={ref} className={cn("text-sm text-foreground/80", className)} {...props} />
 ));
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
 

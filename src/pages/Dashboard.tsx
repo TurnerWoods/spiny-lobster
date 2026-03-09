@@ -71,12 +71,12 @@ const getTreatmentImage = (type: string): string | null => {
 };
 
 const statusConfig: Record<string, { label: string; color: string; icon: any }> = {
-  pending: { label: "Pending Review", color: "bg-warm-stone/20 text-warm-stone border border-warm-stone/30", icon: Clock },
-  under_review: { label: "Under Review", color: "bg-warm-stone/30 text-warm-stone border border-warm-stone/40", icon: AlertCircle },
-  approved: { label: "Approved", color: "bg-success/10 text-success border border-success/30", icon: CheckCircle2 },
-  active: { label: "Active", color: "bg-warm-stone/10 text-warm-stone border border-warm-stone/20", icon: CheckCircle2 },
-  completed: { label: "Completed", color: "bg-muted text-muted-foreground border border-border", icon: CheckCircle2 },
-  cancelled: { label: "Cancelled", color: "bg-destructive/10 text-destructive border border-destructive/30", icon: AlertCircle },
+  pending: { label: "Pending Review", color: "bg-amber-100 text-amber-800 border border-amber-300", icon: Clock },
+  under_review: { label: "Under Review", color: "bg-amber-100 text-amber-900 border border-amber-400", icon: AlertCircle },
+  approved: { label: "Approved", color: "bg-emerald-100 text-emerald-800 border border-emerald-300", icon: CheckCircle2 },
+  active: { label: "Active", color: "bg-emerald-100 text-emerald-800 border border-emerald-300", icon: CheckCircle2 },
+  completed: { label: "Completed", color: "bg-slate-100 text-slate-700 border border-slate-300", icon: CheckCircle2 },
+  cancelled: { label: "Cancelled", color: "bg-red-100 text-red-800 border border-red-300", icon: AlertCircle },
 };
 
 const Dashboard = () => {
@@ -208,14 +208,14 @@ const Dashboard = () => {
           </Link>
           <nav className="flex items-center gap-1 sm:gap-2" role="navigation" aria-label="Main navigation">
             <Link to="/">
-              <Button variant="ghost" size="sm" className="min-h-[44px] min-w-[44px] px-3 text-warm-gray hover:text-rich-black hover:bg-warm-stone/10">
+              <Button variant="ghost" size="sm" className="min-h-[44px] min-w-[44px] px-3 text-slate-700 hover:text-rich-black hover:bg-warm-stone/10">
                 <Home className="h-5 w-5 sm:mr-2 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline text-sm">Home</span>
+                <span className="hidden sm:inline text-sm font-medium">Home</span>
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" onClick={handleSignOut} className="min-h-[44px] min-w-[44px] px-3 text-warm-gray hover:text-rich-black hover:bg-warm-stone/10">
+            <Button variant="ghost" size="sm" onClick={handleSignOut} className="min-h-[44px] min-w-[44px] px-3 text-slate-700 hover:text-rich-black hover:bg-warm-stone/10">
               <LogOut className="h-5 w-5 sm:mr-2 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline text-sm">Sign Out</span>
+              <span className="hidden sm:inline text-sm font-medium">Sign Out</span>
             </Button>
           </nav>
         </div>
@@ -252,14 +252,14 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-6 sm:mb-8"
         >
-          <div className="mb-3 sm:mb-4 inline-flex items-center gap-2 rounded-full border border-warm-stone/20 bg-pure-white/80 px-3 sm:px-4 py-1.5 sm:py-2 shadow-sm backdrop-blur-sm">
-            <Activity className="h-4 w-4 text-warm-stone" />
-            <span className="text-xs sm:text-sm font-medium text-warm-stone">Patient Dashboard</span>
+          <div className="mb-3 sm:mb-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-pure-white/80 px-3 sm:px-4 py-1.5 sm:py-2 shadow-sm backdrop-blur-sm">
+            <Activity className="h-4 w-4 text-slate-600" />
+            <span className="text-xs sm:text-sm font-medium text-slate-700">Patient Dashboard</span>
           </div>
           <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-rich-black leading-tight">
             Welcome back, {firstName}!
           </h1>
-          <p className="mt-2 text-sm sm:text-base text-warm-gray leading-relaxed">
+          <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
             Track your treatments and manage your health journey
           </p>
         </motion.div>
@@ -272,13 +272,13 @@ const Dashboard = () => {
           className="mb-8 sm:mb-10 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2"
         >
           <Link to="/intake" className="group block min-h-[72px]">
-            <Card variant="glass" className="flex h-full items-center gap-3 sm:gap-4 p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 active:scale-[0.98]">
-              <div className="flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
-                <Plus className="h-5 w-5 sm:h-6 sm:w-6 text-warm-stone" />
+            <Card variant="glass" className="flex h-full items-center gap-3 sm:gap-4 p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-slate-300 active:scale-[0.98]">
+              <div className="flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 transition-colors group-hover:bg-slate-200">
+                <Plus className="h-5 w-5 sm:h-6 sm:w-6 text-slate-700" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-rich-black text-sm sm:text-base">Start Treatment</p>
-                <p className="text-xs sm:text-sm text-warm-gray">Complete intake</p>
+                <p className="text-xs sm:text-sm text-slate-600">Complete intake</p>
               </div>
             </Card>
           </Link>
@@ -289,18 +289,18 @@ const Dashboard = () => {
             }}
             className="text-left group w-full min-h-[72px]"
           >
-            <Card variant="glass" className="flex h-full items-center gap-3 sm:gap-4 p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 active:scale-[0.98]">
-              <div className="relative flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10 transition-colors group-hover:bg-warm-stone/20">
-                <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 text-warm-stone" />
+            <Card variant="glass" className="flex h-full items-center gap-3 sm:gap-4 p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-slate-300 active:scale-[0.98]">
+              <div className="relative flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 transition-colors group-hover:bg-slate-200">
+                <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 text-slate-700" />
                 {unreadCount > 0 && (
-                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-bold text-pure-white animate-pulse">
+                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white animate-pulse">
                     {unreadCount}
                   </span>
                 )}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-rich-black text-sm sm:text-base">Messages</p>
-                <p className="text-xs sm:text-sm text-warm-gray truncate">
+                <p className="text-xs sm:text-sm text-slate-600 truncate">
                   {unreadCount > 0 ? `${unreadCount} unread` : "Chat with care team"}
                 </p>
               </div>
@@ -317,11 +317,11 @@ const Dashboard = () => {
         >
           <div className="mb-4 sm:mb-5 flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-warm-stone flex-shrink-0" />
+              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 flex-shrink-0" />
               <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-rich-black truncate">My Treatments</h2>
             </div>
             <Link to="/#treatments" className="flex-shrink-0">
-              <Button variant="outline" size="sm" className="min-h-[44px] px-3 sm:px-4 border-warm-stone/30 text-warm-stone hover:bg-warm-stone/10 hover:border-warm-stone/50 text-xs sm:text-sm">
+              <Button variant="outline" size="sm" className="min-h-[44px] px-3 sm:px-4 border-slate-300 text-slate-700 hover:bg-slate-100 hover:border-slate-400 text-xs sm:text-sm font-medium">
                 <Plus className="mr-1.5 sm:mr-2 h-4 w-4" />
                 <span className="hidden xs:inline">New </span>Treatment
               </Button>
@@ -330,15 +330,15 @@ const Dashboard = () => {
 
           {treatments.length === 0 ? (
             <Card variant="glass" className="p-6 sm:p-10 text-center">
-              <div className="mx-auto mb-4 sm:mb-5 flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-gradient-to-br from-warm-stone/10 to-warm-stone/20">
-                <Pill className="h-8 w-8 sm:h-10 sm:w-10 text-warm-stone" />
+              <div className="mx-auto mb-4 sm:mb-5 flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-gradient-to-br from-slate-100 to-slate-200">
+                <Pill className="h-8 w-8 sm:h-10 sm:w-10 text-slate-600" />
               </div>
               <h3 className="mb-2 sm:mb-3 font-display text-lg sm:text-xl font-semibold text-rich-black">No treatments yet</h3>
-              <p className="mb-5 sm:mb-6 max-w-sm mx-auto text-sm sm:text-base text-warm-gray leading-relaxed">
+              <p className="mb-5 sm:mb-6 max-w-sm mx-auto text-sm sm:text-base text-slate-600 leading-relaxed">
                 Start your personalized health journey by completing a free consultation with our providers
               </p>
               <Link to="/#treatments">
-                <Button className="min-h-[44px] px-6 bg-warm-stone text-pure-white shadow-lg hover:bg-warm-stone/90 transition-all duration-300 hover:shadow-xl active:scale-[0.98]">
+                <Button className="min-h-[44px] px-6 bg-slate-800 text-white shadow-lg hover:bg-slate-700 transition-all duration-300 hover:shadow-xl active:scale-[0.98]">
                   Browse Treatments
                 </Button>
               </Link>
@@ -357,33 +357,33 @@ const Dashboard = () => {
                     transition={{ delay: 0.1 * index }}
                   >
                     <Link to={`/treatment/${treatment.id}`} className="group block min-h-[72px]">
-                      <Card variant="glass" className="flex items-center justify-between p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-warm-stone/30 active:scale-[0.99]">
+                      <Card variant="glass" className="flex items-center justify-between p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-slate-300 active:scale-[0.99]">
                         <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
                           {(() => {
                             const img = getTreatmentImage(treatment.treatment_type);
                             return img ? (
-                              <div className="h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 overflow-hidden rounded-full bg-warm-stone/5">
+                              <div className="h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 overflow-hidden rounded-full bg-slate-50">
                                 <img src={img} alt={treatment.treatment_type} className="h-full w-full object-cover" />
                               </div>
                             ) : (
-                              <div className="flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-warm-stone/10">
-                                <Pill className="h-5 w-5 sm:h-6 sm:w-6 text-warm-stone" />
+                              <div className="flex h-11 w-11 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full bg-slate-100">
+                                <Pill className="h-5 w-5 sm:h-6 sm:w-6 text-slate-600" />
                               </div>
                             );
                           })()}
                           <div className="min-w-0 flex-1">
                             <p className="font-semibold text-rich-black text-sm sm:text-base truncate">{treatment.treatment_type}</p>
-                            <p className="text-xs sm:text-sm text-warm-gray truncate">
+                            <p className="text-xs sm:text-sm text-slate-600 truncate">
                               {treatment.medication || "Medication pending"}
                             </p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-2">
-                          <div className={`flex items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-3 py-1.5 text-xs font-medium whitespace-nowrap ${status.color}`}>
+                          <div className={`flex items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-3 py-1.5 text-xs font-semibold whitespace-nowrap ${status.color}`}>
                             <StatusIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                             <span className="hidden sm:inline">{status.label}</span>
                           </div>
-                          <ChevronRight className="h-5 w-5 text-warm-stone/60 transition-transform group-hover:translate-x-1 flex-shrink-0" />
+                          <ChevronRight className="h-5 w-5 text-slate-500 transition-transform group-hover:translate-x-1 flex-shrink-0" />
                         </div>
                       </Card>
                     </Link>
@@ -402,15 +402,15 @@ const Dashboard = () => {
           className="mt-8 sm:mt-10"
         >
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
-            <Package className="h-4 w-4 sm:h-5 sm:w-5 text-warm-stone flex-shrink-0" />
+            <Package className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 flex-shrink-0" />
             <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-rich-black">Recent Activity</h2>
           </div>
           <Card variant="glass" className="p-6 sm:p-8">
             <div className="flex flex-col items-center gap-3 sm:gap-4 text-center">
-              <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-warm-stone/10">
-                <Clock className="h-6 w-6 sm:h-7 sm:w-7 text-warm-stone/60" />
+              <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-slate-100">
+                <Clock className="h-6 w-6 sm:h-7 sm:w-7 text-slate-500" />
               </div>
-              <p className="text-sm sm:text-base text-warm-gray max-w-sm leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-600 max-w-sm leading-relaxed">
                 No recent activity. Start a treatment to see updates and track your progress here.
               </p>
             </div>

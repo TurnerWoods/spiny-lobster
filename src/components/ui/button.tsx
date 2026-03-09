@@ -7,57 +7,58 @@ import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
   // Base styles with premium transitions
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:shrink-0 select-none",
+  // Disabled opacity increased from 50 to 60 for better legibility while still appearing disabled
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:text-current select-none",
   {
     variants: {
       variant: {
-        // Primary CTA - Gold accent for premium feel
+        // Primary CTA - Gold accent with dark text for WCAG AA contrast (4.5:1+)
         default:
-          "bg-[#C9A962] text-deep-charcoal font-semibold shadow-md hover:bg-[#d4b872] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] active:shadow-sm",
+          "bg-[#C9A962] text-[#1a1a1a] font-semibold shadow-md hover:bg-[#b89952] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] active:shadow-sm",
 
-        // Primary Dark - Deep charcoal for contrast
+        // Primary Dark - Deep charcoal with white text for excellent contrast
         primary:
-          "bg-deep-charcoal text-pure-white font-semibold shadow-md hover:bg-deep-charcoal/90 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] active:shadow-sm",
+          "bg-deep-charcoal text-white font-semibold shadow-md hover:bg-[#1f1c21] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] active:shadow-sm",
 
-        // Secondary - Warm stone for softer actions
+        // Secondary - Darker warm stone (#5a5147) for better contrast with white text
         secondary:
-          "bg-warm-stone text-pure-white font-semibold shadow-md hover:bg-warm-stone/90 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] active:shadow-sm",
+          "bg-[#5a5147] text-white font-semibold shadow-md hover:bg-[#4a4239] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] active:shadow-sm",
 
-        // Outline - Elegant bordered style
+        // Outline - Darker text color (#4a4239) for better readability on light backgrounds
         outline:
-          "border-2 border-warm-stone/30 bg-transparent text-warm-stone hover:border-warm-stone hover:bg-warm-stone/5 active:bg-warm-stone/10",
+          "border-2 border-[#5a5147]/40 bg-transparent text-[#4a4239] hover:border-[#5a5147] hover:bg-[#5a5147]/10 active:bg-[#5a5147]/15",
 
-        // Outline Light - For dark backgrounds
+        // Outline Light - For dark backgrounds with better contrast
         "outline-light":
-          "border-2 border-pure-white/40 bg-pure-white/10 text-pure-white backdrop-blur-sm hover:border-pure-white/60 hover:bg-pure-white/20 active:bg-pure-white/25",
+          "border-2 border-white/50 bg-white/15 text-white backdrop-blur-sm hover:border-white/70 hover:bg-white/25 active:bg-white/30",
 
-        // Ghost - Minimal, text-only feel
+        // Ghost - Darker text (#4a4239) for better contrast on light backgrounds
         ghost:
-          "text-warm-stone hover:bg-warm-stone/10 hover:text-warm-stone active:bg-warm-stone/15",
+          "text-[#4a4239] hover:bg-[#5a5147]/15 hover:text-[#3a3229] active:bg-[#5a5147]/20",
 
-        // Ghost Light - For dark backgrounds
+        // Ghost Light - For dark backgrounds with full opacity text
         "ghost-light":
-          "text-pure-white/90 hover:bg-pure-white/10 hover:text-pure-white active:bg-pure-white/15",
+          "text-white hover:bg-white/15 hover:text-white active:bg-white/20",
 
-        // Link - Underlined text style
+        // Link - Darker color for readability, maintains full contrast on hover
         link:
-          "text-warm-stone underline-offset-4 hover:underline hover:text-warm-stone/80",
+          "text-[#4a4239] underline-offset-4 hover:underline hover:text-[#3a3229]",
 
-        // Destructive - For dangerous actions
+        // Destructive - Ensure white text has sufficient contrast with red background
         destructive:
-          "bg-destructive text-destructive-foreground shadow-md hover:bg-destructive/90 hover:shadow-lg active:scale-[0.98]",
+          "bg-[#c45c3e] text-white shadow-md hover:bg-[#b04d30] hover:shadow-lg active:scale-[0.98]",
 
-        // Success - For positive actions
+        // Success - Dark text on gold for better contrast than white on gold
         success:
-          "bg-success text-pure-white font-semibold shadow-md hover:bg-success/90 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]",
+          "bg-[#4a7c59] text-white font-semibold shadow-md hover:bg-[#3d6849] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]",
 
-        // Premium - Gold with glow effect for hero CTAs
+        // Premium - Gold with dark text for excellent contrast
         premium:
-          "bg-[#C9A962] text-deep-charcoal font-semibold shadow-lg hover:bg-[#d4b872] hover:shadow-xl hover:shadow-[#C9A962]/20 hover:scale-[1.02] active:scale-[0.98] active:shadow-md",
+          "bg-[#C9A962] text-[#1a1a1a] font-semibold shadow-lg hover:bg-[#b89952] hover:shadow-xl hover:shadow-[#C9A962]/20 hover:scale-[1.02] active:scale-[0.98] active:shadow-md",
 
-        // Glass - Glassmorphic style
+        // Glass - Dark text on light glass for readability
         glass:
-          "bg-pure-white/80 backdrop-blur-md border border-pure-white/30 text-rich-black shadow-lg hover:bg-pure-white/90 hover:shadow-xl active:bg-pure-white",
+          "bg-white/85 backdrop-blur-md border border-white/40 text-[#1a1a1a] shadow-lg hover:bg-white/95 hover:shadow-xl active:bg-white",
       },
       size: {
         default: "h-10 px-5 py-2 text-sm [&_svg]:size-4",
