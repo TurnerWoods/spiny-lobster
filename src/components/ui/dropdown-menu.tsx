@@ -43,15 +43,16 @@ DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayNam
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
->(({ className, ...props }, ref) => (
+>(({ className, sideOffset = 2, ...props }, ref) => (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.SubContent
       ref={ref}
       role="menu"
+      sideOffset={sideOffset}
       avoidCollisions={true}
-      collisionPadding={8}
+      collisionPadding={16}
       className={cn(
-        "z-[9999] min-w-[8rem] overflow-hidden rounded-xl border border-pure-white/30 bg-pure-white/90 backdrop-blur-xl p-1 text-foreground shadow-xl",
+        "z-[9999] min-w-[8rem] max-h-[min(400px,var(--radix-dropdown-menu-content-available-height))] overflow-y-auto overflow-x-hidden rounded-xl border border-warm-stone/20 bg-pure-white p-1.5 text-foreground shadow-2xl",
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
         "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         className,
@@ -65,16 +66,17 @@ DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayNam
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
+>(({ className, sideOffset = 4, align = "start", ...props }, ref) => (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.Content
       ref={ref}
       role="menu"
       sideOffset={sideOffset}
+      align={align}
       avoidCollisions={true}
-      collisionPadding={8}
+      collisionPadding={16}
       className={cn(
-        "z-[9999] min-w-[8rem] overflow-hidden rounded-xl border border-pure-white/30 bg-pure-white/90 backdrop-blur-xl p-1 text-foreground shadow-xl",
+        "z-[9999] min-w-[8rem] max-h-[min(400px,var(--radix-dropdown-menu-content-available-height))] overflow-y-auto overflow-x-hidden rounded-xl border border-warm-stone/20 bg-pure-white p-1.5 text-foreground shadow-2xl",
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
         "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         className,
