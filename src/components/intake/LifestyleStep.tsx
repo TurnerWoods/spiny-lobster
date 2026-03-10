@@ -41,10 +41,10 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
     <div className="space-y-8">
       <div>
         <h2 className="font-display text-xl font-bold text-rich-black">Lifestyle Assessment</h2>
-        <p className="mt-1 text-foreground/70">
+        <p className="mt-1 text-foreground/75">
           Help us understand your daily habits to optimize your treatment plan
         </p>
-        <div className="mt-3 flex items-start gap-2 rounded-lg bg-soft-linen/50 border border-warm-stone/10 p-3 text-sm text-foreground/70">
+        <div className="mt-3 flex items-start gap-2 rounded-lg bg-soft-linen/50 border border-warm-stone/10 p-3 text-sm text-foreground/75">
           <Info className="h-4 w-4 text-warm-stone mt-0.5 flex-shrink-0" />
           <span>These fields are optional but help us personalize your recommendations.</span>
         </div>
@@ -56,7 +56,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
           <Dumbbell className="h-5 w-5 text-warm-stone" />
           <Label className="text-base font-semibold text-rich-black">
             How often do you exercise?
-            <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+            <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
           </Label>
         </div>
         <RadioGroup
@@ -72,7 +72,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
                 className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-4 min-h-[72px] text-center backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md active:scale-[0.98]"
               >
                 <span className="font-semibold text-rich-black">{option.label}</span>
-                <span className="text-xs text-foreground/70 mt-1">{option.description}</span>
+                <span className="text-xs text-foreground/75 mt-1">{option.description}</span>
               </Label>
             </div>
           ))}
@@ -85,7 +85,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
           <Brain className="h-5 w-5 text-warm-stone" />
           <Label className="text-base font-semibold text-rich-black">
             What's your typical stress level?
-            <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+            <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
           </Label>
         </div>
         <RadioGroup
@@ -101,7 +101,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
                 className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-warm-stone/20 bg-pure-white/60 p-4 min-h-[72px] text-center backdrop-blur-sm transition-all duration-200 hover:border-warm-stone/40 hover:bg-pure-white/80 hover:shadow-md peer-data-[state=checked]:border-warm-stone peer-data-[state=checked]:bg-warm-stone/10 peer-data-[state=checked]:shadow-md active:scale-[0.98]"
               >
                 <span className="font-semibold text-rich-black">{option.label}</span>
-                <span className="text-xs text-foreground/70 mt-1">{option.description}</span>
+                <span className="text-xs text-foreground/75 mt-1">{option.description}</span>
               </Label>
             </div>
           ))}
@@ -114,7 +114,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
           <Moon className="h-5 w-5 text-warm-stone" />
           <Label htmlFor="sleepHours" className="text-base font-semibold text-rich-black">
             Average hours of sleep per night
-            <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+            <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
           </Label>
         </div>
         <Select value={data.sleepHours} onValueChange={(value) => onChange({ sleepHours: value })}>
@@ -130,7 +130,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
           </SelectContent>
         </Select>
         {data.sleepHours && (data.sleepHours === "less-than-5" || data.sleepHours === "5-6") && (
-          <p className="mt-2 text-xs text-foreground/70">
+          <p className="mt-2 text-xs text-foreground/75">
             Sleep impacts hormone levels. We'll factor this into your treatment plan.
           </p>
         )}
@@ -140,9 +140,9 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
       <div className="space-y-2">
         <Label htmlFor="dietDescription" className="text-base font-semibold text-rich-black">
           Describe your typical diet
-          <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+          <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
         </Label>
-        <p className="text-sm text-foreground/70 mb-2">
+        <p className="text-sm text-foreground/75 mb-2">
           A brief overview helps us provide nutrition guidance
         </p>
         <Textarea
@@ -153,7 +153,7 @@ const LifestyleStep = ({ data, onChange }: LifestyleStepProps) => {
           rows={3}
           className="resize-none"
         />
-        <p className="text-xs text-foreground/60">
+        <p className="text-xs text-foreground/70">
           Don't worry about being perfect - just give us a general idea of your eating habits.
         </p>
       </div>

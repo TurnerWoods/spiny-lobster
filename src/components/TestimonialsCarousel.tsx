@@ -73,7 +73,7 @@ const TestimonialsCarousel = () => {
             whileInView={{ opacity: 1 }}
             viewport={viewportSettings}
             transition={{ duration: duration.slow, ease: premiumEase }}
-            className="mb-8 block text-[13px] font-medium uppercase tracking-[0.2em] text-warm-stone sm:mb-12 sm:text-xs sm:tracking-[0.3em] md:mb-16"
+            className="mb-8 block text-[13px] font-medium uppercase tracking-[0.2em] text-rich-black/80 sm:mb-12 sm:text-xs sm:tracking-[0.3em] md:mb-16"
           >
             Testimonials
           </motion.span>
@@ -92,10 +92,10 @@ const TestimonialsCarousel = () => {
                 <blockquote className="mb-6 font-display text-[1.375rem] font-light leading-[1.5] text-rich-black xs:text-2xl sm:mb-8 sm:text-3xl sm:leading-relaxed md:text-4xl">
                   "{testimonials[currentIndex].quote}"
                 </blockquote>
-                <div className="text-[15px] font-normal text-warm-stone sm:text-sm">
+                <div className="text-[15px] font-normal sm:text-sm">
                   <span className="text-rich-black font-semibold">{testimonials[currentIndex].name}</span>
-                  <span className="mx-2 text-warm-stone">—</span>
-                  <span className="text-warm-stone">{testimonials[currentIndex].location}</span>
+                  <span className="mx-2 text-rich-black/80">—</span>
+                  <span className="text-rich-black/80">{testimonials[currentIndex].location}</span>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -111,13 +111,13 @@ const TestimonialsCarousel = () => {
                 aria-label={`Go to testimonial ${i + 1}`}
               >
                 <motion.span
-                  className="block h-2 rounded-full bg-warm-stone"
+                  className="block h-2 rounded-full bg-rich-black"
                   animate={{
                     width: i === currentIndex ? 32 : 8,
-                    opacity: i === currentIndex ? 1 : 0.5,
+                    opacity: i === currentIndex ? 1 : 0.8,
                   }}
                   transition={{ duration: duration.normal, ease: easing.smooth }}
-                  whileHover={{ opacity: i === currentIndex ? 1 : 0.7 }}
+                  whileHover={{ opacity: i === currentIndex ? 1 : 0.9 }}
                 />
               </button>
             ))}

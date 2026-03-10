@@ -32,7 +32,7 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
           </span>
         </div>
         {remainingSteps > 0 && (
-          <div className="flex items-center gap-1.5 text-xs text-foreground/60">
+          <div className="flex items-center gap-1.5 text-xs text-foreground/70">
             <Clock className="h-3.5 w-3.5" />
             <span>~{estimatedMinutes} min left</span>
           </div>
@@ -108,7 +108,7 @@ const IntakeFormProgress = ({ steps, currentStep }: IntakeFormProgressProps) => 
                   ? "text-rich-black font-semibold"
                   : currentStep > step.id
                   ? "text-foreground"
-                  : "text-foreground/60"
+                  : "text-foreground/70"
               )}
             >
               {step.name}

@@ -82,7 +82,7 @@ const FinalCTA = () => {
           {/* Headline - Mobile-optimized typography */}
           <motion.h2
             variants={contentItem}
-            className="mb-5 font-display text-[1.75rem] font-light leading-[1.2] tracking-tight text-soft-linen xs:text-3xl xs:mb-6 sm:text-4xl sm:mb-8 md:text-5xl lg:text-6xl"
+            className="mb-5 font-display text-[1.75rem] font-light leading-[1.2] tracking-tight text-soft-linen/95 xs:text-3xl xs:mb-6 sm:text-4xl sm:mb-8 md:text-5xl lg:text-6xl"
           >
             Ready to feel like
             <br />
@@ -92,7 +92,7 @@ const FinalCTA = () => {
           {/* Subtitle */}
           <motion.p
             variants={contentItem}
-            className="text-[15px] leading-relaxed mx-auto mb-8 max-w-md text-soft-linen/90 sm:text-base sm:mb-10 md:text-lg md:mb-12"
+            className="text-[15px] leading-relaxed mx-auto mb-8 max-w-md text-soft-linen/80 sm:text-base sm:mb-10 md:text-lg md:mb-12"
           >
             Start your assessment today. Takes five minutes. Completely confidential.
           </motion.p>
@@ -129,7 +129,7 @@ const FinalCTA = () => {
               <motion.div
                 key={badge.label}
                 variants={trustItem}
-                className="flex items-center justify-center gap-2 text-soft-linen/90 sm:justify-start min-h-[44px]"
+                className="flex items-center justify-center gap-2 text-soft-linen/75 sm:justify-start min-h-[44px]"
               >
                 <badge.icon className="h-4 w-4 flex-shrink-0 sm:h-4 sm:w-4" strokeWidth={1.5} />
                 <span className="text-[13px] font-light uppercase tracking-[0.08em] sm:text-xs sm:tracking-[0.15em] leading-tight">

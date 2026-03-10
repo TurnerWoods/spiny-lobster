@@ -48,10 +48,10 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
     <div className="space-y-8">
       <div>
         <h2 className="font-display text-xl font-bold text-rich-black">Medical History</h2>
-        <p className="mt-1 text-foreground/70">
+        <p className="mt-1 text-foreground/75">
           This information helps our providers create a safe, personalized treatment plan
         </p>
-        <div className="mt-3 flex items-start gap-2 rounded-lg bg-soft-linen/50 border border-warm-stone/10 p-3 text-sm text-foreground/70">
+        <div className="mt-3 flex items-start gap-2 rounded-lg bg-soft-linen/50 border border-warm-stone/10 p-3 text-sm text-foreground/75">
           <Info className="h-4 w-4 text-warm-stone mt-0.5 flex-shrink-0" />
           <span>All fields on this page are optional. Share what you're comfortable with - you can always add more details later.</span>
         </div>
@@ -61,7 +61,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       <div className="space-y-4">
         <Label className="text-base font-semibold text-rich-black">
           Basic Measurements
-          <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+          <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
         </Label>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -76,7 +76,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
                 onChange={(e) => onChange({ currentWeight: e.target.value })}
                 className="pr-10"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-foreground/60">lbs</span>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-foreground/70">lbs</span>
             </div>
           </div>
           <div className="space-y-2">
@@ -91,7 +91,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
                 onChange={(e) => onChange({ targetWeight: e.target.value })}
                 className="pr-10"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-foreground/60">lbs</span>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-foreground/70">lbs</span>
             </div>
           </div>
         </div>
@@ -135,9 +135,9 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       <div>
         <Label className="text-base font-semibold text-rich-black">
           Do you have any of the following conditions?
-          <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+          <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
         </Label>
-        <p className="mt-1 mb-3 text-sm text-foreground/70">Select all that apply</p>
+        <p className="mt-1 mb-3 text-sm text-foreground/75">Select all that apply</p>
         <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Medical conditions">
           {medicalConditionOptions.map((condition) => {
             const isSelected = data.medicalConditions.includes(condition);
@@ -182,9 +182,9 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       <div className="space-y-2">
         <Label htmlFor="currentMedications" className="text-base font-semibold text-rich-black">
           Current Medications
-          <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+          <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
         </Label>
-        <p className="text-sm text-foreground/70 mb-2">Include prescription medications, supplements, and over-the-counter drugs</p>
+        <p className="text-sm text-foreground/75 mb-2">Include prescription medications, supplements, and over-the-counter drugs</p>
         <Textarea
           id="currentMedications"
           placeholder="e.g., Metformin 500mg, Vitamin D 2000IU, Advil as needed..."
@@ -199,7 +199,7 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       <div className="space-y-2">
         <Label htmlFor="allergies" className="text-base font-semibold text-rich-black">
           Known Allergies
-          <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+          <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
         </Label>
         <Textarea
           id="allergies"
@@ -215,9 +215,9 @@ const MedicalHistoryStep = ({ data, onChange }: MedicalHistoryStepProps) => {
       <div className="space-y-2">
         <Label htmlFor="previousTreatments" className="text-base font-semibold text-rich-black">
           Previous Treatments
-          <span className="ml-2 text-xs font-normal text-foreground/60">(Optional)</span>
+          <span className="ml-2 text-xs font-normal text-foreground/70">(Optional)</span>
         </Label>
-        <p className="text-sm text-foreground/70 mb-2">Have you tried weight loss or hormone treatments before?</p>
+        <p className="text-sm text-foreground/75 mb-2">Have you tried weight loss or hormone treatments before?</p>
         <Textarea
           id="previousTreatments"
           placeholder="e.g., 'Tried Wegovy for 3 months with good results' or 'No previous treatments'"

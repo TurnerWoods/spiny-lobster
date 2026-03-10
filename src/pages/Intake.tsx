@@ -345,7 +345,7 @@ const Intake = () => {
               <CheckCircle2 className="h-10 w-10 text-success" />
             </div>
             <h1 className="font-display text-2xl font-bold text-rich-black">You're All Set!</h1>
-            <p className="mt-3 text-foreground/70">
+            <p className="mt-3 text-foreground/75">
               Thank you for completing your intake form. Our medical team will review your information within 24-48
               hours and reach out with your personalized treatment plan.
             </p>
@@ -383,7 +383,7 @@ const Intake = () => {
           </Link>
           <div className="flex items-center gap-2">
             {lastSaved && (
-              <span className="text-xs text-foreground/60 hidden sm:inline">
+              <span className="text-xs text-foreground/70 hidden sm:inline">
                 Auto-saved {lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             )}
@@ -537,14 +537,14 @@ const Intake = () => {
 
           {/* Skip optional steps hint */}
           {(currentStep === 2 || currentStep === 3) && (
-            <p className="mt-4 text-center text-xs text-foreground/60">
+            <p className="mt-4 text-center text-xs text-foreground/70">
               These fields are optional. You can skip ahead or fill them in later.
             </p>
           )}
         </motion.div>
 
         {/* Trust Badge */}
-        <div className="mt-6 flex items-center justify-center gap-2 text-xs text-foreground/60">
+        <div className="mt-6 flex items-center justify-center gap-2 text-xs text-foreground/70">
           <Shield className="h-4 w-4 text-foreground/70" />
           <span>HIPAA Compliant • 256-bit Encryption</span>
         </div>

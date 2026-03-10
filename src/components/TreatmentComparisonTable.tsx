@@ -430,22 +430,22 @@ const TreatmentComparisonTable = () => {
                       </thead>
                       <tbody>
                         {filteredTreatments.map((treatment) => (
-                          <motion.tr
+                          <Link
                             key={treatment.name}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className={`border-b last:border-b-0 transition-colors hover:bg-muted/30 ${
-                              treatment.popular || treatment.bestseller ? "bg-primary/5" : ""
-                            }`}
+                            to={getTreatmentUrl(treatment.name, treatment.category)}
+                            className="contents"
                           >
-                            <td className="px-6 py-4">
-                              <Link
-                                to={getTreatmentUrl(treatment.name, treatment.category)}
-                                className="block"
-                              >
+                            <motion.tr
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className={`border-b last:border-b-0 transition-colors hover:bg-muted/30 cursor-pointer ${
+                                treatment.popular || treatment.bestseller ? "bg-primary/5" : ""
+                              }`}
+                            >
+                              <td className="px-6 py-4">
                                 <div className="flex flex-col gap-1">
                                   <div className="flex items-center gap-2">
-                                    <span className="font-medium text-foreground hover:text-primary transition-colors">
+                                    <span className="font-medium text-foreground group-hover:text-primary transition-colors">
                                       {treatment.name}
                                     </span>
                                     {treatment.bestseller && (
@@ -459,48 +459,46 @@ const TreatmentComparisonTable = () => {
                                     <TableStarRating rating={treatment.rating} />
                                   )}
                                 </div>
-                              </Link>
-                            </td>
-                            <td className="px-6 py-4">
-                              <Link
-                                to={`/treatments/${categorySlugMap[treatment.category] || 'weight-loss'}`}
-                              >
+                              </td>
+                              <td className="px-6 py-4">
                                 <span
-                                  className={`inline-block rounded-full border px-3 py-1 text-xs font-medium hover:opacity-80 transition-opacity ${
+                                  className={`inline-block rounded-full border px-3 py-1 text-xs font-medium ${
                                     categoryColors[treatment.category] || "bg-muted text-muted-foreground"
                                   }`}
                                 >
                                   {treatment.category}
                                 </span>
-                              </Link>
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className="font-bold text-lg text-stone-900 dark:text-stone-50">{treatment.price}</span>
-                            </td>
-                            <td className="px-6 py-4">
-                              <ul className="space-y-1">
-                                {treatment.benefits.map((benefit, i) => (
-                                  <li key={i} className="flex items-center gap-2 text-sm text-stone-700 dark:text-stone-200">
-                                    <Check className="h-3 w-3 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
-                                    {benefit}
-                                  </li>
-                                ))}
-                              </ul>
-                            </td>
-                            <td className="px-6 py-4">
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger className="flex items-center gap-1 text-sm text-stone-700 dark:text-stone-200 font-medium">
-                                    {treatment.bestFor}
-                                    <Info className="h-3 w-3 text-stone-500 dark:text-stone-400" />
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>Recommended for patients seeking {treatment.bestFor.toLowerCase()}</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            </td>
-                          </motion.tr>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="font-bold text-lg text-stone-900 dark:text-stone-50">{treatment.price}</span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <ul className="space-y-1">
+                                  {treatment.benefits.map((benefit, i) => (
+                                    <li key={i} className="flex items-center gap-2 text-sm text-stone-700 dark:text-stone-200">
+                                      <Check className="h-3 w-3 flex-shrink-0 text-emerald-600 dark:text-emerald-400" />
+                                      {benefit}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </td>
+                              <td className="px-6 py-4">
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <span className="flex items-center gap-1 text-sm text-stone-700 dark:text-stone-200 font-medium">
+                                        {treatment.bestFor}
+                                        <Info className="h-3 w-3 text-stone-500 dark:text-stone-400" />
+                                      </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p>Recommended for patients seeking {treatment.bestFor.toLowerCase()}</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              </td>
+                            </motion.tr>
+                          </Link>
                         ))}
                       </tbody>
                     </table>
@@ -519,7 +517,7 @@ const TreatmentComparisonTable = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className={`relative rounded-xl border bg-card p-5 transition-shadow hover:shadow-lg cursor-pointer ${
+                        className={`relative rounded-xl border bg-card p-5 transition-all hover:shadow-lg hover:-translate-y-1 cursor-pointer ${
                           treatment.popular || treatment.bestseller ? "ring-2 ring-primary/20" : ""
                         }`}
                         role="listitem"

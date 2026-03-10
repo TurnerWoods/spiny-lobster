@@ -101,18 +101,18 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                 {treatment.title}
               </h1>
 
-              <p className="mx-auto mb-6 max-w-2xl text-base text-warm-gray sm:text-lg">
+              <p className="mx-auto mb-6 max-w-2xl text-base text-rich-black/80 sm:text-lg">
                 {treatment.subtitle}
               </p>
 
               {/* Pricing Block */}
               <div className="mb-6 inline-flex flex-col items-center rounded-2xl bg-pure-white border border-neutral-gray/30 px-6 py-4 shadow-md">
-                <span className="text-xs text-warm-gray">Starting at</span>
+                <span className="text-xs text-rich-black/70">Starting at</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-3xl font-extrabold text-rich-black">{treatment.price}</span>
-                  <span className="text-base text-warm-gray">/month</span>
+                  <span className="text-base text-rich-black/70">/month</span>
                 </div>
-                <div className="mt-2 flex items-center gap-4 text-xs text-warm-gray font-medium">
+                <div className="mt-2 flex items-center gap-4 text-xs text-rich-black/75 font-medium">
                   <span className="flex items-center gap-1">
                     <Check className="h-3.5 w-3.5 text-emerald-600" /> FSA/HSA
                   </span>
@@ -136,7 +136,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <p className="text-xs text-warm-gray">
+                <p className="text-xs text-rich-black/75">
                   5-minute form · No login required · No commitment
                 </p>
               </div>
@@ -147,7 +147,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
         {/* ── QUALITY GUARANTEE BADGE ── */}
         <section className="border-y border-neutral-gray/15 bg-pure-white">
           <div className="container px-4 md:px-6">
-            <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-6 gap-y-2 py-4 text-xs text-warm-gray sm:gap-x-8 sm:text-sm">
+            <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-6 gap-y-2 py-4 text-xs text-rich-black/75 sm:gap-x-8 sm:text-sm">
               <span className="flex items-center gap-1.5 font-semibold text-rich-black">
                 <Shield className="h-4 w-4 text-amber-600" />
                 ≥98% Purity Guaranteed
@@ -176,7 +176,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-6xl">
               <div className={`mb-8 ${sectionFadeClass}`}>
-                <div className="flex items-center gap-2 text-xs font-medium text-warm-stone mb-2">
+                <div className="flex items-center gap-2 text-xs font-medium text-rich-black/80 mb-2">
                   <BadgeCheck className="h-4 w-4" />
                   FDA-Registered Pharmacy Partners
                 </div>
@@ -188,15 +188,16 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
               {/* Stacks (if any) */}
               {treatment.stacks && treatment.stacks.length > 0 && (
                 <div className="mb-10">
-                  <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-warm-gray">
+                  <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-rich-black/75">
                     <Package className="inline h-4 w-4 mr-1" />
                     Recommended Bundles
                   </p>
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {treatment.stacks.map((stack, i) => (
-                      <div
+                      <Link
                         key={i}
-                        className={`relative rounded-2xl bg-pure-white overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 ${
+                        to={`/intake?treatment=${stack.slug || generateSlug(stack.name)}`}
+                        className={`relative rounded-2xl bg-pure-white overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer block ${
                           stack.popular
                             ? "ring-2 ring-warm-stone"
                             : "border border-neutral-gray/20"
@@ -208,10 +209,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           </div>
                         )}
                         {stack.image && (
-                          <Link
-                            to={`/intake?treatment=${stack.slug || generateSlug(stack.name)}`}
-                            className="block aspect-[16/10] overflow-hidden bg-soft-linen cursor-pointer"
-                          >
+                          <div className="aspect-[16/10] overflow-hidden bg-soft-linen">
                             <img
                               src={stack.image}
                               alt={`${stack.name} treatment bundle - includes ${stack.products.join(', ')}`}
@@ -221,7 +219,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                               className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                               onError={handleImageError}
                             />
-                          </Link>
+                          </div>
                         )}
                         <div className="p-5">
                           <div className="flex items-start justify-between mb-3">
@@ -230,7 +228,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                               <Zap className="h-3 w-3" /> {stack.savings}
                             </span>
                           </div>
-                          <p className="text-sm text-warm-gray mb-4">{stack.tagline}</p>
+                          <p className="text-sm text-rich-black/75 mb-4">{stack.tagline}</p>
                           <div className="flex flex-wrap gap-1.5 mb-4">
                             {stack.products.map((p, j) => (
                               <span key={j} className="text-xs bg-soft-linen rounded-md px-2 py-1 text-rich-black">
@@ -240,12 +238,12 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           </div>
                           <div className="flex items-end justify-between pt-4 border-t border-neutral-gray/15">
                             <p className="text-xl font-extrabold text-rich-black">{stack.price}</p>
-                            <span className="text-xs text-warm-gray font-medium">
+                            <span className="text-xs text-rich-black/70 font-medium">
                               {stack.products.length} products included
                             </span>
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -254,14 +252,12 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
               {/* Individual Medications */}
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {treatment.medications.map((med, i) => (
-                  <div
+                  <Link
                     key={i}
-                    className="group flex flex-col overflow-hidden rounded-xl border border-neutral-gray/20 bg-pure-white hover:shadow-lg hover:border-warm-stone/30 transition-all duration-300"
+                    to={`/intake?treatment=${med.slug || generateSlug(med.name)}`}
+                    className="group flex flex-col overflow-hidden rounded-xl border border-neutral-gray/20 bg-pure-white hover:shadow-lg hover:border-warm-stone/30 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
                   >
-                    <Link
-                      to={`/intake?treatment=${med.slug || generateSlug(med.name)}`}
-                      className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-soft-linen to-warm-stone/5 block cursor-pointer"
-                    >
+                    <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-soft-linen to-warm-stone/5">
                       {med.image ? (
                         <img
                           src={med.image}
@@ -292,7 +288,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           <span className="h-1.5 w-1.5 rounded-full bg-white" /> In Stock
                         </span>
                       )}
-                    </Link>
+                    </div>
                     <div className="flex flex-1 flex-col p-4">
                       <h3 className="font-display text-sm font-bold text-rich-black mb-1 group-hover:text-deep-charcoal transition-colors">
                         {med.name}
@@ -302,13 +298,13 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                           {[...Array(5)].map((_, j) => (
                             <Star key={j} className={`h-2.5 w-2.5 ${j < Math.floor(med.rating!) ? "fill-amber-500 text-amber-500" : "fill-gray-200 text-gray-200"}`} />
                           ))}
-                          <span className="ml-1 text-xs text-warm-gray font-medium">{med.rating}{med.reviewCount && ` (${med.reviewCount.toLocaleString()})`}</span>
+                          <span className="ml-1 text-xs text-rich-black/70 font-medium">{med.rating}{med.reviewCount && ` (${med.reviewCount.toLocaleString()})`}</span>
                         </div>
                       )}
-                      <p className="text-xs text-warm-gray line-clamp-2 mb-3 flex-1">{med.description.split('.')[0]}.</p>
+                      <p className="text-xs text-rich-black/75 line-clamp-2 mb-3 flex-1">{med.description.split('.')[0]}.</p>
                       <div className="flex items-end justify-between pt-3 border-t border-neutral-gray/10">
                         <div>
-                          <p className="text-xs text-warm-gray">From</p>
+                          <p className="text-xs text-rich-black/70">From</p>
                           <p className="text-lg font-extrabold text-rich-black">{med.price}</p>
                         </div>
                         {med.mostPopular && (
@@ -318,7 +314,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                         )}
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -395,7 +391,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                     </div>
                     <p className="text-xs font-bold uppercase tracking-wider text-warm-stone mb-1">Step {item.step}</p>
                     <h3 className="font-display text-lg font-bold text-rich-black mb-2">{item.title}</h3>
-                    <p className="text-sm text-warm-gray leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-rich-black/75 leading-relaxed">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -411,7 +407,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                       <div key={i} className="flex-1 relative">
                         <div className="rounded-xl bg-pure-white border border-neutral-gray/20 p-4 sm:mx-1 hover:shadow-md transition-shadow">
                           <p className="text-sm font-bold text-warm-stone mb-1">{item.period}</p>
-                          <p className="text-xs text-warm-gray leading-relaxed">{item.description}</p>
+                          <p className="text-xs text-rich-black/75 leading-relaxed">{item.description}</p>
                         </div>
                         {i < treatment.timeline.length - 1 && (
                           <div className="hidden sm:block absolute top-1/2 -right-1 w-2 h-0.5 bg-warm-stone/30" />
@@ -441,11 +437,11 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
               <h2 className="mb-4 font-display text-2xl font-bold text-pure-white sm:text-3xl lg:text-4xl">
                 Ready to Get Started?
               </h2>
-              <p className="mb-6 text-pure-white/70">
+              <p className="mb-6 text-pure-white/80">
                 5-minute assessment. No insurance needed. No login required.
               </p>
 
-              <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-sm text-pure-white/70">
+              <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-sm text-pure-white/80">
                 <span className="flex items-center gap-1.5"><Award className="h-4 w-4 text-warm-stone" /> US-Licensed</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-warm-stone" /> FDA-Registered</span>
                 <span className="flex items-center gap-1.5"><Shield className="h-4 w-4 text-warm-stone" /> HIPAA</span>
@@ -458,7 +454,7 @@ const TreatmentPageTemplate = ({ treatment }: TreatmentPageTemplateProps) => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <p className="mt-4 text-xs text-pure-white/40">
+              <p className="mt-4 text-xs text-pure-white/70">
                 Discreet delivery in 3-5 business days. Cancel anytime.
               </p>
             </div>

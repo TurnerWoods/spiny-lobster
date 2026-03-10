@@ -191,6 +191,14 @@ const Hero = () => {
             </Link>
           </motion.div>
 
+          {/* Quick info text */}
+          <motion.p
+            variants={contentItem}
+            className="mt-4 text-sm text-soft-linen/75"
+          >
+            5-minute form · No long waits · No commitment
+          </motion.p>
+
           {/* Enhanced Trust Badges - 2-column grid on mobile, inline on larger */}
           <motion.div
             variants={trustContainer}

@@ -202,10 +202,10 @@ textarea:focus-visible,
 
     /* Secondary - Light Cloud */
     --secondary: 248 0.7% 96.8%; /* light-cloud #EEF0F7 */
-    --secondary-foreground: 266 4% 20.8%;
+    --secondary-foreground: 266 5% 18%; /* WCAG AA compliant: ~10:1 contrast - minimum 75% opacity equivalent */
 
     --muted: 248 0.7% 96.8%; /* warm-gray #E8E6E1 */
-    --muted-foreground: 257 5% 42%; /* Improved contrast: ~6.5:1 on white background (WCAG AA compliant) */
+    --muted-foreground: 257 6% 35%; /* WCAG AA compliant: ~8:1 contrast on white - minimum 65% opacity equivalent */
 
     /* Accent - Deep Charcoal */
     --accent: 248 0.7% 96.8%; /* deep-charcoal #2F2B31 */
@@ -242,10 +242,10 @@ textarea:focus-visible,
     /* Custom Brand Colors */
     --deep-charcoal: 270 5% 18%;
     --pure-white: 0 0% 99%;
-    --warm-stone: 30 14% 35%; /* Improved contrast: ~7.5:1 on white background (WCAG AA compliant) */
+    --warm-stone: 30 14% 32%; /* WCAG AA compliant: ~8.5:1 contrast on white - adequate for text */
     --soft-linen: 40 15% 96%;
     --rich-black: 240 11% 4%;
-    --warm-gray: 45 10% 38%; /* Improved contrast: ~7:1 on white background (WCAG AA compliant) */
+    --warm-gray: 45 10% 34%; /* WCAG AA compliant: ~8:1 contrast on white - adequate for text */
     --light-cloud: 226 33% 95%;
     --neutral-gray: 0 0% 88%;
     --accent-gold: 41 55% 45%; /* Improved contrast: ~4.8:1 on white background (WCAG AA compliant for large text/UI) */
@@ -264,7 +264,7 @@ textarea:focus-visible,
     --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
     --shadow-card: 0 4px 20px rgb(0 0 0 / 0.04);
-    --shadow-glow: 0 0 40px hsl(30 14% 35% / 0.15);
+    --shadow-glow: 0 0 40px hsl(30 14% 32% / 0.15);
 
     /* Sidebar */
     --sidebar-background: 40 15% 96%;
@@ -303,7 +303,7 @@ textarea:focus-visible,
     --secondary: 260 4.1% 27.9%;
     --secondary-foreground: 248 0.3% 98.4%;
     --muted: 260 4.1% 27.9%;
-    --muted-foreground: 257 4% 70.4%;
+    --muted-foreground: 257 4% 75%; /* WCAG AA compliant: ~7:1 contrast on dark bg - minimum 65% opacity equivalent */
     --accent: 260 4.1% 27.9%;
     --accent-foreground: 248 0.3% 98.4%;
     --destructive: 22 19.1% 70.4%;

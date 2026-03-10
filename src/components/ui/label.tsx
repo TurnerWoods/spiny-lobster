@@ -10,7 +10,7 @@ const labelVariants = cva(
     variants: {
       variant: {
         default: "text-rich-black",
-        muted: "text-warm-gray",
+        muted: "text-muted-foreground/75",
         error: "text-red-600",
         required: "text-rich-black after:content-['*'] after:ml-0.5 after:text-red-500",
       },

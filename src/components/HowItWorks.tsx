@@ -104,7 +104,7 @@ const HowItWorks = () => {
             >
               {/* Step number */}
               <motion.span
-                className="text-stat mb-4 xs:mb-5 sm:mb-6 md:mb-8 block text-5xl xs:text-6xl text-soft-linen/50 sm:text-7xl"
+                className="text-stat mb-4 xs:mb-5 sm:mb-6 md:mb-8 block text-5xl xs:text-6xl text-soft-linen/60 sm:text-7xl"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -118,10 +118,10 @@ const HowItWorks = () => {
               </motion.span>
 
               {/* Content */}
-              <h3 className="mb-3 xs:mb-4 font-display text-xl xs:text-2xl font-normal tracking-normal text-soft-linen">
+              <h3 className="mb-3 xs:mb-4 font-display text-xl xs:text-2xl font-normal tracking-normal text-soft-linen/95">
                 {step.title}
               </h3>
-              <p className="text-sm xs:text-base leading-relaxed text-soft-linen/90">
+              <p className="text-sm xs:text-base leading-relaxed text-soft-linen/80">
                 {step.description}
               </p>
 
@@ -172,7 +172,7 @@ const HowItWorks = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: duration.normal, delay: 0.5, ease: easing.smooth }}
-            className="text-caption mt-6 text-soft-linen/90"
+            className="text-caption mt-6 text-soft-linen/75"
           >
             No charge unless approved
           </motion.p>

@@ -129,7 +129,7 @@ const FAQItem = ({
         whileHover={{ x: 2 }}
         transition={{ duration: duration.fast, ease: easing.smooth }}
       >
-        <span className="font-display text-[15px] font-medium tracking-normal text-rich-black leading-relaxed xs:text-base sm:text-lg">
+        <span className="font-display text-[15px] font-medium tracking-normal text-rich-black/95 leading-relaxed xs:text-base sm:text-lg">
           {faq.question}
         </span>
         {/* Touch target: 44px minimum with visual icon inside */}
@@ -139,9 +139,9 @@ const FAQItem = ({
           transition={{ duration: duration.normal, ease: easing.smooth }}
         >
           {isOpen ? (
-            <Minus className="h-5 w-5 text-deep-charcoal" />
+            <Minus className="h-5 w-5 text-rich-black/70" />
           ) : (
-            <Plus className="h-5 w-5 text-deep-charcoal" />
+            <Plus className="h-5 w-5 text-rich-black/70" />
           )}
         </motion.span>
       </motion.button>
@@ -154,7 +154,7 @@ const FAQItem = ({
             exit="exit"
             className="overflow-hidden"
           >
-            <p className="text-[15px] leading-relaxed pb-5 text-warm-gray sm:text-base sm:pb-6 md:pb-8">
+            <p className="text-[15px] leading-relaxed pb-5 text-rich-black/80 sm:text-base sm:pb-6 md:pb-8">
               {faq.answer}
             </p>
           </motion.div>
@@ -181,7 +181,7 @@ const FAQ = () => {
           >
             <motion.span
               variants={headerItem}
-              className="text-[13px] uppercase tracking-[0.15em] mb-4 block text-warm-gray sm:text-xs sm:tracking-[0.2em] sm:mb-6"
+              className="text-[13px] uppercase tracking-[0.15em] mb-4 block text-rich-black/70 sm:text-xs sm:tracking-[0.2em] sm:mb-6"
             >
               Questions
             </motion.span>

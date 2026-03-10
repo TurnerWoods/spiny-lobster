@@ -62,8 +62,8 @@ const ProviderSection = () => {
           <h2 className="font-display text-[1.625rem] font-bold text-rich-black xs:text-3xl sm:text-4xl leading-tight">
             Expert-Led Medical Care
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-[15px] text-deep-charcoal/80 leading-relaxed sm:text-base">
-            Our board-certified physicians specialize in hormone optimization and peptide therapy for men and women
+          <p className="mt-4 max-w-2xl mx-auto text-[15px] text-deep-charcoal leading-relaxed sm:text-base">
+            Our board-certified physicians specialize in hormone optimization and peptide wellness therapy
           </p>
         </motion.div>
 
@@ -91,14 +91,14 @@ const ProviderSection = () => {
                       <BadgeCheck className="h-3 w-3" />
                       {provider.credentials}
                     </span>
-                    <span className="inline-flex rounded-full bg-warm-stone/15 px-3 py-1 text-xs font-semibold text-deep-charcoal">
+                    <span className="inline-flex rounded-full bg-warm-stone/20 px-3 py-1 text-xs font-semibold text-rich-black">
                       {provider.specialty}
                     </span>
                   </div>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="mt-4 min-h-[48px] px-6 border-deep-charcoal/30 text-deep-charcoal hover:bg-deep-charcoal/10 active:bg-deep-charcoal/20 sm:min-h-[40px] sm:px-4 text-[15px] sm:text-sm font-medium"
+                    className="mt-4 min-h-[48px] px-6 border-deep-charcoal bg-deep-charcoal text-pure-white hover:bg-rich-black active:bg-rich-black sm:min-h-[40px] sm:px-4 text-[15px] sm:text-sm font-medium"
                     onClick={() => setShowBooking(!showBooking)}
                   >
                     {showBooking ? "Close Booking" : "Book with Dr. Myers"}
@@ -121,9 +121,9 @@ const ProviderSection = () => {
                         style={{ minHeight: '600px' }}
                         title="Book an appointment with Dr. Paul Myers"
                       />
-                      <p className="py-2 text-center text-xs text-deep-charcoal/70">
+                      <p className="py-2 text-center text-xs text-deep-charcoal/75">
                         Booking Provided by{' '}
-                        <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-deep-charcoal">Healthie</a>
+                        <a href="https://gethealthie.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-rich-black">Healthie</a>
                       </p>
                     </div>
                   </motion.div>
@@ -150,7 +150,7 @@ const ProviderSection = () => {
                 <h3 className="font-display text-[14px] font-semibold text-rich-black mb-1.5 leading-tight sm:text-base sm:mb-2">
                   {credential.title}
                 </h3>
-                <p className="text-[13px] text-deep-charcoal/80 leading-relaxed sm:text-sm">
+                <p className="text-[13px] text-deep-charcoal leading-relaxed sm:text-sm">
                   {credential.description}
                 </p>
               </Card>

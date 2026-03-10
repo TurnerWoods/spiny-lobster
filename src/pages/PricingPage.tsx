@@ -251,10 +251,10 @@ const PricingPage = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Link to={treatment.link} className="block h-full">
+                    <Link to={treatment.link} className="block h-full cursor-pointer">
                       <Card
                         variant="glass"
-                        className={`relative h-full p-6 transition-all duration-200 hover:shadow-lg hover:ring-2 hover:ring-warm-stone/30 ${
+                        className={`relative h-full p-6 transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:ring-2 hover:ring-warm-stone/30 ${
                           treatment.badge ? "ring-1 ring-warm-stone/20" : ""
                         }`}
                       >

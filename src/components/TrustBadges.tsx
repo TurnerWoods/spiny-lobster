@@ -35,7 +35,7 @@ export const trustBadgeData = [
 ];
 
 interface TrustBadgesProps {
-  variant?: "hero" | "footer" | "compact" | "inline" | "card";
+  variant?: "hero" | "footer" | "compact" | "inline" | "card" | "detailed";
   className?: string;
   showAll?: boolean;
   animated?: boolean;
@@ -74,8 +74,8 @@ export const TrustBadges = ({
             key={badge.id}
             className="flex items-center gap-2 text-soft-linen"
           >
-            <badge.icon className="h-4 w-4 text-soft-linen" strokeWidth={1.5} />
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-soft-linen/90">
+            <badge.icon className="h-4 w-4 text-soft-linen/80" strokeWidth={1.5} />
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-soft-linen/95">
               {badge.shortLabel}
             </span>
             {index < displayBadges.length - 1 && (
@@ -101,8 +101,8 @@ export const TrustBadges = ({
             key={badge.id}
             className="flex items-center gap-2.5"
           >
-            <badge.icon className="h-5 w-5 text-deep-charcoal sm:h-6 sm:w-6" strokeWidth={1.5} />
-            <span className="text-sm font-medium tracking-wide text-rich-black sm:text-base">
+            <badge.icon className="h-5 w-5 text-foreground/80 sm:h-6 sm:w-6" strokeWidth={1.5} />
+            <span className="text-sm font-medium tracking-wide text-foreground/95 sm:text-base">
               {badge.shortLabel}
             </span>
           </div>
@@ -125,10 +125,39 @@ export const TrustBadges = ({
             key={badge.id}
             className="flex items-center gap-2 rounded-lg border border-warm-stone/20 bg-warm-stone/5 px-3 py-2"
           >
-            <badge.icon className="h-4 w-4 text-deep-charcoal" strokeWidth={1.5} />
-            <span className="text-xs font-medium text-rich-black">
+            <badge.icon className="h-4 w-4 text-foreground/80" strokeWidth={1.5} />
+            <span className="text-xs font-medium text-foreground/95">
               {badge.shortLabel}
             </span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Detailed variant - shows descriptions with proper contrast
+  if (variant === "detailed") {
+    return (
+      <div
+        className={cn(
+          "grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6",
+          className
+        )}
+      >
+        {displayBadges.map((badge) => (
+          <div
+            key={badge.id}
+            className="rounded-lg border border-warm-stone/20 bg-warm-stone/5 p-4 sm:p-5 text-center"
+          >
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-foreground/10 sm:mb-4 sm:h-12 sm:w-12">
+              <badge.icon className="h-5 w-5 text-foreground/80 sm:h-6 sm:w-6" strokeWidth={1.5} />
+            </div>
+            <h3 className="font-display text-[14px] font-semibold text-foreground/95 mb-1.5 leading-tight sm:text-base sm:mb-2">
+              {badge.label}
+            </h3>
+            <p className="text-[13px] text-muted-foreground leading-relaxed sm:text-sm">
+              {badge.description}
+            </p>
           </div>
         ))}
       </div>
@@ -145,7 +174,7 @@ export const TrustBadges = ({
             className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-warm-stone/30 bg-warm-stone/5 transition-colors hover:bg-warm-stone/15"
             title={badge.label}
           >
-            <badge.icon className="h-5 w-5 text-deep-charcoal" strokeWidth={1.5} />
+            <badge.icon className="h-5 w-5 text-foreground/80" strokeWidth={1.5} />
           </div>
         ))}
       </div>
@@ -162,8 +191,8 @@ export const TrustBadges = ({
           key={badge.id}
           className="flex min-h-[44px] items-center gap-2 py-2"
         >
-          <badge.icon className="h-4 w-4 flex-shrink-0 text-deep-charcoal" strokeWidth={1.5} />
-          <span className="text-sm font-medium text-rich-black">{badge.shortLabel}</span>
+          <badge.icon className="h-4 w-4 flex-shrink-0 text-foreground/80" strokeWidth={1.5} />
+          <span className="text-sm font-medium text-foreground/95">{badge.shortLabel}</span>
         </div>
       ))}
     </div>
@@ -216,7 +245,7 @@ export const StarRating = ({
         />
       ))}
       {showCount && reviewCount !== undefined && (
-        <span className={cn("ml-1 text-deep-charcoal", textSizeClasses[size])}>
+        <span className={cn("ml-1 text-foreground/95", textSizeClasses[size])}>
           ({reviewCount.toLocaleString()})
         </span>
       )}
