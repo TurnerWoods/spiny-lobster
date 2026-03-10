@@ -419,8 +419,8 @@ const AIChatWidget = () => {
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4">
+            {/* Messages - Light background with subtle pattern */}
+            <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-soft-linen to-white" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0)', backgroundSize: '20px 20px' }}>
               <div className="flex flex-col gap-3">
                 {messages.map((message, index) => (
                   <div
@@ -457,13 +457,13 @@ const AIChatWidget = () => {
                 {/* Suggested Prompts - Touch-friendly with 44px minimum height */}
                 {showSuggestedPrompts && (
                   <div className="mt-2 flex flex-col gap-2">
-                    <p className="text-xs font-semibold text-pure-white/80 uppercase tracking-wide">Quick questions:</p>
+                    <p className="text-xs font-semibold text-rich-black/70 uppercase tracking-wide">Quick questions:</p>
                     <div className="flex flex-wrap gap-2">
                       {SUGGESTED_PROMPTS.map((prompt, index) => (
                         <button
                           key={index}
                           onClick={() => handleSend(prompt)}
-                          className="rounded-full border border-pure-white/40 bg-pure-white/10 px-4 py-2.5 min-h-[44px] text-sm font-medium text-pure-white transition-colors hover:bg-pure-white/20 hover:border-pure-white/60 active:bg-pure-white/25"
+                          className="rounded-full border border-deep-charcoal/30 bg-white px-4 py-2.5 min-h-[44px] text-sm font-medium text-deep-charcoal shadow-sm transition-all hover:bg-soft-linen hover:border-deep-charcoal/50 hover:shadow active:bg-warm-stone/20"
                         >
                           {prompt}
                         </button>
