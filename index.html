@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spiny Lobster Creative | Full-Service Marketing Agency</title>
+  <meta name="description" content="Spiny Lobster Creative is a full-service marketing agency powered by AI-driven strategy and human creativity. We help brands grow with data-informed campaigns.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-coral: #E8734A;
+      --color-coral-dark: #D15A32;
+      --color-navy: #1A2B4A;
+      --color-navy-light: #2A3B5A;
+      --color-cream: #FDF8F4;
+      --color-sand: #F5EDE6;
+      --color-white: #FFFFFF;
+      --color-text: #2D3748;
+      --color-text-muted: #64748B;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-cream);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(253, 248, 244, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(26, 43, 74, 0.08);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-navy);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--color-coral);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--color-text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-coral);
+    }
+
+    .nav-cta {
+      background: var(--color-coral);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--color-coral-dark);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 80px;
+      background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-sand) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 80%;
+      height: 150%;
+      background: radial-gradient(ellipse, rgba(232, 115, 74, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 500;
+      line-height: 1.15;
+      color: var(--color-navy);
+      margin-bottom: 24px;
+    }
+
+    .hero-text h1 span {
+      color: var(--color-coral);
+      font-style: italic;
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      color: var(--color-text-muted);
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn-primary {
+      background: var(--color-coral);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-coral-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-navy);
+      padding: 14px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 2px solid var(--color-navy);
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-navy);
+      color: white;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(26, 43, 74, 0.12);
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      background: var(--color-coral);
+      border-radius: 50%;
+      opacity: 0.15;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+      background: var(--color-cream);
+      border-radius: 12px;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--color-coral);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 100px 0;
+      background: var(--color-white);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-coral);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--color-navy);
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .service-card {
+      background: var(--color-cream);
+      padding: 36px;
+      border-radius: 16px;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(26, 43, 74, 0.1);
+      border-color: var(--color-coral);
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--color-coral);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.25rem;
+      color: var(--color-navy);
+      margin-bottom: 12px;
+    }
+
+    .service-card p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Differentiator Section */
+    .differentiator {
+      padding: 100px 0;
+      background: var(--color-navy);
+      color: white;
+    }
+
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .diff-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      margin-bottom: 24px;
+    }
+
+    .diff-content h2 span {
+      color: var(--color-coral);
+    }
+
+    .diff-content p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      margin-bottom: 32px;
+    }
+
+    .diff-features {
+      list-style: none;
+    }
+
+    .diff-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .diff-features li::before {
+      content: '✓';
+      color: var(--color-coral);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .diff-visual {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-coral);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .workflow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .workflow-step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background: var(--color-coral);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 0.95rem;
+    }
+
+    /* Process Section */
+    .process {
+      padding: 100px 0;
+      background: var(--color-sand);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      margin-top: 60px;
+    }
+
+    .process-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .process-step::after {
+      content: '→';
+      position: absolute;
+      right: -20px;
+      top: 30px;
+      color: var(--color-coral);
+      font-size: 1.5rem;
+    }
+
+    .process-step:last-child::after {
+      display: none;
+    }
+
+    .process-number {
+      width: 60px;
+      height: 60px;
+      background: var(--color-coral);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin: 0 auto 20px;
+    }
+
+    .process-step h4 {
+      color: var(--color-navy);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .process-step p {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* CTA Section */
+    .cta {
+      padding: 100px 0;
+      background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-white) 100%);
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--color-navy);
+      margin-bottom: 16px;
+    }
+
+    .cta p {
+      color: var(--color-text-muted);
+      font-size: 1.15rem;
+      margin-bottom: 32px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--color-navy);
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand .logo {
+      color: white;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .footer-brand p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--color-coral);
+    }
+
+    .footer-bottom {
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-text p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .diff-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-step::after {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">Spiny<span>Lobster</span></a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#approach">Our Approach</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Marketing that <span>moves</span> your business forward</h1>
+          <p>We combine AI-powered strategy with human creativity to deliver marketing campaigns that convert. Full-service solutions for brands ready to scale.</p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn-primary">
+              Start a Project
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#services" class="btn-secondary">See Our Work</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-card">
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">AI Agents Working</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">10x</div>
+                <div class="stat-label">Faster Delivery</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">200%</div>
+                <div class="stat-label">Avg. ROI Increase</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Campaign Monitoring</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">What We Do</p>
+        <h2 class="section-title">Full-Service Marketing Solutions</h2>
+        <p class="section-subtitle">From strategy to execution, we handle every aspect of your marketing with precision and creativity.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3>Strategy & Research</h3>
+          <p>Data-driven market research, competitive analysis, and strategic planning to position your brand for growth.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🎨</div>
+          <h3>Brand & Creative</h3>
+          <p>Visual identity, brand guidelines, and creative assets that make your brand memorable and distinctive.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📱</div>
+          <h3>Digital Marketing</h3>
+          <p>SEO, paid advertising, social media, and email campaigns optimized for maximum ROI.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">✍️</div>
+          <h3>Content Creation</h3>
+          <p>Compelling copy, blog posts, video scripts, and social content that engages and converts.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🚀</div>
+          <h3>Growth Marketing</h3>
+          <p>Conversion optimization, funnel design, and growth experiments to accelerate your business.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📈</div>
+          <h3>Analytics & Reporting</h3>
+          <p>Real-time dashboards, performance tracking, and actionable insights to guide decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Differentiator Section -->
+  <section class="differentiator" id="approach">
+    <div class="container">
+      <div class="diff-grid">
+        <div class="diff-content">
+          <h2>Powered by <span>AI Agents</span>, Guided by Humans</h2>
+          <p>We've pioneered a new approach to marketing using a team of 50+ specialized AI agents working in parallel. This means faster execution, deeper analysis, and more creative output—all overseen by experienced marketers.</p>
+          <ul class="diff-features">
+            <li>50 AI agents handling research, content, and optimization simultaneously</li>
+            <li>Human creative directors reviewing and refining every deliverable</li>
+            <li>Real-time campaign adjustments based on live data</li>
+            <li>Enterprise-grade security and brand consistency</li>
+            <li>10x faster turnaround without sacrificing quality</li>
+          </ul>
+        </div>
+        <div class="diff-visual">
+          <div class="ai-badge">🤖 AI-Powered Workflow</div>
+          <div class="workflow-steps">
+            <div class="workflow-step">
+              <div class="step-number">1</div>
+              <div class="step-text">Brief ingested by orchestration layer</div>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">2</div>
+              <div class="step-text">50 agents tackle parallel workstreams</div>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">3</div>
+              <div class="step-text">Human review and creative refinement</div>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">4</div>
+              <div class="step-text">Delivery in days, not weeks</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">How We Work</p>
+        <h2 class="section-title">Simple Process, Powerful Results</h2>
+        <p class="section-subtitle">We've streamlined our workflow to get you from idea to execution faster.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <h4>Discovery Call</h4>
+          <p>We learn about your business, goals, and challenges in a 30-minute call.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <h4>Strategy & Proposal</h4>
+          <p>Our team develops a custom strategy and clear pricing within 48 hours.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <h4>AI-Powered Execution</h4>
+          <p>50 agents and our creative team bring your campaigns to life.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <h4>Optimize & Scale</h4>
+          <p>Continuous improvement based on real performance data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <h2>Ready to Transform Your Marketing?</h2>
+      <p>Let's discuss how AI-powered marketing can accelerate your growth.</p>
+      <a href="mailto:hello@spinylobster.co" class="btn-primary">
+        Schedule a Call
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">Spiny<span>Lobster</span></a>
+          <p>Full-service marketing powered by AI agents and human creativity. Faster, smarter, better.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Strategy</a></li>
+            <li><a href="#">Branding</a></li>
+            <li><a href="#">Digital Marketing</a></li>
+            <li><a href="#">Content</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="mailto:hello@spinylobster.co">Email Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Spiny Lobster Creative. All rights reserved.</p>
+        <p>Powered by Cofounder AI Agent Platform</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
