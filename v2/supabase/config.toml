@@ -1,0 +1,22 @@
+project_id = "cfdoakyafauiibauafbd"
+
+[functions.chat]
+verify_jwt = false
+
+[functions.healthie-sync]
+verify_jwt = false
+
+[functions.healthie-webhook]
+verify_jwt = false
+
+[functions.send-email]
+verify_jwt = false
+
+[functions.lab-interpreter]
+verify_jwt = false
+
+[functions.meal-planner]
+verify_jwt = false
+
+[functions.workout-generator]
+verify_jwt = false

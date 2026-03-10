@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELEVAR Vial Label Detail</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #F6F5F3;
+        }
+    </style>
+</head>
+<body>
+    <svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <!-- Linen background -->
+            <pattern id="linen" patternUnits="userSpaceOnUse" width="3" height="3">
+                <rect width="3" height="3" fill="#F6F5F3"/>
+                <rect x="0" y="0" width="1" height="1" fill="#F2F0ED" opacity="0.3"/>
+                <rect x="2" y="1" width="1" height="1" fill="#FAF8F6" opacity="0.3"/>
+            </pattern>
+
+            <!-- Premium gold gradient -->
+            <linearGradient id="goldPremium" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#DCC07A"/>
+                <stop offset="20%" style="stop-color:#C9A962"/>
+                <stop offset="40%" style="stop-color:#E5CA7F"/>
+                <stop offset="60%" style="stop-color:#C9A962"/>
+                <stop offset="80%" style="stop-color:#D4B872"/>
+                <stop offset="100%" style="stop-color:#B89A52"/>
+            </linearGradient>
+
+            <!-- Matte charcoal label -->
+            <linearGradient id="matteCharcoal" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#343035"/>
+                <stop offset="50%" style="stop-color:#2F2B31"/>
+                <stop offset="100%" style="stop-color:#2A262C"/>
+            </linearGradient>
+
+            <!-- Glass vial gradient - curved appearance -->
+            <linearGradient id="glassLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#D8D6D3"/>
+                <stop offset="30%" style="stop-color:#E8E6E3"/>
+                <stop offset="60%" style="stop-color:#F5F5F5"/>
+                <stop offset="100%" style="stop-color:#FAFAFA"/>
+            </linearGradient>
+
+            <linearGradient id="glassRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#FAFAFA"/>
+                <stop offset="40%" style="stop-color:#F5F5F5"/>
+                <stop offset="70%" style="stop-color:#E8E6E3"/>
+                <stop offset="100%" style="stop-color:#D8D6D3"/>
+            </linearGradient>
+
+            <!-- Soft depth shadow -->
+            <filter id="depthShadow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="20" stdDeviation="40" flood-color="#1a1a1a" flood-opacity="0.12"/>
+            </filter>
+
+            <!-- Gold foil emboss effect -->
+            <filter id="goldEmboss" x="-5%" y="-5%" width="110%" height="110%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="0.5" result="blur"/>
+                <feOffset in="blur" dx="0.5" dy="1" result="offsetBlur"/>
+                <feFlood flood-color="#8B7A45" flood-opacity="0.5" result="darkGold"/>
+                <feComposite in="darkGold" in2="offsetBlur" operator="in" result="darkShadow"/>
+                <feOffset in="blur" dx="-0.3" dy="-0.5" result="offsetBlur2"/>
+                <feFlood flood-color="#F0DFA0" flood-opacity="0.6" result="lightGold"/>
+                <feComposite in="lightGold" in2="offsetBlur2" operator="in" result="highlight"/>
+                <feMerge>
+                    <feMergeNode in="darkShadow"/>
+                    <feMergeNode in="highlight"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+
+            <!-- Subtle label texture -->
+            <pattern id="labelTexture" patternUnits="userSpaceOnUse" width="2" height="2">
+                <rect width="2" height="2" fill="#2F2B31"/>
+                <rect x="0" y="0" width="1" height="1" fill="#333033" opacity="0.3"/>
+            </pattern>
+        </defs>
+
+        <!-- Background -->
+        <rect width="800" height="800" fill="url(#linen)"/>
+
+        <!-- Macro vial view - large scale -->
+        <g transform="translate(400, 400)" filter="url(#depthShadow)">
+
+            <!-- Glass vial body - left edge visible -->
+            <rect x="-200" y="-250" width="40" height="500" fill="url(#glassLeft)" rx="10"/>
+
+            <!-- Glass vial body - right edge visible -->
+            <rect x="160" y="-250" width="40" height="500" fill="url(#glassRight)" rx="10"/>
+
+            <!-- Main label surface -->
+            <rect x="-160" y="-200" width="320" height="400" fill="url(#matteCharcoal)"/>
+
+            <!-- Subtle label texture overlay -->
+            <rect x="-160" y="-200" width="320" height="400" fill="url(#labelTexture)" opacity="0.1"/>
+
+            <!-- Top gold border accent -->
+            <rect x="-160" y="-200" width="320" height="3" fill="url(#goldPremium)" opacity="0.6"/>
+
+            <!-- Bottom gold border accent -->
+            <rect x="-160" y="197" width="320" height="3" fill="url(#goldPremium)" opacity="0.6"/>
+
+            <!-- CHEVRON LOGO - Large and detailed -->
+            <g transform="translate(-80, -60)" filter="url(#goldEmboss)">
+                <path d="M0,-80
+                         L60,0
+                         L0,80
+                         L0,55
+                         L40,0
+                         L0,-55
+                         Z"
+                      fill="url(#goldPremium)"/>
+
+                <!-- Inner highlight on chevron -->
+                <path d="M5,-70 L55,0 L5,70 L5,50 L35,0 L5,-50 Z"
+                      fill="none" stroke="#F0DFA0" stroke-width="0.5" opacity="0.4"/>
+            </g>
+
+            <!-- ELEVAR Typography -->
+            <g filter="url(#goldEmboss)">
+                <text x="0" y="-30" font-family="'Didot', 'Playfair Display', 'Times New Roman', serif"
+                      font-size="48" fill="url(#goldPremium)" text-anchor="middle" letter-spacing="12" font-weight="400">ELEVAR</text>
+            </g>
+
+            <!-- Tagline -->
+            <text x="0" y="10" font-family="'Helvetica Neue', 'Arial', sans-serif"
+                  font-size="12" fill="url(#goldPremium)" text-anchor="middle" letter-spacing="4" opacity="0.8">PEPTIDE WELLNESS</text>
+
+            <!-- Divider line -->
+            <line x1="-100" y1="35" x2="100" y2="35" stroke="url(#goldPremium)" stroke-width="0.5" opacity="0.5"/>
+
+            <!-- Product Name -->
+            <text x="0" y="75" font-family="'Helvetica Neue', sans-serif"
+                  font-size="20" fill="#FFFFFF" text-anchor="middle" letter-spacing="3" opacity="0.95">SEMAGLUTIDE</text>
+
+            <!-- Dosage Info -->
+            <text x="0" y="105" font-family="'Helvetica Neue', sans-serif"
+                  font-size="14" fill="#999999" text-anchor="middle" letter-spacing="2">2.5mg/mL</text>
+
+            <!-- Volume -->
+            <text x="0" y="130" font-family="'Helvetica Neue', sans-serif"
+                  font-size="12" fill="#777777" text-anchor="middle" letter-spacing="1">5mL Sterile Solution</text>
+
+            <!-- Bottom section divider -->
+            <line x1="-120" y1="155" x2="120" y2="155" stroke="#444" stroke-width="0.5" opacity="0.5"/>
+
+            <!-- Storage info -->
+            <text x="0" y="178" font-family="'Helvetica Neue', sans-serif"
+                  font-size="9" fill="#666666" text-anchor="middle" letter-spacing="1">STORE REFRIGERATED 2-8 C</text>
+
+            <!-- Rx indicator -->
+            <g transform="translate(-130, 170)">
+                <rect x="-15" y="-12" width="30" height="18" rx="2" fill="none" stroke="#666" stroke-width="0.5"/>
+                <text x="0" y="2" font-family="'Times New Roman', serif" font-size="12" fill="#888" text-anchor="middle" font-style="italic">Rx</text>
+            </g>
+
+            <!-- Lot/Exp area -->
+            <g transform="translate(100, 170)">
+                <text x="0" y="-5" font-family="'Courier New', monospace" font-size="7" fill="#555" text-anchor="middle">LOT: ELV24-1089</text>
+                <text x="0" y="8" font-family="'Courier New', monospace" font-size="7" fill="#555" text-anchor="middle">EXP: 12/2026</text>
+            </g>
+
+            <!-- Glass reflections -->
+            <rect x="-195" y="-240" width="8" height="480" rx="4" fill="white" opacity="0.2"/>
+            <rect x="187" y="-240" width="5" height="480" rx="2" fill="white" opacity="0.15"/>
+        </g>
+
+        <!-- Decorative corner elements -->
+        <path d="M50,50 L50,100 M50,50 L100,50" stroke="url(#goldPremium)" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M750,50 L750,100 M750,50 L700,50" stroke="url(#goldPremium)" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M50,750 L50,700 M50,750 L100,750" stroke="url(#goldPremium)" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M750,750 L750,700 M750,750 L700,750" stroke="url(#goldPremium)" stroke-width="1" fill="none" opacity="0.3"/>
+
+        <!-- Subtle gold dust effect -->
+        <g opacity="0.1">
+            <circle cx="150" cy="200" r="2" fill="#C9A962"/>
+            <circle cx="650" cy="300" r="1.5" fill="#C9A962"/>
+            <circle cx="180" cy="600" r="1" fill="#C9A962"/>
+            <circle cx="620" cy="550" r="2" fill="#C9A962"/>
+            <circle cx="300" cy="150" r="1.5" fill="#C9A962"/>
+            <circle cx="500" cy="680" r="1" fill="#C9A962"/>
+        </g>
+
+        <!-- Brand signature -->
+        <text x="750" y="770" font-family="'Helvetica Neue', sans-serif" font-size="10"
+              fill="#2F2B31" opacity="0.3" text-anchor="end" letter-spacing="2">ELEVAR</text>
+    </svg>
+</body>
+</html>

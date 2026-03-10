@@ -1,0 +1,303 @@
+import { motion } from "framer-motion";
+import { Shield, Award, CheckCircle2, Truck, Star, Flame } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+// Trust badge data
+export const trustBadgeData = [
+  {
+    id: "physicians",
+    icon: Award,
+    label: "US-Licensed Physicians",
+    shortLabel: "Licensed Physicians",
+    description: "All treatments prescribed by board-certified US physicians",
+  },
+  {
+    id: "fda",
+    icon: CheckCircle2,
+    label: "FDA-Registered Pharmacy Partners",
+    shortLabel: "FDA-Registered",
+    description: "Partnered with FDA-registered licensed pharmacies",
+  },
+  {
+    id: "hipaa",
+    icon: Shield,
+    label: "HIPAA Compliant",
+    shortLabel: "HIPAA Compliant",
+    description: "Your health information is protected and secure",
+  },
+  {
+    id: "shipping",
+    icon: Truck,
+    label: "Discreet Shipping",
+    shortLabel: "Discreet Shipping",
+    description: "Discreet shipping on all orders",
+  },
+];
+
+interface TrustBadgesProps {
+  variant?: "hero" | "footer" | "compact" | "inline" | "card" | "detailed";
+  className?: string;
+  showAll?: boolean;
+  animated?: boolean;
+  badges?: ("physicians" | "fda" | "hipaa" | "shipping")[];
+}
+
+export const TrustBadges = ({
+  variant = "inline",
+  className,
+  showAll = true,
+  animated = true,
+  badges,
+}: TrustBadgesProps) => {
+  const displayBadges = badges
+    ? trustBadgeData.filter((b) => badges.includes(b.id as any))
+    : trustBadgeData;
+
+  const Wrapper = animated ? motion.div : "div";
+  const animationProps = animated
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration: 1, delay: 1.2, ease: [0.22, 1, 0.36, 1] as const },
+      }
+    : {};
+
+  // Hero variant - minimal, light text for dark backgrounds
+  if (variant === "hero") {
+    return (
+      <Wrapper
+        className={cn("flex flex-wrap items-center gap-4 sm:gap-8", className)}
+        {...animationProps}
+      >
+        {displayBadges.map((badge, index) => (
+          <div
+            key={badge.id}
+            className="flex items-center gap-2 text-soft-linen"
+          >
+            <badge.icon className="h-4 w-4 text-soft-linen/80" strokeWidth={1.5} />
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-soft-linen/95">
+              {badge.shortLabel}
+            </span>
+            {index < displayBadges.length - 1 && (
+              <span className="ml-4 hidden h-px w-8 bg-soft-linen/40 sm:block" />
+            )}
+          </div>
+        ))}
+      </Wrapper>
+    );
+  }
+
+  // Footer variant - with icons, darker text
+  if (variant === "footer") {
+    return (
+      <div
+        className={cn(
+          "flex flex-wrap items-center justify-center gap-6 sm:gap-10",
+          className
+        )}
+      >
+        {displayBadges.map((badge) => (
+          <div
+            key={badge.id}
+            className="flex items-center gap-2.5"
+          >
+            <badge.icon className="h-5 w-5 text-foreground/80 sm:h-6 sm:w-6" strokeWidth={1.5} />
+            <span className="text-sm font-medium tracking-wide text-foreground/95 sm:text-base">
+              {badge.shortLabel}
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Card variant - for pricing cards and sections
+  if (variant === "card") {
+    return (
+      <div
+        className={cn(
+          "grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-6",
+          className
+        )}
+      >
+        {displayBadges.map((badge) => (
+          <div
+            key={badge.id}
+            className="flex items-center gap-2 rounded-lg border border-warm-stone/20 bg-warm-stone/5 px-3 py-2"
+          >
+            <badge.icon className="h-4 w-4 text-foreground/80" strokeWidth={1.5} />
+            <span className="text-xs font-medium text-foreground/95">
+              {badge.shortLabel}
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Detailed variant - shows descriptions with proper contrast
+  if (variant === "detailed") {
+    return (
+      <div
+        className={cn(
+          "grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6",
+          className
+        )}
+      >
+        {displayBadges.map((badge) => (
+          <div
+            key={badge.id}
+            className="rounded-lg border border-warm-stone/20 bg-warm-stone/5 p-4 sm:p-5 text-center"
+          >
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-foreground/10 sm:mb-4 sm:h-12 sm:w-12">
+              <badge.icon className="h-5 w-5 text-foreground/80 sm:h-6 sm:w-6" strokeWidth={1.5} />
+            </div>
+            <h3 className="font-display text-[14px] font-semibold text-foreground/95 mb-1.5 leading-tight sm:text-base sm:mb-2">
+              {badge.label}
+            </h3>
+            <p className="text-[13px] text-muted-foreground leading-relaxed sm:text-sm">
+              {badge.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Compact variant - icons only with tooltips
+  if (variant === "compact") {
+    return (
+      <div className={cn("flex flex-wrap items-center gap-2 sm:gap-3", className)}>
+        {displayBadges.map((badge) => (
+          <div
+            key={badge.id}
+            className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-warm-stone/30 bg-warm-stone/5 transition-colors hover:bg-warm-stone/15"
+            title={badge.label}
+          >
+            <badge.icon className="h-5 w-5 text-foreground/80" strokeWidth={1.5} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Default inline variant
+  return (
+    <div
+      className={cn("flex flex-wrap items-center gap-3 sm:gap-6", className)}
+    >
+      {displayBadges.map((badge) => (
+        <div
+          key={badge.id}
+          className="flex min-h-[44px] items-center gap-2 py-2"
+        >
+          <badge.icon className="h-4 w-4 flex-shrink-0 text-foreground/80" strokeWidth={1.5} />
+          <span className="text-sm font-medium text-foreground/95">{badge.shortLabel}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Star Rating Component
+interface StarRatingProps {
+  rating: number;
+  maxRating?: number;
+  showCount?: boolean;
+  reviewCount?: number;
+  size?: "sm" | "md" | "lg";
+  className?: string;
+}
+
+export const StarRating = ({
+  rating,
+  maxRating = 5,
+  showCount = false,
+  reviewCount,
+  size = "md",
+  className,
+}: StarRatingProps) => {
+  const sizeClasses = {
+    sm: "h-3 w-3",
+    md: "h-4 w-4",
+    lg: "h-5 w-5",
+  };
+
+  const textSizeClasses = {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base",
+  };
+
+  return (
+    <div className={cn("flex items-center gap-1", className)}>
+      {Array.from({ length: maxRating }).map((_, index) => (
+        <Star
+          key={index}
+          className={cn(
+            sizeClasses[size],
+            index < Math.floor(rating)
+              ? "fill-amber-400 text-amber-400"
+              : index < rating
+              ? "fill-amber-400/50 text-amber-400"
+              : "fill-gray-200 text-gray-200"
+          )}
+        />
+      ))}
+      {showCount && reviewCount !== undefined && (
+        <span className={cn("ml-1 text-foreground/95", textSizeClasses[size])}>
+          ({reviewCount.toLocaleString()})
+        </span>
+      )}
+    </div>
+  );
+};
+
+// Product Badge Component (Most Popular, Best Seller, etc.)
+interface ProductBadgeProps {
+  type: "popular" | "bestseller" | "new" | "sale";
+  className?: string;
+}
+
+export const ProductBadge = ({ type, className }: ProductBadgeProps) => {
+  const badgeConfig = {
+    popular: {
+      label: "Most Popular",
+      icon: Flame,
+      className: "bg-gradient-to-r from-amber-500 to-orange-500 text-white",
+    },
+    bestseller: {
+      label: "Best Seller",
+      icon: Star,
+      className: "bg-gradient-to-r from-warm-stone to-warm-stone/80 text-white",
+    },
+    new: {
+      label: "New",
+      icon: null,
+      className: "bg-gradient-to-r from-accent-gold to-[#B8956A] text-white",
+    },
+    sale: {
+      label: "Sale",
+      icon: null,
+      className: "bg-gradient-to-r from-red-500 to-rose-500 text-white",
+    },
+  };
+
+  const config = badgeConfig[type];
+  const Icon = config.icon;
+
+  return (
+    <div
+      className={cn(
+        "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold shadow-sm",
+        config.className,
+        className
+      )}
+    >
+      {Icon && <Icon className="h-3 w-3" />}
+      {config.label}
+    </div>
+  );
+};
+
+export default TrustBadges;
