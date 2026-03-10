@@ -457,13 +457,13 @@ const AIChatWidget = () => {
                 {/* Suggested Prompts - Touch-friendly with 44px minimum height */}
                 {showSuggestedPrompts && (
                   <div className="mt-2 flex flex-col gap-2">
-                    <p className="text-xs font-semibold text-rich-black/70 uppercase tracking-wide">Quick questions:</p>
+                    <p className="text-xs font-semibold text-pure-white/80 uppercase tracking-wide">Quick questions:</p>
                     <div className="flex flex-wrap gap-2">
                       {SUGGESTED_PROMPTS.map((prompt, index) => (
                         <button
                           key={index}
                           onClick={() => handleSend(prompt)}
-                          className="rounded-full border border-deep-charcoal/50 bg-deep-charcoal/5 px-4 py-2.5 min-h-[44px] text-sm font-medium text-deep-charcoal transition-colors hover:bg-deep-charcoal/10 hover:border-deep-charcoal/70 active:bg-deep-charcoal/15"
+                          className="rounded-full border border-pure-white/40 bg-pure-white/10 px-4 py-2.5 min-h-[44px] text-sm font-medium text-pure-white transition-colors hover:bg-pure-white/20 hover:border-pure-white/60 active:bg-pure-white/25"
                         >
                           {prompt}
                         </button>
